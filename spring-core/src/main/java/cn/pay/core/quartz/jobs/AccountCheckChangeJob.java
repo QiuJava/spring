@@ -10,6 +10,12 @@ import org.springframework.stereotype.Component;
 
 import cn.pay.core.service.AccountService;
 
+/**
+ * 数据库用户账户信息防篡改检查作业
+ * 
+ * @author Administrator
+ *
+ */
 @Component
 public class AccountCheckChangeJob implements Job {
 

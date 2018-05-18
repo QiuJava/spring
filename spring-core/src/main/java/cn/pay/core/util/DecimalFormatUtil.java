@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 import cn.pay.core.consts.BidConst;
 
 /**
- * 数额格式化工具类
+ * 金额格式化工具类
  * 
  * @author Qiujian
  *

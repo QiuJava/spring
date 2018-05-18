@@ -23,6 +23,11 @@ public interface SystemDictionaryItemService {
 	 */
 	List<SystemDictionaryItem> getBySn(String string);
 
+	/**
+	 * 根据ID删除
+	 * 
+	 * @param id
+	 */
 	void delete(Long id);
 
 	/**
@@ -33,6 +38,11 @@ public interface SystemDictionaryItemService {
 	 */
 	Long getSystemDictionaryId(Long itemId);
 
+	/**
+	 * 更新
+	 * 
+	 * @param item
+	 */
 	void update(SystemDictionaryItem item);
 
 	/**

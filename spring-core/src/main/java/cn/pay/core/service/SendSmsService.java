@@ -8,7 +8,7 @@ import cn.pay.core.domain.business.RepaymentSchedule;
 import cn.pay.core.domain.business.Withdraw;
 
 /**
- * 发送短信相关
+ * 发送短信服务
  * 
  * @author Administrator
  *

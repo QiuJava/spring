@@ -5,7 +5,7 @@ import cn.pay.core.obj.qo.RechargeQo;
 import cn.pay.core.obj.vo.PageResult;
 
 /**
- * 线下充值
+ * 线下充值服务
  * 
  * @author Administrator
  *

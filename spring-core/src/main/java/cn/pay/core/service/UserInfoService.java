@@ -40,5 +40,10 @@ public interface UserInfoService {
 	 */
 	void update(UserInfo userInfo);
 
+	/**
+	 * 保存
+	 * 
+	 * @param userInfo
+	 */
 	void save(UserInfo userInfo);
 }

@@ -11,12 +11,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
+/**
+ * 定时调度器配置类
+ * 
+ * @author Administrator
+ *
+ */
 @Configuration
 public class SchedulerConfig {
 
 	@Autowired
 	private SpringJobFactory springJobFactory;
 
+	/**
+	 * 配置调度器工厂Bean
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	@Bean
 	public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
 		SchedulerFactoryBean factory = new SchedulerFactoryBean();
@@ -25,6 +37,12 @@ public class SchedulerConfig {
 		return factory;
 	}
 
+	/**
+	 * 设置quartz属性对象
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	@Bean
 	public Properties quartzProperties() throws IOException {
 		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
@@ -33,9 +51,15 @@ public class SchedulerConfig {
 		return propertiesFactoryBean.getObject();
 	}
 
+	/**
+	 * 根据调度器工厂Bean获取调度器
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	@Bean
 	public Scheduler scheduler() throws IOException {
 		return schedulerFactoryBean().getScheduler();
 	}
-	
+
 }

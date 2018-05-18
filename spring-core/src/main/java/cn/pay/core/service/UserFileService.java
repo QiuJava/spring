@@ -23,7 +23,7 @@ public interface UserFileService {
 	void apply(String fileName);
 
 	/**
-	 * 更新用户材料的类型
+	 * 批量更新用户材料的类型
 	 * 
 	 * @param id
 	 * @param fileType
@@ -31,7 +31,7 @@ public interface UserFileService {
 	void updateType(Long[] id, Long[] fileType);
 
 	/**
-	 * 查询用户材料列表根据页面分页查询
+	 * 根据用户材料查询对象获取用户材料页面结果集
 	 * 
 	 * @param qo
 	 * @return
@@ -49,7 +49,7 @@ public interface UserFileService {
 	void audit(Long id, int state, int score, String remark);
 
 	/**
-	 * 获取用户的风控材料
+	 * 获取用户的风控材料列表
 	 * 
 	 * @param id
 	 * @param b

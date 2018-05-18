@@ -9,7 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 上传工具类
+ * 文件上传工具类
  * 
  * @author Qiujian
  *

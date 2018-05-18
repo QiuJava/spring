@@ -6,7 +6,7 @@ import cn.pay.core.domain.business.RealAuth;
 import cn.pay.core.obj.qo.RealAuthQo;
 
 /**
- * 实名认证
+ * 实名认证服务
  * 
  * @author Administrator
  *
@@ -21,6 +21,11 @@ public interface RealAuthService {
 	 */
 	RealAuth get(Long realAuthId);
 
+	/**
+	 * 保存
+	 * 
+	 * @param realAuth
+	 */
 	void save(RealAuth realAuth);
 
 	/**

@@ -1,7 +1,7 @@
 package cn.pay.core.util;
 
 /**
- * 系统字符串操作工具
+ * 系统字符串操作工具类
  * 
  * @author Administrator
  *

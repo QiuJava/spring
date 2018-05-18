@@ -6,7 +6,7 @@ import java.util.Date;
 import org.apache.commons.lang.time.DateUtils;
 
 /**
- * 日期工具
+ * 系统日期工具
  * 
  * @author Qiujian
  *

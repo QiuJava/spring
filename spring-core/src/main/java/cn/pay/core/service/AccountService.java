@@ -3,7 +3,7 @@ package cn.pay.core.service;
 import cn.pay.core.domain.business.Account;
 
 /**
- * 账户
+ * 账户服务
  * 
  * @author Administrator
  *
@@ -11,7 +11,7 @@ import cn.pay.core.domain.business.Account;
 public interface AccountService {
 
 	/**
-	 * 获取账户
+	 * 根据用户账户Id获取账户
 	 * 
 	 * @param id
 	 * @return
@@ -24,9 +24,17 @@ public interface AccountService {
 	 * @param account
 	 */
 	void update(Account account);
-	
+
+	/**
+	 * 保存账户
+	 * 
+	 * @param account
+	 */
 	void save(Account account);
 
+	/**
+	 * 数据库账户信息防篡改
+	 */
 	void checkAccountChange();
 
 }

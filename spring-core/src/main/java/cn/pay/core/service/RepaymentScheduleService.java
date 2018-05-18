@@ -27,6 +27,11 @@ public interface RepaymentScheduleService {
 	 */
 	void repay(Long id);
 
+	/**
+	 * 保存或更新
+	 * 
+	 * @param rs
+	 */
 	void saveAndUpdate(RepaymentSchedule rs);
 
 	/**

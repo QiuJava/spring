@@ -1,7 +1,7 @@
 package cn.pay.core.service;
 
 /**
- * 邮箱验证
+ * 邮箱验证服务
  * 
  * @author Administrator
  *
@@ -9,14 +9,14 @@ package cn.pay.core.service;
 public interface EmailVerifyService {
 
 	/**
-	 * 邮箱验证
+	 * 根据邮箱验证码进行校验
 	 * 
 	 * @param verify
 	 */
 	void verifyEmail(String verify);
 
 	/**
-	 * 发送认证信息到用户邮箱
+	 * 发送邮箱验证码相关信息到用户邮箱
 	 * 
 	 * @param email
 	 */

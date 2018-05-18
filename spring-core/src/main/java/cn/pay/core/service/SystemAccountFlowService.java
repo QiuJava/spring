@@ -10,6 +10,11 @@ import cn.pay.core.domain.business.SystemAccountFlow;
  */
 public interface SystemAccountFlowService {
 
+	/**
+	 * 保存或更新
+	 * 
+	 * @param flow
+	 */
 	void saveAndUpdate(SystemAccountFlow flow);
 
 }

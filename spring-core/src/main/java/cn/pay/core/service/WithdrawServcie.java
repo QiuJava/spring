@@ -6,7 +6,7 @@ import cn.pay.core.obj.qo.WithdrawQo;
 import cn.pay.core.obj.vo.PageResult;
 
 /**
- * 提现
+ * 提现服务
  * 
  * @author Administrator
  *

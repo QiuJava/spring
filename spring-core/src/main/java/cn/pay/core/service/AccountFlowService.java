@@ -11,7 +11,7 @@ import cn.pay.core.domain.business.RepaymentSchedule;
 import cn.pay.core.domain.business.Withdraw;
 
 /**
- * 账户流水
+ * 账户流水服务
  * 
  * @author Administrator
  *

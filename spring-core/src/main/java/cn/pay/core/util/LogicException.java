@@ -1,7 +1,7 @@
 package cn.pay.core.util;
 
 /**
- * 逻辑异常类
+ * 系统逻辑异常类=工具类
  * 
  * @author Qiujian
  *

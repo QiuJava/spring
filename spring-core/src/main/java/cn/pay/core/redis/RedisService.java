@@ -11,6 +11,13 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+/**
+ * Redis服务基础类
+ * 
+ * @author Administrator
+ *
+ * @param <T>
+ */
 @Service
 public abstract class RedisService<T> {
 

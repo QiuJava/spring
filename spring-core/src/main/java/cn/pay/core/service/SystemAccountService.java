@@ -6,7 +6,7 @@ import cn.pay.core.domain.business.Borrow;
 import cn.pay.core.domain.business.SystemAccount;
 
 /**
- * 系统账号
+ * 系统账号服务
  * 
  * @author Administrator
  *
@@ -28,8 +28,18 @@ public interface SystemAccountService {
 	 */
 	void update(SystemAccount systemAccount);
 
+	/**
+	 * 获取系统账户在数据库中的计数
+	 * 
+	 * @return
+	 */
 	Long count();
 
+	/**
+	 * 保存
+	 * 
+	 * @param systemAccount
+	 */
 	void save(SystemAccount systemAccount);
 
 }

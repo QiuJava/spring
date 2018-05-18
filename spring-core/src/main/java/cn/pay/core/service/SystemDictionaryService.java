@@ -8,15 +8,25 @@ import cn.pay.core.domain.sys.SystemDictionary;
 import cn.pay.core.obj.qo.SystemDictionaryQo;
 
 /**
- * 系统字典
+ * 系统字典服务
  * 
  * @author Administrator
  *
  */
 public interface SystemDictionaryService {
 
+	/**
+	 * 根据ID删除
+	 * 
+	 * @param id
+	 */
 	void delete(Long id);
 
+	/**
+	 * 保存
+	 * 
+	 * @param systemDictionary
+	 */
 	void save(SystemDictionary systemDictionary);
 
 	/**

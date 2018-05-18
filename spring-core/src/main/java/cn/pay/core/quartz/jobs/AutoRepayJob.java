@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import cn.pay.core.service.RepaymentScheduleService;
 
 /**
- * 自动还款
+ * 自动还款作业
  * 
  * @author Administrator
  *

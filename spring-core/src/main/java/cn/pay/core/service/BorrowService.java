@@ -9,7 +9,7 @@ import cn.pay.core.obj.qo.BorrowQo;
 import cn.pay.core.obj.vo.PageResult;
 
 /**
- * 借款
+ * 借款服务
  * 
  * @author Administrator
  *
@@ -17,7 +17,7 @@ import cn.pay.core.obj.vo.PageResult;
 public interface BorrowService {
 
 	/**
-	 * 判断是否申请借款
+	 * 判断是否有申请借款
 	 * 
 	 * @return
 	 */
@@ -31,7 +31,7 @@ public interface BorrowService {
 	void apply(Borrow borrow);
 
 	/**
-	 * 投标
+	 * 对借款进行投资
 	 * 
 	 * @param borrowId
 	 * @param amount
@@ -39,7 +39,7 @@ public interface BorrowService {
 	void bid(Long borrowId, BigDecimal amount);
 
 	/**
-	 * 查询借款列表
+	 * 根据借款查询条件查询借款页面结果集
 	 * 
 	 * @param qo
 	 * @return
@@ -47,7 +47,7 @@ public interface BorrowService {
 	PageResult list(BorrowQo qo);
 
 	/**
-	 * 发标前审核
+	 * 借款发布之前审核
 	 * 
 	 * @param id
 	 * @param state
@@ -56,7 +56,7 @@ public interface BorrowService {
 	void publishAudit(Long id, int state, String remark);
 
 	/**
-	 * 满标一审
+	 * 借款满标一审
 	 * 
 	 * @param id
 	 * @param remark
@@ -65,7 +65,7 @@ public interface BorrowService {
 	void audit1Audit(Long id, String remark, int state);
 
 	/**
-	 * 满标2审
+	 * 借款满标二审
 	 * 
 	 * @param id
 	 * @param remark
@@ -74,7 +74,7 @@ public interface BorrowService {
 	void audit2Audit(Long id, String remark, int state);
 
 	/**
-	 * 获取借款
+	 * 根绝借款ID获取借款
 	 * 
 	 * @param id
 	 * @return
@@ -96,5 +96,11 @@ public interface BorrowService {
 	 */
 	void update(Borrow borrow);
 
+	/**
+	 * 根据借款的一些状态获取借款列表
+	 * 
+	 * @param state
+	 * @return
+	 */
 	List<Borrow> listByState(int... state);
 }

@@ -7,7 +7,7 @@ import cn.pay.core.obj.qo.CompanyBankInfoQo;
 import cn.pay.core.obj.vo.PageResult;
 
 /**
- * 公司银行账号信息
+ * 公司银行账号信息服务
  * 
  * @author Administrator
  *
@@ -22,14 +22,14 @@ public interface CompanyBankInfoService {
 	List<CompanyBankInfo> list();
 
 	/**
-	 * 更新信息
+	 * 更新信息 并进行乐观锁检查
 	 * 
 	 * @param info
 	 */
 	void update(CompanyBankInfo info);
 
 	/**
-	 * 获取公司银行账号信息列表用于页面分页查询
+	 * 根据公司银行账号查询条件对象获取页面结果集
 	 * 
 	 * @param qo
 	 * @return
@@ -37,7 +37,7 @@ public interface CompanyBankInfoService {
 	PageResult page(CompanyBankInfoQo qo);
 
 	/**
-	 * 获取公司账户信息
+	 * 根据局公司银行信息ID获取公司账户信息
 	 * 
 	 * @param bankInfoId
 	 * @return

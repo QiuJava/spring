@@ -17,13 +17,27 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * Redis配置类
+ * 
+ * @author Administrator
+ *
+ */
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
+	/**
+	 * 注入Spring自动配好的Redis连接工厂
+	 */
 	@Autowired
 	private RedisConnectionFactory redisConnectionFactory;
 
+	/**
+	 * 配置 Redis模板
+	 * 
+	 * @return
+	 */
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();

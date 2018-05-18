@@ -53,6 +53,11 @@ public interface LoginInfoService {
 	 */
 	LoginInfo getByUsername(String username);
 
+	/**
+	 * 保存或更新
+	 * 
+	 * @param info
+	 */
 	void saveAndUpdate(LoginInfo info);
-	
+
 }

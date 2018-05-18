@@ -18,6 +18,11 @@ public interface UserBankInfoService {
 	 */
 	UserBankInfo getByLoginInfoId(Long id);
 
+	/**
+	 * 保存
+	 * 
+	 * @param userBankInfo
+	 */
 	void save(UserBankInfo userBankInfo);
 
 }

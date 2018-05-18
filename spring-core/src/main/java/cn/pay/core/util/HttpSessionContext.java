@@ -9,7 +9,7 @@ import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.obj.vo.VerifyCode;
 
 /**
- * Session上下文
+ * Http会话工具类
  * 
  * @author Qiujian
  *
