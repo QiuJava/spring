@@ -1,0 +1,43 @@
+package cn.pay.core.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import cn.pay.core.dao.UserBankInfoRepository;
+import cn.pay.core.domain.business.UserBankInfo;
+import cn.pay.core.domain.business.UserInfo;
+import cn.pay.core.service.UserBankInfoService;
+import cn.pay.core.service.UserInfoService;
+import cn.pay.core.util.BidStateUtil;
+import cn.pay.core.util.HttpSessionContext;
+
+@Service
+public class UserBankInfoServiceImpl implements UserBankInfoService {
+
+	@Autowired
+	private UserBankInfoRepository repository;
+	@Autowired
+	private UserInfoService userInfoService;
+
+	@Override
+	public UserBankInfo getByLoginInfoId(Long id) {
+		return repository.findByLoginInfoId(id);
+	}
+
+	@Override
+	@Transactional
+	public void save(UserBankInfo userBankInfo) {
+		// 得到用户信息对象
+		UserInfo info = userInfoService.get(HttpSessionContext.getCurrentLoginInfo().getId());
+		if (!info.getIsBankBind() && info.getIsRealAuth()) {
+			// 没绑定 进行绑定 保存用户银行卡信息 修改状态
+			userBankInfo.setAccountName(info.getRealName());
+			userBankInfo.setLoginInfoId(info.getId());
+			repository.saveAndFlush(userBankInfo);
+			info.addState(BidStateUtil.OP_USERBANKINFO_BIND);
+			userInfoService.update(info);
+		}
+	}
+
+}

@@ -1,0 +1,47 @@
+{"properties": [
+  {
+    "name": "service.sms.username",
+    "type": "java.lang.String",
+    "description": "A description for 'service.sms.username'"
+  },
+  {
+    "name": "service.sms.apikey",
+    "type": "java.lang.String",
+    "description": "A description for 'service.sms.apikey'"
+  },
+  {
+    "name": "service.sms.password",
+    "type": "java.lang.String",
+    "description": "A description for 'service.sms.password'"
+  },
+  {
+    "name": "service.sms.url",
+    "type": "java.lang.String",
+    "description": "A description for 'service.sms.url'"
+  },
+  {
+    "name": "service.email.username",
+    "type": "java.lang.String",
+    "description": "A description for 'service.email.username'"
+  },
+  {
+    "name": "service.email.password",
+    "type": "java.lang.String",
+    "description": "A description for 'service.email.password'"
+  },
+  {
+    "name": "service.email.host",
+    "type": "java.lang.String",
+    "description": "A description for 'service.email.host'"
+  },
+  {
+    "name": "service.email.url",
+    "type": "java.lang.String",
+    "description": "A description for 'service.email.url'"
+  },
+  {
+    "name": "upload.path.img",
+    "type": "java.lang.String",
+    "description": "A description for 'upload.path.img'"
+  }
+]}

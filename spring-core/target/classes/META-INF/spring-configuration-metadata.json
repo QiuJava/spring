@@ -1,0 +1,11 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "cn.pay.core.service.impl.SendSmsServiceImpl",
+      "name": "service.sms",
+      "type": "cn.pay.core.service.impl.SendSmsServiceImpl"
+    }
+  ],
+  "properties": []
+}

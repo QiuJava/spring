@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 引用SpringBoot默认的日志输出格式 -->
+	<conversionRule conversionWord="clr"
+		converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+	<conversionRule conversionWord="wex"
+		converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx"
+		converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+	<property name="CONSOLE_LOG_PATTERN"
+		value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+	<property name="FILE_LOG_PATTERN"
+		value="${FILE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+
+	<property name="test_log_path" value="E:/logs/loan/" />
+	<property name="prod_log_path" value="E:/logs/loan/" />
+
+	<springProfile name="dev">
+		<appender name="console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<encoder>
+				<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			</encoder>
+			<target>System.out</target>
+		</appender>
+
+		<root level="info">
+			<appender-ref ref="console" />
+		</root>
+	</springProfile>
+
+	<springProfile name="test">
+		<appender name="rollingfile"
+			class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<encoder>
+				<pattern>${FILE_LOG_PATTERN}</pattern>
+			</encoder>
+			<rollingPolicy
+				class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<fileNamePattern>${test_log_path}log%d{yyyy_MM_dd}.txt
+				</fileNamePattern>
+				<maxHistory>30</maxHistory>
+			</rollingPolicy>
+		</appender>
+
+		<root level="info">
+			<appender-ref ref="rollingfile" />
+		</root>
+	</springProfile>
+
+	<springProfile name="prod">
+		<appender name="rollingfile_size"
+			class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<encoder>
+				<pattern>${FILE_LOG_PATTERN}</pattern>
+			</encoder>
+			<rollingPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+				<fileNamePattern>${prod_log_path}size%d{yyyy_MM_dd}_%i.txt
+				</fileNamePattern>
+				<maxHistory>30</maxHistory>
+				<maxFileSize>10MB</maxFileSize>
+			</rollingPolicy>
+		</appender>
+
+		<root level="info">
+			<appender-ref ref="rollingfile_size" />
+		</root>
+	</springProfile>
+</configuration>
