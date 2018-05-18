@@ -7,7 +7,6 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,7 +17,6 @@ import cn.pay.loan.web.interceptor.LoginInterceptor;
 
 @SpringBootApplication
 @ServletComponentScan
-@EnableScheduling
 @EnableRedisHttpSession
 @Profile("dev")
 public class LoanApplication extends WebMvcConfigurerAdapter {

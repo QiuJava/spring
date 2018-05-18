@@ -2,6 +2,7 @@ package cn.pay.core.obj.qo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 还款计划查询对象
@@ -11,6 +12,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@ToString
 public class RepaymentScheduleQo extends BaseConditionQo {
 	private static final long serialVersionUID = 1L;
 	private Long userId = -1L;

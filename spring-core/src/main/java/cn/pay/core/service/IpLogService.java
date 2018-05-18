@@ -24,11 +24,11 @@ public interface IpLogService {
 	/**
 	 * 获取用户最新的登录日志
 	 * 
-	 * @param username
+	 * @param qo
 	 * @return
 	 */
 	IpLog getNewestIpLog(String username);
-	
+
 	void saveAndUpdate(IpLog ipLog);
 
 }

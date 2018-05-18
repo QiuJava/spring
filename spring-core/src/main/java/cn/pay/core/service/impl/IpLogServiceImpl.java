@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.SerializationUtils;
 
 import cn.pay.core.dao.IpLogRepository;
 import cn.pay.core.domain.sys.IpLog;
@@ -34,7 +35,7 @@ public class IpLogServiceImpl implements IpLogService {
 	@Autowired
 	private IpLogRedisService redisService;
 
-	@Cacheable("ipLogCache")
+	@Cacheable("ipLogPage")
 	@Override
 	public Page<IpLog> page(IpLogQo qo) {
 		Page<IpLog> page = repository.findAll(new Specification<IpLog>() {
@@ -65,17 +66,19 @@ public class IpLogServiceImpl implements IpLogService {
 	}
 
 	@Override
+	@Cacheable("newestIpLog")
 	public IpLog getNewestIpLog(String username) {
 		List<IpLog> list = repository.findByUsernameOrderByLoginTimeDesc(username, new PageRequest(0, 1));
 		return list.get(0);
 	}
 
-	@CacheEvict(value = "ipLogCache", allEntries = true)
+	@CacheEvict(value = { "ipLogPage", "newestIpLog" }, allEntries = true)
 	@Override
 	@Transactional
 	public void saveAndUpdate(IpLog ipLog) {
 		IpLog log = repository.saveAndFlush(ipLog);
 		redisService.put(log.getId().toString(), log, -1);
+		SerializationUtils.serialize(log);
 	}
 
 }

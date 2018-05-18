@@ -4,6 +4,7 @@ import org.springframework.util.StringUtils;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 
@@ -12,6 +13,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@ToString
 public class RechargeQo extends BaseConditionQo {
 	private static final long serialVersionUID = 1L;
 	private Long applierId;

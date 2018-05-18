@@ -2,6 +2,7 @@ package cn.pay.core.obj.qo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.springframework.util.StringUtils;
 
@@ -13,6 +14,7 @@ import org.springframework.util.StringUtils;
  */
 @Setter
 @Getter
+@ToString
 public class IpLogQo extends BaseConditionQo {
 	private static final long serialVersionUID = 1L;
 	private String username;
