@@ -74,7 +74,7 @@ public interface BorrowService {
 	void audit2Audit(Long id, String remark, int state);
 
 	/**
-	 * 根绝借款ID获取借款
+	 * 根据借款ID获取借款
 	 * 
 	 * @param id
 	 * @return
@@ -103,4 +103,15 @@ public interface BorrowService {
 	 * @return
 	 */
 	List<Borrow> listByState(int... state);
+
+	/**
+	 * 获取一个小时内即将要流标的借款并放到Redis中
+	 */
+	void getFailBorrow();
+
+	/**
+	 * 每隔一秒执行流标
+	 */
+	void failBorrow();
+
 }

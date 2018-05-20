@@ -51,4 +51,12 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
+	@Override
+	public void flushAccountVerify() {
+		List<Account> list = repository.findAll();
+		for (Account account : list) {
+			update(account);
+		}
+	}
+
 }

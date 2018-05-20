@@ -10,20 +10,16 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.SerializationUtils;
 
 import cn.pay.core.dao.IpLogRepository;
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.obj.qo.IpLogQo;
-import cn.pay.core.redis.service.IpLogRedisService;
 import cn.pay.core.service.IpLogService;
 
 @Service
@@ -32,11 +28,11 @@ public class IpLogServiceImpl implements IpLogService {
 	@Autowired
 	private IpLogRepository repository;
 
-	@Autowired
-	private IpLogRedisService redisService;
+	//@Autowired
+	//private IpLogRedisService redisService;
 
-	@Cacheable("ipLogPage")
 	@Override
+	//@Cacheable("ipLogPage")
 	public Page<IpLog> page(IpLogQo qo) {
 		Page<IpLog> page = repository.findAll(new Specification<IpLog>() {
 			@Override
@@ -66,19 +62,18 @@ public class IpLogServiceImpl implements IpLogService {
 	}
 
 	@Override
-	@Cacheable("newestIpLog")
+	//@Cacheable("newestIpLog")
 	public IpLog getNewestIpLog(String username) {
 		List<IpLog> list = repository.findByUsernameOrderByLoginTimeDesc(username, new PageRequest(0, 1));
 		return list.get(0);
 	}
 
-	@CacheEvict(value = { "ipLogPage", "newestIpLog" }, allEntries = true)
+	//@CacheEvict(value = { "ipLogPage" }, allEntries = true)
 	@Override
 	@Transactional
 	public void saveAndUpdate(IpLog ipLog) {
-		IpLog log = repository.saveAndFlush(ipLog);
-		redisService.put(log.getId().toString(), log, -1);
-		SerializationUtils.serialize(log);
+		repository.saveAndFlush(ipLog);
+		//redisService.put(log.getId().toString(), log, -1);
 	}
 
 }

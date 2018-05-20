@@ -37,4 +37,9 @@ public interface AccountService {
 	 */
 	void checkAccountChange();
 
+	/**
+	 * 刷新所有用户账户防篡改验证码
+	 */
+	void flushAccountVerify();
+
 }

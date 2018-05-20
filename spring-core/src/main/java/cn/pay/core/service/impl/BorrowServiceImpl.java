@@ -5,9 +5,11 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,7 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,6 +82,9 @@ public class BorrowServiceImpl implements BorrowService {
 
 	@Autowired
 	private ApplicationContext ac;
+
+	@Resource
+	private ValueOperations<String, List<Borrow>> valueOperations;
 
 	@Override
 	public boolean isApplyBorrow() {
@@ -245,7 +253,7 @@ public class BorrowServiceImpl implements BorrowService {
 				borrow.setState(BidConst.BORROW_STATE_APPROVE_PENDING_2);
 			} else {
 				// 退标 满标一审或者满标二审拒绝
-				cancelBorrow(borrow);
+				cancelBorrow(borrow, BidConst.BORROW_STATE_REJECTED);
 			}
 
 			// 更新借款对象
@@ -253,9 +261,9 @@ public class BorrowServiceImpl implements BorrowService {
 		}
 	}
 
-	private void cancelBorrow(Borrow borrow) {
+	private void cancelBorrow(Borrow borrow, Integer state) {
 		// 修改借钱对象的状态为审核失败
-		borrow.setState(BidConst.BORROW_STATE_REJECTED);
+		borrow.setState(state);
 
 		// 更新用户没有借款在流程中
 		UserInfo userInfo = userInfoService.get(borrow.getCreateUser().getId());
@@ -365,7 +373,7 @@ public class BorrowServiceImpl implements BorrowService {
 				}
 			} else {
 				// 审核失败
-				cancelBorrow(borrow);
+				cancelBorrow(borrow, BidConst.BORROW_STATE_REJECTED);
 			}
 			update(borrow);
 			// 发送借款成功短信
@@ -495,4 +503,45 @@ public class BorrowServiceImpl implements BorrowService {
 		});
 		return borrowList;
 	}
+
+	@Override
+	public void getFailBorrow() {
+		// 根据标的到期时间和招标状态将接下来一个小时内可能流标的标的Id和到期时间以到期时间的正序放到一个列表中缓存。
+		Date date = new Date();
+		Date addHours = DateUtils.addHours(date, 1);
+		List<Borrow> list = repository.findAll(new Specification<Borrow>() {
+			@Override
+			public Predicate toPredicate(Root<Borrow> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> list = new ArrayList<>();
+				list.add(cb.equal(root.get("state").as(Integer.class), BidConst.BORROW_STATE_BIDDING));
+				list.add(cb.between(root.get("disableDate").as(Date.class), date, addHours));
+				Predicate[] ps = new Predicate[list.size()];
+				return cb.and(list.toArray(ps));
+			}
+		}, new Sort(Direction.ASC, "disableDate"));
+		valueOperations.set("FailBorrowList", list);
+	}
+
+	@Override
+	public void failBorrow() {
+		// 拿到缓存列表的第一个标，判断到期时间是否小于当前时间，小于可能是流标，去数据库查询标的状态
+		// 是招标中进行流标业务，从缓存列表去除。依次判断接下来的每一个标。
+		List<Borrow> list = valueOperations.get("FailBorrowList");
+		if (list != null) {
+			Date date = new Date();
+			for (Iterator<Borrow> iterator = list.iterator(); iterator.hasNext();) {
+				Borrow borrow = iterator.next();
+				if (borrow.getDisableDate().getTime() < date.getTime()) {
+					Borrow newBorrow = get(borrow.getId());
+					if (BidConst.BORROW_STATE_BIDDING == newBorrow.getState()) {
+						// 流标操作
+						cancelBorrow(newBorrow, BidConst.BORROW_STATE_BIDDING_OVERDUE);
+						iterator.remove();
+					}
+				}
+			}
+			valueOperations.set("FailBorrowList", list);
+		}
+	}
+
 }

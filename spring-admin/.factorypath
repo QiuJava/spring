@@ -38,8 +38,8 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/com/alibaba/fastjson/1.2.7/fastjson-1.2.7.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/alibaba/druid-spring-boot-starter/1.1.4/druid-spring-boot-starter-1.1.4.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/alibaba/druid/1.1.4/druid-1.1.4.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="D:\Java\jdk1.8.0_161\lib\jconsole.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="D:\Java\jdk1.8.0_161\lib\tools.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="C:\Java\jdk1.8.0_152\lib\jconsole.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="C:\Java\jdk1.8.0_152\lib\tools.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/springframework/boot/spring-boot-autoconfigure/1.5.10.RELEASE/spring-boot-autoconfigure-1.5.10.RELEASE.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/mysql/mysql-connector-java/5.1.45/mysql-connector-java-5.1.45.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/quartz-scheduler/quartz/2.3.0/quartz-2.3.0.jar" enabled="true" runInBatchMode="false"/>

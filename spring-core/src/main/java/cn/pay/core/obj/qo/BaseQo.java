@@ -15,8 +15,8 @@ import lombok.Setter;
 @Setter
 public class BaseQo implements  Serializable{
 	private static final long serialVersionUID = 1L;
-	private Integer currentPage = 1;
-	private Integer pageSize = 5;
+	protected Integer currentPage = 1;
+	protected Integer pageSize = 5;
 
 	public Integer getCurrentPage() {
 		return currentPage;

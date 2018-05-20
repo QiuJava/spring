@@ -1,9 +1,12 @@
 package cn.pay.core.redis;
 
+import java.lang.reflect.Method;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -15,6 +18,7 @@ import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -41,23 +45,33 @@ public class RedisConfig extends CachingConfigurerSupport {
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-		initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
+		RedisSerializer<?> stringRedisSerializer = new StringRedisSerializer();
+		redisTemplate.setKeySerializer(stringRedisSerializer);
+		redisTemplate.setHashKeySerializer(stringRedisSerializer);
+		RedisSerializer<?> jdkSerializationRedisSerializer = new JdkSerializationRedisSerializer();
+		redisTemplate.setHashValueSerializer(jdkSerializationRedisSerializer);
+		redisTemplate.setValueSerializer(jdkSerializationRedisSerializer);
+		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		return redisTemplate;
 	}
 
 	/**
-	 * 设置数据存入 redis 的序列化方式
-	 *
-	 * @param redisTemplate
-	 * @param factory
+	 * 注解@Cache key生成规则
 	 */
-	private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
-		// 定义key生成策略
-		redisTemplate.setKeySerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-		redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setConnectionFactory(factory);
+	@Bean
+	public KeyGenerator keyGenerator() {
+		return new KeyGenerator() {
+			@Override
+			public Object generate(Object target, Method method, Object... params) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(target.getClass().getName());
+				sb.append("::" + method.getName() + ":");
+				for (Object obj : params) {
+					sb.append(obj.toString());
+				}
+				return sb.toString();
+			}
+		};
 	}
 
 	/**

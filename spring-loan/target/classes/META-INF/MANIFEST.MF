@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: spring-loan
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Administrator
+Built-By: Qiu Jian
 Implementation-Vendor-Id: cn.pay
-Build-Jdk: 1.8.0_161
+Build-Jdk: 1.8.0_152
 Implementation-URL: http://projects.spring.io/spring-boot/spring-paren
  t/spring-loan/
 Created-By: Maven Integration for Eclipse

@@ -28,9 +28,9 @@ public class JobController {
 	@RequestMapping("/add")
 	public AjaxResult add(String name, String group, String cronExpression) throws Exception {
 		AjaxResult result = new AjaxResult();
-		name = "cn.pay.core.quartz.jobs.AutoRepaySmsJob";
-		group = "repaymentSchedule";
-		cronExpression = "0 30 8 ? * *";
+		name = "cn.pay.core.quartz.jobs.FailBorrowJob";
+		group = "borrow";
+		cronExpression = "*/1 * * * * ?";
 		// 启动调度器
 		scheduler.start();
 		Class<?> clz = Class.forName(name);
@@ -80,6 +80,9 @@ public class JobController {
 	 */
 	@RequestMapping("/reschedule")
 	public void rescheduleJob(String name, String group, String cronExpression) throws Exception {
+		name = "cn.pay.core.quartz.jobs.GetFailBorrowJob";
+		group = "borrow";
+		cronExpression = "*/30 * * * * ?";
 		TriggerKey triggerKey = TriggerKey.triggerKey(name, group);
 		// 表达式调度构建器
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
@@ -95,8 +98,8 @@ public class JobController {
 
 	@RequestMapping("/delete")
 	public void deletejob(String name, String group) throws Exception {
-		name = "cn.pay.admin.quartz.jobs.AccountCheckChangeJob";
-		group = "account";
+		name = "cn.pay.core.quartz.jobs.FailBorrowJob";
+		group = "borrow";
 		scheduler.pauseTrigger(TriggerKey.triggerKey(name, group));
 		scheduler.unscheduleJob(TriggerKey.triggerKey(name, group));
 		scheduler.deleteJob(JobKey.jobKey(name, group));

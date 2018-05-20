@@ -18,11 +18,11 @@ import lombok.Setter;
 @Setter
 public class BaseConditionQo extends BaseQo {
 	private static final long serialVersionUID = 1L;
-	private int state = -1;
+	protected int state = -1;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date beginDate;
+	protected Date beginDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date endDate;
+	protected Date endDate;
 
 	public Date getEndDate() {
 		if (endDate != null) {
