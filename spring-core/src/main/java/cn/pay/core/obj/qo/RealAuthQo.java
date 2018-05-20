@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 实名认证查询
+ * 实名认证查询对象
  * 
  * @author Administrator
  */

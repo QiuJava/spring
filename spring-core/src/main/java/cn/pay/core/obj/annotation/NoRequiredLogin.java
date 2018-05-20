@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 不需要登录
+ * 不需要登录注解
  * 
  * @author Qiujian
  *

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * 系统字典查询对象
  * 
  * @author Qiujian
  *

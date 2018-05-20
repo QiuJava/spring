@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 充值查询
+ * 充值查询对象
  * 
  * @author Administrator
  *

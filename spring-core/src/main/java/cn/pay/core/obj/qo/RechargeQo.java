@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * 线下充值查询对象
  * 
  * @author Qiujian
  *

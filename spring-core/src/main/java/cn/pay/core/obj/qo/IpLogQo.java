@@ -7,7 +7,7 @@ import lombok.ToString;
 import org.springframework.util.StringUtils;
 
 /**
- * 登录日志的高级查询加分页
+ * 登录日志查询对象
  * 
  * @author Administrator
  *
