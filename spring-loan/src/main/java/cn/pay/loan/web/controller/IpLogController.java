@@ -13,6 +13,12 @@ import cn.pay.core.obj.vo.PageResult;
 import cn.pay.core.service.IpLogService;
 import cn.pay.core.util.HttpSessionContext;
 
+/**
+ * 用户登录日志相关
+ * 
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping("/ipLog")
 public class IpLogController {

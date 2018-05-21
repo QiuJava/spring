@@ -73,7 +73,7 @@ public class BorrowController {
 		service.apply(borrow);
 		return "redirect:/borrow/info.do";
 	}
-
+	
 	@RequestMapping("/borrow/bid")
 	@ResponseBody
 	public AjaxResult bid(Long borrowId, BigDecimal amount) {

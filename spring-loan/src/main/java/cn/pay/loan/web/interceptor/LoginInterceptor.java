@@ -10,7 +10,7 @@ import cn.pay.core.obj.annotation.NoRequiredLogin;
 import cn.pay.core.util.HttpSessionContext;
 
 /**
- * 登陆拦截
+ * 访问的Url是否需要登陆拦截
  * 
  * @author Administrator
  *

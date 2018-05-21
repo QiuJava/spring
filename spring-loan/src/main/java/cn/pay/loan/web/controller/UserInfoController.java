@@ -13,6 +13,12 @@ import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.HttpSessionContext;
 
+/**
+ * 用户相关信息相关
+ * 
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping("/userInfo")
 public class UserInfoController {

@@ -7,6 +7,12 @@ import org.springframework.stereotype.Component;
 
 import cn.pay.core.service.IndexService;
 
+/**
+ * 首页统计数据监听
+ * 
+ * @author Administrator
+ *
+ */
 @Component
 public class IndexSummaryListener implements ApplicationListener<ContextRefreshedEvent> {
 

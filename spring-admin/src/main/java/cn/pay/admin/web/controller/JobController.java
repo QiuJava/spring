@@ -18,6 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.pay.core.obj.qo.JobQo;
 import cn.pay.core.obj.vo.AjaxResult;
 
+/**
+ * 系统定时作业相关
+ * 
+ * @author Administrator
+ *
+ */
 @RestController
 @RequestMapping("/job")
 public class JobController {
@@ -28,9 +34,9 @@ public class JobController {
 	@RequestMapping("/add")
 	public AjaxResult add(String name, String group, String cronExpression) throws Exception {
 		AjaxResult result = new AjaxResult();
-		name = "cn.pay.core.quartz.jobs.FailBorrowJob";
+		name = "cn.pay.core.quartz.jobs.GetFailBorrowJob";
 		group = "borrow";
-		cronExpression = "*/1 * * * * ?";
+		cronExpression = "0 0 0/1 * * ?";
 		// 启动调度器
 		scheduler.start();
 		Class<?> clz = Class.forName(name);
@@ -57,6 +63,8 @@ public class JobController {
 	 */
 	@RequestMapping("/pause")
 	public void pausejob(String name, String group) throws SchedulerException {
+		name = "cn.pay.core.quartz.jobs.FailBorrowJob";
+		group = "borrow";
 		scheduler.pauseJob(JobKey.jobKey(name, group));
 	}
 

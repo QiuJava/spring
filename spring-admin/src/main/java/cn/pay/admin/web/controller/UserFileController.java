@@ -15,7 +15,7 @@ import cn.pay.core.obj.vo.PageResult;
 import cn.pay.core.service.UserFileService;
 
 /**
- * 审核相关
+ * 用户材料审核相关
  * 
  * @author Administrator
  *

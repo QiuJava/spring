@@ -12,7 +12,7 @@ import cn.pay.core.obj.annotation.NoRequiredLogin;
 import cn.pay.core.util.HttpSessionContext;
 
 /**
- * 登陆拦截
+ * 登陆拦截器
  * 
  * @author Administrator
  *

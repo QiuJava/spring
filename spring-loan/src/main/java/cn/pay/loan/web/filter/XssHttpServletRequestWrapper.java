@@ -2,7 +2,11 @@ package cn.pay.loan.web.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
+/**
+ * 防Xss攻击过滤 请求包装类
+ * @author Administrator
+ *
+ */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	public XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {

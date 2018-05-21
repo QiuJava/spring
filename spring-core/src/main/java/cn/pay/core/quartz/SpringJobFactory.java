@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class SpringJobFactory extends AdaptableJobFactory {
 
 	/**
-	 * 注入可延伸的Spring工厂
+	 * 注入可延伸的Spring工厂类
 	 */
 	@Autowired
 	private AutowireCapableBeanFactory capableBeanFactory;

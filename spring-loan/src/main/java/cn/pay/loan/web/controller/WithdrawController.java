@@ -16,7 +16,7 @@ import cn.pay.core.service.WithdrawServcie;
 import cn.pay.core.util.HttpSessionContext;
 
 /**
- * 提现
+ * 提现相关
  * 
  * @author Administrator
  *
@@ -24,7 +24,7 @@ import cn.pay.core.util.HttpSessionContext;
 @Controller
 public class WithdrawController {
 	public static final String withdraw = "withdraw_apply";
-	
+
 	@Autowired
 	private WithdrawServcie service;
 	@Autowired

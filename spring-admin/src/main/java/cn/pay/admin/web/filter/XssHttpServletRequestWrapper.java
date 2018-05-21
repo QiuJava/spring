@@ -3,6 +3,12 @@ package cn.pay.admin.web.filter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+/**
+ * 防Xss攻击过滤请求包装类
+ * 
+ * @author Administrator
+ *
+ */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	public XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {

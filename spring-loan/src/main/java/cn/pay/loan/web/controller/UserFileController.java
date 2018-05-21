@@ -21,7 +21,7 @@ import cn.pay.core.util.UploadUtil;
 import lombok.Setter;
 
 /**
- * 上传风控材料相关
+ * 用户风控材料相关
  * 
  * @author Administrator
  *

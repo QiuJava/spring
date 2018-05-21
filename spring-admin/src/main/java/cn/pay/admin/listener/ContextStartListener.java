@@ -16,6 +16,12 @@ import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.SystemAccountService;
 import cn.pay.core.util.Md5;
 
+/**
+ * 后台应用初始化事件监听
+ * 
+ * @author Administrator
+ *
+ */
 @Component
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
 
