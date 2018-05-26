@@ -3,3 +3,5 @@
 <script type="text/javascript" src="/js/jquery/jquery-2.1.3.js"></script>
 <script type="text/javascript" src="/js/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 <script type="text/javascript" src="/js/jquery.bootstrap.min.js"></script>
+<!-- 引入Spring Security标签 -->
+<#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />

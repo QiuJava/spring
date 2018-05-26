@@ -3,6 +3,9 @@ package cn.pay.core.service.impl;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -23,7 +26,7 @@ import cn.pay.core.util.LogicException;
 import cn.pay.core.util.Md5;
 
 @Service
-public class LoginInfoServiceImpl implements LoginInfoService {
+public class LoginInfoServiceImpl implements LoginInfoService, UserDetailsService {
 
 	@Autowired
 	private LoginInfoRepository repository;
@@ -153,6 +156,12 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	@Transactional
 	public void saveAndUpdate(LoginInfo info) {
 		repository.saveAndFlush(info);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
