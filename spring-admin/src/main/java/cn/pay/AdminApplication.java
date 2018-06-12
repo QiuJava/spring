@@ -8,11 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import cn.pay.admin.web.interceptor.LoginInterceptor;
 
 /**
  * 后台管理系统应用配置
@@ -35,30 +31,28 @@ public class AdminApplication extends WebMvcConfigurerAdapter {
 	public ServletRegistrationBean servletRegistrationBean(DispatcherServlet dispatcherServlet) {
 		ServletRegistrationBean bean = new ServletRegistrationBean(dispatcherServlet);
 		bean.getUrlMappings().clear();
-
 		bean.addUrlMappings("*.do");
-		bean.addUrlMappings("*.json");
 		return bean;
 	}
 
 	/**
 	 * 添加拦截器
 	 */
-	@Override
+	/*@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**");
 		super.addInterceptors(registry);
-	}
+	}*/
 
 	/**
 	 * 用户访问url是否需要登录拦截
 	 * 
 	 * @return
 	 */
-	@Bean
+	/*@Bean
 	public HandlerInterceptor loginInterceptor() {
 		return new LoginInterceptor();
-	}
+	}*/
 
 	/**
 	 * 属性资源解析器 方法需要为静态 容器级别
