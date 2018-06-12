@@ -8,13 +8,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.obj.annotation.NoRequiredLogin;
+import cn.pay.core.obj.annotation.RequestLimit;
 import cn.pay.core.obj.vo.AjaxResult;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.util.HttpSessionContext;
@@ -41,8 +40,9 @@ public class LoginInfoController {
 	}
 
 	@NoRequiredLogin
-	@PostMapping("/login")
+	@RequestMapping("/login")
 	@ResponseBody
+	@RequestLimit(count = 2)
 	public AjaxResult login(String username, String password, HttpServletRequest request) {
 		String ip = request.getRemoteAddr();
 		LoginInfo loginInfo = service.login(username, password, ip, LoginInfo.USER);
@@ -53,7 +53,7 @@ public class LoginInfoController {
 	}
 
 	@NoRequiredLogin
-	@PostMapping("/isExist")
+	@RequestMapping("/isExist")
 	@ResponseBody
 	public AjaxResult isExist(String username) {
 		AjaxResult ajaxResult = new AjaxResult();
@@ -69,11 +69,12 @@ public class LoginInfoController {
 	 * @return
 	 * @throws IOException
 	 */
-	@GetMapping("/exit")
+	@RequestMapping("/exit")
+	@NoRequiredLogin
 	@ResponseBody
 	public AjaxResult exit(HttpServletResponse response) throws IOException {
 		HttpSession session = HttpSessionContext.getHttpSession();
-		session.removeAttribute(HttpSessionContext.LOGIN_INFO_IN_SESSIION);
+		session.removeAttribute(HttpSessionContext.CURRENT_LOGIN_INFO);
 		response.sendRedirect("/login.html");
 		return new AjaxResult(true, "注销成功");
 	}

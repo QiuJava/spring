@@ -1,10 +1,13 @@
 package cn.pay.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,8 @@ import cn.pay.core.domain.business.Account;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.domain.sys.Permission;
+import cn.pay.core.domain.sys.Role;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.IpLogService;
 import cn.pay.core.service.LoginInfoService;
@@ -25,8 +30,8 @@ import cn.pay.core.util.HttpSessionContext;
 import cn.pay.core.util.LogicException;
 import cn.pay.core.util.Md5;
 
-@Service
-public class LoginInfoServiceImpl implements LoginInfoService, UserDetailsService {
+@Service("loginInfoService")
+public class LoginInfoServiceImpl implements LoginInfoService {
 
 	@Autowired
 	private LoginInfoRepository repository;
@@ -160,8 +165,22 @@ public class LoginInfoServiceImpl implements LoginInfoService, UserDetailsServic
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		LoginInfo loginInfo = repository.findByUsername(username);
+		if (loginInfo != null) {
+			List<Permission> permissions = new ArrayList<>();
+			for (Role role :  loginInfo.getRoleList()) {
+				// 获取用户所拥有的权限
+				permissions.addAll(role.getPermissionList());
+			}
+			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+			for (Permission permission : permissions) {
+				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(permission.getName());
+				grantedAuthorities.add(grantedAuthority);
+			}
+			loginInfo.setAuthorities(grantedAuthorities);
+			return loginInfo;
+		} else {
+			throw new UsernameNotFoundException("admin: " + username + " do not exist!");
+		}
 	}
-
 }

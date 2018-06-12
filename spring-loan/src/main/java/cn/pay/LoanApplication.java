@@ -38,7 +38,6 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 		ServletRegistrationBean bean = new ServletRegistrationBean(dispatcherServlet);
 		bean.getUrlMappings().clear();
 		bean.addUrlMappings("*.do");
-		bean.addUrlMappings("*.json");
 		return bean;
 	}
 

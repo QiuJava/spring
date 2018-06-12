@@ -1,5 +1,8 @@
 package cn.pay.core.service;
 
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import cn.pay.core.domain.sys.LoginInfo;
 
 /**
@@ -8,7 +11,7 @@ import cn.pay.core.domain.sys.LoginInfo;
  * @author Administrator
  *
  */
-public interface LoginInfoService {
+public interface LoginInfoService extends UserDetailsService {
 
 	/**
 	 * 用户登录验证

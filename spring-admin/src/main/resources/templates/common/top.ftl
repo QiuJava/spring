@@ -5,10 +5,7 @@
 		<li>
 			<p class="navbar-text text-info">${loginInfo.username}</p>
 		</li>
-		<li><a href="/loginInfo/exit.do">安全退出</a></li>
+		<li><a href="/loginInfo/logout.do">安全退出</a></li>
 		<li><a href="">个人设置</a></li>
-		<@security.authorize access="hasRole('ADMIN')">
-		222
-		</@security.authorize>
 	</ul>
 </div>

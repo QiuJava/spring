@@ -12,5 +12,5 @@ public class SysConst {
 
 	public static final String ADMIN = "admin";
 	public static final String PASSWORD = "123456";
-
+	
 }

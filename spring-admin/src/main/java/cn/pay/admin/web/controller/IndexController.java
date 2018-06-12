@@ -1,20 +1,9 @@
 package cn.pay.admin.web.controller;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.obj.annotation.NoRequiredLogin;
-import cn.pay.core.obj.vo.AjaxResult;
-import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.util.HttpSessionContext;
 
 /**
@@ -24,12 +13,12 @@ import cn.pay.core.util.HttpSessionContext;
  *
  */
 @Controller
-public class LoginInfoController {
+public class IndexController {
 
-	@Autowired
-	private LoginInfoService service;
+	//@Autowired
+	//private LoginInfoService service;
 
-	@RequestMapping("/loginInfo/login")
+	/*@RequestMapping("/loginInfo/login")
 	@ResponseBody
 	@NoRequiredLogin
 	public AjaxResult login(String username, String password, HttpServletRequest request) {
@@ -39,20 +28,21 @@ public class LoginInfoController {
 			return new AjaxResult("用户名或密码不正确");
 		}
 		return new AjaxResult(true, "登陆成功");
-	}
+	}*/
 
 	@RequestMapping("/index")
-	public String index() {
+	public String index(Model model) {
+		model.addAttribute("loginInfo", HttpSessionContext.getLoginInfoBySecurity());
 		return "main";
 	}
 
-	@RequestMapping("/loginInfo/exit")
+	/*@RequestMapping("/loginInfo/exit")
 	@ResponseBody
 	public AjaxResult exit(HttpServletResponse response) throws IOException {
 		HttpSession session = HttpSessionContext.getHttpSession();
 		session.removeAttribute(HttpSessionContext.LOGIN_INFO_IN_SESSIION);
 		response.sendRedirect("/login.html");
 		return new AjaxResult(true, "安全退出成功");
-	}
+	}*/
 
 }

@@ -109,7 +109,7 @@ public class Borrow extends BaseDomain {
 		return createUser;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "borrow_id")
 	public List<Bid> getBidList() {
 		return bidList;
