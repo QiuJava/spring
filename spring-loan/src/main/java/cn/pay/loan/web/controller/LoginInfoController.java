@@ -42,7 +42,7 @@ public class LoginInfoController {
 	@NoRequiredLogin
 	@RequestMapping("/login")
 	@ResponseBody
-	@RequestLimit(count = 2)
+	@RequestLimit(count = 5)
 	public AjaxResult login(String username, String password, HttpServletRequest request) {
 		String ip = request.getRemoteAddr();
 		LoginInfo loginInfo = service.login(username, password, ip, LoginInfo.USER);
@@ -69,7 +69,7 @@ public class LoginInfoController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping("/exit")
+	@RequestMapping("/logout")
 	@NoRequiredLogin
 	@ResponseBody
 	public AjaxResult exit(HttpServletResponse response) throws IOException {
@@ -78,5 +78,5 @@ public class LoginInfoController {
 		response.sendRedirect("/login.html");
 		return new AjaxResult(true, "注销成功");
 	}
-
+	
 }

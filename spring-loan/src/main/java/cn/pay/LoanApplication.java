@@ -73,5 +73,5 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(LoanApplication.class, args);
 	}
-
+	
 }
