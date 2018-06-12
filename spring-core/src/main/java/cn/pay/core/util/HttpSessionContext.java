@@ -21,7 +21,7 @@ public class HttpSessionContext {
 	}
 
 	/** 当前登录信息 */
-	public static final String CURRENT_LOGIN_INFO = "CURRENT_LOGIN_INFO";
+	public static final String CURRENT_LOGIN_INFO = "loginInfo";
 	/** 手机验证码相关信息 */
 	public static final String VERIFY_CODE = "VERIFY_CODE";
 	/** Spring Security 放到session中的认证相关信息 */
