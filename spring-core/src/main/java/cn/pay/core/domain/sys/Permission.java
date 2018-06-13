@@ -1,15 +1,11 @@
 package cn.pay.core.domain.sys;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import cn.pay.core.domain.base.BaseDomain;
 import lombok.Getter;
@@ -40,18 +36,12 @@ public class Permission extends BaseDomain {
 	@Column(name = "url")
 	private String url;
 	/** 父节点ID */
+	@Column(name = "parent_id")
 	private Long parentId;
-	/** 拥有该权限的角色 */
-	private List<Role> roleList = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return super.id;
-	}
-	
-	@Transient
-	public List<Role> getRoleList() {
-		return roleList;
 	}
 }

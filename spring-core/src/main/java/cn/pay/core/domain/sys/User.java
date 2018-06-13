@@ -21,30 +21,23 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 角色
+ * 用户
  * 
- * @author Administrator
+ * @author Qiujian
  *
  */
-@Setter
 @Getter
+@Setter
 @ToString
 @Entity
-@Table(name = "role")
-public class Role extends BaseDomain {
+@Table(name = "user")
+public class User extends BaseDomain {
 	private static final long serialVersionUID = 1L;
-
-	/** 角色名称 */
-	@Column(name = "name")
-	private String name;
-	/** 角色描述 */
-	@Column(name = "descritpion")
-	private String descritpion;
-	/** 角色状态 */
-	@Column(name = "state")
-	private Integer state;
-	private List<Permission> permissionList = new ArrayList<>();
-
+	
+	@Column(name = "login_info_id")
+	private Long loginInfoId;
+	private List<Role> roleList = new ArrayList<>();
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -52,9 +45,9 @@ public class Role extends BaseDomain {
 	}
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "role_permission", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "permission_id") })
-	public List<Permission> getPermissionList() {
-		return permissionList;
+	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
+	public List<Role> getRoleList() {
+		return roleList;
 	}
 }

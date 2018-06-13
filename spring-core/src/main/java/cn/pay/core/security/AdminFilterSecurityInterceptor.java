@@ -1,4 +1,4 @@
-package cn.pay.admin.config;
+package cn.pay.core.security;
 
 import java.io.IOException;
 

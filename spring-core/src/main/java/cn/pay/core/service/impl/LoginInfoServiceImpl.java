@@ -21,10 +21,12 @@ import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.domain.sys.Permission;
 import cn.pay.core.domain.sys.Role;
+import cn.pay.core.domain.sys.User;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.IpLogService;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.UserInfoService;
+import cn.pay.core.service.UserService;
 import cn.pay.core.util.DateUtil;
 import cn.pay.core.util.HttpSessionContext;
 import cn.pay.core.util.LogicException;
@@ -42,6 +44,8 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	private AccountService accountService;
 	@Autowired
 	private UserInfoService userInfoService;
+	@Autowired
+	private UserService userService;
 
 	@Override
 	@Transactional
@@ -106,8 +110,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	@Override
 	@Transactional
 	public void register(String username, String password) {
-		LoginInfo loginInfo = repository.findByUsername(username);
-		if (loginInfo != null) {
+		if (repository.countByUsername(username) > 0) {
 			throw new LogicException("用户名已存在");
 		} else {
 			if (!StringUtils.hasLength(username)) {
@@ -117,7 +120,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 				throw new LogicException("请输入密码");
 			}
 
-			loginInfo = new LoginInfo();
+			LoginInfo loginInfo = new LoginInfo();
 			loginInfo.setUsername(username);
 			loginInfo.setPassword(Md5.encode(password));
 			loginInfo.setStatus(LoginInfo.NORMAL);
@@ -140,11 +143,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 
 	@Override
 	public boolean isExist(String username) {
-		LoginInfo loginInfo = repository.findByUsername(username);
-		if (loginInfo == null) {
-			return true;
-		}
-		return false;
+		return repository.countByUsername(username) > 0;
 	}
 
 	@Override
@@ -168,7 +167,8 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 		LoginInfo loginInfo = repository.findByUsername(username);
 		if (loginInfo != null) {
 			List<Permission> permissions = new ArrayList<>();
-			for (Role role :  loginInfo.getRoleList()) {
+			User user = userService.getByLoginInfoId(loginInfo.getId());
+			for (Role role : user.getRoleList()) {
 				// 获取用户所拥有的权限
 				permissions.addAll(role.getPermissionList());
 			}

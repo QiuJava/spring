@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
+import cn.pay.core.security.AdminAuthenticationProvider;
+import cn.pay.core.security.AdminFilterSecurityInterceptor;
 import cn.pay.core.service.LoginInfoService;
 
 /**
@@ -50,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/css/**", "/images/**", "/js/**", "/tags/**", "/login.html").permitAll()
 				// 登录登出url可以完全访问
 				.antMatchers("/loginInfo/login.do", "/loginInfo/logout.do").permitAll()
+				.antMatchers("/index.do").access("hasRole('后台首页')")
 				// 所有以.do 结尾的请求需要登录之后才能访问
 				.antMatchers("*。do").authenticated()
 

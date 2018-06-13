@@ -24,4 +24,12 @@ public interface LoginInfoRepository extends JpaRepository<LoginInfo, Long> {
 	 */
 	LoginInfo findByUsernameAndPasswordAndUserType(String username, String password, Integer userType);
 
+	/**
+	 * 根据用户名查询登录信息是否存在
+	 * 
+	 * @param username
+	 * @return
+	 */
+	int countByUsername(String username);
+
 }

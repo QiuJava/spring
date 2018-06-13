@@ -88,12 +88,14 @@ public class BorrowServiceImpl implements BorrowService {
 
 	@Override
 	public boolean isApplyBorrow() {
-		// 拿到用户当前信息对象
+		// 拿到当前用户信息
 		UserInfo userInfo = userInfoService.get(HttpSessionContext.getCurrentLoginInfo().getId());
-		return userInfo.getIsBasicInfo() && userInfo.getAuthScore() >= BidConst.CREDIT_BORROW_SCORE
-		// 是否有借款在审核流程
+		return userInfo.getIsBasicInfo()
+				// 满足条件认证分
+				&& userInfo.getAuthScore() >= BidConst.CREDIT_BORROW_SCORE
+				// 没有借款在审核流程
 				&& !userInfo.getHasBorrow()
-				// 是否实名认证
+				// 是实名认证
 				&& userInfo.getIsRealAuth();
 	}
 
@@ -109,7 +111,7 @@ public class BorrowServiceImpl implements BorrowService {
 				&& borrow.getAmount().compareTo(BidConst.MIN_BORROW_AMOUNT) >= 0
 				&& borrow.getRate().compareTo(BidConst.MIN_BORROW_RETE) >= 0
 				&& borrow.getRate().compareTo(BidConst.MAX_BORROW_RETE) <= 0
-				// 如果能够借款
+				// 设置最小投标金额需要大于系统设置的最小投标金额
 				&& borrow.getMinBidAmount().compareTo(BidConst.MIN_BID_AMOUNT) >= 0) {
 			borrow.setApplyTime(new Date());
 			borrow.setDisableDate(new Date());

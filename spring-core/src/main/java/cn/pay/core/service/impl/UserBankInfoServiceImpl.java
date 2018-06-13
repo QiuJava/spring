@@ -34,8 +34,8 @@ public class UserBankInfoServiceImpl implements UserBankInfoService {
 			// 没绑定 进行绑定 保存用户银行卡信息 修改状态
 			userBankInfo.setAccountName(info.getRealName());
 			userBankInfo.setLoginInfoId(info.getId());
-			repository.saveAndFlush(userBankInfo);
 			info.addState(BidStateUtil.OP_USERBANKINFO_BIND);
+			repository.saveAndFlush(userBankInfo);
 			userInfoService.update(info);
 		}
 	}

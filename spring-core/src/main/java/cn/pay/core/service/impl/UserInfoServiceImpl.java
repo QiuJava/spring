@@ -78,8 +78,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	@Transactional
 	public void update(UserInfo userInfo) {
-		UserInfo ui = repository.saveAndFlush(userInfo);
-		if (ui == null) {
+		if (repository.saveAndFlush(userInfo) == null) {
 			throw new LogicException("用户信息更新乐观锁异常");
 		}
 	}
