@@ -7,7 +7,7 @@ spring:
 
 #服务器相关设置
 server:
-  port: 8081
+  port: 8088
   session:
     timeout: 1800
 
@@ -74,7 +74,7 @@ service:
   email:
     username: admin@qq.com
     password: 123456
-    host: 192.168.3.31
+    host: localhost
     url: http://localhost:8081/email/verify.do
 
 #文件上传相关配置
@@ -92,3 +92,8 @@ logging:
     #org.hibernate.type.descriptor.sql.BasicBinder: trace
     #输出sqlselect出来的相关信息
     #org.hibernate.type.descriptor.sql.BasicExtractor: trace
+    
+#关闭spring security的默认登录    
+security:
+  basic:
+    enabled: false

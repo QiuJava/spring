@@ -38,7 +38,7 @@ spring:
   #Redis相关配置
   redis:
     database: 0
-    host: 127.0.0.1
+    host: localhost
     port: 6379
     password: 
     pool:
@@ -65,3 +65,8 @@ logging:
   file: E:/logs/admin/logback_spring.log
   level:
     root: info
+
+#关闭spring security的默认登录    
+security:
+  basic:
+    enabled: false

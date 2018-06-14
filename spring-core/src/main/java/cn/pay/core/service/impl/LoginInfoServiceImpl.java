@@ -161,7 +161,8 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	public void saveAndUpdate(LoginInfo info) {
 		repository.saveAndFlush(info);
 	}
-
+	
+	//@Cacheable("loadUserByUsername")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LoginInfo loginInfo = repository.findByUsername(username);
@@ -180,7 +181,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 			loginInfo.setAuthorities(grantedAuthorities);
 			return loginInfo;
 		} else {
-			throw new UsernameNotFoundException("admin: " + username + " do not exist!");
+			throw new UsernameNotFoundException("用户名: " + username + " 不存在!");
 		}
 	}
 }

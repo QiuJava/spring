@@ -8,7 +8,7 @@
 			<#else>
 			<li><a class="el-current-user" href="/personal.do"> ${loginInfo.username} </a></li>
 			<li><a href="/recharge.do"> 账户充值 </a></li>
-			<li><a href="/loginInfo/exit.do"> 注销 </a></li> 
+			<li><a href="/loginInfo/logout.do"> 注销 </a></li> 
 			</#if>
 			<li><a href="#">帮助</a></li>
 		</ul>

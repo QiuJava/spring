@@ -13,7 +13,8 @@ import cn.pay.core.service.PermissionService;
 public class PermissionServiceImpl implements PermissionService {
 	@Autowired
 	private PermissionRepository repository;
-
+	
+	//@Cacheable("getAll")
 	@Override
 	public List<Permission> getAll() {
 		return repository.findAll();

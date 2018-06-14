@@ -32,7 +32,7 @@ public class IpLogServiceImpl implements IpLogService {
 	//private IpLogRedisService redisService;
 
 	@Override
-	//@Cacheable("ipLogPage")
+	//@Cacheable("page")
 	public Page<IpLog> page(IpLogQo qo) {
 		Page<IpLog> page = repository.findAll(new Specification<IpLog>() {
 			@Override
@@ -62,13 +62,13 @@ public class IpLogServiceImpl implements IpLogService {
 	}
 
 	@Override
-	//@Cacheable("newestIpLog")
+	//@Cacheable("getNewestIpLog")
 	public IpLog getNewestIpLog(String username) {
 		List<IpLog> list = repository.findByUsernameOrderByLoginTimeDesc(username, new PageRequest(0, 1));
 		return list.get(0);
 	}
 
-	//@CacheEvict(value = { "ipLogPage" }, allEntries = true)
+	//@CacheEvict(value = { "page" }, allEntries = true)
 	@Override
 	@Transactional
 	public void saveAndUpdate(IpLog ipLog) {
