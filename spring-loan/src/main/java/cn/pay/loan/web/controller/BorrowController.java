@@ -1,8 +1,13 @@
 package cn.pay.loan.web.controller;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.jms.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +39,11 @@ public class BorrowController {
 	private UserInfoService userInfoService;
 	@Autowired
 	private AccountService accountService;
+
+	@Autowired
+	private JmsMessagingTemplate jmsMessagingTemplate;
+	@Autowired
+	private Queue bidQueue;
 
 	/**
 	 * 根据用户是否登录分配不同页面
@@ -73,12 +83,18 @@ public class BorrowController {
 		service.apply(borrow);
 		return "redirect:/borrow/info.do";
 	}
-	
+
 	@RequestMapping("/borrow/bid")
 	@ResponseBody
 	public AjaxResult bid(Long borrowId, BigDecimal amount) {
 		AjaxResult result = new AjaxResult();
-		service.bid(borrowId, amount);
+		// service.bid(borrowId, amount);
+		Map<String, Object> map = new HashMap<>();
+		map.put("borrowId", borrowId);
+		map.put("amount", amount);
+		map.put("loginInfoId", HttpSessionContext.getCurrentLoginInfo().getId());
+		// 发送消息服
+		jmsMessagingTemplate.convertAndSend(bidQueue,map.toString());
 		result.setSuccess(true);
 		return result;
 	}

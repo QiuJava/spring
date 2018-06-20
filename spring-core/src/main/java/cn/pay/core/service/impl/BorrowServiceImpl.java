@@ -46,6 +46,7 @@ import cn.pay.core.service.AccountService;
 import cn.pay.core.service.BidService;
 import cn.pay.core.service.BorrowAuditHistroyService;
 import cn.pay.core.service.BorrowService;
+import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.PaymentPlanService;
 import cn.pay.core.service.RepaymentScheduleService;
 import cn.pay.core.service.SystemAccountService;
@@ -79,6 +80,8 @@ public class BorrowServiceImpl implements BorrowService {
 	private UserInfoService userInfoService;
 	@Autowired
 	private AccountService accountService;
+	@Autowired
+	private LoginInfoService loginInfoService;
 
 	@Autowired
 	private ApplicationContext ac;
@@ -130,13 +133,14 @@ public class BorrowServiceImpl implements BorrowService {
 
 	@Override
 	@Transactional
-	public void bid(Long borrowId, BigDecimal amount) {
+	public void bid(Long borrowId, BigDecimal amount, Long loginInfoId) {
 		// 拿到借款对象
 		Borrow borrow = get(borrowId);
 		// 1.检查标是否存在，检查是否是招标中，检查招标的时间是否到期
 		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_BIDDING
 				&& new Date().before(borrow.getDisableDate())) {
-			LoginInfo currentLoginInfo = HttpSessionContext.getCurrentLoginInfo();
+			//LoginInfo currentLoginInfo = HttpSessionContext.getCurrentLoginInfo();
+			LoginInfo currentLoginInfo = loginInfoService.get(loginInfoId);
 			// 拿到投资者账户对象
 			Account bidAccount = accountService.get(currentLoginInfo.getId());
 			// 2.检查投资 投标金额小于可用金额 大于最小投标金额 小于剩余可投金额
