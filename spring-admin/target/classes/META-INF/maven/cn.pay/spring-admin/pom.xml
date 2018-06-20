@@ -57,6 +57,11 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.2.1-b03</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-activemq</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
