@@ -28,7 +28,7 @@ public class ExceptionHandlerController {
 	@ExceptionHandler(Exception.class)
 	public AjaxResult handlerException(Exception e) {
 		logger.error("系统异常", e);
-		return new AjaxResult(false, e.getMessage());
+		return new AjaxResult(false, "系统异常");
 	}
 
 }

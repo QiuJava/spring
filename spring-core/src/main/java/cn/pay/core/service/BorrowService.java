@@ -36,7 +36,7 @@ public interface BorrowService {
 	 * @param borrowId
 	 * @param amount
 	 */
-	void bid(Long borrowId, BigDecimal amount);
+	void bid(Long borrowId, BigDecimal amount, Long loginInfoId);
 
 	/**
 	 * 根据借款查询条件查询借款页面结果集

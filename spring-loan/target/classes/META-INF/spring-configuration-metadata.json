@@ -12,51 +12,5 @@
       "type": "cn.pay.loan.web.controller.UserFileController"
     }
   ],
-  "properties": [
-    {
-      "name": "service.email.host",
-      "description": "A description for 'service.email.host'",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "service.email.password",
-      "description": "A description for 'service.email.password'",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "service.email.url",
-      "description": "A description for 'service.email.url'",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "service.email.username",
-      "description": "A description for 'service.email.username'",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "service.sms.apikey",
-      "description": "A description for 'service.sms.apikey'",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "service.sms.password",
-      "description": "A description for 'service.sms.password'",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "service.sms.url",
-      "description": "A description for 'service.sms.url'",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "service.sms.username",
-      "description": "A description for 'service.sms.username'",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "upload.path.img",
-      "description": "A description for 'upload.path.img'",
-      "type": "java.lang.String"
-    }
-  ]
+  "properties": []
 }

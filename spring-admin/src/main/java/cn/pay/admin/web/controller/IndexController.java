@@ -13,7 +13,7 @@ import cn.pay.core.util.HttpSessionContext;
  */
 @Controller
 public class IndexController {
-
+	
 	//@Autowired
 	//private LoginInfoService service;
 
