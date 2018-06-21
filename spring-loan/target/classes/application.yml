@@ -49,6 +49,7 @@ spring:
       max-wait: 1
     #连接超时时间
     timeout: 5000
+
   #文件上传
   http:
     multipart:

@@ -61,7 +61,7 @@ public class TemplateUtil {
 
 	public static void main(String[] args) {
 		try {
-			createJavaFile(Object.class);
+			TemplateUtil.createJavaFile(Object.class);
 		} catch (TemplateNotFoundException e) {
 			logger.error(e.getMessage());
 		} catch (MalformedTemplateNameException e) {

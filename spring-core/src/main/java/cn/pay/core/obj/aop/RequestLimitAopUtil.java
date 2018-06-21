@@ -50,26 +50,28 @@ public class RequestLimitAopUtil {
 			String url = request.getRequestURL().toString();
 			String key = "req_limit_".concat(url).concat(ip);
 			if (valueOperations.get(key) == null || valueOperations.get(key) == 0) {
+				// 如果是第一次请求 设置key过期时间
 				valueOperations.set(key, 1);
 			} else {
 				valueOperations.set(key, valueOperations.get(key) + 1);
 			}
 			int count = valueOperations.get(key);
 			if (count > 0) {
-				// 创建一个定时器
 				Timer timer = new Timer();
-				TimerTask timerTask = new TimerTask() {
+				TimerTask task = new TimerTask() {
 					@Override
 					public void run() {
 						valueOperations.getOperations().delete(key);
+
 					}
 				};
-				// 这个定时器设定在time规定的时间之后会执行上面的remove方法，也就是说在这个时间后它可以重新访问
-				timer.schedule(timerTask, limit.time());
+				timer.schedule(task, limit.time());
+				valueOperations.getOperations().delete(key);
 			}
+
 			if (count > limit.count()) {
 				logger.info("用户IP[" + ip + "]访问地址[" + url + "]超过了限定的次数[" + limit.count() + "]");
-				throw new LogicException("超过" + limit.count() + "次");
+				throw new LogicException("超过" + limit.count() + "次，请" + limit.count() + "分钟后再尝试请求。");
 			}
 		} catch (LogicException e) {
 			throw e;
