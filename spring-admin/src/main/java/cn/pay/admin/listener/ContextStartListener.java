@@ -18,8 +18,10 @@ import cn.pay.core.util.Md5;
 
 /**
  * 后台应用初始化事件监听
+ * 创建Admin登录信息
+ * 创建系统账户
  * 
- * @author Administrator
+ * @author Qiujian
  *
  */
 @Component

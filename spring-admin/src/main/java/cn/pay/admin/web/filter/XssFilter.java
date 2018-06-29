@@ -13,7 +13,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Xss攻击过滤
+ * Xss过滤
+ * 
  * @author Qiujian
  *
  */
@@ -28,11 +29,9 @@ public class XssFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		chain.doFilter(
-				new XssHttpServletRequestWrapper((HttpServletRequest) request),
-				response);
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		chain.doFilter(new XssHttpServletRequestWrapper((HttpServletRequest) request), response);
 	}
 
 	@Override

@@ -73,3 +73,7 @@ logging:
 security:
   basic:
     enabled: false
+    
+test:
+  sms:
+    url: 127.0.0.1

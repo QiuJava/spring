@@ -1,4 +1,4 @@
-package cn.pay.test;
+package cn.pay;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
