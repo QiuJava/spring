@@ -6,7 +6,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -28,7 +27,7 @@ import cn.pay.loan.web.interceptor.LoginInterceptor;
 public class LoanApplication extends WebMvcConfigurerAdapter {
 
 	/**
-	 * 设置SpringMvc处理的请求
+	 * 设置SpringMvc处理的请求规则
 	 * 
 	 * @param dispatcherServlet
 	 * @return
@@ -42,7 +41,7 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	}
 
 	/**
-	 * 添加WebMvc拦截器
+	 * 添加拦截器
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -61,14 +60,17 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	}
 
 	/**
-	 * 属性资源解析器 方法需要为静态 容器级别
+	 * 属性资源解析器 
+	 * 方法需要为静态 返回的Bean是容器级别
 	 * 
 	 * @return
 	 */
+	/*
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
+	*/
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(LoanApplication.class, args);

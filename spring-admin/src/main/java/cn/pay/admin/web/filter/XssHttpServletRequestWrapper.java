@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
- * 防Xss攻击过滤请求包装类
+ * Xss过滤请求包装类
  * 
  * @author Administrator
  *
