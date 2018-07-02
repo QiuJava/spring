@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/loginInfo/login.do", "/loginInfo/logout.do").permitAll()
 				//.antMatchers("/index.do").access("hasRole('后台首页')")
 				// 所有以.do 结尾的请求需要登录之后才能访问
-				//.antMatchers("*。do").authenticated()
+				//.antMatchers("*.do").authenticated()
 
 				.and()//
 				// 登录配置
