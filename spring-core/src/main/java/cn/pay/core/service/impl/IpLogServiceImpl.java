@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.pay.core.dao.IpLogRepository;
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.obj.qo.IpLogQo;
+import cn.pay.core.redis.service.IpLogRedisService;
 import cn.pay.core.service.IpLogService;
 
 @Service
@@ -29,7 +30,7 @@ public class IpLogServiceImpl implements IpLogService {
 	private IpLogRepository repository;
 
 	//@Autowired
-	//private IpLogRedisService redisService;
+	private IpLogRedisService redisService;
 
 	@Override
 	//@Cacheable("page")
@@ -72,8 +73,8 @@ public class IpLogServiceImpl implements IpLogService {
 	@Override
 	@Transactional
 	public void saveAndUpdate(IpLog ipLog) {
-		repository.saveAndFlush(ipLog);
-		//redisService.put(log.getId().toString(), log, -1);
+		IpLog log = repository.saveAndFlush(ipLog);
+		redisService.put(log.getId().toString(), log, -1);
 	}
 
 }

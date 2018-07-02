@@ -14,11 +14,11 @@ import cn.pay.core.redis.RedisService;
 @Service
 public class IpLogRedisService extends RedisService<IpLog> {
 
-	private static final String REDIS_KEY = "IP_LOG_KEY";
+	private static final String IP_LOG_KEY = "IP_LOG_KEY";
 
 	@Override
 	protected String getRedisKey() {
-		return REDIS_KEY;
+		return IP_LOG_KEY;
 	}
 
 }

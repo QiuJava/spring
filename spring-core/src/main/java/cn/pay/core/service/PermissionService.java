@@ -8,4 +8,6 @@ public interface PermissionService {
 
 	List<Permission> getAll();
 
+	void save(Permission p);
+
 }

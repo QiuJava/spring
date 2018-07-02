@@ -49,12 +49,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				// 静态资源可以完全访问
-				.antMatchers("/css/**", "/images/**", "/js/**", "/tags/**", "/login.html").permitAll()
+				//.antMatchers("/css/**", "/images/**", "/js/**", "/tags/**", "/login.html").permitAll()
 				// 登录登出url可以完全访问
 				.antMatchers("/loginInfo/login.do", "/loginInfo/logout.do").permitAll()
-				.antMatchers("/index.do").access("hasRole('后台首页')")
+				//.antMatchers("/index.do").access("hasRole('后台首页')")
 				// 所有以.do 结尾的请求需要登录之后才能访问
-				.antMatchers("*。do").authenticated()
+				//.antMatchers("*。do").authenticated()
 
 				.and()//
 				// 登录配置

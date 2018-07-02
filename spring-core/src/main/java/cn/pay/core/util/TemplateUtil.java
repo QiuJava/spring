@@ -59,9 +59,14 @@ public class TemplateUtil {
 		serviceImplTemplate.process(map, serviceImplWiter);
 	}
 
-	public static void main(String[] args) {
+	/**
+	 * 根据domain实体创建对应的dao service
+	 * 
+	 * @param clz
+	 */
+	public static void domainTemplate(Class<?> clz) {
 		try {
-			TemplateUtil.createJavaFile(Object.class);
+			TemplateUtil.createJavaFile(clz);
 		} catch (TemplateNotFoundException e) {
 			logger.error(e.getMessage());
 		} catch (MalformedTemplateNameException e) {
