@@ -40,7 +40,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
-		<!-- Quartz调用器依赖 -->
+		<!-- Quartz调度器依赖 -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
