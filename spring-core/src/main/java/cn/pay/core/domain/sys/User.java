@@ -33,17 +33,26 @@ import lombok.ToString;
 @Table(name = "user")
 public class User extends BaseDomain {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column(name = "login_info_id")
 	private Long loginInfoId;
-	private List<Role> roleList = new ArrayList<>();
-	
+	/** 用户名称 */
+	@Column(name = "name")
+	private String name;
+	/** 用户描述 */
+	@Column(name = "descritpion")
+	private String descritpion;
+	/** 用户状态 */
+	@Column(name = "state")
+	private Integer state;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return super.id;
 	}
-	
+
+	private List<Role> roleList = new ArrayList<>();
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })

@@ -11,34 +11,34 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.stereotype.Service;
 
-import cn.pay.core.dao.PermissionRepository;
-import cn.pay.core.domain.sys.Permission;
+import cn.pay.core.dao.RoleRepository;
+import cn.pay.core.domain.sys.Role;
 import cn.pay.core.redis.service.ConfigAttributeRedisService;
-import cn.pay.core.service.PermissionService;
+import cn.pay.core.service.RoleService;
 
 @Service
-public class PermissionServiceImpl implements PermissionService {
+public class RoleServiceImpl implements RoleService {
 	@Autowired
-	private PermissionRepository repository;
+	private RoleRepository repository;
 
 	@Autowired
 	private ConfigAttributeRedisService configAttributeRedisService;
 
 	// @Cacheable("getAll")
 	@Override
-	public List<Permission> getAll() {
+	public List<Role> getAll() {
 		return repository.findAll();
 	}
 
 	@Transactional
 	@Override
-	public void save(Permission p) {
+	public void save(Role r) {
 		// 判断该权限在Redis中已存在
-		if (configAttributeRedisService.get(p.getUrl()) == null) {
-			Permission permission = repository.save(p);
+		if (configAttributeRedisService.get(r.getUrl()) == null) {
+			Role role = repository.save(r);
 			Collection<ConfigAttribute> con = new ArrayList<>();
-			con.add(new SecurityConfig(permission.getName()));
-			configAttributeRedisService.put(permission.getUrl(), con, -1);
+			con.add(new SecurityConfig(role.getName()));
+			configAttributeRedisService.put(role.getUrl(), con, -1);
 		}
 	}
 

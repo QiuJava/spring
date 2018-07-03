@@ -1,4 +1,4 @@
-package cn.pay.loan;
+package cn.pay.loan.config;
 
 import javax.jms.Queue;
 

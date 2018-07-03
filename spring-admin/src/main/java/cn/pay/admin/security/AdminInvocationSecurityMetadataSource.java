@@ -1,4 +1,4 @@
-package cn.pay.core.security;
+package cn.pay.admin.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,9 +17,9 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
-import cn.pay.core.domain.sys.Permission;
+import cn.pay.core.domain.sys.Role;
 import cn.pay.core.redis.service.ConfigAttributeRedisService;
-import cn.pay.core.service.PermissionService;
+import cn.pay.core.service.RoleService;
 
 /**
  * 获取权限资源
@@ -33,7 +33,7 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 	private static Logger log = LoggerFactory.getLogger(AdminInvocationSecurityMetadataSource.class);
 
 	@Autowired
-	private PermissionService permissionService;
+	private RoleService roleService;
 	@Autowired
 	private ConfigAttributeRedisService redisService;
 
@@ -50,12 +50,12 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 			// map = new HashMap<>();
 			Collection<ConfigAttribute> con;
 			ConfigAttribute config;
-			List<Permission> permissions = permissionService.getAll();
-			for (Permission permission : permissions) {
+			List<Role> roleList = roleService.getAll();
+			for (Role role : roleList) {
 				con = new ArrayList<>();
-				config = new SecurityConfig(permission.getName());
+				config = new SecurityConfig(role.getName());
 				con.add(config);
-				redisService.put(permission.getUrl(), con, -1);
+				redisService.put(role.getUrl(), con, -1);
 			}
 			log.info("系统安全信息加载成功!!");
 		}

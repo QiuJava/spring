@@ -1,4 +1,4 @@
-package cn.pay.admin.config;
+package cn.pay.admin.security;
 
 import javax.annotation.Resource;
 
@@ -8,12 +8,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
-import cn.pay.core.security.AdminAuthenticationProvider;
-import cn.pay.core.security.AdminFilterSecurityInterceptor;
-import cn.pay.core.service.LoginInfoService;
+import cn.pay.core.consts.SysConst;
 
 /**
  * SpringSecurity 配置类
@@ -25,21 +21,26 @@ import cn.pay.core.service.LoginInfoService;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private AdminFilterSecurityInterceptor adminFilterSecurityInterceptor;
+	//@Autowired
+	//private AdminFilterSecurityInterceptor adminFilterSecurityInterceptor;
 
-	@Autowired
-	private LoginInfoService loginInfoService;
+	//@Autowired
+	//private UserDetailsService userDetailsService;
 
 	@Resource
 	private AdminAuthenticationProvider authenticationProvider;
+
+	@Autowired
+	private AdminLoginSuccessHandler successHandler;
+	@Autowired
+	private AdminLoginFailureHandler failureHandler;
 
 	/**
 	 * 认证关系构建
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(loginInfoService).passwordEncoder(new BCryptPasswordEncoder());
+		//auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 		auth.authenticationProvider(authenticationProvider);
 	}
 
@@ -49,34 +50,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				// 静态资源可以完全访问
-				//.antMatchers("/css/**", "/images/**", "/js/**", "/tags/**", "/login.html").permitAll()
+				// .antMatchers("/css/**", "/images/**", "/js/**", "/tags/**",
+				// "/login.html").permitAll()
 				// 登录登出url可以完全访问
-				.antMatchers("/loginInfo/login.do", "/loginInfo/logout.do").permitAll()
-				//.antMatchers("/index.do").access("hasRole('后台首页')")
+				.antMatchers(SysConst.LOGIN_INFO_LOGIN_DO, SysConst.LOGIN_INFO_LOGOUT_DO).permitAll()
+				// .antMatchers("/index.do").access("hasRole('后台首页')")
 				// 所有以.do 结尾的请求需要登录之后才能访问
-				//.antMatchers("*.do").authenticated()
+				.antMatchers(SysConst.URL_MAPPINGS).authenticated()
 
 				.and()//
 				// 登录配置
 				.formLogin()
 				// 登录页面
-				.loginPage("/login.html")
+				.loginPage(SysConst.LOGIN_HTML)
 				// 登录处理URL
-				.loginProcessingUrl("/loginInfo/login.do")
+				.loginProcessingUrl(SysConst.LOGIN_INFO_LOGIN_DO)
 				// 登录失败跳转的页面
-				.failureForwardUrl("/login.html")
+				//.failureForwardUrl("/login.html")
 				// 登录成功之后跳转的url
-				.defaultSuccessUrl("/index.do")
-
+				//.defaultSuccessUrl("/index.do")
+				.successHandler(successHandler)
+				.failureHandler(failureHandler)
+				
 				.and()//
 				// 登出配置
 				.logout()
 				// 登出的URL
-				.logoutUrl("/loginInfo/logout.do")
+				.logoutUrl(SysConst.LOGIN_INFO_LOGOUT_DO)
 				// 登出成功的URL
-				.logoutSuccessUrl("/login.html");
+				.logoutSuccessUrl(SysConst.LOGIN_HTML)
+				// 登出时让HttpSession无效
+				.invalidateHttpSession(true)
+				;
 
-		http.addFilterBefore(adminFilterSecurityInterceptor, FilterSecurityInterceptor.class);
+		//http.addFilterBefore(adminFilterSecurityInterceptor, FilterSecurityInterceptor.class);
 	}
 
 }

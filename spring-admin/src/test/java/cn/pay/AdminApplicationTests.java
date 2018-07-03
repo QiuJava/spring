@@ -13,8 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.pay.core.domain.sys.Permission;
-import cn.pay.core.service.PermissionService;
+import cn.pay.core.consts.SysConst;
+import cn.pay.core.domain.sys.Role;
+import cn.pay.core.service.RoleService;
 
 /**
  * 使用SpringBoot测试，再多profile下需要在设置环境变量 spring.profile.active=dev
@@ -35,14 +36,14 @@ public class AdminApplicationTests {
 	private ApplicationContext ac;
 
 	@Autowired
-	private PermissionService permissionService;
+	private RoleService roleService;
 
 	@Test
 	public void contextLoads() {
-		this.setPerssion(Controller.class);
+		this.setRole(Controller.class);
 	}
 
-	private void setPerssion(Class<? extends Annotation> clz) {
+	private void setRole(Class<? extends Annotation> clz) {
 		Map<String, Object> map = ac.getBeansWithAnnotation(clz);
 
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -51,16 +52,16 @@ public class AdminApplicationTests {
 			for (Method m : value.getClass().getMethods()) {
 				String[] methodStrs = getReqMappingValuesFromMethod(m);
 				if (this.isNotEmpty(methodStrs)) {
-					Permission p = new Permission();
+					Role role = new Role();
 					StringBuilder sb = new StringBuilder();
 					if (this.isNotEmpty(classMappingStrs)) {
 						sb.append(classMappingStrs[0]);
 					}
 					sb.append(methodStrs[0]);
-					sb.append(".do");
-					p.setUrl(sb.toString());
+					sb.append(SysConst.URL_MAPPINGS);
+					role.setUrl(sb.toString());
 					// 保存权限
-					permissionService.save(p);
+					roleService.save(role);
 				}
 			}
 		}

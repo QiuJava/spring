@@ -1,18 +1,10 @@
 package cn.pay.core.domain.sys;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import cn.pay.core.domain.base.BaseDomain;
@@ -33,28 +25,24 @@ import lombok.ToString;
 @Table(name = "role")
 public class Role extends BaseDomain {
 	private static final long serialVersionUID = 1L;
-
-	/** 角色名称 */
+	
+	/** 权限名称 */
 	@Column(name = "name")
 	private String name;
-	/** 角色描述 */
+	/** 权限描述 */
 	@Column(name = "descritpion")
 	private String descritpion;
-	/** 角色状态 */
-	@Column(name = "state")
-	private Integer state;
-	private List<Permission> permissionList = new ArrayList<>();
-
+	/** 权限连接 */
+	@Column(name = "url")
+	private String url;
+	/** 父节点ID */
+	@Column(name = "parent_id")
+	private Long parentId;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return super.id;
 	}
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "role_permission", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "permission_id") })
-	public List<Permission> getPermissionList() {
-		return permissionList;
-	}
 }

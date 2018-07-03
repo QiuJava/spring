@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import cn.pay.core.consts.SysConst;
+
 
 /**
  * 后台管理系统应用配置
@@ -52,7 +54,7 @@ public class AdminApplication extends WebMvcConfigurerAdapter {
 	public ServletRegistrationBean servletRegistrationBean(DispatcherServlet dispatcherServlet) {
 		ServletRegistrationBean bean = new ServletRegistrationBean(dispatcherServlet);
 		bean.getUrlMappings().clear();
-		bean.addUrlMappings("*.do");
+		bean.addUrlMappings(SysConst.URL_MAPPINGS);
 		return bean;
 	}
 

@@ -55,13 +55,13 @@ public class LoginInfo extends BaseDomain implements UserDetails {
 	private Date lockTime;
 
 	private Collection<? extends GrantedAuthority> authorities;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return super.id;
 	}
-
+	
 	@Transient
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;

@@ -19,7 +19,6 @@ import cn.pay.core.domain.business.Account;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.domain.sys.Permission;
 import cn.pay.core.domain.sys.Role;
 import cn.pay.core.domain.sys.User;
 import cn.pay.core.service.AccountService;
@@ -161,21 +160,17 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	public void saveAndUpdate(LoginInfo info) {
 		repository.saveAndFlush(info);
 	}
-	
-	//@Cacheable("loadUserByUsername")
+
+	// @Cacheable("loadUserByUsername")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LoginInfo loginInfo = repository.findByUsername(username);
 		if (loginInfo != null) {
-			List<Permission> permissions = new ArrayList<>();
+			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 			User user = userService.getByLoginInfoId(loginInfo.getId());
 			for (Role role : user.getRoleList()) {
 				// 获取用户所拥有的权限
-				permissions.addAll(role.getPermissionList());
-			}
-			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-			for (Permission permission : permissions) {
-				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(permission.getName());
+				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getName());
 				grantedAuthorities.add(grantedAuthority);
 			}
 			loginInfo.setAuthorities(grantedAuthorities);

@@ -34,14 +34,17 @@ public class IndexController {
 		HttpSessionContext.setCurrentLoginInfo(HttpSessionContext.getLoginInfoBySecurity());
 		return "main";
 	}
-
-	/*@RequestMapping("/loginInfo/exit")
+	
+	/*
+	@RequestMapping("/loginInfo/logout")
 	@ResponseBody
-	public AjaxResult exit(HttpServletResponse response) throws IOException {
+	public AjaxResult logout(HttpServletResponse response) throws IOException {
 		HttpSession session = HttpSessionContext.getHttpSession();
-		session.removeAttribute(HttpSessionContext.LOGIN_INFO_IN_SESSIION);
+		session.removeAttribute(HttpSessionContext.CURRENT_LOGIN_INFO);
+		session.removeAttribute(HttpSessionContext.SPRING_SECURITY_CONTEXT);
 		response.sendRedirect("/login.html");
 		return new AjaxResult(true, "安全退出成功");
-	}*/
+	}
+	*/
 
 }

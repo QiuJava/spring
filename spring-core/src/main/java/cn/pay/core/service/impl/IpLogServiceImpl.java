@@ -29,7 +29,7 @@ public class IpLogServiceImpl implements IpLogService {
 	@Autowired
 	private IpLogRepository repository;
 
-	//@Autowired
+	@Autowired
 	private IpLogRedisService redisService;
 
 	@Override
