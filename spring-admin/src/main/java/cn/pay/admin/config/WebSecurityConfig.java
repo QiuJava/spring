@@ -53,8 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				// 静态资源可以完全访问
-				// .antMatchers("/css/**", "/images/**", "/js/**", "/tags/**",
-				// "/login.html").permitAll()
+				 .antMatchers("/css/**", "/images/**", "/js/**", "/tags/**", "/login.html").permitAll()
 				// 登录登出url可以完全访问
 				.antMatchers(SysConst.LOGIN_INFO_LOGIN_DO, SysConst.LOGIN_INFO_LOGOUT_DO).permitAll()
 				// .antMatchers("/index.do").access("hasRole('后台首页')")

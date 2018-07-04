@@ -2,14 +2,13 @@ package cn.pay;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import cn.pay.core.consts.SysConst;
+import cn.pay.admin.web.filter.XssFilter;
 
 
 /**
@@ -41,6 +40,17 @@ import cn.pay.core.consts.SysConst;
  * @EnableTransactionManagement 开启事务管理 默认开启
  */
 public class AdminApplication extends WebMvcConfigurerAdapter {
+	
+	
+	@Bean
+    public FilterRegistrationBean xssFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new XssFilter());//添加过滤器
+        registration.addUrlPatterns("*.do");//设置过滤路径，/*所有路径
+        registration.setName("XssFilter");//设置优先级
+        registration.setOrder(1);//设置优先级
+        return registration;
+    }
 
 	/**
 	 * 
@@ -50,13 +60,13 @@ public class AdminApplication extends WebMvcConfigurerAdapter {
 	 * @param dispatcherServlet
 	 * @return
 	 */
-	@Bean
-	public ServletRegistrationBean servletRegistrationBean(DispatcherServlet dispatcherServlet) {
+	/*@Bean
+	public ServletRegistrationBean dispatcherServletRegistration(DispatcherServlet dispatcherServlet) {
 		ServletRegistrationBean bean = new ServletRegistrationBean(dispatcherServlet);
 		bean.getUrlMappings().clear();
 		bean.addUrlMappings(SysConst.URL_MAPPINGS);
 		return bean;
-	}
+	}*/
 
 	/**
 	 * 添加拦截器

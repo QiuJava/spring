@@ -70,7 +70,7 @@ public class IndexController {
 		model.addAttribute("summaryVO", service.getIndexSummaryVO());
 		return MAIN;
 	}
-
+	
 	/**
 	 * 借款信息
 	 * 

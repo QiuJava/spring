@@ -2,16 +2,15 @@ package cn.pay;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import cn.pay.loan.web.filter.XssFilter;
 import cn.pay.loan.web.interceptor.LoginInterceptor;
 
 /**
@@ -21,10 +20,20 @@ import cn.pay.loan.web.interceptor.LoginInterceptor;
  *
  */
 @SpringBootApplication
-@ServletComponentScan
+//@ServletComponentScan
 @EnableRedisHttpSession
 @Profile("dev")
 public class LoanApplication extends WebMvcConfigurerAdapter {
+	
+	@Bean
+    public FilterRegistrationBean xssFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new XssFilter());//添加过滤器
+        registration.addUrlPatterns("*.do");//设置过滤路径，/*所有路径
+        registration.setName("XssFilter");//设置优先级
+        registration.setOrder(1);//设置优先级
+        return registration;
+    }
 
 	/**
 	 * 设置SpringMvc处理的请求规则
@@ -32,20 +41,19 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	 * @param dispatcherServlet
 	 * @return
 	 */
-	@Bean
-	public ServletRegistrationBean servletRegistrationBean(DispatcherServlet dispatcherServlet) {
+	/*@Bean
+	public ServletRegistrationBean dispatcherServletRegistration(DispatcherServlet dispatcherServlet) {
 		ServletRegistrationBean bean = new ServletRegistrationBean(dispatcherServlet);
-		bean.getUrlMappings().clear();
-		bean.addUrlMappings("*.do");
+		//bean.getUrlMappings().clear();
 		return bean;
-	}
+	}*/
 
 	/**
 	 * 添加拦截器
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor()).addPathPatterns("/*");
+		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**");
 		super.addInterceptors(registry);
 	}
 
