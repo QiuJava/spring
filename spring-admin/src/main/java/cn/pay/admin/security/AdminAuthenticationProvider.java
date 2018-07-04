@@ -31,7 +31,7 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
 		String username = authentication.getName();
 		String password = (String) authentication.getCredentials();
 		LoginInfo loginInfo = (LoginInfo) loginInfoService.loadUserByUsername(username);
-		
+
 		// 初始化
 		if (!loginInfo.isAccountNonLocked()
 				&& System.currentTimeMillis() - loginInfo.getLockTime().getTime() >= DateUtil.LOCK_TIME) {
@@ -43,10 +43,11 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
 
 		if (!loginInfo.isAccountNonLocked()) {
 			StringBuilder errMsg = new StringBuilder();
+			Long seconds = (((loginInfo.getLockTime().getTime() + DateUtil.LOCK_TIME) - System.currentTimeMillis())
+					/ 1000);
 			errMsg.append("密码输错")//
 					.append(LoginInfo.LOSER_MAX_COUNT).append("次，请")//
-					.append(((loginInfo.getLockTime().getTime() + DateUtil.LOCK_TIME) - System.currentTimeMillis())
-							/ 1000)//
+					.append(seconds.toString())//
 					.append("秒后再进行登录");//
 			throw new LockedException(errMsg.toString());
 		}

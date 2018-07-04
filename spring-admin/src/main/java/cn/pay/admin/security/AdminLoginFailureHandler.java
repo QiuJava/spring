@@ -3,12 +3,11 @@ package cn.pay.admin.security;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -30,8 +29,6 @@ import cn.pay.core.service.LoginInfoService;
 @Component
 public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 	
-	private Logger logger = LoggerFactory.getLogger(getClass());
-
 	@Autowired
 	private IpLogService ipLogService;
 	@Autowired
@@ -59,8 +56,10 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			loginInfoService.saveAndUpdate(loginInfo);
 			ipLogService.saveAndUpdate(ipLog);
 		}
-		logger.error(exception.getMessage());
-		response.sendRedirect(SysConst.LOGIN_HTML);
+		request.setAttribute("msg", exception.getMessage());
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.LOGIN_INFO_AJAX_DO);
+		requestDispatcher.forward(request, response);
+		//response.sendRedirect(SysConst.LOGIN_HTML);
 	}
 
 }

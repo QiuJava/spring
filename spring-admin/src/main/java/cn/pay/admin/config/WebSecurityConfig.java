@@ -1,4 +1,4 @@
-package cn.pay.admin.security;
+package cn.pay.admin.config;
 
 import javax.annotation.Resource;
 
@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import cn.pay.admin.security.AdminAuthenticationProvider;
+import cn.pay.admin.security.AdminLoginFailureHandler;
+import cn.pay.admin.security.AdminLoginSuccessHandler;
 import cn.pay.core.consts.SysConst;
 
 /**

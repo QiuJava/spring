@@ -3,6 +3,7 @@ package cn.pay.admin.security;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +44,9 @@ public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ipLog.setLoginState(IpLog.SUCCESS);
 		ipLogService.saveAndUpdate(ipLog);
 		
-		response.sendRedirect(SysConst.INDEX_DO);
+		//response.sendRedirect(SysConst.INDEX_DO);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.LOGIN_INFO_AJAX_DO);
+		requestDispatcher.forward(request, response);
 	}
 
 }
