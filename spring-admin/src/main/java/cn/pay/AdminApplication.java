@@ -6,9 +6,12 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import cn.pay.admin.web.filter.XssFilter;
+import cn.pay.admin.web.interceptor.UrlDoInterceptor;
 
 
 /**
@@ -41,43 +44,64 @@ import cn.pay.admin.web.filter.XssFilter;
  */
 public class AdminApplication extends WebMvcConfigurerAdapter {
 	
-	
+	/**
+	 * 注册自定义过滤器
+	 * 
+	 * @return
+	 */
 	@Bean
     public FilterRegistrationBean xssFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new XssFilter());//添加过滤器
-        registration.addUrlPatterns("*.do");//设置过滤路径，/*所有路径
-        registration.setName("XssFilter");//设置优先级
+        registration.addUrlPatterns("*.do");//设置过滤路径
+        registration.setName("XssFilter");
         registration.setOrder(1);//设置优先级
         return registration;
     }
+	
+	/*@Bean
+	public ServletRegistrationBean dispatcherServletRegistrationBean(DispatcherServlet dispatcherServlet) {
+		ServletRegistrationBean bean = new ServletRegistrationBean();
+		bean.getUrlMappings().clear();
+		bean.setServlet(dispatcherServlet);
+		bean.addUrlMappings("*.jpg", "*.png", "*.css", "*.js", "*.html","*.do","*.dlt","/error");
+		return bean;
+	}*/
 
 	/**
 	 * 
-	 * 由ServletRegistrationBean去注册DispatcherServlet
-	 * 配置DispatcherServlet  处理什么样的请求
+	 * 由ServletRegistrationBean去注册CoreServlet
+	 * 配置CoreServlet  处理已.do结尾的请求
 	 * 
-	 * @param dispatcherServlet
+	 * @param coreServlet
 	 * @return
 	 */
 	/*@Bean
-	public ServletRegistrationBean dispatcherServletRegistration(DispatcherServlet dispatcherServlet) {
-		ServletRegistrationBean bean = new ServletRegistrationBean(dispatcherServlet);
-		bean.getUrlMappings().clear();
-		bean.addUrlMappings(SysConst.URL_MAPPINGS);
+	public ServletRegistrationBean coreServletRegistration() {
+		ServletRegistrationBean bean = new ServletRegistrationBean();
+		AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
+		webContext.setParent(ac);
+		DispatcherServlet ds = new DispatcherServlet(webContext);
+		bean.setName("coreServlet");
+		bean.addUrlMappings("*.do");
+		bean.setServlet(ds);
 		return bean;
 	}*/
 
 	/**
 	 * 添加拦截器
 	 */
-	/*@Override
+	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(urlDoInterceptor()).addPathPatterns("/**");
 		super.addInterceptors(registry);
-	}*/
+	}
 	
-
+	@Bean
+	public HandlerInterceptor urlDoInterceptor() {
+		return new UrlDoInterceptor();
+	}
+	
 	/**
 	 * 用户访问url是否需要登录拦截
 	 * 

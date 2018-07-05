@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.pay.core.consts.SysConst;
 import cn.pay.core.domain.sys.Role;
 import cn.pay.core.service.RoleService;
 
@@ -58,8 +57,9 @@ public class AdminApplicationTests {
 						sb.append(classMappingStrs[0]);
 					}
 					sb.append(methodStrs[0]);
-					sb.append(SysConst.URL_MAPPINGS);
+					sb.append(".do");
 					role.setUrl(sb.toString());
+					role.setName("ROLE_");
 					// 保存权限
 					roleService.save(role);
 				}

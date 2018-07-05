@@ -13,8 +13,8 @@
 		<script type="text/javascript">
 			$(function(){
 				$('#pagination').twbsPagination({
-					totalPages : ${pageResult.totalPages}||1,
-					currentPage : ${pageResult.currentPage},
+					totalPages : ${pageResult.totalPages},
+					startPage : ${pageResult.currentPage},
 					visiblePages : 5,
 					first:"首页",
 				    prev:"上一页",

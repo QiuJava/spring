@@ -16,10 +16,14 @@ import cn.pay.core.util.HttpSessionContext;
  *
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		if (!request.getServletPath().endsWith(".do")) {
+			response.sendRedirect("/404.html");
+			return false;
+		}
 		if (handler instanceof HandlerMethod) {
 			HandlerMethod method = (HandlerMethod) handler;
 			if (method.getMethodAnnotation(NoRequiredLogin.class) == null

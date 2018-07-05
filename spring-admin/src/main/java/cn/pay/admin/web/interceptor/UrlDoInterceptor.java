@@ -3,12 +3,7 @@ package cn.pay.admin.web.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.obj.annotation.NoRequiredLogin;
-import cn.pay.core.util.HttpSessionContext;
 
 /**
  * 登陆拦截器
@@ -16,11 +11,18 @@ import cn.pay.core.util.HttpSessionContext;
  * @author Administrator
  *
  */
-public class LoginInterceptor extends HandlerInterceptorAdapter {
+public class UrlDoInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		LoginInfo current = HttpSessionContext.getLoginInfoBySecurity();
+		String servletPath = request.getServletPath();
+		if (servletPath.endsWith(".do")) {
+			return true;
+		} else {
+			response.sendRedirect("/404.html");
+			return false;
+		}
+		/*LoginInfo current = HttpSessionContext.getLoginInfoBySecurity();
 		if (current != null && current.isAdmin()) {
 			return true;
 		}
@@ -33,6 +35,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				return false;
 			}
 		}
-		return true;
+		return true;*/
 	}
 }
