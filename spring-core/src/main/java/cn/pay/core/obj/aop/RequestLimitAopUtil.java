@@ -26,7 +26,7 @@ import cn.pay.core.util.LogicException;
 @Aspect
 @Component
 public class RequestLimitAopUtil {
-	private static final Logger logger = LoggerFactory.getLogger(RequestLimitAopUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(RequestLimitAopUtil.class);
 
 	@Resource
 	private ValueOperations<String, Integer> valueOperations;

@@ -11,9 +11,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Xss攻击过滤
  * 
@@ -21,8 +18,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class XssFilter implements Filter {
-	
-	private static Logger logger = LoggerFactory.getLogger(XssFilter.class);
 	
 	FilterConfig filterConfig = null;
 
@@ -36,7 +31,6 @@ public class XssFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		chain.doFilter(new XssHttpServletRequestWrapper(req), response);
-		logger.info("Xss过滤" + req.getServletPath());
 	}
 
 	@Override
