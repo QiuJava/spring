@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import cn.pay.loan.web.filter.XssFilter;
-import cn.pay.loan.web.interceptor.LoginInterceptor;
+import cn.pay.loan.web.interceptor.UrlDoInterceptor;
 
 /**
  * 借款网页应用相关配置
@@ -53,7 +53,7 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(urlDoInterceptor()).addPathPatterns("/**");
 		super.addInterceptors(registry);
 	}
 
@@ -63,8 +63,8 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	 * @return
 	 */
 	@Bean
-	public HandlerInterceptor loginInterceptor() {
-		return new LoginInterceptor();
+	public HandlerInterceptor urlDoInterceptor() {
+		return new UrlDoInterceptor();
 	}
 
 	/**

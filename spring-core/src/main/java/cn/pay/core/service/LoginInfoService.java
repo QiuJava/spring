@@ -22,7 +22,7 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @param manager
 	 * @return
 	 */
-	LoginInfo login(String username, String password, String ip, Integer manager);
+	//LoginInfo login(String username, String password, String ip, Integer manager);
 
 	/**
 	 * 前台页面注册

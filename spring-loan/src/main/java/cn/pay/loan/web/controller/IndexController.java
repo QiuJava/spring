@@ -57,7 +57,7 @@ public class IndexController {
 	 * @return
 	 */
 	@NoRequiredLogin
-	@RequestMapping("/index")
+	@RequestMapping("/home")
 	public String index(Model model) {
 		// 页面显示 首页需要显示的状态 投标中 还款中 已完成
 		BorrowQo qo = new BorrowQo();

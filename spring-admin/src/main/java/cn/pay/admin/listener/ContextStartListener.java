@@ -7,6 +7,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import cn.pay.core.consts.SysConst;
@@ -14,7 +15,6 @@ import cn.pay.core.domain.business.SystemAccount;
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.SystemAccountService;
-import cn.pay.core.util.Md5;
 
 /**
  * 后台应用初始化事件监听
@@ -40,7 +40,7 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 			// 没有创建
 			info = new LoginInfo();
 			info.setAdmin(true);
-			info.setPassword(Md5.encode(SysConst.PASSWORD));
+			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.PASSWORD));
 			info.setUsername(SysConst.ADMIN);
 			info.setUserType(LoginInfo.MANAGER);
 			loginInfoService.saveAndUpdate(info);

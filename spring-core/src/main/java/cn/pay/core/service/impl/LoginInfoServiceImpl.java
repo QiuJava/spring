@@ -1,7 +1,6 @@
 package cn.pay.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -17,19 +17,14 @@ import cn.pay.core.consts.BidConst;
 import cn.pay.core.dao.LoginInfoRepository;
 import cn.pay.core.domain.business.Account;
 import cn.pay.core.domain.business.UserInfo;
-import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.domain.sys.Role;
 import cn.pay.core.domain.sys.User;
 import cn.pay.core.service.AccountService;
-import cn.pay.core.service.IpLogService;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.service.UserService;
-import cn.pay.core.util.DateUtil;
-import cn.pay.core.util.HttpSessionContext;
 import cn.pay.core.util.LogicException;
-import cn.pay.core.util.Md5;
 
 @Service("loginInfoService")
 public class LoginInfoServiceImpl implements LoginInfoService {
@@ -37,8 +32,8 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	@Autowired
 	private LoginInfoRepository repository;
 
-	@Autowired
-	private IpLogService ipLogService;
+	//@Autowired
+	//private IpLogService ipLogService;
 	@Autowired
 	private AccountService accountService;
 	@Autowired
@@ -46,7 +41,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	@Autowired
 	private UserService userService;
 
-	@Override
+	/*@Override
 	@Transactional
 	public LoginInfo login(String username, String password, String ip, Integer userType) {
 		// 登录名检查
@@ -105,7 +100,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 		ipLogService.saveAndUpdate(ipLog);
 		return null;
 	}
-
+*/
 	@Override
 	@Transactional
 	public void register(String username, String password) {
@@ -121,7 +116,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 
 			LoginInfo loginInfo = new LoginInfo();
 			loginInfo.setUsername(username);
-			loginInfo.setPassword(Md5.encode(password));
+			loginInfo.setPassword(new BCryptPasswordEncoder().encode(password));
 			loginInfo.setStatus(LoginInfo.NORMAL);
 			LoginInfo info = repository.saveAndFlush(loginInfo);
 
@@ -168,10 +163,12 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 		if (loginInfo != null) {
 			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 			User user = userService.getByLoginInfoId(loginInfo.getId());
-			for (Role role : user.getRoleList()) {
-				// 获取用户所拥有的权限
-				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getName());
-				grantedAuthorities.add(grantedAuthority);
+			if (user != null) {
+				for (Role role : user.getRoleList()) {
+					// 获取用户所拥有的权限
+					GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getName());
+					grantedAuthorities.add(grantedAuthority);
+				}
 			}
 			loginInfo.setAuthorities(grantedAuthorities);
 			return loginInfo;

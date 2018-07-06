@@ -29,12 +29,12 @@ public class IndexController {
 		if (StringUtil.hasLength(msg)) {
 			return new AjaxResult(msg);
 		}
+		HttpSessionContext.setCurrentLoginInfo(HttpSessionContext.getLoginInfoBySecurity());
 		return new AjaxResult(true, "登录成功");
 	}
 
 	@RequestMapping("/index")
 	public String index() {
-		HttpSessionContext.setCurrentLoginInfo(HttpSessionContext.getLoginInfoBySecurity());
 		return "main";
 	}
 	

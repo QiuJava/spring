@@ -1,5 +1,6 @@
 package cn.pay.admin.web.interceptor;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,10 +17,12 @@ public class UrlDoInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String servletPath = request.getServletPath();
-		if (servletPath.endsWith(".do")) {
+		if (servletPath.endsWith(".do") || "/error".equals(servletPath)) {
 			return true;
 		} else {
-			response.sendRedirect("/404.html");
+			request.setAttribute("javax.servlet.error.status_code", 404);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/error");
+			dispatcher.forward(request, response);
 			return false;
 		}
 		/*LoginInfo current = HttpSessionContext.getLoginInfoBySecurity();

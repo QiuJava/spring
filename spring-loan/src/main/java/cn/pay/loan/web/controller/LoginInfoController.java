@@ -11,13 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.obj.annotation.NoRequiredLogin;
-import cn.pay.core.obj.annotation.RequestLimit;
 import cn.pay.core.obj.vo.AjaxResult;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.util.HttpSessionContext;
-import cn.pay.core.util.LogicException;
+import cn.pay.core.util.StringUtil;
 
 /**
  * 登陆相关
@@ -30,6 +28,18 @@ import cn.pay.core.util.LogicException;
 public class LoginInfoController {
 	@Autowired
 	private LoginInfoService service;
+	
+	
+	@RequestMapping("/ajax")
+	@ResponseBody
+	public AjaxResult ajax(HttpServletRequest request) {
+		String msg = (String)request.getAttribute("msg");
+		if (StringUtil.hasLength(msg)) {
+			return new AjaxResult(msg);
+		}
+		HttpSessionContext.setCurrentLoginInfo(HttpSessionContext.getLoginInfoBySecurity());
+		return new AjaxResult(true, "登录成功");
+	}
 
 	@NoRequiredLogin
 	@RequestMapping("/register")
@@ -39,7 +49,7 @@ public class LoginInfoController {
 		return new AjaxResult(true, "注册成功");
 	}
 
-	@NoRequiredLogin
+	/*@NoRequiredLogin
 	@RequestMapping("/login")
 	@ResponseBody
 	@RequestLimit(count = 5)
@@ -50,9 +60,9 @@ public class LoginInfoController {
 			throw new LogicException("账号或密码不正确");
 		}
 		return new AjaxResult(true, "登陆成功");
-	}
+	}*/
 
-	@NoRequiredLogin
+	//@NoRequiredLogin
 	@RequestMapping("/isExist")
 	@ResponseBody
 	public AjaxResult isExist(String username) {

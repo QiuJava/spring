@@ -52,7 +52,7 @@ public class BorrowController {
 	 * @return
 	 */
 	@NoRequiredLogin
-	@RequestMapping("/borrow")
+	@RequestMapping("/borrow/home")
 	public String borrow(Model model) {
 		LoginInfo current = HttpSessionContext.getCurrentLoginInfo();
 		// 如果当前用户没有登录应该直接导向到静态页面
