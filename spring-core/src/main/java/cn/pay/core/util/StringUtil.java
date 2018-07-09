@@ -19,7 +19,7 @@ public class StringUtil {
 
 	public static Map<String, String> mapStringToMap(String str) {
 		str = str.substring(1, str.length() - 1);
-		str = str.replace(" ", "");
+		str = str.trim();
 		String[] strs = str.split(",");
 		Map<String, String> map = new HashMap<String, String>();
 		for (String string : strs) {

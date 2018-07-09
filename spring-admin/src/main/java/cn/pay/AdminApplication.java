@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import cn.pay.admin.web.filter.XssFilter;
 import cn.pay.admin.web.interceptor.UrlDoInterceptor;
-
+import cn.pay.core.consts.SysConst;
 
 /**
  * 后台管理系统应用配置
@@ -43,30 +43,30 @@ import cn.pay.admin.web.interceptor.UrlDoInterceptor;
  * @EnableTransactionManagement 开启事务管理 默认开启
  */
 public class AdminApplication extends WebMvcConfigurerAdapter {
-	
+
 	/**
 	 * 注册自定义过滤器
 	 * 
 	 * @return
 	 */
 	@Bean
-    public FilterRegistrationBean xssFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new XssFilter());//添加过滤器
-        registration.addUrlPatterns("*.do");//设置过滤路径
-        registration.setName("XssFilter");
-        registration.setOrder(1);//设置优先级
-        return registration;
-    }
-	
-	/*@Bean
-	public ServletRegistrationBean dispatcherServletRegistrationBean(DispatcherServlet dispatcherServlet) {
-		ServletRegistrationBean bean = new ServletRegistrationBean();
-		bean.getUrlMappings().clear();
-		bean.setServlet(dispatcherServlet);
-		bean.addUrlMappings("*.jpg", "*.png", "*.css", "*.js", "*.html","*.do","*.dlt","/error");
-		return bean;
-	}*/
+	public FilterRegistrationBean xssFilterRegistration() {
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		registration.setFilter(new XssFilter());// 添加过滤器
+		registration.addUrlPatterns(SysConst.URL_SUFFIX_DO);// 设置过滤路径
+		registration.setName("XssFilter");
+		registration.setOrder(1);// 设置优先级
+		return registration;
+	}
+
+	/*
+	 * @Bean public ServletRegistrationBean
+	 * dispatcherServletRegistrationBean(DispatcherServlet dispatcherServlet) {
+	 * ServletRegistrationBean bean = new ServletRegistrationBean();
+	 * bean.getUrlMappings().clear(); bean.setServlet(dispatcherServlet);
+	 * bean.addUrlMappings("*.jpg", "*.png", "*.css", "*.js",
+	 * "*.html","*.do","*.dlt","/error"); return bean; }
+	 */
 
 	/**
 	 * 
@@ -76,41 +76,39 @@ public class AdminApplication extends WebMvcConfigurerAdapter {
 	 * @param coreServlet
 	 * @return
 	 */
-	/*@Bean
-	public ServletRegistrationBean coreServletRegistration() {
-		ServletRegistrationBean bean = new ServletRegistrationBean();
-		AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
-		webContext.setParent(ac);
-		DispatcherServlet ds = new DispatcherServlet(webContext);
-		bean.setName("coreServlet");
-		bean.addUrlMappings("*.do");
-		bean.setServlet(ds);
-		return bean;
-	}*/
+	/*
+	 * @Bean public ServletRegistrationBean coreServletRegistration() {
+	 * ServletRegistrationBean bean = new ServletRegistrationBean();
+	 * AnnotationConfigWebApplicationContext webContext = new
+	 * AnnotationConfigWebApplicationContext(); webContext.setParent(ac);
+	 * DispatcherServlet ds = new DispatcherServlet(webContext);
+	 * bean.setName("coreServlet"); bean.addUrlMappings("*.do");
+	 * bean.setServlet(ds); return bean; }
+	 */
 
 	/**
 	 * 添加拦截器
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(urlDoInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(urlDoInterceptor()).addPathPatterns(SysConst.URL_ALL);
 		super.addInterceptors(registry);
 	}
-	
+
 	@Bean
 	public HandlerInterceptor urlDoInterceptor() {
 		return new UrlDoInterceptor();
 	}
-	
+
 	/**
 	 * 用户访问url是否需要登录拦截
 	 * 
 	 * @return
 	 */
-	/*@Bean
-	public HandlerInterceptor loginInterceptor() {
-		return new LoginInterceptor();
-	}*/
+	/*
+	 * @Bean public HandlerInterceptor loginInterceptor() { return new
+	 * LoginInterceptor(); }
+	 */
 
 	/**
 	 * 属性资源解析器 
@@ -119,11 +117,10 @@ public class AdminApplication extends WebMvcConfigurerAdapter {
 	 * @return
 	 */
 	/*
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
-	*/
+	 * @Bean public static PropertySourcesPlaceholderConfigurer
+	 * propertySourcesPlaceholderConfigurer() { return new
+	 * PropertySourcesPlaceholderConfigurer(); }
+	 */
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(AdminApplication.class, args);

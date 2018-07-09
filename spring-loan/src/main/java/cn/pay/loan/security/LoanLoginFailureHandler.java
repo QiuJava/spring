@@ -28,7 +28,7 @@ import cn.pay.core.service.LoginInfoService;
  */
 @Component
 public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
-	
+
 	@Autowired
 	private IpLogService ipLogService;
 	@Autowired
@@ -57,9 +57,9 @@ public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
 			ipLogService.saveAndUpdate(ipLog);
 		}
 		request.setAttribute("msg", exception.getMessage());
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.LOGIN_INFO_AJAX_DO);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX_DO);
 		requestDispatcher.forward(request, response);
-		//response.sendRedirect(SysConst.LOGIN_HTML);
+		// response.sendRedirect(SysConst.LOGIN_HTML);
 	}
 
 }

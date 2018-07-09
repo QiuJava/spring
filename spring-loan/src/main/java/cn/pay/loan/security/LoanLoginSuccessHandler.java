@@ -27,14 +27,14 @@ import cn.pay.core.service.IpLogService;
  */
 @Component
 public class LoanLoginSuccessHandler implements AuthenticationSuccessHandler {
-	
+
 	@Autowired
 	private IpLogService ipLogService;
-	
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		LoginInfo loginInfo = (LoginInfo)authentication.getPrincipal();
+		LoginInfo loginInfo = (LoginInfo) authentication.getPrincipal();
 		// 登录日志记录
 		IpLog ipLog = new IpLog();
 		ipLog.setIp(request.getRemoteAddr());
@@ -43,9 +43,9 @@ public class LoanLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ipLog.setLoginTime(new Date());
 		ipLog.setLoginState(IpLog.SUCCESS);
 		ipLogService.saveAndUpdate(ipLog);
-		
-		//response.sendRedirect(SysConst.INDEX_DO);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.LOGIN_INFO_AJAX_DO);
+
+		// response.sendRedirect(SysConst.INDEX_DO);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX_DO);
 		requestDispatcher.forward(request, response);
 	}
 

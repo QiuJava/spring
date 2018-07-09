@@ -20,14 +20,14 @@ import cn.pay.loan.security.LoanLoginSuccessHandler;
  *
  */
 @Configuration
-//@EnableWebSecurity
+// @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	//@Autowired
-	//private AdminFilterSecurityInterceptor adminFilterSecurityInterceptor;
+	// @Autowired
+	// private AdminFilterSecurityInterceptor adminFilterSecurityInterceptor;
 
-	//@Autowired
-	//private UserDetailsService userDetailsService;
+	// @Autowired
+	// private UserDetailsService userDetailsService;
 
 	@Resource
 	private LoanAuthenticationProvider authenticationProvider;
@@ -42,7 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		//auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+		// auth.userDetailsService(userDetailsService).passwordEncoder(new
+		// BCryptPasswordEncoder());
 		auth.authenticationProvider(authenticationProvider);
 	}
 
@@ -54,37 +55,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 静态资源可以完全访问
 				.antMatchers("/borrow.html", "/index.html", "/register.html").permitAll()
 				// 登录登录url可以完全访问
-				.antMatchers("/loginInfo/ajax.do","/home.do","/borrow/home.do","/sms/send.do","/email/verify.do","/borrow_info.do","/invest/list.do","/loginInfo/register.do","/loginInfo//isExist.do").permitAll()
+				.antMatchers(SysConst.URL_LOGIN_INFO_AJAX_DO, "/home.do", "/borrow/home.do", "/sms/send.do",
+						"/email/verify.do", "/borrow_info.do", "/invest/list.do", "/loginInfo/register.do",
+						"/loginInfo/isExist.do")
+				.permitAll()
 				// .antMatchers("/index.do").access("hasRole('后台首页')")
 				// 所有以.do 结尾的请求需要登录之后才能访问
-				//.antMatchers("*.do").
-				.anyRequest().authenticated()
-				.and()//
+				// .antMatchers("*.do").
+				.anyRequest().authenticated().and()//
 				// 登录配置
 				.formLogin()
 				// 登录页面
-				.loginPage(SysConst.LOGIN_HTML)
+				.loginPage(SysConst.URL_LOGIN_HTML)
 				// 登录处理URL
-				.loginProcessingUrl(SysConst.LOGIN_INFO_LOGIN_DO).permitAll()
+				.loginProcessingUrl(SysConst.URL_LOGIN_INFO_LOGIN_DO).permitAll()
 				// 登录失败跳转的页面
-				//.failureForwardUrl("/login.html")
+				// .failureForwardUrl("/login.html")
 				// 登录成功之后跳转的url
-				//.defaultSuccessUrl("/index.do")
-				.successHandler(successHandler)
-				.failureHandler(failureHandler)
-				
+				// .defaultSuccessUrl("/index.do")
+				.successHandler(successHandler).failureHandler(failureHandler)
+
 				.and()//
 				// 登出配置
 				.logout()
 				// 登出的URL
-				.logoutUrl(SysConst.LOGIN_INFO_LOGOUT_DO).permitAll()
+				.logoutUrl(SysConst.URL_LOGIN_INFO_LOGOUT_DO).permitAll()
 				// 登出成功的URL
-				.logoutSuccessUrl(SysConst.LOGIN_HTML)
+				.logoutSuccessUrl(SysConst.URL_LOGIN_HTML)
 				// 登出时让HttpSession无效
-				.invalidateHttpSession(true)
-				;
+				.invalidateHttpSession(true);
 
-		//http.addFilterBefore(adminFilterSecurityInterceptor, FilterSecurityInterceptor.class);
+		// http.addFilterBefore(adminFilterSecurityInterceptor,
+		// FilterSecurityInterceptor.class);
 	}
 
 }

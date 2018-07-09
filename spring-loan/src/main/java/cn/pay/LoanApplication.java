@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import cn.pay.core.consts.SysConst;
 import cn.pay.loan.web.filter.XssFilter;
 import cn.pay.loan.web.interceptor.UrlDoInterceptor;
 
@@ -20,20 +21,20 @@ import cn.pay.loan.web.interceptor.UrlDoInterceptor;
  *
  */
 @SpringBootApplication
-//@ServletComponentScan
+// @ServletComponentScan
 @EnableRedisHttpSession
 @Profile("dev")
 public class LoanApplication extends WebMvcConfigurerAdapter {
-	
+
 	@Bean
-    public FilterRegistrationBean xssFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new XssFilter());//添加过滤器
-        registration.addUrlPatterns("*.do");//设置过滤路径
-        registration.setName("XssFilter");
-        registration.setOrder(1);//设置优先级
-        return registration;
-    }
+	public FilterRegistrationBean xssFilterRegistration() {
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		registration.setFilter(new XssFilter());// 添加过滤器
+		registration.addUrlPatterns("*.do");// 设置过滤路径
+		registration.setName("XssFilter");
+		registration.setOrder(1);// 设置优先级
+		return registration;
+	}
 
 	/**
 	 * 设置SpringMvc处理的请求规则
@@ -41,19 +42,20 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	 * @param dispatcherServlet
 	 * @return
 	 */
-	/*@Bean
-	public ServletRegistrationBean dispatcherServletRegistration(DispatcherServlet dispatcherServlet) {
-		ServletRegistrationBean bean = new ServletRegistrationBean(dispatcherServlet);
-		//bean.getUrlMappings().clear();
-		return bean;
-	}*/
+	/*
+	 * @Bean public ServletRegistrationBean
+	 * dispatcherServletRegistration(DispatcherServlet dispatcherServlet) {
+	 * ServletRegistrationBean bean = new
+	 * ServletRegistrationBean(dispatcherServlet); //bean.getUrlMappings().clear();
+	 * return bean; }
+	 */
 
 	/**
 	 * 添加拦截器
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(urlDoInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(urlDoInterceptor()).addPathPatterns(SysConst.URL_ALL);
 		super.addInterceptors(registry);
 	}
 
@@ -74,14 +76,13 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	 * @return
 	 */
 	/*
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
-	*/
+	 * @Bean public static PropertySourcesPlaceholderConfigurer
+	 * propertySourcesPlaceholderConfigurer() { return new
+	 * PropertySourcesPlaceholderConfigurer(); }
+	 */
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(LoanApplication.class, args);
 	}
-	
+
 }
