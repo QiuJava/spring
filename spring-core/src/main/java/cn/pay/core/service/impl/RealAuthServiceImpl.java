@@ -50,7 +50,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 	public void save(RealAuth realAuth) {
 		UserInfo userInfo = userInfoService.get(HttpSessionContext.getCurrentLoginInfo().getId());
 		if (!userInfo.getIsRealAuth() && userInfo.getRealAuthId() == null) {
-			realAuth.setState(RealAuth.NORMAL);
+			realAuth.setState(RealAuth.AUTH_NORMAL);
 			realAuth.setApplier(HttpSessionContext.getCurrentLoginInfo());
 			realAuth.setApplyTime(new Date());
 			userInfo.setRealAuthId(realAuth.getId());
@@ -87,7 +87,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 	public void autid(Long id, int state, String remark) {
 		// 查询当前实名认证对象
 		RealAuth realAuth = repository.findOne(id);
-		if (realAuth.getState() == RealAuth.NORMAL) {
+		if (realAuth.getState() == RealAuth.AUTH_NORMAL) {
 			// 设置审核人审核时间
 			realAuth.setAuditor(HttpSessionContext.getCurrentLoginInfo());
 			realAuth.setAuditTime(new Date());
@@ -95,7 +95,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 			realAuth.setState(state);
 			// 拿到申请人基本资料对象
 			UserInfo applierInfo = userInfoService.get(realAuth.getApplier().getId());
-			if (state == RealAuth.PASS) {
+			if (state == RealAuth.AUTH_PASS) {
 				if (!applierInfo.getIsRealAuth()) {
 					applierInfo.addState(BidStateUtil.OP_REAL_AUTH);
 					// 把实名认证对象中的姓名身份证号码设置到申请人

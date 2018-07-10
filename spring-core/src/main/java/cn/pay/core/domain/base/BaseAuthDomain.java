@@ -18,12 +18,12 @@ import lombok.Setter;
 @Setter
 public class BaseAuthDomain extends BaseDomain {
 	private static final long serialVersionUID = 1L;
-	/** 正常 */
-	public static final int NORMAL = 0;
+	/** 审核中 */
+	public static final int AUTH_NORMAL = 0;
 	/** 通过 */
-	public static final int PASS = 1;
+	public static final int AUTH_PASS = 1;
 	/** 拒绝 */
-	public static final int REJECT = 2;
+	public static final int AUTH_REJECT = 2;
 
 	/** 状态 */
 	protected Integer state;
@@ -40,11 +40,11 @@ public class BaseAuthDomain extends BaseDomain {
 
 	public String getStateDisplay() {
 		switch (state) {
-		case BaseAuthDomain.NORMAL:
+		case BaseAuthDomain.AUTH_NORMAL:
 			return "审核中";
-		case BaseAuthDomain.PASS:
+		case BaseAuthDomain.AUTH_PASS:
 			return "审核通过";
-		case BaseAuthDomain.REJECT:
+		case BaseAuthDomain.AUTH_REJECT:
 			return "审核拒绝";
 		default:
 			return "异常状态";

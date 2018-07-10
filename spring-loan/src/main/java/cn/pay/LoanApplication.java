@@ -30,7 +30,7 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	public FilterRegistrationBean xssFilterRegistration() {
 		FilterRegistrationBean registration = new FilterRegistrationBean();
 		registration.setFilter(new XssFilter());// 添加过滤器
-		registration.addUrlPatterns("*.do");// 设置过滤路径
+		registration.addUrlPatterns(SysConst.URL_SUFFIX_DO);// 设置过滤路径
 		registration.setName("XssFilter");
 		registration.setOrder(1);// 设置优先级
 		return registration;

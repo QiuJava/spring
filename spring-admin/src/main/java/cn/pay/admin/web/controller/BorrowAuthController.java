@@ -112,7 +112,7 @@ public class BorrowAuthController {
 		model.addAttribute("authHistroyList", service.getAuthHistroys(id));
 		model.addAttribute("realAuth", realAuthService.get(userInfo.getRealAuthId()));
 		UserFileQo qo = new UserFileQo();
-		qo.setState(UserFile.PASS);
+		qo.setState(UserFile.AUTH_PASS);
 		qo.setLoginInfoId(borrow.getCreateUser().getId());
 		model.addAttribute("userFiles", userFileService.page(qo).getContent());
 		return "borrow/info";

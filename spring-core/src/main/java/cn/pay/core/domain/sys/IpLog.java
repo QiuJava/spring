@@ -29,13 +29,13 @@ import lombok.ToString;
 @Table(name = "ip_log")
 public class IpLog extends BaseDomain {
 	private static final long serialVersionUID = 1L;
-	public static final int SUCCESS = 1;
-	public static final int FAIL = 0;
+	public static final int LOGIN_SUCCESS = 1;
+	public static final int LOGIN_FAIL = 0;
 
 	@Column(name = "username")
 	private String username;
 	@Column(name = "login_state")
-	private Integer loginState = IpLog.FAIL;
+	private Integer loginState = IpLog.LOGIN_FAIL;
 	@Column(name = "ip")
 	private String ip;
 	@Column(name = "login_time")
@@ -51,6 +51,6 @@ public class IpLog extends BaseDomain {
 
 	@Transient
 	public String getDisplayState() {
-		return loginState == IpLog.FAIL ? "登陆失败" : "登陆成功";
+		return loginState == IpLog.LOGIN_FAIL ? "登陆失败" : "登陆成功";
 	}
 }

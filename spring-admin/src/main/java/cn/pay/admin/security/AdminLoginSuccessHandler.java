@@ -41,7 +41,7 @@ public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ipLog.setUsername(loginInfo.getUsername());
 		ipLog.setUserType(LoginInfo.MANAGER);
 		ipLog.setLoginTime(new Date());
-		ipLog.setLoginState(IpLog.SUCCESS);
+		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
 		ipLogService.saveAndUpdate(ipLog);
 
 		// response.sendRedirect(SysConst.INDEX_DO);

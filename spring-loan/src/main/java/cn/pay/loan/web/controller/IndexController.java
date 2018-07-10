@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.domain.base.BaseAuthDomain;
 import cn.pay.core.domain.business.Borrow;
+import cn.pay.core.domain.business.UserFile;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.obj.annotation.NoRequiredLogin;
@@ -89,7 +89,7 @@ public class IndexController {
 
 		UserFileQo qo = new UserFileQo();
 		qo.setLoginInfoId(borrow.getCreateUser().getId());
-		qo.setState(BaseAuthDomain.PASS);
+		qo.setState(UserFile.AUTH_PASS);
 
 		model.addAttribute("userFiles", userFileService.page(qo).getContent());
 

@@ -73,7 +73,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 			withdraw.setRealName(bankInfo.getAccountName());
 			withdraw.setMoneyAmount(moneyAmount);
 			withdraw.setApplyTime(new Date());
-			withdraw.setState(Withdraw.NORMAL);
+			withdraw.setState(Withdraw.AUTH_NORMAL);
 			withdraw.setApplier(HttpSessionContext.getCurrentLoginInfo());
 			// 保存对象
 			repository.saveAndFlush(withdraw);
@@ -95,7 +95,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 		// 拿到当前申请提现对象
 		Withdraw withdraw = repository.findOne(id);
 		// 判断当前是否处于审核状态
-		if (withdraw.getState() == Withdraw.NORMAL) {
+		if (withdraw.getState() == Withdraw.AUTH_NORMAL) {
 			// 拿到当前申请人的账户对象
 			Account currentAccount = accountService.get(withdraw.getApplier().getId());
 			// 设置提相关状态
@@ -104,7 +104,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 			withdraw.setAuditTime(new Date());
 			withdraw.setState(state);
 			// 如果审核通过
-			if (state == Withdraw.PASS) {
+			if (state == Withdraw.AUTH_PASS) {
 				// 申请人冻结金额减少 生成成功提现流水
 				currentAccount.setFreezedAmount(currentAccount.getFreezedAmount().subtract(withdraw.getMoneyAmount()));
 				accountFlowService.withdrawSuccessFlow(withdraw, currentAccount);

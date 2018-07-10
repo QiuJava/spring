@@ -48,6 +48,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 		RedisSerializer<?> stringRedisSerializer = new StringRedisSerializer();
 		redisTemplate.setKeySerializer(stringRedisSerializer);
 		redisTemplate.setHashKeySerializer(stringRedisSerializer);
+		
 		RedisSerializer<?> jdkSerializationRedisSerializer = new JdkSerializationRedisSerializer();
 		redisTemplate.setHashValueSerializer(jdkSerializationRedisSerializer);
 		redisTemplate.setValueSerializer(jdkSerializationRedisSerializer);
@@ -65,7 +66,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 			public Object generate(Object target, Method method, Object... params) {
 				StringBuilder sb = new StringBuilder();
 				sb.append(target.getClass().getName());
-				sb.append("::" + method.getName() + ":");
+				sb.append(":" + method.getName() + ":");
 				for (Object obj : params) {
 					sb.append(obj.toString());
 				}

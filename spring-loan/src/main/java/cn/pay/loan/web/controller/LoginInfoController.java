@@ -28,12 +28,11 @@ import cn.pay.core.util.StringUtil;
 public class LoginInfoController {
 	@Autowired
 	private LoginInfoService service;
-	
-	
+
 	@RequestMapping("/ajax")
 	@ResponseBody
 	public AjaxResult ajax(HttpServletRequest request) {
-		String msg = (String)request.getAttribute("msg");
+		String msg = (String) request.getAttribute("msg");
 		if (StringUtil.hasLength(msg)) {
 			return new AjaxResult(msg);
 		}
@@ -49,20 +48,21 @@ public class LoginInfoController {
 		return new AjaxResult(true, "注册成功");
 	}
 
-	/*@NoRequiredLogin
-	@RequestMapping("/login")
-	@ResponseBody
-	@RequestLimit(count = 5)
-	public AjaxResult login(String username, String password, HttpServletRequest request) {
-		String ip = request.getRemoteAddr();
-		LoginInfo loginInfo = service.login(username, password, ip, LoginInfo.USER);
-		if (loginInfo == null) {
-			throw new LogicException("账号或密码不正确");
-		}
-		return new AjaxResult(true, "登陆成功");
-	}*/
+	/*
+	 * @NoRequiredLogin
+	 * 
+	 * @RequestMapping("/login")
+	 * 
+	 * @ResponseBody
+	 * 
+	 * @RequestLimit(count = 5) public AjaxResult login(String username, String
+	 * password, HttpServletRequest request) { String ip = request.getRemoteAddr();
+	 * LoginInfo loginInfo = service.login(username, password, ip, LoginInfo.USER);
+	 * if (loginInfo == null) { throw new LogicException("账号或密码不正确"); } return new
+	 * AjaxResult(true, "登陆成功"); }
+	 */
 
-	//@NoRequiredLogin
+	// @NoRequiredLogin
 	@RequestMapping("/isExist")
 	@ResponseBody
 	public AjaxResult isExist(String username) {
@@ -88,5 +88,5 @@ public class LoginInfoController {
 		response.sendRedirect("/login.html");
 		return new AjaxResult(true, "注销成功");
 	}
-	
+
 }

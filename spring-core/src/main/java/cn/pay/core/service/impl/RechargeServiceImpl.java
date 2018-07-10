@@ -56,7 +56,7 @@ public class RechargeServiceImpl implements RechargeService {
 	public void apply(Recharge recharge) {
 		recharge.setApplier(HttpSessionContext.getCurrentLoginInfo());
 		recharge.setApplyTime(new Date());
-		recharge.setState(Recharge.NORMAL);
+		recharge.setState(Recharge.AUTH_NORMAL);
 		repository.saveAndFlush(recharge);
 	}
 
@@ -100,12 +100,12 @@ public class RechargeServiceImpl implements RechargeService {
 	@Transactional
 	public void audit(Long id, String remark, int state) {
 		Recharge recharge = repository.findOne(id);
-		if (recharge != null && recharge.getState() == Recharge.NORMAL) {
+		if (recharge != null && recharge.getState() == Recharge.AUTH_NORMAL) {
 			recharge.setAuditor(HttpSessionContext.getCurrentLoginInfo());
 			recharge.setAuditTime(new Date());
 			recharge.setState(state);
 			recharge.setRemark(remark);
-			if (state == Recharge.PASS) {
+			if (state == Recharge.AUTH_PASS) {
 				// 拿到用户账户对象
 				Account account = accountService.get(recharge.getApplier().getId());
 				// 修改账户可用余额

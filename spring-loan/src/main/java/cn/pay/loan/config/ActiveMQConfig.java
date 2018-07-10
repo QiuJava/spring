@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ActiveMQConfig {
 
+	public static final String BID_QUEUE = "bid.queue";
+	public static final String LOGIN_QUEUE = "login.queue";
+
 	/**
 	 * 投标队列
 	 * 
@@ -16,6 +19,16 @@ public class ActiveMQConfig {
 	 */
 	@Bean
 	public Queue bidQueue() {
-		return new ActiveMQQueue("bid.queue");
+		return new ActiveMQQueue(BID_QUEUE);
 	}
+
+	/**
+	 * 登录队列
+	 * @return
+	 */
+	@Bean
+	public Queue loginQueue() {
+		return new ActiveMQQueue(LOGIN_QUEUE);
+	}
+
 }

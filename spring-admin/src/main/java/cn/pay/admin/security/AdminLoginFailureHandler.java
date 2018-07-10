@@ -52,7 +52,7 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			ipLog.setUsername(username);
 			ipLog.setUserType(LoginInfo.MANAGER);
 			ipLog.setLoginTime(new Date());
-			ipLog.setLoginState(IpLog.FAIL);
+			ipLog.setLoginState(IpLog.LOGIN_FAIL);
 			loginInfoService.saveAndUpdate(loginInfo);
 			ipLogService.saveAndUpdate(ipLog);
 		}

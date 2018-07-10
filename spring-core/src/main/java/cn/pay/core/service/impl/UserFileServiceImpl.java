@@ -68,7 +68,7 @@ public class UserFileServiceImpl implements UserFileService {
 		userFile.setApplier(HttpSessionContext.getCurrentLoginInfo());
 		userFile.setApplyTime(new Date());
 		userFile.setFile(fileName);
-		userFile.setState(UserFile.NORMAL);
+		userFile.setState(UserFile.AUTH_NORMAL);
 		repository.saveAndFlush(userFile);
 	}
 
@@ -119,12 +119,12 @@ public class UserFileServiceImpl implements UserFileService {
 	@Transactional
 	public void audit(Long id, int state, int score, String remark) {
 		UserFile userFile = repository.findOne(id);
-		if (userFile.getState() == UserFile.NORMAL) {
+		if (userFile.getState() == UserFile.AUTH_NORMAL) {
 			userFile.setAuditor(HttpSessionContext.getCurrentLoginInfo());
 			userFile.setAuditTime(new Date());
 			userFile.setRemark(remark);
 			userFile.setState(state);
-			if (state == UserFile.PASS) {
+			if (state == UserFile.AUTH_PASS) {
 				userFile.setScore(score);
 				UserInfo info = userInfoService.get(userFile.getApplier().getId());
 				info.setAuthScore(info.getAuthScore() + score);

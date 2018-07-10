@@ -213,7 +213,7 @@ public class BorrowServiceImpl implements BorrowService {
 		if (borrow != null) {
 			// 创建一个审核历史对象 每一次审核对应一条历史记录
 			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.PUSH_AUDIT);
-			if (state == BorrowAuditHistroy.PASS) {
+			if (state == BorrowAuditHistroy.AUTH_PASS) {
 				// 修改状态进入招标中
 				borrow.setState(BidConst.BORROW_STATE_BIDDING);
 				// 修改发布时间
@@ -255,7 +255,7 @@ public class BorrowServiceImpl implements BorrowService {
 		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_APPROVE_PENDING_1) {
 			// 创建审核历史记录
 			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.FULL_AUDIT1);
-			if (state == BorrowAuditHistroy.PASS) {
+			if (state == BorrowAuditHistroy.AUTH_PASS) {
 				borrow.setState(BidConst.BORROW_STATE_APPROVE_PENDING_2);
 			} else {
 				// 退标 满标一审或者满标二审拒绝
@@ -309,7 +309,7 @@ public class BorrowServiceImpl implements BorrowService {
 			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.FULL_AUDIT2);
 
 			// 审核成功
-			if (state == BorrowAuditHistroy.PASS) {
+			if (state == BorrowAuditHistroy.AUTH_PASS) {
 				// 1.针对审核人
 				// 1.1修改借款状态(还款状态)
 				borrow.setState(BidConst.BORROW_STATE_PAYING_BACK);
