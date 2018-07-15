@@ -1,7 +1,6 @@
 package cn.pay.core.domain.business;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +92,7 @@ public class Borrow extends BaseDomain {
 	private Integer returnType;
 	/** 借款人 */
 	private LoginInfo createUser;
-	private List<Bid> bidList = new ArrayList<>();
+	private List<Bid> bidList;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,6 @@
 package cn.pay.core.domain.business;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class RepaymentSchedule extends BaseDomain {
 	// @Column(name = "borrow_title")
 	private String borrowTitle;
 	/** 对应的收款的计划 */
-	private List<PaymentPlan> paymentPlanList = new ArrayList<>();
+	private List<PaymentPlan> paymentPlanList;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

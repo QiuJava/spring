@@ -2,11 +2,13 @@ package cn.pay.core.domain.sys;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -51,6 +53,7 @@ public class LoginInfo extends BaseDomain implements UserDetails {
 	private Integer loserCount = 0;
 	// @Column(name = "lock_time")
 	private Date lockTime;
+	private List<Role> roles;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
@@ -59,7 +62,12 @@ public class LoginInfo extends BaseDomain implements UserDetails {
 	public Long getId() {
 		return super.id;
 	}
-
+	
+	@ManyToMany
+	public List<Role> getRoles() {
+		return roles;
+	}
+	
 	@Transient
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;

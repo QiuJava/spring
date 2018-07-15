@@ -1,9 +1,12 @@
 package cn.pay.core.domain.sys;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import cn.pay.core.domain.base.BaseDomain;
 import lombok.Getter;
@@ -37,10 +40,17 @@ public class Role extends BaseDomain {
 	// @Column(name = "parent_id")
 	private Long parentId;
 
+	private List<LoginInfo> loginInfos;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return super.id;
+	}
+
+	@ManyToMany(mappedBy = "roles")
+	public List<LoginInfo> getLoginInfos() {
+		return loginInfos;
 	}
 
 }
