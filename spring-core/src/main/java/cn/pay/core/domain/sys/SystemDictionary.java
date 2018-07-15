@@ -3,12 +3,10 @@ package cn.pay.core.domain.sys;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
@@ -28,19 +26,19 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "system_dictionary")
+// @Table(name = "system_dictionary")
 public class SystemDictionary extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 
 	/** 字典编码 */
-	@Column(name = "sn", nullable = false)
+	// @Column(name = "sn", nullable = false)
 	private String sn;
-	@Column(name = "title", nullable = false)
+	// @Column(name = "title", nullable = false)
 	private String title;
 	/** 字典介绍 */
-	@Column(name = "intro", nullable = false)
+	// @Column(name = "intro", nullable = false)
 	private String intro;
-	@Column(name = "sequence", nullable = false)
+	// @Column(name = "sequence", nullable = false)
 	private Integer sequence;
 
 	@Id

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
@@ -35,15 +33,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "user_file")
+// @Table(name = "user_file")
 public class UserFile extends BaseAuthDomain {
 	private static final long serialVersionUID = 1L;
 
 	/** 认证分 */
-	@Column(name = "score")
+	// @Column(name = "score")
 	private Integer score = 0;
 	/** 材料文件名 */
-	@Column(name = "file")
+	// @Column(name = "file")
 	private String file;
 	private SystemDictionaryItem fileType;
 
@@ -59,12 +57,12 @@ public class UserFile extends BaseAuthDomain {
 		return fileType;
 	}
 
-	@Column(name = "state")
+	// @Column(name = "state")
 	public Integer getState() {
 		return state;
 	}
 
-	@Column(name = "remark")
+	// @Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
@@ -81,12 +79,12 @@ public class UserFile extends BaseAuthDomain {
 		return applier;
 	}
 
-	@Column(name = "apply_time")
+	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	@Column(name = "audit_time")
+	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

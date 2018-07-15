@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
@@ -26,36 +25,36 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "account")
+// @Table(name = "account")
 public class Account extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 
 	/** 乐观锁版本号 */
-	@Version
+	// @Version
 	private Integer version;
 	/** 交易密码 */
-	@Column(name = "trade_password")
+	// @Column(name = "trade_password")
 	private String tradePassword;
 	/** 可用余额 */
-	@Column(name = "usable_amount")
+	// @Column(name = "usable_amount")
 	private BigDecimal usableAmount = BidConst.ZERO;
 	/** 冻结金额 */
-	@Column(name = "freezed_amount")
+	// @Column(name = "freezed_amount")
 	private BigDecimal freezedAmount = BidConst.ZERO;
 	/** 待收本金 */
-	@Column(name = "un_receive_principal")
+	// @Column(name = "un_receive_principal")
 	private BigDecimal unReceivePrincipal = BidConst.ZERO;
 	/** 待收利息 */
-	@Column(name = "un_receive_interest")
+	// @Column(name = "un_receive_interest")
 	private BigDecimal unReceiveInterest = BidConst.ZERO;
 	/** 待还本息 */
-	@Column(name = "un_return_amount")
+	// @Column(name = "un_return_amount")
 	private BigDecimal unReturnAmount = BidConst.ZERO;
 	/** 剩余授信额度 */
-	@Column(name = "remain_borrow_limit")
+	// @Column(name = "remain_borrow_limit")
 	private BigDecimal remainBorrowLimit = BidConst.ZERO;
 	/** 账户授信额度 */
-	@Column(name = "borrow_limit")
+	// @Column(name = "borrow_limit")
 	private BigDecimal borrowLimit = BidConst.INIT_BORROW_LIMIT;
 	/** 数据库列校验key */
 	private String verifyKey;
@@ -64,6 +63,11 @@ public class Account extends BaseDomain {
 	@Column(name = "id")
 	public Long getId() {
 		return id;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
 	}
 
 	@Column(name = "verify_key")

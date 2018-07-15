@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,22 +35,22 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-@Table(name = "recharge")
+// @Table(name = "recharge")
 public class Recharge extends BaseAuthDomain {
 	private static final long serialVersionUID = 1L;
 
 	/** 系统银行账户信息 */
 	private CompanyBankInfo bankInfo;
 	/** 交易号 */
-	@Column(name = "trade_code")
+	// @Column(name = "trade_code")
 	private String tradeCode;
-	@Column(name = "trade_time")
+	// @Column(name = "trade_time")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date tradeTime;
-	@Column(name = "amount")
+	// @Column(name = "amount")
 	private BigDecimal amount;
 	/** 操作记录 */
-	@Column(name = "note")
+	// @Column(name = "note")
 	private String note;
 
 	@Id
@@ -67,12 +65,12 @@ public class Recharge extends BaseAuthDomain {
 		return bankInfo;
 	}
 
-	@Column(name = "state")
+	// @Column(name = "state")
 	public Integer getState() {
 		return state;
 	}
 
-	@Column(name = "remark")
+	// @Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
@@ -89,12 +87,12 @@ public class Recharge extends BaseAuthDomain {
 		return applier;
 	}
 
-	@Column(name = "apply_time")
+	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	@Column(name = "audit_time")
+	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

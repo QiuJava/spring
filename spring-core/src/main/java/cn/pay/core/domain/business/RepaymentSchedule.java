@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import cn.pay.core.domain.base.BaseDomain;
@@ -32,7 +30,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-@Table(name = "repayment_schedule")
+// @Table(name = "repayment_schedule")
 public class RepaymentSchedule extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 
@@ -44,35 +42,35 @@ public class RepaymentSchedule extends BaseDomain {
 	public static final int OVERDUE = 2;
 
 	/** 应还时间 */
-	@Column(name = "deadline")
+	// @Column(name = "deadline")
 	private Date deadline;
 	/** 实际还款时间 */
-	@Column(name = "pay_date")
+	// @Column(name = "pay_date")
 	private Date payDate;
 	/** 还款总金额 */
-	@Column(name = "total_amount")
+	// @Column(name = "total_amount")
 	private BigDecimal totalAmount;
 	/** 还款本金 */
-	@Column(name = "principal")
+	// @Column(name = "principal")
 	private BigDecimal principal;
 	/** 还款利息 */
-	@Column(name = "interest")
+	// @Column(name = "interest")
 	private BigDecimal interest;
 	/** 第几期 */
-	@Column(name = "month_index")
+	// @Column(name = "month_index")
 	private Integer monthIndex;
-	@Column(name = "state")
+	// @Column(name = "state")
 	private Integer state = RepaymentSchedule.NORMAL;
 	/** 借款类型 */
-	@Column(name = "borrow_type")
+	// @Column(name = "borrow_type")
 	private Integer borrowType;
-	@Column(name = "return_type")
+	// @Column(name = "return_type")
 	private Integer returnType;
-	@Column(name = "borrow_id")
+	// @Column(name = "borrow_id")
 	private Long borrowId;
-	@Column(name = "borrow_user_id")
+	// @Column(name = "borrow_user_id")
 	private Long borrowUserId;
-	@Column(name = "borrow_title")
+	// @Column(name = "borrow_title")
 	private String borrowTitle;
 	/** 对应的收款的计划 */
 	private List<PaymentPlan> paymentPlanList = new ArrayList<>();

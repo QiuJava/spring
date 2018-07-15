@@ -3,7 +3,6 @@ package cn.pay.core.domain.business;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import cn.pay.core.domain.base.BaseAuthDomain;
@@ -30,7 +28,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "borrow_audit_histroy")
+// @Table(name = "borrow_audit_histroy")
 public class BorrowAuditHistroy extends BaseAuthDomain {
 	private static final long serialVersionUID = 1L;
 	/** 发标审核 */
@@ -40,9 +38,9 @@ public class BorrowAuditHistroy extends BaseAuthDomain {
 	/** 满标二审 */
 	public static final int FULL_AUDIT2 = 2;
 
-	@Column(name = "audit_type")
+	// @Column(name = "audit_type")
 	private Integer auditType;
-	@Column(name = "borrow_id")
+	// @Column(name = "borrow_id")
 	private Long borrowId;
 
 	@Id
@@ -51,12 +49,12 @@ public class BorrowAuditHistroy extends BaseAuthDomain {
 		return id;
 	}
 
-	@Column(name = "state")
+	// @Column(name = "state")
 	public Integer getState() {
 		return state;
 	}
 
-	@Column(name = "remark")
+	// @Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
@@ -73,12 +71,12 @@ public class BorrowAuditHistroy extends BaseAuthDomain {
 		return applier;
 	}
 
-	@Column(name = "apply_time")
+	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	@Column(name = "audit_time")
+	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

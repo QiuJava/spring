@@ -6,14 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
@@ -34,21 +32,21 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-@Table(name = "withdraw")
+// @Table(name = "withdraw")
 public class Withdraw extends BaseAuthDomain {
 	private static final long serialVersionUID = 1L;
 
 	/** 提现申请的银行卡账号 */
-	@Column(name = "account_number")
+	// @Column(name = "account_number")
 	private String accountNumber;
 	/** 支行名称 */
-	@Column(name = "bank_for_name")
+	// @Column(name = "bank_for_name")
 	private String bankForkName;
-	@Column(name = "bank_name")
+	// @Column(name = "bank_name")
 	private String bankName;
-	@Column(name = "real_name")
+	// @Column(name = "real_name")
 	private String realName;
-	@Column(name = "money_amount")
+	// @Column(name = "money_amount")
 	private BigDecimal moneyAmount;
 
 	@Id
@@ -57,12 +55,12 @@ public class Withdraw extends BaseAuthDomain {
 		return id;
 	}
 
-	@Column(name = "state")
+	// @Column(name = "state")
 	public Integer getState() {
 		return state;
 	}
 
-	@Column(name = "remark")
+	// @Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
@@ -79,12 +77,12 @@ public class Withdraw extends BaseAuthDomain {
 		return applier;
 	}
 
-	@Column(name = "apply_time")
+	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	@Column(name = "audit_time")
+	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

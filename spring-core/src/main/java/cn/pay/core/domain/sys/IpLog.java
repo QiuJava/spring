@@ -3,12 +3,10 @@ package cn.pay.core.domain.sys;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import cn.pay.core.domain.base.BaseDomain;
@@ -26,21 +24,21 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "ip_log")
+// @Table(name = "ip_log")
 public class IpLog extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 	public static final int LOGIN_SUCCESS = 1;
 	public static final int LOGIN_FAIL = 0;
 
-	@Column(name = "username")
+	// @Column(name = "username")
 	private String username;
-	@Column(name = "login_state")
+	/// @Column(name = "login_state")
 	private Integer loginState = IpLog.LOGIN_FAIL;
-	@Column(name = "ip")
+	// @Column(name = "ip")
 	private String ip;
-	@Column(name = "login_time")
+	// @Column(name = "login_time")
 	private Date loginTime;
-	@Column(name = "user_type")
+	// @Column(name = "user_type")
 	private Integer userType;
 
 	@Id

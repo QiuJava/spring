@@ -3,12 +3,10 @@ package cn.pay.core.domain.business;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
@@ -28,20 +26,20 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-@Table(name = "company_bank_info")
+// @Table(name = "company_bank_info")
 public class CompanyBankInfo extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "bank_name")
+	// @Column(name = "bank_name")
 	private String bankName;
 	/** 账户名称 */
-	@Column(name = "account_name")
+	// @Column(name = "account_name")
 	private String accountName;
 	/** 银行卡号 */
-	@Column(name = "bank_number")
+	// @Column(name = "bank_number")
 	private String bankNumber;
 	/** 开户支行名称 */
-	@Column(name = "bank_fork_name")
+	// @Column(name = "bank_fork_name")
 	private String bankForkName;
 
 	@Id

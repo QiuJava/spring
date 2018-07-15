@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
@@ -34,28 +33,28 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "real_auth")
+//@Table(name = "real_auth")
 public class RealAuth extends BaseAuthDomain {
 	private static final long serialVersionUID = 1L;
 	public static final Integer MAN = 0;
 	public static final Integer WOMAN = 1;
 	
-	@Column(name = "real_name")
+	//@Column(name = "real_name")
 	private String realname;
-	@Column(name = "sex")
+	//@Column(name = "sex")
 	private Integer sex;
-	@Column(name = "brith_date")
+	//@Column(name = "brith_date")
 	private String birthDate;
 	/** 身份证号码 */
-	@Column(name = "id_number")
+	//@Column(name = "id_number")
 	private String idNumber;
-	@Column(name = "address")
+	//@Column(name = "address")
 	private String address;
 	/** 身份证正面 */
-	@Column(name = "image1")
+	//@Column(name = "image1")
 	private String image1;
 	/** 身份证反面 */
-	@Column(name = "image2")
+	//@Column(name = "image2")
 	private String image2;
 
 	@Id

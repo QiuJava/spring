@@ -3,12 +3,10 @@ package cn.pay.core.domain.sys;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
@@ -28,17 +26,17 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-@Table(name = "system_dictionary_item")
+// @Table(name = "system_dictionary_item")
 public class SystemDictionaryItem extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "system_dictionary_id")
+	// @Column(name = "system_dictionary_id")
 	private Long systemDictionaryId;
-	@Column(name = "title")
+	// @Column(name = "title")
 	private String title;
-	@Column(name = "intro")
+	// @Column(name = "intro")
 	private String intro;
-	@Column(name = "sequence")
+	// @Column(name = "sequence")
 	private Integer sequence;
 
 	@Id

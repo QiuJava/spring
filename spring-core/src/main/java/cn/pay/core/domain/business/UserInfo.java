@@ -1,13 +1,11 @@
 package cn.pay.core.domain.business;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
@@ -28,23 +26,23 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "user_info")
+// @Table(name = "user_info")
 public class UserInfo extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 
-	@Version
+	// @Version
 	private Integer version;
-	@Column(name = "bit_state")
+	// @Column(name = "bit_state")
 	private Long bitState = 0L;
-	@Column(name = "real_name")
+	// @Column(name = "real_name")
 	private String realName;
-	@Column(name = "id_number")
+	// @Column(name = "id_number")
 	private String idNumber;
-	@Column(name = "phone_number")
+	// @Column(name = "phone_number")
 	private String phoneNumber;
-	@Column(name = "email")
+	// @Column(name = "email")
 	private String email;
-	@Column(name = "auth_score")
+	// @Column(name = "auth_score")
 	private Integer authScore = 0;
 	/** 月收入 */
 	private SystemDictionaryItem incomeGrade;
@@ -56,13 +54,18 @@ public class UserInfo extends BaseDomain {
 	private SystemDictionaryItem educationBackground;
 	/** 住房条件 */
 	private SystemDictionaryItem houseCondition;
-	@Column(name = "real_auth_id")
+	// @Column(name = "real_auth_id")
 	private Long realAuthId;
 
 	@Id
-	@Column(name = "id")
+	// @Column(name = "id")
 	public Long getId() {
 		return id;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)

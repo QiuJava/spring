@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
@@ -40,67 +38,72 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "borrow")
+// @Table(name = "borrow")
 public class Borrow extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 
-	@Version
+	// @Version
 	private Integer version;
 	/** 借款类型 */
-	@Column(name = "type")
+	// @Column(name = "type")
 	private Integer type;
-	@Column(name = "state")
+	// @Column(name = "state")
 	private Integer state;
-	@Column(name = "amount")
+	// @Column(name = "amount")
 	private BigDecimal amount;
 	/** 借款利率 */
-	@Column(name = "rate")
+	// @Column(name = "rate")
 	private BigDecimal rate;
 	/** 还款期限(月数) */
-	@Column(name = "month_return")
+	// @Column(name = "month_return")
 	private Integer monthReturn;
 	/** 投标总数 */
-	@Column(name = "bid_count")
+	// @Column(name = "bid_count")
 	private Integer bidCount = 0;
 	/** 产生总利息 */
-	@Column(name = "total_interest_amount")
+	// @Column(name = "total_interest_amount")
 	private BigDecimal totalInterestAmount;
 	/** 当前投标总金额 */
-	@Column(name = "current_sum")
+	// @Column(name = "current_sum")
 	private BigDecimal currentSum = BidConst.ZERO;
-	@Column(name = "title")
+	// @Column(name = "title")
 	private String title;
 	/** 借款描述 */
-	@Column(name = "description")
+	// @Column(name = "description")
 	private String description;
 	/** 借款注释 */
-	@Column(name = "note")
+	// @Column(name = "note")
 	private String note;
 	/** 投标截止日期 */
-	@Column(name = "disable_date")
+	// @Column(name = "disable_date")
 	private Date disableDate;
 	/** 招标天数 */
-	@Column(name = "disable_days")
+	// @Column(name = "disable_days")
 	private Integer disableDays;
 	/** 最小投标金额 */
-	@Column(name = "min_bid_amount")
+	// @Column(name = "min_bid_amount")
 	private BigDecimal minBidAmount;
-	@Column(name = "apply_time")
+	// @Column(name = "apply_time")
 	private Date applyTime;
 	/** 发布时间 */
-	@Column(name = "publish_time")
+	// @Column(name = "publish_time")
 	private Date publishTime;
 	/** 还款方式 */
-	@Column(name = "return_type")
+	// @Column(name = "return_type")
 	private Integer returnType;
 	/** 借款人 */
 	private LoginInfo createUser;
 	private List<Bid> bidList = new ArrayList<>();
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
 	}
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
