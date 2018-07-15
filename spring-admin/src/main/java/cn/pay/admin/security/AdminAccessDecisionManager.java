@@ -26,18 +26,20 @@ public class AdminAccessDecisionManager implements AccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		// 没有配置权限控制直接过
-		if (null == configAttributes || configAttributes.size() <= 0) {
-			return;
-		}
 		// 超级管理员拥有所有权限
 		if (authentication instanceof UsernamePasswordAuthenticationToken) {
 			LoginInfo info = (LoginInfo) authentication.getPrincipal();
 			if (info.isAdmin()) {
 				return;
 			}
+		} else {
+			throw new InsufficientAuthenticationException("请先登录");
 		}
 
+		// 没有配置权限控制直接过
+		if (null == configAttributes || configAttributes.size() <= 0) {
+			return;
+		}
 		ConfigAttribute config;
 		String needRole;
 		for (Iterator<ConfigAttribute> iter = configAttributes.iterator(); iter.hasNext();) {
