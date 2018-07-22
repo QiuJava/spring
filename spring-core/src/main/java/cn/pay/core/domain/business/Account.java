@@ -43,7 +43,6 @@ public class Account implements Serializable {
 	/** 待还本息 */
 	private BigDecimal unReturnAmount = BidConst.ZERO;
 	/** 剩余授信额度 */
-	// @Column(name = "remain_borrow_limit")
 	private BigDecimal remainBorrowLimit = BidConst.ZERO;
 	/** 账户授信额度 */
 	private BigDecimal borrowLimit = BidConst.INIT_BORROW_LIMIT;

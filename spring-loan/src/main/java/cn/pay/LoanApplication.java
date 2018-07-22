@@ -21,7 +21,6 @@ import cn.pay.loan.web.interceptor.UrlDoInterceptor;
  *
  */
 @SpringBootApplication
-// @ServletComponentScan
 @EnableRedisHttpSession
 @Profile("dev")
 public class LoanApplication extends WebMvcConfigurerAdapter {
@@ -36,50 +35,16 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 		return registration;
 	}
 
-	/**
-	 * 设置SpringMvc处理的请求规则
-	 * 
-	 * @param dispatcherServlet
-	 * @return
-	 */
-	/*
-	 * @Bean public ServletRegistrationBean
-	 * dispatcherServletRegistration(DispatcherServlet dispatcherServlet) {
-	 * ServletRegistrationBean bean = new
-	 * ServletRegistrationBean(dispatcherServlet); //bean.getUrlMappings().clear();
-	 * return bean; }
-	 */
-
-	/**
-	 * 添加拦截器
-	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(urlDoInterceptor()).addPathPatterns(SysConst.URL_ALL);
 		super.addInterceptors(registry);
 	}
 
-	/**
-	 * 访问是否需要登录url拦截
-	 * 
-	 * @return
-	 */
 	@Bean
 	public HandlerInterceptor urlDoInterceptor() {
 		return new UrlDoInterceptor();
 	}
-
-	/**
-	 * 属性资源解析器 
-	 * 方法需要为静态 返回的Bean是容器级别
-	 * 
-	 * @return
-	 */
-	/*
-	 * @Bean public static PropertySourcesPlaceholderConfigurer
-	 * propertySourcesPlaceholderConfigurer() { return new
-	 * PropertySourcesPlaceholderConfigurer(); }
-	 */
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(LoanApplication.class, args);
