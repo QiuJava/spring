@@ -1,15 +1,12 @@
 package cn.pay.core.domain.business;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import cn.pay.core.domain.sys.SystemDictionaryItem;
 import cn.pay.core.util.BidStateUtil;
 import lombok.Getter;
@@ -27,7 +24,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "user_info")
-public class UserInfo extends BaseDomain {
+public class UserInfo extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	// @Version
@@ -68,32 +65,37 @@ public class UserInfo extends BaseDomain {
 		return version;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "income_grade_id")
+	// @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "income_grade_id")
+	@OneToOne
 	public SystemDictionaryItem getIncomeGrade() {
 		return incomeGrade;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "marriage_id")
+	// @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "marriage_id")
+	@OneToOne
 	public SystemDictionaryItem getMarriage() {
 		return marriage;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "kid_count_id")
+	// @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "kid_count_id")
+	@OneToOne
 	public SystemDictionaryItem getKidCount() {
 		return kidCount;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "education_background_id")
+	// @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "education_background_id")
+	@OneToOne
 	public SystemDictionaryItem getEducationBackground() {
 		return educationBackground;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "house_condition_id")
+	// @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "house_condition_id")
+	@OneToOne
 	public SystemDictionaryItem getHouseCondition() {
 		return houseCondition;
 	}

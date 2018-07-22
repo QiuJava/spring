@@ -5,18 +5,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.BaseAuthDomain;
+import cn.pay.core.domain.base.AuthComponent;
 import cn.pay.core.domain.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +31,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "withdraw")
-public class Withdraw extends BaseAuthDomain {
+public class Withdraw extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 
 	/** 提现申请的银行卡账号 */
@@ -65,14 +63,16 @@ public class Withdraw extends BaseAuthDomain {
 		return remark;
 	}
 
-	@OneToOne(cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "auditor_id")
+	// @OneToOne(cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "auditor_id")
+	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
 
-	@OneToOne(cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "applier_id")
+	// @OneToOne(cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "applier_id")
+	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}

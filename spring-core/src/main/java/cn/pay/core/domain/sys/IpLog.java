@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,7 +25,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "ip_log")
-public class IpLog extends BaseDomain {
+public class IpLog extends IdComponent {
 	private static final long serialVersionUID = 1L;
 	public static final int LOGIN_SUCCESS = 1;
 	public static final int LOGIN_FAIL = 0;

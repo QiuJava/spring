@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,7 +30,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "login_info")
-public class LoginInfo extends BaseDomain implements UserDetails {
+public class LoginInfo extends IdComponent implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	public static final int NORMAL = 0;
 	public static final int DEL = -1;
@@ -38,7 +38,7 @@ public class LoginInfo extends BaseDomain implements UserDetails {
 	public static final int LOSER_MAX_COUNT = 5;
 	public static final Integer USER = 0;
 	public static final Integer MANAGER = 1;
-
+	
 	// @Column(name = "username")
 	private String username;
 	// @Column(name = "password")

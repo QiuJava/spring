@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,7 +25,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "system_account")
-public class SystemAccount extends BaseDomain {
+public class SystemAccount extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	// @Version

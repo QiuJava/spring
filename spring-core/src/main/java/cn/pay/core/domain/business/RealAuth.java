@@ -4,20 +4,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.BaseAuthDomain;
+import cn.pay.core.domain.base.AuthComponent;
 import cn.pay.core.domain.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,28 +30,28 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-//@Table(name = "real_auth")
-public class RealAuth extends BaseAuthDomain {
+// @Table(name = "real_auth")
+public class RealAuth extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 	public static final Integer MAN = 0;
 	public static final Integer WOMAN = 1;
-	
-	//@Column(name = "real_name")
+
+	// @Column(name = "real_name")
 	private String realname;
-	//@Column(name = "sex")
+	// @Column(name = "sex")
 	private Integer sex;
-	//@Column(name = "brith_date")
+	// @Column(name = "brith_date")
 	private String birthDate;
 	/** 身份证号码 */
-	//@Column(name = "id_number")
+	// @Column(name = "id_number")
 	private String idNumber;
-	//@Column(name = "address")
+	// @Column(name = "address")
 	private String address;
 	/** 身份证正面 */
-	//@Column(name = "image1")
+	// @Column(name = "image1")
 	private String image1;
 	/** 身份证反面 */
-	//@Column(name = "image2")
+	// @Column(name = "image2")
 	private String image2;
 
 	@Id
@@ -73,24 +70,26 @@ public class RealAuth extends BaseAuthDomain {
 		return remark;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "auditor_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "auditor_id")
+	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "applier_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "applier_id")
+	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}
 
-	@Column(name = "apply_time")
+	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	@Column(name = "audit_time")
+	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

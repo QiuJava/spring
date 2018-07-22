@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import cn.pay.core.util.HttpSessionContext;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +27,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 // @Table(name = "email_verify")
-public class EmailVerify extends BaseDomain {
+public class EmailVerify extends IdComponent {
 	private static final long serialVersionUID = 1L;
 	/** 邮箱验证码有效时间 */
 	public final static int VALIDITY_DAY = 5;

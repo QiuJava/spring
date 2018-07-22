@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "user_bank_info")
-public class UserBankInfo extends BaseDomain {
+public class UserBankInfo extends IdComponent {
 	private static final long serialVersionUID = 1L;
 	// @Column(name = "bank_fork_name")
 	private String bankForkName;

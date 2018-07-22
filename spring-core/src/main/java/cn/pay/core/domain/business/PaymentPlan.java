@@ -3,17 +3,13 @@ package cn.pay.core.domain.business;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,7 +25,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "payment_plan")
-public class PaymentPlan extends BaseDomain {
+public class PaymentPlan extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	/** 这个收款计划对应的投标金额 */
@@ -62,7 +58,7 @@ public class PaymentPlan extends BaseDomain {
 	// @Column(name = "return_login_info_id")
 	private Long returnLoginInfoId;
 	/** 收款人 */
-	@Column(name = "collect_login_info_id")
+	// @Column(name = "collect_login_info_id")
 	private Long collectLoginInfoId;
 	/** 对应还款计划的id */
 	private RepaymentSchedule repaymentSchedule;
@@ -73,8 +69,9 @@ public class PaymentPlan extends BaseDomain {
 		return id;
 	}
 
-	@JoinColumn(name = "repayment_schedule_id")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "repayment_schedule_id")
+	// @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@ManyToOne
 	public RepaymentSchedule getRepaymentSchedule() {
 		return repaymentSchedule;
 	}

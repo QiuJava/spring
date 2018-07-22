@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,7 +27,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "company_bank_info")
-public class CompanyBankInfo extends BaseDomain {
+public class CompanyBankInfo extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	// @Column(name = "bank_name")

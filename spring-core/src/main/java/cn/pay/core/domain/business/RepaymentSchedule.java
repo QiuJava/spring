@@ -4,17 +4,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,7 +27,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "repayment_schedule")
-public class RepaymentSchedule extends BaseDomain {
+public class RepaymentSchedule extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	/** 正常待还 */
@@ -80,8 +77,9 @@ public class RepaymentSchedule extends BaseDomain {
 		return id;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "repayment_schedule_id")
+	//@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	//@JoinColumn(name = "repayment_schedule_id")
+	@OneToMany(mappedBy = "repaymentSchedule")
 	public List<PaymentPlan> getPaymentPlanList() {
 		return paymentPlanList;
 	}

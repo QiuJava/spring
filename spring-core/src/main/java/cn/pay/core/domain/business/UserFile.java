@@ -4,19 +4,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.BaseAuthDomain;
+import cn.pay.core.domain.base.AuthComponent;
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.domain.sys.SystemDictionaryItem;
 import lombok.Getter;
@@ -34,7 +31,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "user_file")
-public class UserFile extends BaseAuthDomain {
+public class UserFile extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 
 	/** 认证分 */
@@ -51,8 +48,9 @@ public class UserFile extends BaseAuthDomain {
 		return id;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "file_type_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "file_type_id")
+	@OneToOne
 	public SystemDictionaryItem getFileType() {
 		return fileType;
 	}
@@ -67,14 +65,16 @@ public class UserFile extends BaseAuthDomain {
 		return remark;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "auditor_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "auditor_id")
+	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "applier_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "applier_id")
+	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}

@@ -2,14 +2,13 @@ package cn.pay.core.domain.business;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import cn.pay.core.util.Md5;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +25,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "account")
-public class Account extends BaseDomain {
+public class Account extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	/** 乐观锁版本号 */
@@ -60,7 +59,7 @@ public class Account extends BaseDomain {
 	private String verifyKey;
 
 	@Id
-	@Column(name = "id")
+	//@Column(name = "id")
 	public Long getId() {
 		return id;
 	}
@@ -70,7 +69,7 @@ public class Account extends BaseDomain {
 		return version;
 	}
 
-	@Column(name = "verify_key")
+	//@Column(name = "verify_key")
 	public String getVerifyKey() {
 		return Md5.encode(this.usableAmount.hashCode() + "" + this.freezedAmount.hashCode());
 	}

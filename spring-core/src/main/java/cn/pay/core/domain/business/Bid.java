@@ -3,17 +3,14 @@ package cn.pay.core.domain.business;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import cn.pay.core.domain.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +27,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "bid")
-public class Bid extends BaseDomain {
+public class Bid extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	public static final int SUCCEED = 1;
@@ -58,14 +55,16 @@ public class Bid extends BaseDomain {
 		return id;
 	}
 
-	@JoinColumn(name = "borrow_id")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "borrow_id")
+	// @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@ManyToOne
 	public Borrow getBorrow() {
 		return borrow;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "create_user_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "create_user_id")
+	@OneToOne
 	public LoginInfo getCreateUser() {
 		return createUser;
 	}

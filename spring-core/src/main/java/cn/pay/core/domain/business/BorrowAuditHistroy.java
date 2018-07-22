@@ -2,17 +2,14 @@ package cn.pay.core.domain.business;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import cn.pay.core.domain.base.BaseAuthDomain;
+import cn.pay.core.domain.base.AuthComponent;
 import cn.pay.core.domain.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +26,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "borrow_audit_histroy")
-public class BorrowAuditHistroy extends BaseAuthDomain {
+public class BorrowAuditHistroy extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 	/** 发标审核 */
 	public static final int PUSH_AUDIT = 0;
@@ -59,14 +56,16 @@ public class BorrowAuditHistroy extends BaseAuthDomain {
 		return remark;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "auditor_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "auditor_id")
+	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "applier_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "applier_id")
+	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}

@@ -9,14 +9,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 审核基础对象
+ * 审核组件
  * 
  * @author Qiujian
  *
  */
 @Getter
 @Setter
-public class BaseAuthDomain extends BaseDomain {
+public class AuthComponent extends IdComponent {
 	private static final long serialVersionUID = 1L;
 	/** 审核中 */
 	public static final int AUTH_NORMAL = 0;
@@ -40,11 +40,11 @@ public class BaseAuthDomain extends BaseDomain {
 
 	public String getStateDisplay() {
 		switch (state) {
-		case BaseAuthDomain.AUTH_NORMAL:
+		case AuthComponent.AUTH_NORMAL:
 			return "审核中";
-		case BaseAuthDomain.AUTH_PASS:
+		case AuthComponent.AUTH_PASS:
 			return "审核通过";
-		case BaseAuthDomain.AUTH_REJECT:
+		case AuthComponent.AUTH_REJECT:
 			return "审核拒绝";
 		default:
 			return "异常状态";

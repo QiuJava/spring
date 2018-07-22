@@ -128,6 +128,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	}
 
 	// @Cacheable("loadUserByUsername")
+	@Transactional
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LoginInfo loginInfo = repository.findByUsername(username);

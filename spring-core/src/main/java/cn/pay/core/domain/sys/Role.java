@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,7 +24,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "role")
-public class Role extends BaseDomain {
+public class Role extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	/** 权限名称 */

@@ -6,13 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -21,7 +18,7 @@ import javax.persistence.Version;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.domain.base.BaseDomain;
+import cn.pay.core.domain.base.IdComponent;
 import cn.pay.core.domain.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +35,7 @@ import lombok.ToString;
 @ToString
 @Entity
 // @Table(name = "borrow")
-public class Borrow extends BaseDomain {
+public class Borrow extends IdComponent {
 	private static final long serialVersionUID = 1L;
 
 	// @Version
@@ -105,14 +102,16 @@ public class Borrow extends BaseDomain {
 		return version;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "create_user_id")
+	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "create_user_id")
+	@OneToOne
 	public LoginInfo getCreateUser() {
 		return createUser;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "borrow_id")
+	// @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	// @JoinColumn(name = "borrow_id")
+	@OneToMany(mappedBy = "borrow")
 	public List<Bid> getBidList() {
 		return bidList;
 	}
