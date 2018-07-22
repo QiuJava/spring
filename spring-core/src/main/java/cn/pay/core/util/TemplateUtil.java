@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -27,7 +28,7 @@ public class TemplateUtil {
 	private TemplateUtil() {
 	}
 
-	private static Logger logger = org.slf4j.LoggerFactory.getLogger(TemplateUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(TemplateUtil.class);
 
 	private static String templatePath = "C:/Users/Administrator/git/spring/spring-core/src/main/resources/java_template/";
 	private static String daoPath = "C:/Users/Administrator/git/spring/spring-core/src/main/java/cn/pay/core/dao/";
