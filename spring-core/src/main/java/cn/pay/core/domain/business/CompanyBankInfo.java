@@ -1,5 +1,6 @@
 package cn.pay.core.domain.business;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,20 +26,16 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-// @Table(name = "company_bank_info")
-public class CompanyBankInfo extends IdComponent {
+public class CompanyBankInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// @Column(name = "bank_name")
+	private Long id;
 	private String bankName;
 	/** 账户名称 */
-	// @Column(name = "account_name")
 	private String accountName;
 	/** 银行卡号 */
-	// @Column(name = "bank_number")
 	private String bankNumber;
 	/** 开户支行名称 */
-	// @Column(name = "bank_fork_name")
 	private String bankForkName;
 
 	@Id

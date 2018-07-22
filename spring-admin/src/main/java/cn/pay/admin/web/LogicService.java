@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.pay.core.service.AccountService;
 
 /**
- * 后天系统额外逻辑功能相关服务
+ * 额外逻辑功能相关服务
  * 
  * @author Administrator
  *

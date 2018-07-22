@@ -13,7 +13,6 @@ import cn.pay.core.domain.business.Borrow;
 import cn.pay.core.domain.business.UserFile;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.obj.annotation.NoRequiredLogin;
 import cn.pay.core.obj.qo.BorrowQo;
 import cn.pay.core.obj.qo.UserFileQo;
 import cn.pay.core.service.AccountService;
@@ -56,7 +55,6 @@ public class IndexController {
 	 * @param model
 	 * @return
 	 */
-	@NoRequiredLogin
 	@RequestMapping("/home")
 	public String index(Model model) {
 		// 页面显示 首页需要显示的状态 投标中 还款中 已完成
@@ -78,7 +76,6 @@ public class IndexController {
 	 * @param model
 	 * @return
 	 */
-	@NoRequiredLogin
 	@RequestMapping("/borrow_info")
 	public String borrowInfo(Long id, Model model) {
 		Borrow borrow = borrowService.get(id);
@@ -119,7 +116,6 @@ public class IndexController {
 	/**
 	 * 投资列表的里面的内容
 	 */
-	@NoRequiredLogin
 	@RequestMapping("/invest/list")
 	public String investList(BorrowQo qo, Model model) {
 		// 设置投标人能看到的状态 招标中

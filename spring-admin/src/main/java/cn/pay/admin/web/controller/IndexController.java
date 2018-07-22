@@ -18,14 +18,11 @@ import cn.pay.core.util.StringUtil;
  */
 @Controller
 public class IndexController {
-	
-	//@Autowired
-	//private LoginInfoService service;
 
 	@RequestMapping("/loginInfo/ajax")
 	@ResponseBody
 	public AjaxResult ajax(HttpServletRequest request) {
-		String msg = (String)request.getAttribute("msg");
+		String msg = (String) request.getAttribute("msg");
 		if (StringUtil.hasLength(msg)) {
 			return new AjaxResult(msg);
 		}
@@ -37,17 +34,5 @@ public class IndexController {
 	public String index() {
 		return "main";
 	}
-	
-	/*
-	@RequestMapping("/loginInfo/logout")
-	@ResponseBody
-	public AjaxResult logout(HttpServletResponse response) throws IOException {
-		HttpSession session = HttpSessionContext.getHttpSession();
-		session.removeAttribute(HttpSessionContext.CURRENT_LOGIN_INFO);
-		session.removeAttribute(HttpSessionContext.SPRING_SECURITY_CONTEXT);
-		response.sendRedirect("/login.html");
-		return new AjaxResult(true, "安全退出成功");
-	}
-	*/
 
 }

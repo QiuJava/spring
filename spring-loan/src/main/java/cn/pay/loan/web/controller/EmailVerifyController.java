@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.obj.annotation.NoRequiredLogin;
 import cn.pay.core.obj.vo.AjaxResult;
 import cn.pay.core.service.EmailVerifyService;
 
@@ -21,7 +20,6 @@ public class EmailVerifyController {
 	@Autowired
 	private EmailVerifyService service;
 
-	@NoRequiredLogin
 	@RequestMapping("/email/verify")
 	public String verifyMail(String verify, Model model) {
 		if (verify != null) {

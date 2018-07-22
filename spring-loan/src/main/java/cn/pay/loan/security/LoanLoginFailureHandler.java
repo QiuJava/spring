@@ -59,7 +59,6 @@ public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
 		request.setAttribute("msg", exception.getMessage());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX_DO);
 		requestDispatcher.forward(request, response);
-		// response.sendRedirect(SysConst.LOGIN_HTML);
 	}
 
 }

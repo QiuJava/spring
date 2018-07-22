@@ -1,11 +1,12 @@
 package cn.pay.core.domain.business;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,18 +21,14 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-// @Table(name = "user_bank_info")
-public class UserBankInfo extends IdComponent {
+public class UserBankInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
-	// @Column(name = "bank_fork_name")
+
+	private Long id;
 	private String bankForkName;
-	// @Column(name = "bank_name")
 	private String bankName;
-	// @Column(name = "account_number")
 	private String accountNumber;
-	// @Column(name = "login_info_id")
 	private Long loginInfoId;
-	// @Column(name = "account_name")
 	private String accountName;
 
 	@Id

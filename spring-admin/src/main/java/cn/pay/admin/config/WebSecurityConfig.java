@@ -20,7 +20,6 @@ import cn.pay.core.consts.SysConst;
  *
  */
 @Configuration
-// @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// @Autowired

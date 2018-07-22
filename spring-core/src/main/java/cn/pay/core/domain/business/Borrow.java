@@ -1,5 +1,6 @@
 package cn.pay.core.domain.business;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,7 +19,6 @@ import javax.persistence.Version;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.domain.base.IdComponent;
 import cn.pay.core.domain.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,58 +34,40 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-// @Table(name = "borrow")
-public class Borrow extends IdComponent {
+public class Borrow implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// @Version
+	private Long id;
 	private Integer version;
 	/** 借款类型 */
-	// @Column(name = "type")
 	private Integer type;
-	// @Column(name = "state")
 	private Integer state;
-	// @Column(name = "amount")
 	private BigDecimal amount;
 	/** 借款利率 */
-	// @Column(name = "rate")
 	private BigDecimal rate;
 	/** 还款期限(月数) */
-	// @Column(name = "month_return")
 	private Integer monthReturn;
 	/** 投标总数 */
-	// @Column(name = "bid_count")
 	private Integer bidCount = 0;
 	/** 产生总利息 */
-	// @Column(name = "total_interest_amount")
 	private BigDecimal totalInterestAmount;
 	/** 当前投标总金额 */
-	// @Column(name = "current_sum")
 	private BigDecimal currentSum = BidConst.ZERO;
-	// @Column(name = "title")
 	private String title;
 	/** 借款描述 */
-	// @Column(name = "description")
 	private String description;
 	/** 借款注释 */
-	// @Column(name = "note")
 	private String note;
 	/** 投标截止日期 */
-	// @Column(name = "disable_date")
 	private Date disableDate;
 	/** 招标天数 */
-	// @Column(name = "disable_days")
 	private Integer disableDays;
 	/** 最小投标金额 */
-	// @Column(name = "min_bid_amount")
 	private BigDecimal minBidAmount;
-	// @Column(name = "apply_time")
 	private Date applyTime;
 	/** 发布时间 */
-	// @Column(name = "publish_time")
 	private Date publishTime;
 	/** 还款方式 */
-	// @Column(name = "return_type")
 	private Integer returnType;
 	/** 借款人 */
 	private LoginInfo createUser;
@@ -102,15 +84,11 @@ public class Borrow extends IdComponent {
 		return version;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "create_user_id")
 	@OneToOne
 	public LoginInfo getCreateUser() {
 		return createUser;
 	}
 
-	// @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "borrow_id")
 	@OneToMany(mappedBy = "borrow")
 	public List<Bid> getBidList() {
 		return bidList;

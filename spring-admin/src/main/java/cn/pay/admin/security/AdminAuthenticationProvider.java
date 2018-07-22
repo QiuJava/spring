@@ -35,10 +35,7 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
 		// 初始化
 		if (!loginInfo.isAccountNonLocked()
 				&& System.currentTimeMillis() - loginInfo.getLockTime().getTime() >= DateUtil.LOCK_TIME) {
-			// loginInfo.setLoserCount(0);
 			loginInfo.setStatus(LoginInfo.NORMAL);
-			// loginInfo.setLockTime(null);
-			// loginInfoService.saveAndUpdate(loginInfo);
 		}
 
 		if (!loginInfo.isAccountNonLocked()) {

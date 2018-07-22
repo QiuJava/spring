@@ -1,5 +1,6 @@
 package cn.pay.core.domain.sys;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,17 +26,13 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-// @Table(name = "system_dictionary_item")
-public class SystemDictionaryItem extends IdComponent {
+public class SystemDictionaryItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// @Column(name = "system_dictionary_id")
+	private Long id;
 	private Long systemDictionaryId;
-	// @Column(name = "title")
 	private String title;
-	// @Column(name = "intro")
 	private String intro;
-	// @Column(name = "sequence")
 	private Integer sequence;
 
 	@Id

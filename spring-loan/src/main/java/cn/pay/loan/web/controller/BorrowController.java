@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.pay.core.consts.BidConst;
 import cn.pay.core.domain.business.Borrow;
 import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.obj.annotation.NoRequiredLogin;
 import cn.pay.core.obj.vo.AjaxResult;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.BorrowService;
@@ -51,7 +50,6 @@ public class BorrowController {
 	 * @param model
 	 * @return
 	 */
-	@NoRequiredLogin
 	@RequestMapping("/borrow/home")
 	public String borrow(Model model) {
 		LoginInfo current = HttpSessionContext.getCurrentLoginInfo();

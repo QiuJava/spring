@@ -23,11 +23,8 @@ public class MessageService {
 	@Autowired
 	private BorrowService borrowService;
 	
-	Integer i = 100;
-
 	@JmsListener(destination = ActiveMQConfig.BID_QUEUE)
 	public void bid(String msg) {
-
 		Map<String, String> map = StringUtil.mapStringToMap(msg);
 		borrowService.bid(Long.valueOf(map.get("borrowId")), new BigDecimal(map.get("amount")),
 				Long.valueOf(map.get("loginInfoId")));
@@ -36,10 +33,6 @@ public class MessageService {
 	@JmsListener(destination = ActiveMQConfig.LOGIN_QUEUE)
 	public void login(String msg) {
 		
-		if (i > 0) {
-			i--;
-			System.out.println("商品还剩:" + i + msg);
-		}
 	}
 
 }

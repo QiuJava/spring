@@ -32,22 +32,18 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-// @Table(name = "recharge")
 public class Recharge extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
 	/** 系统银行账户信息 */
 	private CompanyBankInfo bankInfo;
 	/** 交易号 */
-	// @Column(name = "trade_code")
 	private String tradeCode;
-	// @Column(name = "trade_time")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date tradeTime;
-	// @Column(name = "amount")
 	private BigDecimal amount;
 	/** 操作记录 */
-	// @Column(name = "note")
 	private String note;
 
 	@Id
@@ -56,43 +52,33 @@ public class Recharge extends AuthComponent {
 		return id;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "bank_info_id")
 	@OneToOne
 	public CompanyBankInfo getBankInfo() {
 		return bankInfo;
 	}
 
-	// @Column(name = "state")
 	public Integer getState() {
 		return state;
 	}
 
-	// @Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "auditor_id")
 	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "applier_id")
 	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}
 
-	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

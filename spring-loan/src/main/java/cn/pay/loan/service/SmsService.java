@@ -4,8 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.obj.annotation.NoRequiredLogin;
-
 /**
  * 模拟短信网关系统服务
  * 
@@ -22,7 +20,6 @@ public class SmsService {
 	 * @param content
 	 * @return
 	 */
-	@NoRequiredLogin
 	@RequestMapping("/send")
 	@ResponseBody
 	public String send(String content) {

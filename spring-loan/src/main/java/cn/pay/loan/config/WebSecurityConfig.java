@@ -85,8 +85,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登出时让HttpSession无效
 				.invalidateHttpSession(true);
 
-		// http.addFilterBefore(adminFilterSecurityInterceptor,
-		// FilterSecurityInterceptor.class);
 	}
 
 }

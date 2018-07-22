@@ -30,15 +30,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-// @Table(name = "user_file")
 public class UserFile extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
 	/** 认证分 */
-	// @Column(name = "score")
 	private Integer score = 0;
 	/** 材料文件名 */
-	// @Column(name = "file")
 	private String file;
 	private SystemDictionaryItem fileType;
 
@@ -48,43 +46,33 @@ public class UserFile extends AuthComponent {
 		return id;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "file_type_id")
 	@OneToOne
 	public SystemDictionaryItem getFileType() {
 		return fileType;
 	}
 
-	// @Column(name = "state")
 	public Integer getState() {
 		return state;
 	}
 
-	// @Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "auditor_id")
 	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "applier_id")
 	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}
 
-	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

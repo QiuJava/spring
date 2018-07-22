@@ -26,14 +26,5 @@ public class UrlDoInterceptor extends HandlerInterceptorAdapter {
 			dispatcher.forward(request, response);
 			return false;
 		}
-		/*if (handler instanceof HandlerMethod) {
-			HandlerMethod method = (HandlerMethod) handler;
-			if (method.getMethodAnnotation(NoRequiredLogin.class) == null
-					&& HttpSessionContext.getCurrentLoginInfo() == null) {
-				// 需要登陆，但是当前没有登陆
-				response.sendRedirect("/login.html");
-				return false;
-			}
-		}*/
 	}
 }

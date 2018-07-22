@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import cn.pay.core.redis.RedisService;
 
 /**
- * 用户登录历史Redis服务
+ * 系统权限信息
  * 
  * @author Administrator
  *

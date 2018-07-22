@@ -37,9 +37,6 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 	@Autowired
 	private ConfigAttributeRedisService redisService;
 
-	/** 储存所有系统权限 */
-	// public static Map<String, Collection<ConfigAttribute>> map = null;
-
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		List<Collection<ConfigAttribute>> list = redisService.getAll();
@@ -47,7 +44,6 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 			/**
 			 * 加载资源，初始化资源变量
 			 */
-			// map = new HashMap<>();
 			Collection<ConfigAttribute> con;
 			ConfigAttribute config;
 			List<Role> roleList = roleService.getAll();

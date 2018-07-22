@@ -24,6 +24,7 @@ public class ActiveMQConfig {
 
 	/**
 	 * 登录队列
+	 * 
 	 * @return
 	 */
 	@Bean

@@ -1,5 +1,6 @@
 package cn.pay.core.domain.business;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import cn.pay.core.domain.base.IdComponent;
 import cn.pay.core.util.HttpSessionContext;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,20 +26,16 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
-// @Table(name = "email_verify")
-public class EmailVerify extends IdComponent {
+public class EmailVerify implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 邮箱验证码有效时间 */
 	public final static int VALIDITY_DAY = 5;
 
-	// @Column(name = "verify")
+	private Long id;
 	private String verify;
-	// @Column(name = "email")
 	private String email;
-	// @Column(name = "user_id")
 	private Long userId;
 	/** 校验时间 */
-	// @Column(name = "verify_date")
 	private Date verifyDate;
 
 	@Id

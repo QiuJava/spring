@@ -25,7 +25,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-// @Table(name = "borrow_audit_histroy")
 public class BorrowAuditHistroy extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 	/** 发标审核 */
@@ -35,9 +34,8 @@ public class BorrowAuditHistroy extends AuthComponent {
 	/** 满标二审 */
 	public static final int FULL_AUDIT2 = 2;
 
-	// @Column(name = "audit_type")
+	private Long id;
 	private Integer auditType;
-	// @Column(name = "borrow_id")
 	private Long borrowId;
 
 	@Id
@@ -46,36 +44,28 @@ public class BorrowAuditHistroy extends AuthComponent {
 		return id;
 	}
 
-	// @Column(name = "state")
 	public Integer getState() {
 		return state;
 	}
 
-	// @Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "auditor_id")
 	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "applier_id")
 	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}
 
-	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

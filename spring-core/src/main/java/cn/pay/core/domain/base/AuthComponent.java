@@ -1,5 +1,6 @@
 package cn.pay.core.domain.base;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +17,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class AuthComponent extends IdComponent {
+public class AuthComponent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 审核中 */
 	public static final int AUTH_NORMAL = 0;

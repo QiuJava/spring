@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,28 +29,21 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-// @Table(name = "real_auth")
 public class RealAuth extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 	public static final Integer MAN = 0;
 	public static final Integer WOMAN = 1;
 
-	// @Column(name = "real_name")
+	private Long id;
 	private String realname;
-	// @Column(name = "sex")
 	private Integer sex;
-	// @Column(name = "brith_date")
 	private String birthDate;
 	/** 身份证号码 */
-	// @Column(name = "id_number")
 	private String idNumber;
-	// @Column(name = "address")
 	private String address;
 	/** 身份证正面 */
-	// @Column(name = "image1")
 	private String image1;
 	/** 身份证反面 */
-	// @Column(name = "image2")
 	private String image2;
 
 	@Id
@@ -60,36 +52,28 @@ public class RealAuth extends AuthComponent {
 		return id;
 	}
 
-	@Column(name = "state")
 	public Integer getState() {
 		return state;
 	}
 
-	@Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "auditor_id")
 	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
 
-	// @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	// @JoinColumn(name = "applier_id")
 	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}
 
-	// @Column(name = "apply_time")
 	public Date getApplyTime() {
 		return applyTime;
 	}
 
-	// @Column(name = "audit_time")
 	public Date getAuditTime() {
 		return auditTime;
 	}

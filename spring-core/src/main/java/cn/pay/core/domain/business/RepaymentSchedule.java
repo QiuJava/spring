@@ -1,5 +1,6 @@
 package cn.pay.core.domain.business;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import cn.pay.core.domain.base.IdComponent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,10 +26,10 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-// @Table(name = "repayment_schedule")
-public class RepaymentSchedule extends IdComponent {
+public class RepaymentSchedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
 	/** 正常待还 */
 	public static final int NORMAL = 0;
 	/** 已还 */
@@ -38,35 +38,23 @@ public class RepaymentSchedule extends IdComponent {
 	public static final int OVERDUE = 2;
 
 	/** 应还时间 */
-	// @Column(name = "deadline")
 	private Date deadline;
 	/** 实际还款时间 */
-	// @Column(name = "pay_date")
 	private Date payDate;
 	/** 还款总金额 */
-	// @Column(name = "total_amount")
 	private BigDecimal totalAmount;
 	/** 还款本金 */
-	// @Column(name = "principal")
 	private BigDecimal principal;
 	/** 还款利息 */
-	// @Column(name = "interest")
 	private BigDecimal interest;
 	/** 第几期 */
-	// @Column(name = "month_index")
 	private Integer monthIndex;
-	// @Column(name = "state")
 	private Integer state = RepaymentSchedule.NORMAL;
 	/** 借款类型 */
-	// @Column(name = "borrow_type")
 	private Integer borrowType;
-	// @Column(name = "return_type")
 	private Integer returnType;
-	// @Column(name = "borrow_id")
 	private Long borrowId;
-	// @Column(name = "borrow_user_id")
 	private Long borrowUserId;
-	// @Column(name = "borrow_title")
 	private String borrowTitle;
 	/** 对应的收款的计划 */
 	private List<PaymentPlan> paymentPlanList;
@@ -77,8 +65,6 @@ public class RepaymentSchedule extends IdComponent {
 		return id;
 	}
 
-	//@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	//@JoinColumn(name = "repayment_schedule_id")
 	@OneToMany(mappedBy = "repaymentSchedule")
 	public List<PaymentPlan> getPaymentPlanList() {
 		return paymentPlanList;
