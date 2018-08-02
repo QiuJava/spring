@@ -1,14 +1,13 @@
 package cn.pay.loan.service;
 
-import java.math.BigDecimal;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+
+import cn.pay.core.obj.dto.BidDto;
 import cn.pay.core.service.BorrowService;
-import cn.pay.core.util.StringUtil;
 import cn.pay.loan.config.ActiveMQConfig;
 
 /**
@@ -22,17 +21,16 @@ public class MessageService {
 
 	@Autowired
 	private BorrowService borrowService;
-	
+
 	@JmsListener(destination = ActiveMQConfig.BID_QUEUE)
 	public void bid(String msg) {
-		Map<String, String> map = StringUtil.mapStringToMap(msg);
-		borrowService.bid(Long.valueOf(map.get("borrowId")), new BigDecimal(map.get("amount")),
-				Long.valueOf(map.get("loginInfoId")));
+		BidDto dto = JSON.parseObject(msg, BidDto.class);
+		borrowService.bid(dto.getBorrowId(), dto.getAmount(), dto.getLoginInfoId());
 	}
 
 	@JmsListener(destination = ActiveMQConfig.LOGIN_QUEUE)
 	public void login(String msg) {
-		
+
 	}
 
 }

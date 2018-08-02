@@ -1,8 +1,6 @@
 package cn.pay.loan.web.controller;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.jms.Queue;
 
@@ -13,9 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.pay.core.consts.BidConst;
 import cn.pay.core.domain.business.Borrow;
 import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.obj.dto.BidDto;
 import cn.pay.core.obj.vo.AjaxResult;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.BorrowService;
@@ -87,12 +88,12 @@ public class BorrowController {
 	public AjaxResult bid(Long borrowId, BigDecimal amount) {
 		AjaxResult result = new AjaxResult();
 		// service.bid(borrowId, amount);
-		Map<String, Object> map = new HashMap<>();
-		map.put("borrowId", borrowId);
-		map.put("amount", amount);
-		map.put("loginInfoId", HttpSessionContext.getCurrentLoginInfo().getId());
+		BidDto dto = new BidDto();
+		dto.setBorrowId(borrowId);
+		dto.setAmount(amount);
+		dto.setLoginInfoId(HttpSessionContext.getCurrentLoginInfo().getId());
 		// 发送消息服
-		jmsMessagingTemplate.convertAndSend(bidQueue,map.toString());
+		jmsMessagingTemplate.convertAndSend(bidQueue, JSON.toJSONString(dto));
 		result.setSuccess(true);
 		return result;
 	}
