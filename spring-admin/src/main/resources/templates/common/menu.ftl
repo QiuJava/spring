@@ -11,7 +11,8 @@
 		<ul class="in" id="permissionmanage_detail">
 			<li class="systemDictionary"><a href="/systemDictionary/page.do"><span>系统数据字典目录</span></a></li>
 			<li class="systemDictionaryItem"><a href="/systemDictionaryItem/list.do"><span>系统数据字典明细</span></a></li>
-			<li><a href="/permission_list.do"><span>权限管理</span></a></li>
+			<li class="systemTimedTask_list"><a href="/systemTimedTask/list.do"><span>定时任务管理</span></a></li>
+			<li><a href="#"><span>权限管理</span></a></li>
 			<li><a href="#"><span>角色管理</span></a></li>
 			<li><a href="#"><span>菜单管理</span></a></li>
 			<li class="ipLog"><a href="/iplog.do"><span>登录历史</span></a></li>
@@ -31,7 +32,7 @@
 			<li class="bidrequest_audit2_list"><a href="/borrow/audit2.do">满标二审</a></li>
 			<li class="rechargeOffline"><a href="/recharge.do">线下充值审核</a></li>
 			<li class="moneyWithdraw"><a href="/withdraw.do">提现审核</a></li>
-			<li class=""><a href="/moneyWithdraw_translist.do">提现转账确认</a></li>
+			<li class="moneyWithdraw_translist"><a href="/moneyWithdraw_translist.do">提现转账确认</a></li>
 		</ul>
 	</li>
 	<li class="list-group-item">
@@ -39,10 +40,10 @@
 			<span>平台管理</span>
 		</a>
 		<ul class="in" id="systemmanage_detail">
-			<li><a href="/real_auth_list.do">系统账户流水</a></li>
+			<li><a href="#">系统账户流水</a></li>
 			<li class="companyBank_list"><a href="/companyBankInfo.do">平台账户管理</a></li>
-			<li><a href="/bid_request_list.do"> <span>系统设置</span></a></li>
-			<li><a href="/bid_request_list.do"> <span>企业资讯</span></a></li>
+			<li><a href="#"> <span>系统设置</span></a></li>
+			<li><a href="#"> <span>企业资讯</span></a></li>
 			<li><span><a href="#">友情链接</a></span></li>
 			<li><span><a href="#">广告设置</a></span></li>
 		</ul>

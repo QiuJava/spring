@@ -13,6 +13,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class JobQo extends BaseQo {
+public class SystemTimedTaskQo extends BaseQo {
 	private static final long serialVersionUID = 1L;
+	
+	private String groupName;
 }

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pay.core.obj.vo.AjaxResult;
-import cn.pay.core.util.HttpSessionContext;
 import cn.pay.core.util.StringUtil;
 
 /**
@@ -26,7 +25,6 @@ public class IndexController {
 		if (StringUtil.hasLength(msg)) {
 			return new AjaxResult(msg);
 		}
-		HttpSessionContext.setCurrentLoginInfo(HttpSessionContext.getLoginInfoBySecurity());
 		return new AjaxResult(true, "登录成功");
 	}
 
