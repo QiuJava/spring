@@ -52,8 +52,6 @@ public class SystemTimedTask implements Serializable {
 		switch (status) {
 		case PAUSE:
 			return "暂停";
-		case NORMAL:
-			return "开启";
 		default:
 			return "开启";
 		}
