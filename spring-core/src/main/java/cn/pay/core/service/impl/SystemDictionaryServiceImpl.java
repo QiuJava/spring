@@ -35,11 +35,13 @@ public class SystemDictionaryServiceImpl implements SystemDictionaryService {
 
 	@Override
 	@Transactional
-	public void save(SystemDictionary systemDictionary) {
+	public SystemDictionary save(SystemDictionary systemDictionary) {
 		SystemDictionary dictionary = repository.saveAndFlush(systemDictionary);
 		if (dictionary == null) {
 			throw new LogicException("系统字典更新异常");
 		}
+		
+		return dictionary;
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package cn.pay.core.service;
 
 
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import cn.pay.core.domain.sys.LoginInfo;
@@ -62,5 +64,11 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @param info
 	 */
 	void saveAndUpdate(LoginInfo info);
+	
+	/**
+	 * 查询所有用户
+	 * @return
+	 */
+	List<LoginInfo> listAll();
 
 }

@@ -59,7 +59,7 @@ public class AdminApplicationTests {
 					sb.append(methodStrs[0]);
 					sb.append(".do");
 					role.setUrl(sb.toString());
-					role.setName("ROLE_");
+					role.setName("ROLE_" + sb.toString());
 					// 保存权限
 					roleService.save(role);
 				}

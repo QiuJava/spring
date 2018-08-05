@@ -108,4 +108,9 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 			throw new UsernameNotFoundException("用户名: " + username + " 不存在!");
 		}
 	}
+
+	@Override
+	public List<LoginInfo> listAll() {
+		return repository.findAll();
+	}
 }

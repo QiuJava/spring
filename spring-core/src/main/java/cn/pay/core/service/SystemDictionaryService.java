@@ -27,7 +27,7 @@ public interface SystemDictionaryService {
 	 * 
 	 * @param systemDictionary
 	 */
-	void save(SystemDictionary systemDictionary);
+	SystemDictionary save(SystemDictionary systemDictionary);
 
 	/**
 	 * 获取字典列表用于页面分页查询

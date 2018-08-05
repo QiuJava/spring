@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.pay.core.dao.IpLogRepository;
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.obj.qo.IpLogQo;
-import cn.pay.core.redis.service.IpLogRedisService;
 import cn.pay.core.service.IpLogService;
 
 @Service
@@ -29,11 +28,11 @@ public class IpLogServiceImpl implements IpLogService {
 	@Autowired
 	private IpLogRepository repository;
 
-	@Autowired
-	private IpLogRedisService redisService;
+	// @Autowired
+	// private IpLogRedisService redisService;
 
 	@Override
-	//@Cacheable("page")
+	// @Cacheable("page")
 	public Page<IpLog> page(IpLogQo qo) {
 		Page<IpLog> page = repository.findAll(new Specification<IpLog>() {
 			@Override
@@ -63,18 +62,18 @@ public class IpLogServiceImpl implements IpLogService {
 	}
 
 	@Override
-	//@Cacheable("getNewestIpLog")
+	// @Cacheable("getNewestIpLog")
 	public IpLog getNewestIpLog(String username) {
 		List<IpLog> list = repository.findByUsernameOrderByLoginTimeDesc(username, new PageRequest(0, 1));
 		return list.get(0);
 	}
 
-	//@CacheEvict(value = { "page" }, allEntries = true)
+	// @CacheEvict(value = { "page" }, allEntries = true)
 	@Override
 	@Transactional
 	public void saveAndUpdate(IpLog ipLog) {
-		IpLog log = repository.saveAndFlush(ipLog);
-		redisService.put(log.getId().toString(), log, -1);
+		repository.saveAndFlush(ipLog);
+		// redisService.put(log.getId().toString(), log, -1);
 	}
 
 }
