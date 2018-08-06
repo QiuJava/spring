@@ -1,8 +1,8 @@
 package cn.pay.admin.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import cn.pay.core.service.AccountService;
 
@@ -12,14 +12,15 @@ import cn.pay.core.service.AccountService;
  * @author Administrator
  *
  */
-@RestController
+@Controller
 public class LogicService {
 
 	@Autowired
 	private AccountService accountService;
 
 	@RequestMapping("/account/flush")
-	public void flush() {
+	public String flush() {
 		accountService.flushAccountVerify();
+		return "main";
 	}
 }
