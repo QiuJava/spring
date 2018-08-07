@@ -44,8 +44,8 @@ public class LoanLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
 		ipLogService.saveAndUpdate(ipLog);
 
-		// response.sendRedirect(SysConst.INDEX_DO);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX_DO);
+		// response.sendRedirect(SysConst.INDEX);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}
 

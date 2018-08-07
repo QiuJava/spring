@@ -118,7 +118,7 @@
 				借款信息
 				<label class="label label-primary">信用标</label>
 			</div>
-			<form class="form-horizontal el-borrow-form" id="editForm" novalidate="novalidate" method="post" action="/borrow/apply.do">
+			<form class="form-horizontal el-borrow-form" id="editForm" novalidate="novalidate" method="post" action="/borrow/apply">
 				<div class="form-group">
 					<label class="col-sm-3 control-label">
 						借款金额

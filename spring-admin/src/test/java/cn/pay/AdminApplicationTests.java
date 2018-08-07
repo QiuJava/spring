@@ -2,6 +2,7 @@ package cn.pay;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -9,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Controller;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -39,10 +39,21 @@ public class AdminApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		this.setRole(Controller.class);
+		//setRole(Controller.class);
+		updateRoleList();
+	}
+	
+	public void updateRoleList() {
+		List<Role> list = roleService.getAll();
+		for (Role role : list) {
+			String url = role.getUrl();
+			url = url.replace(".do", "");
+			role.setUrl(url);
+			roleService.save(role);
+		}
 	}
 
-	private void setRole(Class<? extends Annotation> clz) {
+	public void setRole(Class<? extends Annotation> clz) {
 		Map<String, Object> map = ac.getBeansWithAnnotation(clz);
 
 		for (Map.Entry<String, Object> entry : map.entrySet()) {

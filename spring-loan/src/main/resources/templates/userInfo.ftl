@@ -48,7 +48,7 @@
 						<div class="panel-heading">
 							个人资料
 						</div>
-						<form id="userInfoForm" class="form-horizontal" action="/userInfo/basic/save.do" method="post" style="width: 700px;">
+						<form id="userInfoForm" class="form-horizontal" action="/userInfo/basic/save" method="post" style="width: 700px;">
 							<div class="form-group">
 								<label class="col-sm-4 control-label">
 									用户名
@@ -67,7 +67,7 @@
 											${userInfo.realName}
 										<#else>
 											未认证
-											<a href="/realAuth.do">[马上认证]</a>
+											<a href="/realAuth">[马上认证]</a>
 										</#if>
 									</p>
 								</div>
@@ -83,7 +83,7 @@
 											${userInfo.idNumber}
 										<#else>
 											未认证
-											<a href="/realAuth.do">[马上认证]</a>
+											<a href="/realAuth">[马上认证]</a>
 										</#if>
 									</p>
 								</div>

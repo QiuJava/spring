@@ -102,7 +102,7 @@
 							<p class="text-info">您有提现申请正在处理中，请完这个提现申请完成后再次申请；<a href="javascript:;">撤销提现申请</a></p>
 						</div>
 					<#elseif bankInfo??>
-					<form id="editForm" class="form-horizontal el-form" action="/withdraw/apply.do" method="post">
+					<form id="editForm" class="form-horizontal el-form" action="/withdraw/apply" method="post">
 						<div class="form-group">
 							<label class="control-label col-sm-2">开户行</label>
 							<div class="col-sm-10">

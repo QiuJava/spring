@@ -50,7 +50,7 @@
 			<div class="col-sm-3"><#assign currentMenu="iplog" /> <#include "common/leftmenu-tpl.ftl" /></div>
 			<!-- 功能页面 -->
 			<div class="col-sm-9">
-				<form action="/ipLog/page.do" name="searchForm" id="searchForm" class="form-inline" method="post">
+				<form action="/ipLog/page" name="searchForm" id="searchForm" class="form-inline" method="post">
 					<input type="hidden" id="currentPage" name="currentPage" value="1" />
 					<div class="form-group">
 						<label>时间范围</label> <input type="text" class="form-control beginDate" name="beginDate"

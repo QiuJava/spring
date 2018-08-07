@@ -57,7 +57,7 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			ipLogService.saveAndUpdate(ipLog);
 		}
 		request.setAttribute("msg", exception.getMessage());
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX_DO);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}
 

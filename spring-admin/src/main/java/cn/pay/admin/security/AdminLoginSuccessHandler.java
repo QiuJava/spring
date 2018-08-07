@@ -20,8 +20,7 @@ import cn.pay.core.service.IpLogService;
 import cn.pay.core.util.HttpSessionContext;
 
 /**
- * 自定义登录成功处理
- * 记录登录日志
+ * 自定义登录成功处理 记录登录日志
  * 
  * @author Qiujian
  *
@@ -44,9 +43,9 @@ public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ipLog.setLoginTime(new Date());
 		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
 		ipLogService.saveAndUpdate(ipLog);
+		// 登录成功把用户登录信息存储到session
 		HttpSessionContext.setCurrentLoginInfo(loginInfo);
-		// response.sendRedirect(SysConst.INDEX_DO);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX_DO);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}
 

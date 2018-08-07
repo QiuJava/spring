@@ -48,7 +48,7 @@
 						$.messager.popup("投资金额已超过借款标金额");
 						return;
 					}
-					$.post("/borrow/bid.do",{
+					$.post("/borrow/bid",{
 						borrowId : ${borrow.id},
 						amount:amount
 					},function(data){

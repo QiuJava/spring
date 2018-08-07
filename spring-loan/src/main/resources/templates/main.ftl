@@ -74,7 +74,7 @@
 						进行中借款
 					</span>
 					<div class="pull-right">
-						<a class="btn btn-link " href="/invest.do">
+						<a class="btn btn-link " href="/invest">
 							进入投资列表
 						</a>
 					</div>
@@ -109,7 +109,7 @@
 											${data.persent} %
 										</div>
 									</td>
-									<td><a class="btn btn-danger btn-sm" href="/borrow_info.do?id=${data.id}">查看</a></td>
+									<td><a class="btn btn-danger btn-sm" href="/borrow_info?id=${data.id}">查看</a></td>
 								</tr>
 							</#list>							
 						<#else>

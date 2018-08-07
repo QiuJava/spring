@@ -86,7 +86,7 @@
 			$(".deleteClass").click(function(){
 				var id = $(this).data("id");
 				$.messager.confirm("确定","确定删除吗",function(){
-					window.location.href="/systemDictionaryItem/delete.do?itemId="+id;
+					window.location.href="/systemDictionaryItem/delete?itemId="+id;
 				})
 			})
 		});
@@ -106,7 +106,7 @@
 				</div>
 				<div class="col-sm-12">
 					<!-- 提交分页的表单 -->
-					<form id="searchForm" class="form-inline" method="post" action="/systemDictionaryItem/list.do">
+					<form id="searchForm" class="form-inline" method="post" action="/systemDictionaryItem/list">
 						<input type="hidden" id="currentPage" name="currentPage" value="1"/>
 						<input type="hidden" id="systemDictionaryId" name="systemDictionaryId" value="${(qo.systemDictionaryId)!''}" />
 						<div class="form-group">
@@ -169,7 +169,7 @@
 							        <h4 class="modal-title">编辑/增加</h4>
 							      </div>
 							      <div class="modal-body">
-							       	  <form id="editForm" class="form-horizontal" method="post" action="/systemDictionaryItem/update.do" style="margin: -3px 118px">
+							       	  <form id="editForm" class="form-horizontal" method="post" action="/systemDictionaryItem/update" style="margin: -3px 118px">
 										    <input type="hidden" name="id" value="" />
 									    	<input id="systemDictionaryId" type="hidden" name="systemDictionaryId" value="" />
 										   	<div class="form-group">

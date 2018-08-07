@@ -51,7 +51,7 @@
 						</div>
 					</div>
 					<div class="row">
-					  <form method="POST" action="/userFile/updateType.do" id="editForm">
+					  <form method="POST" action="/userFile/updateType" id="editForm">
 					  <#list userFiles as vo>
 					  <div class="col-sm-6 col-md-4">
 					    <div class="thumbnail">

@@ -17,11 +17,10 @@ public class SysConst {
 	public static final String LOGIN_PASSWORD = "123456";
 
 	public static final String URL_LOGIN_HTML = "/login.html";
-	public static final String URL_LOGIN_INFO_LOGIN_DO = "/loginInfo/login.do";
-	public static final String URL_LOGIN_INFO_LOGOUT_DO = "/loginInfo/logout.do";
-	public static final String URL_LOGIN_INFO_AJAX_DO = "/loginInfo/ajax.do";
+	public static final String URL_LOGIN_INFO_LOGIN = "/loginInfo/login";
+	public static final String URL_LOGIN_INFO_LOGOUT = "/loginInfo/logout";
+	public static final String URL_LOGIN_INFO_AJAX = "/loginInfo/ajax";
 	
-	public static final String URL_SUFFIX_DO = "*.do";
 	public static final String URL_ALL = "/**";
 	
 }

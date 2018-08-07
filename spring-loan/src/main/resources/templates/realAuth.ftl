@@ -72,7 +72,7 @@
 				multi:false,//是否允许多选
 				fileTypeExts:'*.gif; *.jpg; *.png',//控制上传文件的后缀
 				swf:"/js/plugins/uploadify/uploadify.swf",//falsh文件的地址
-				uploader:"/realAuth/upload.do",//后台处理上传文件的地址;
+				uploader:"/realAuth/upload",//后台处理上传文件的地址;
 				overrideEvents:['onUploadSuccess','onUploadProgress','onSelect'],
 				onUploadSuccess:function(file,data){
 					$("#uploadImg1").attr("src",data);
@@ -88,7 +88,7 @@
 				multi:false,//是否允许多选
 				fileTypeExts:'*.gif; *.jpg; *.png',//控制上传文件的后缀
 				swf:"/js/plugins/uploadify/uploadify.swf",//falsh文件的地址
-				uploader:"/realAuth/upload.do",//后台处理上传文件的地址;
+				uploader:"/realAuth/upload",//后台处理上传文件的地址;
 				overrideEvents:['onUploadSuccess','onUploadProgress','onSelect'],
 				onUploadSuccess:function(file,data){
 					$("#uploadImg2").attr("src",data);
@@ -127,7 +127,7 @@
 						<div class="panel-heading">
 							实名认证
 						</div>
-							<form class="form-horizontal" id="realAuthForm" method="post" action="/realAuth/save.do" novalidate="novalidate">
+							<form class="form-horizontal" id="realAuthForm" method="post" action="/realAuth/save" novalidate="novalidate">
 							<fieldset>
 								<div class="form-group">
 									<p class="text-center text-danger">为保护您账户安全，实名认证成功之后不能修改信息，请认真填写！</p>

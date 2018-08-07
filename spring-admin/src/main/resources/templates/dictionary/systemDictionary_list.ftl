@@ -58,7 +58,7 @@
 		$(".deleteClass").click(function(){
 			var id = $(this).data("dataid");
 			$.messager.confirm("确认","你确定删除这条数据吗?",function(){
-				window.location.href='/systemDictionary/delete.do?id='+id; 
+				window.location.href='/systemDictionary/delete?id='+id; 
 			});
 		});
 	});
@@ -78,7 +78,7 @@
 				<div class="row">
 					<!-- 提交分页的表单 -->
 					<form id="searchForm" class="form-inline" method="post"
-						action="/systemDictionary/page.do">
+						action="/systemDictionary/page">
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 						<div class="form-group">
 							<label>关键字</label> <input class="form-control" type="text"
@@ -129,7 +129,7 @@
 				        <h4 class="modal-title">编辑/增加</h4>
 				      </div>
 				      <div class="modal-body">
-			       		<form id="editForm" class="form-horizontal" method="post" action="/systemDictionary/update.do" style="margin: -3px 118px">
+			       		<form id="editForm" class="form-horizontal" method="post" action="/systemDictionary/update" style="margin: -3px 118px">
 						    <input id="systemDictionaryId" type="hidden" name="id" value="" />
 						   	<div class="form-group">
 							    <label class="col-sm-2 control-label">名称</label>

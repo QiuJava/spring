@@ -28,7 +28,7 @@ body{
 		$("#loginForm").ajaxForm({success:function(data){
 			console.debug(data);
 			if(data.success){
-				window.location.href="/index.do";
+				window.location.href="/index";
 			}else{
 				$.messager.alert("错误",data.msg);
 			}
@@ -42,7 +42,7 @@ body{
 		<h3 class="text-center">系统管理平台</h3>
 		<hr />
 		<div class="login">
-			<form id="loginForm" action="/loginInfo/login.do" method="post">
+			<form id="loginForm" action="/loginInfo/login" method="post">
 				<div class="form-group form-group-lg">
 					<div class="input-group">
 						<div class="input-group-addon">用户名</div>

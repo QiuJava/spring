@@ -95,7 +95,7 @@
 			    	<div>
 			    		<p class="text-primary h4" style="padding: 0px;margin: 0px;;">第一步:</p><p class="text-primary">请选择往以上一个账号汇款或转账您所要充值的金额（若您是跨行转账，推荐选择建行）。注：请保存您的交易记录信息。</p>
 			    		<p class="text-primary h4" style="padding: 0px;margin: 0px;;">第二步:</p><p class="text-primary">款或转账成功后，再选择你所汇款或转账的账号，并填写以下完整的信息后，提交您的线下充值申请。我们将会在下个工作日核对您的申请。</p>
-			    		<form id="rechargeForm" class="form-horizontal el-recharge-form" action="/recharge/save.do" method="post">
+			    		<form id="rechargeForm" class="form-horizontal el-recharge-form" action="/recharge/save" method="post">
 			    			<div class="form-group">
 			    				<label class="control-label col-lg-2">银行</label>
 			    				<div class="col-sm-10">

@@ -28,19 +28,19 @@
 					<ul>
 						<li>
 							<#if !(userInfo.isBasicInfo)>
-								<a href="/basicInfo.do">填写基本资料</a>
+								<a href="/basicInfo">填写基本资料</a>
 								<span class="glyphicon glyphicon-remove" style="color:red;"></span>
 							<#else>填写基本资料<span class="glyphicon glyphicon-ok" style="color:green;"></span></#if>
 						</li>
 						<li>
 							<#if !(userInfo.isRealAuth)>
-								<a href="/realAuth.do">身份认证</a>
+								<a href="/realAuth">身份认证</a>
 								<span class="glyphicon glyphicon-remove" style="color:red;"></span>
 							<#else>身份认证<span class="glyphicon glyphicon-ok" style="color:green;"></span></#if>
 						</li>
 						<li>
 							<#if (userInfo.authScore < creditBorrowScore) >
-								<a href="/userFile.do">材料认证分数达到${creditBorrowScore}分</a>
+								<a href="/userFile">材料认证分数达到${creditBorrowScore}分</a>
 								<span class="glyphicon glyphicon-remove" style="color:red;"></span>
 							<#else>材料认证分数达到${creditBorrowScore}分<span class="glyphicon glyphicon-ok" style="color:green;"></span></#if>
 						</li>
@@ -50,7 +50,7 @@
 						</li>
 					</ul>
 					<#if userInfo.isBasicInfo && userInfo.isRealAuth &&(userInfo.authScore >= creditBorrowScore) >
-						<a href="/borrow/info.do" class="el-borrow-apply">
+						<a href="/borrow/info" class="el-borrow-apply">
 							申请贷款
 						</a>
 					<#else>

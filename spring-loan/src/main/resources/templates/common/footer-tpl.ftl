@@ -12,7 +12,7 @@
 						：粤ICP备字0001</a>
 				</p>
 				<p>
-					<a href="http://www.gzjd.gov.cn/wlaqjc/open/validateSite.do" style="color: #ffffff">穗公网安备：44010650010086</a>
+					<a href="http://www.gzjd.gov.cn/wlaqjc/open/validateSite" style="color: #ffffff">穗公网安备：44010650010086</a>
 				</p>
 			</div>
 			<div class="right">

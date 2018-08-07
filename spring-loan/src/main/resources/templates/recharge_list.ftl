@@ -54,7 +54,7 @@
 				</div>
 				<!-- 功能页面 -->
 				<div class="col-sm-9">
-					<form action="/recharge/list.do" name="searchForm" id="searchForm" class="form-inline">
+					<form action="/recharge/list" name="searchForm" id="searchForm" class="form-inline">
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 						<div class="form-group">
 							<label>时间范围</label>
@@ -83,7 +83,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<span class="pull-left" style="line-height: 35px;">充值明细</span>
-							<a class="pull-right btn btn-danger btn-sm" href="/recharge.do">
+							<a class="pull-right btn btn-danger btn-sm" href="/recharge">
 								账户充值
 							</a>
 							<div class="clearfix"></div>

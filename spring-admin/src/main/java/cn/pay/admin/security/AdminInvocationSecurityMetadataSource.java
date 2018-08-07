@@ -69,16 +69,7 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		Collection<ConfigAttribute> con = new ArrayList<>();
-		ConfigAttribute config;
-		List<Role> roleList = roleService.getAll();
-		for (Role role : roleList) {
-			config = new SecurityConfig(role.getName());
-			con.add(config);
-		}
-		
-		log.info("所有系统安全信息给到SpringSecurity");
-		return con;
+		return new ArrayList<>();
 	}
 
 	@Override

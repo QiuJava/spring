@@ -69,7 +69,7 @@
 				<div class="page-header">
 					<h3>满标二审管理</h3>
 				</div>
-				<form id="searchForm" class="form-inline" method="post" action="/borrow/audit2.do">
+				<form id="searchForm" class="form-inline" method="post" action="/borrow/audit2">
 					<input type="hidden" id="currentPage" name="currentPage" value="1"/>
 				</form>
 				<div class="panel panel-default">
@@ -91,7 +91,7 @@
 						<#list pageResult.content as data>
 							<tr>
 								<td>
-									<a target="_blank" href="/borrow/info.do?id=${data.id}">${data.title}</a>&emsp;<span class="label label-primary">信</span>
+									<a target="_blank" href="/borrow/info?id=${data.id}">${data.title}</a>&emsp;<span class="label label-primary">信</span>
 								</td>
 								<td>${data.createUser.username}</td>
 								<td>${(data.publishTime?datetime)!'未发布'}</td>
@@ -117,7 +117,7 @@
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-body">
-		      	<form class="form-horizontal" id="editform" method="post" action="/borrow/audit2/audit.do">
+		      	<form class="form-horizontal" id="editform" method="post" action="/borrow/audit2/audit">
 					<fieldset>
 						<div id="legend" class="">
 							<legend>满标二审</legend>

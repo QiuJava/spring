@@ -42,7 +42,7 @@
 						$.ajax({
 							dataType:"json",
 							type:"POST",
-							url:"/repaymentSchedule/repay.do",
+							url:"/repaymentSchedule/repay",
 							data:{id:$(this).data("rid")},
 							success:function(data){
 								if(data.success){
@@ -78,7 +78,7 @@
 				</div>
 				<!-- 功能页面 -->
 				<div class="col-sm-9">
-					<form action="/repaymentSchedule.do" name="searchForm" id="searchForm" class="form-inline" method="post">
+					<form action="/repaymentSchedule" name="searchForm" id="searchForm" class="form-inline" method="post">
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 						<div class="form-group">
 							<label>时间范围</label>
@@ -107,7 +107,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<span class="pull-left" style="line-height: 35px;">还款明细</span>
-							<a class="pull-right btn btn-danger btn-sm" href="/recharge.do">
+							<a class="pull-right btn btn-danger btn-sm" href="/recharge">
 								账户充值
 							</a>
 							<div class="clearfix"></div>
@@ -128,7 +128,7 @@
 							<tbody>
 								<#list pageResult.content as data>
 									<tr>
-										<td><a href="/borrow_info.do?id=${data.borrowId}">${data.borrowTitle}</a></td>
+										<td><a href="/borrow_info?id=${data.borrowId}">${data.borrowTitle}</a></td>
 										<td>${data.totalAmount}元</td>
 										<td>${data.principal}元</td>
 										<td>${data.interest}元</td>

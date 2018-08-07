@@ -74,7 +74,7 @@
 				<div class="page-header">
 					<h3>用户征信文件审核管理</h3>
 				</div>
-				<form id="searchForm" class="form-inline" method="post" action="/userFile.do">
+				<form id="searchForm" class="form-inline" method="post" action="/userFile">
 					<input type="hidden" id="currentPage" name="currentPage" value="1"/>
 					<div class="form-group">
 					    <label>状态</label>
@@ -137,7 +137,7 @@
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-body">
-		      	<form class="form-horizontal" id="editform" method="post" action="/userFile/audit.do">
+		      	<form class="form-horizontal" id="editform" method="post" action="/userFile/audit">
 					<fieldset>
 						<div id="legend" class="">
 							<legend>实名认证审核</legend>

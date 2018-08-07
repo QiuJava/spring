@@ -35,7 +35,7 @@
 	<!-- 网页内容 -->
 	<div class="container" style="min-height: 500px;">
 		<h4 class="page-title">投资列表</h4>
-		<form action="/invest/list.do" id="searchForm">
+		<form action="/invest/list" id="searchForm">
 			<input type="hidden" name="currentPage" id="currentPage" value="1">
 			<div style="margin: 20px 0px;">
 					<span class="text-muted">标的状态</span><div style="margin-left: 30px" class="btn-group" data-toggle="buttons">

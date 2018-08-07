@@ -21,7 +21,7 @@
 				$.ajax({
 					dataType : "json",
 					type : "POST",
-					url : "/userInfo/verifyCode.do",
+					url : "/userInfo/verifyCode",
 					data : {
 						phoneNumber : pn
 					},
@@ -71,7 +71,7 @@
 				$.ajax({
 					dataType : "json",
 					type : "POST",
-					url : "/email/send.do",
+					url : "/email/send",
 					data : {
 						email : em
 					},
@@ -118,8 +118,8 @@
 								<p>最后登录时间：${ipLog.loginTime?datetime}</p>
 							</div>
 							<div class="pull-left" style="text-align: center; width: 400px; margin: 30px auto 0px auto;">
-								<a class="btn btn-primary btn-lg" href="/recharge.do">账户充值</a> <a class="btn btn-danger btn-lg"
-									href="/withdraw.do">账户提现</a>
+								<a class="btn btn-primary btn-lg" href="/recharge">账户充值</a> <a class="btn btn-danger btn-lg"
+									href="/withdraw">账户提现</a>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -159,11 +159,11 @@
 											<h5>实名认证</h5>
 											<#if userInfo.isRealAuth>
 											<p>
-												已认证 <a href="/realAuth.do">查看</a>
+												已认证 <a href="/realAuth">查看</a>
 											</p>
 											<#else>
 											<p>
-												未认证 <a href="/realAuth.do">马上认证</a>
+												未认证 <a href="/realAuth">马上认证</a>
 											</p>
 											</#if>
 										</div>
@@ -248,7 +248,7 @@
 					<h4 class="modal-title" id="exampleModalLabel">绑定手机</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" id="bindForm" method="post" action="/userInfo/bindPhone.do">
+					<form class="form-horizontal" id="bindForm" method="post" action="/userInfo/bindPhone">
 						<div class="form-group">
 							<label for="phoneNumber" class="col-sm-2 control-label">手机号:</label>
 							<div class="col-sm-4">
@@ -282,7 +282,7 @@
 					<h4 class="modal-title" id="bindEmailModalLabel">绑定邮箱</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" id="bindEmailForm" method="post" action="/email/send.do">
+					<form class="form-horizontal" id="bindEmailForm" method="post" action="/email/send">
 						<div class="form-group">
 							<label for="email" class="col-sm-2 control-label">邮箱地址:</label>
 							<div class="col-sm-6">

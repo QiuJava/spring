@@ -73,7 +73,7 @@
 				<div class="page-header">
 					<h3>发标前审核管理</h3>
 				</div>
-				<form id="searchForm" class="form-inline" method="post" action="/borrowt/publish.do">
+				<form id="searchForm" class="form-inline" method="post" action="/borrowt/publish">
 					<input type="hidden" id="currentPage" name="currentPage" value="1"/>
 				</form>
 				<div class="panel panel-default">
@@ -95,7 +95,7 @@
 						<#list pageResult.content as data>
 							<tr>
 								<td>
-									<a target="_blank" href="/borrow/info.do?id=${data.id}">${data.title}</a>&emsp;<span class="label label-primary">信</span>
+									<a target="_blank" href="/borrow/info?id=${data.id}">${data.title}</a>&emsp;<span class="label label-primary">信</span>
 								</td>
 								<td>${data.createUser.username}</td>
 								<td>${(data.applyTime?datetime)!'未发布'}</td>
@@ -121,7 +121,7 @@
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-body">
-		      	<form class="form-horizontal" id="editform" method="post" action="/borrow/publish/audit.do">
+		      	<form class="form-horizontal" id="editform" method="post" action="/borrow/publish/audit">
 					<fieldset>
 						<div id="legend" class="">
 							<legend>发标前审核</legend>

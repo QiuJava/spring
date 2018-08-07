@@ -61,19 +61,19 @@
 		$(".deleteClass").click(function(){
 			var id = $(this).data("dataid");
 			$.messager.confirm("确认","你确定删除这个定时任务吗?",function(){
-				window.location.href='/systemTimedTask/delete.do?id='+id; 
+				window.location.href='/systemTimedTask/delete?id='+id; 
 			});
 		});
 		$(".pauseClass").click(function(){
 			var id = $(this).data("dataid");
 			$.messager.confirm("确认","你确定暂停这个定时任务吗?",function(){
-				window.location.href='/systemTimedTask/pause.do?id='+id; 
+				window.location.href='/systemTimedTask/pause?id='+id; 
 			});
 		});
 		$(".resumeClass").click(function(){
 			var id = $(this).data("dataid");
 			$.messager.confirm("确认","你确定重启这个定时任务吗?",function(){
-				window.location.href='/systemTimedTask/resume.do?id='+id; 
+				window.location.href='/systemTimedTask/resume?id='+id; 
 			});
 		});
 	});
@@ -93,7 +93,7 @@
 				<div class="row">
 					<!-- 提交分页的表单 -->
 					<form id="searchForm" class="form-inline" method="post"
-						action="/systemTimedTask/list.do">
+						action="/systemTimedTask/list">
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 						<div class="form-group">
 							<label>组名</label> <input class="form-control" type="text"
@@ -152,7 +152,7 @@
 				        <h4 class="modal-title">编辑/保存</h4>
 				      </div>
 				      <div class="modal-body">
-			       		<form id="editForm" class="form-horizontal" method="post" action="/systemTimedTask/update.do" style="margin: -3px 118px">
+			       		<form id="editForm" class="form-horizontal" method="post" action="/systemTimedTask/update" style="margin: -3px 118px">
 						    <input id="systemTimedTaskId" type="hidden" name="id" value="" />
 						   	<div class="form-group">
 							    <label class="col-sm-2 control-label">名称</label>

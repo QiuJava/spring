@@ -34,7 +34,7 @@
 					fileTypeDesc:"选择风控资料",
 					fileTypeExts:'*.gif; *.jpg; *.png',//控制上传文件的后缀
 					swf:"/js/plugins/uploadify/uploadify.swf",//falsh文件的地址
-					uploader:"/userFile/upload.do?;jsessionid=${sessionid}",//后台处理上传文件的地址;
+					uploader:"/userFile/upload?;jsessionid=${sessionid}",//后台处理上传文件的地址;
 					overrideEvents:['onQueueComplete'],
 					onQueueComplete:function(){
 						window.location.reload();
