@@ -59,7 +59,7 @@ public class BorrowController {
 			return "redirect:/borrow.html";
 		}
 		model.addAttribute("userInfo", userInfoService.get(current.getId()));
-		model.addAttribute("creditBorrowScore", BidConst.CREDIT_BORROW_SCORE);
+		model.addAttribute("creditBorrowScore", BidConst.BORROW_CREDIT_SCORE);
 		model.addAttribute("initBorrowLimit", BidConst.INIT_BORROW_LIMIT);
 		return BORROW;
 	}

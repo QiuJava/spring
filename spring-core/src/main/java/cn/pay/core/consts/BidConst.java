@@ -12,8 +12,6 @@ public class BidConst {
 	private BidConst() {
 	}
 
-	public static final String INIT_TRADE_PASSWORD = "123456";
-
 	/** 显示的精度为2位 */
 	public static final Integer DISP_SCALE = 2;
 	/** 保存到数据库精度为4位 */
@@ -24,22 +22,22 @@ public class BidConst {
 	public static final BigDecimal ZERO = new BigDecimal("0.0000");
 	public static final BigDecimal INIT_BORROW_LIMIT = new BigDecimal("50000.0000");
 
-	/** 达到借款条件的风控材料认证分 */
-	public static final Integer CREDIT_BORROW_SCORE = 30;
+	/** 借款需要的信用分 */
+	public static final Integer BORROW_CREDIT_SCORE = 30;
 
 	public static final BigDecimal MIN_BORROW_AMOUNT = new BigDecimal("500");
 	public static final BigDecimal MIN_BID_AMOUNT = new BigDecimal("1000");
 	public static final BigDecimal MIN_BORROW_RETE = new BigDecimal("5");
 	public static final BigDecimal MAX_BORROW_RETE = new BigDecimal("15");
-	public static final BigDecimal MIN_WITHDRAW_AMOUNT = new BigDecimal("500");
+	public static final BigDecimal MIN_WITHDRAW_AMOUNT = new BigDecimal("100");
 
 	/** 待发布：借款刚提交 */
 	public static final int BORROW_STATE_PUBLISH_PENDING = 0;
-	/** 招标中：发标审核通过 */
+	/** 招标：发标审核通过 */
 	public static final int BORROW_STATE_BIDDING = 1;
 	/** 已撤销：在发标过程中，如果借款用户撤销了借款或者后台管理员撤销了借款 */
 	public static final int BORROW_STATE_UNDO = 2;
-	/** 流标：在招标时间内，标的没有投满 */
+	/** 过期：在招标时间内，标的没有投满 */
 	public static final int BORROW_STATE_BIDDING_OVERDUE = 3;
 	/** 满标1审：满标后进入满标一审（待审） */
 	public static final int BORROW_STATE_APPROVE_PENDING_1 = 4;

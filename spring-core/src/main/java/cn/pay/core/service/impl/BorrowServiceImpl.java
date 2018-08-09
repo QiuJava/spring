@@ -95,7 +95,7 @@ public class BorrowServiceImpl implements BorrowService {
 		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
 		return userInfo.getIsBasicInfo()
 				// 满足条件认证分
-				&& userInfo.getAuthScore() >= BidConst.CREDIT_BORROW_SCORE
+				&& userInfo.getAuthScore() >= BidConst.BORROW_CREDIT_SCORE
 				// 没有借款在审核流程
 				&& !userInfo.getHasBorrow()
 				// 是实名认证

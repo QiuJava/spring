@@ -1,6 +1,5 @@
 package cn.pay.core.service;
 
-
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,21 +9,10 @@ import cn.pay.core.domain.sys.LoginInfo;
 /**
  * 用户登录
  * 
- * @author Administrator
+ * @author Qiu jian
  *
  */
 public interface LoginInfoService extends UserDetailsService {
-
-	/**
-	 * 用户登录验证
-	 * 
-	 * @param username
-	 * @param password
-	 * @param ip
-	 * @param manager
-	 * @return
-	 */
-	//LoginInfo login(String username, String password, String ip, Integer manager);
 
 	/**
 	 * 前台页面注册
@@ -64,9 +52,10 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @param info
 	 */
 	void saveAndUpdate(LoginInfo info);
-	
+
 	/**
 	 * 查询所有用户
+	 * 
 	 * @return
 	 */
 	List<LoginInfo> listAll();

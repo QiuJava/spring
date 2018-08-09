@@ -10,6 +10,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -28,11 +30,8 @@ public class IpLogServiceImpl implements IpLogService {
 	@Autowired
 	private IpLogRepository repository;
 
-	// @Autowired
-	// private IpLogRedisService redisService;
-
 	@Override
-	// @Cacheable("page")
+	@Cacheable("page")
 	public Page<IpLog> page(IpLogQo qo) {
 		Page<IpLog> page = repository.findAll(new Specification<IpLog>() {
 			@Override
@@ -62,18 +61,17 @@ public class IpLogServiceImpl implements IpLogService {
 	}
 
 	@Override
-	// @Cacheable("getNewestIpLog")
+	@Cacheable("getNewestIpLog")
 	public IpLog getNewestIpLog(String username) {
 		List<IpLog> list = repository.findByUsernameOrderByLoginTimeDesc(username, new PageRequest(0, 1));
 		return list.get(0);
 	}
 
-	// @CacheEvict(value = { "page" }, allEntries = true)
+	@CacheEvict(value = { "page", "getNewestIpLog" }, allEntries = true)
 	@Override
 	@Transactional
 	public void saveAndUpdate(IpLog ipLog) {
 		repository.saveAndFlush(ipLog);
-		// redisService.put(log.getId().toString(), log, -1);
 	}
 
 }

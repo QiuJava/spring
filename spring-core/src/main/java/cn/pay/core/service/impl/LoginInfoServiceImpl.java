@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,7 +61,6 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 			account.setId(info.getId());
 			account.setBorrowLimit(BidConst.INIT_BORROW_LIMIT);
 			account.setRemainBorrowLimit(BidConst.INIT_BORROW_LIMIT);
-			account.setTradePassword(BidConst.INIT_TRADE_PASSWORD);
 			accountService.save(account);
 
 			UserInfo userInfo = new UserInfo();
@@ -86,11 +87,12 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 
 	@Override
 	@Transactional
+	@CacheEvict(value = { "loadUserByUsername" }, allEntries = true)
 	public void saveAndUpdate(LoginInfo info) {
 		repository.saveAndFlush(info);
 	}
 
-	// @Cacheable("loadUserByUsername")
+	@Cacheable("loadUserByUsername")
 	@Transactional
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

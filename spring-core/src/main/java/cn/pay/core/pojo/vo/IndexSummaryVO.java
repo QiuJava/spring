@@ -1,5 +1,6 @@
 package cn.pay.core.pojo.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +20,9 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class IndexSummaryVO {
+public class IndexSummaryVO implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private Integer totalBorrowUser;
 	private BigDecimal totalBorrowAmount;
 	private BigDecimal totalInterestAmount;

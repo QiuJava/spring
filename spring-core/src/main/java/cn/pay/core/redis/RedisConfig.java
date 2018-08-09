@@ -48,7 +48,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 		RedisSerializer<?> stringRedisSerializer = new StringRedisSerializer();
 		redisTemplate.setKeySerializer(stringRedisSerializer);
 		redisTemplate.setHashKeySerializer(stringRedisSerializer);
-		
+
 		RedisSerializer<?> jdkSerializationRedisSerializer = new JdkSerializationRedisSerializer();
 		redisTemplate.setHashValueSerializer(jdkSerializationRedisSerializer);
 		redisTemplate.setValueSerializer(jdkSerializationRedisSerializer);
@@ -74,7 +74,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 			}
 		};
 	}
-	
+
 	/**
 	 * 缓存管理器
 	 * 
@@ -83,8 +83,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 */
 	@Bean
 	public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
-		CacheManager cacheManager = new RedisCacheManager(redisTemplate);
-		return cacheManager;
+		return new RedisCacheManager(redisTemplate);
 	}
 
 	/**
