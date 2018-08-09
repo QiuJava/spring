@@ -7,8 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.pay.core.domain.sys.IpLog;
-import cn.pay.core.obj.qo.IpLogQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.IpLogQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.IpLogService;
 
 /**

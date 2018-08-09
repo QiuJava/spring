@@ -17,7 +17,7 @@ import cn.pay.core.consts.SysConst;
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.service.IpLogService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 自定义登录成功处理 记录登录日志
@@ -44,7 +44,7 @@ public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
 		ipLogService.saveAndUpdate(ipLog);
 		// 登录成功把用户登录信息存储到session
-		HttpSessionContext.setCurrentLoginInfo(loginInfo);
+		HttpServletContext.setCurrentLoginInfo(loginInfo);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}

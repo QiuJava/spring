@@ -5,11 +5,11 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import cn.pay.core.obj.event.BorrowEvent;
-import cn.pay.core.obj.event.PaymentPlanEvent;
-import cn.pay.core.obj.event.RealAuthEvent;
-import cn.pay.core.obj.event.RechargeEvent;
-import cn.pay.core.obj.event.WithdrawEvent;
+import cn.pay.core.pojo.event.BorrowEvent;
+import cn.pay.core.pojo.event.PaymentPlanEvent;
+import cn.pay.core.pojo.event.RealAuthEvent;
+import cn.pay.core.pojo.event.RechargeEvent;
+import cn.pay.core.pojo.event.WithdrawEvent;
 import cn.pay.core.service.SendSmsService;
 
 /**

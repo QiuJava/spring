@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.pay.core.domain.sys.SystemTimedTask;
-import cn.pay.core.obj.qo.SystemTimedTaskQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.SystemTimedTaskQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.SystemTimedTaskService;
 
 /**

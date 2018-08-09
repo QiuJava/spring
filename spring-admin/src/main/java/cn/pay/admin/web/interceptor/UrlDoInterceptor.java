@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 登陆拦截器
@@ -22,7 +22,7 @@ public class UrlDoInterceptor extends HandlerInterceptorAdapter {
 		String servletPath = request.getServletPath();
 		if (servletPath.endsWith(".do") || "/error".equals(servletPath)) {
 			// 是否登录拦截
-			LoginInfo loginInfo = HttpSessionContext.getCurrentLoginInfo();
+			LoginInfo loginInfo = HttpServletContext.getCurrentLoginInfo();
 			if (loginInfo == null) {
 				response.sendRedirect("/login.html");
 				return false;

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pay.core.domain.business.RealAuth;
-import cn.pay.core.obj.qo.RealAuthQo;
-import cn.pay.core.obj.vo.AjaxResult;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.RealAuthQo;
+import cn.pay.core.pojo.vo.AjaxResult;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.RealAuthService;
 
 /**

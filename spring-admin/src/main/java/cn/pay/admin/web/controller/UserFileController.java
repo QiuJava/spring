@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pay.core.domain.business.UserFile;
-import cn.pay.core.obj.qo.UserFileQo;
-import cn.pay.core.obj.vo.AjaxResult;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.UserFileQo;
+import cn.pay.core.pojo.vo.AjaxResult;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.UserFileService;
 
 /**

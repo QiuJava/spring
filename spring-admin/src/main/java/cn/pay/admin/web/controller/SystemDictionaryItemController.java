@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.pay.core.domain.sys.SystemDictionaryItem;
-import cn.pay.core.obj.qo.SystemDictionaryQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.SystemDictionaryQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.SystemDictionaryService;
 
