@@ -14,7 +14,7 @@ import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.service.EmailVerifyService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 
 @Service
@@ -46,7 +46,7 @@ public class EmailVerifyServiceImpl implements EmailVerifyService {
 
 	@Override
 	public void send(String email) {
-		UserInfo userInfo = userInfoService.get(HttpSessionContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
 		// 如果用户已经绑定邮箱,直接略过
 		if (!userInfo.getIsBindEmail()) {
 			// 创建一个绑定用户的验证对象

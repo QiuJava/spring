@@ -25,16 +25,16 @@ import cn.pay.core.domain.business.Account;
 import cn.pay.core.domain.business.UserBankInfo;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.domain.business.Withdraw;
-import cn.pay.core.obj.event.WithdrawEvent;
-import cn.pay.core.obj.qo.WithdrawQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.event.WithdrawEvent;
+import cn.pay.core.pojo.qo.WithdrawQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.AccountFlowService;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.UserBankInfoService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.service.WithdrawServcie;
 import cn.pay.core.util.BidStateUtil;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 @Service
 public class WithdrawServcieImpl implements WithdrawServcie {
@@ -57,7 +57,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 	@Override
 	@Transactional
 	public void apply(BigDecimal moneyAmount) {
-		Long id = HttpSessionContext.getCurrentLoginInfo().getId();
+		Long id = HttpServletContext.getCurrentLoginInfo().getId();
 		UserInfo userInfo = userInfoService.get(id);
 		Account account = accountService.get(id);
 		// 拿到当前银行账户对象
@@ -74,7 +74,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 			withdraw.setMoneyAmount(moneyAmount);
 			withdraw.setApplyTime(new Date());
 			withdraw.setState(Withdraw.AUTH_NORMAL);
-			withdraw.setApplier(HttpSessionContext.getCurrentLoginInfo());
+			withdraw.setApplier(HttpServletContext.getCurrentLoginInfo());
 			// 保存对象
 			repository.saveAndFlush(withdraw);
 			// 修改用户状态
@@ -99,7 +99,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 			// 拿到当前申请人的账户对象
 			Account currentAccount = accountService.get(withdraw.getApplier().getId());
 			// 设置提相关状态
-			withdraw.setAuditor((HttpSessionContext.getCurrentLoginInfo()));
+			withdraw.setAuditor((HttpServletContext.getCurrentLoginInfo()));
 			withdraw.setRemark(remark);
 			withdraw.setAuditTime(new Date());
 			withdraw.setState(state);

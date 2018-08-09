@@ -38,9 +38,9 @@ import cn.pay.core.domain.business.PaymentPlan;
 import cn.pay.core.domain.business.RepaymentSchedule;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.obj.event.BorrowEvent;
-import cn.pay.core.obj.qo.BorrowQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.event.BorrowEvent;
+import cn.pay.core.pojo.qo.BorrowQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.AccountFlowService;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.BidService;
@@ -54,7 +54,7 @@ import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;
 import cn.pay.core.util.CalculatetUtil;
 import cn.pay.core.util.DecimalFormatUtil;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 import cn.pay.core.util.StringUtil;
 
@@ -92,7 +92,7 @@ public class BorrowServiceImpl implements BorrowService {
 	@Override
 	public boolean isApplyBorrow() {
 		// 拿到当前用户信息
-		UserInfo userInfo = userInfoService.get(HttpSessionContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
 		return userInfo.getIsBasicInfo()
 				// 满足条件认证分
 				&& userInfo.getAuthScore() >= BidConst.CREDIT_BORROW_SCORE
@@ -105,7 +105,7 @@ public class BorrowServiceImpl implements BorrowService {
 	@Override
 	@Transactional
 	public void apply(Borrow borrow) {
-		LoginInfo currentLoginInfo = HttpSessionContext.getCurrentLoginInfo();
+		LoginInfo currentLoginInfo = HttpServletContext.getCurrentLoginInfo();
 		Account account = accountService.get(currentLoginInfo.getId());
 		if (isApplyBorrow()
 				// 借款金额<=剩余信用额度
@@ -238,7 +238,7 @@ public class BorrowServiceImpl implements BorrowService {
 		BorrowAuditHistroy histroy = new BorrowAuditHistroy();
 		histroy.setApplier(borrow.getCreateUser());
 		histroy.setApplyTime(borrow.getApplyTime());
-		histroy.setAuditor(HttpSessionContext.getCurrentLoginInfo());
+		histroy.setAuditor(HttpServletContext.getCurrentLoginInfo());
 		histroy.setAuditTime(new Date());
 		histroy.setBorrowId(borrow.getId());
 		histroy.setRemark(remark);

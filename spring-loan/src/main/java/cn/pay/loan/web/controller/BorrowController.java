@@ -16,12 +16,12 @@ import com.alibaba.fastjson.JSON;
 import cn.pay.core.consts.BidConst;
 import cn.pay.core.domain.business.Borrow;
 import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.obj.dto.BidDto;
-import cn.pay.core.obj.vo.AjaxResult;
+import cn.pay.core.pojo.dto.BidDto;
+import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.BorrowService;
 import cn.pay.core.service.UserInfoService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 借款相关
@@ -53,7 +53,7 @@ public class BorrowController {
 	 */
 	@RequestMapping("/borrow/home")
 	public String borrow(Model model) {
-		LoginInfo current = HttpSessionContext.getCurrentLoginInfo();
+		LoginInfo current = HttpServletContext.getCurrentLoginInfo();
 		// 如果当前用户没有登录应该直接导向到静态页面
 		if (current == null) {
 			return "redirect:/borrow.html";
@@ -68,7 +68,7 @@ public class BorrowController {
 	public String info(Model model) {
 		if (service.isApplyBorrow()) {
 			// 查询用户账户信息
-			model.addAttribute("account", accountService.get(HttpSessionContext.getCurrentLoginInfo().getId()));
+			model.addAttribute("account", accountService.get(HttpServletContext.getCurrentLoginInfo().getId()));
 			model.addAttribute("minBorrowAmount", BidConst.MIN_BORROW_AMOUNT);
 			model.addAttribute("minBidAmount", BidConst.MIN_BID_AMOUNT);
 			return "borrow_apply";
@@ -91,7 +91,7 @@ public class BorrowController {
 		BidDto dto = new BidDto();
 		dto.setBorrowId(borrowId);
 		dto.setAmount(amount);
-		dto.setLoginInfoId(HttpSessionContext.getCurrentLoginInfo().getId());
+		dto.setLoginInfoId(HttpServletContext.getCurrentLoginInfo().getId());
 		// 发送消息服
 		jmsMessagingTemplate.convertAndSend(bidQueue, JSON.toJSONString(dto));
 		result.setSuccess(true);

@@ -5,8 +5,8 @@ import java.util.List;
 
 import cn.pay.core.domain.business.Borrow;
 import cn.pay.core.domain.business.BorrowAuditHistroy;
-import cn.pay.core.obj.qo.BorrowQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.BorrowQo;
+import cn.pay.core.pojo.vo.PageResult;
 
 /**
  * 借款服务

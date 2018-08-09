@@ -9,7 +9,7 @@ import cn.pay.core.domain.business.UserBankInfo;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.service.UserBankInfoService;
 import cn.pay.core.service.UserInfoService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 绑定银行卡相关
@@ -29,7 +29,7 @@ public class UserBankInfoController {
 
 	@RequestMapping("/bankInfo")
 	public String bankInfo(Model model) {
-		Long id = HttpSessionContext.getCurrentLoginInfo().getId();
+		Long id = HttpServletContext.getCurrentLoginInfo().getId();
 		UserInfo userInfo = userInfoService.get(id);
 		if (userInfo.getIsBankBind()) {
 			model.addAttribute("userInfo", userInfo);

@@ -22,12 +22,12 @@ import cn.pay.core.domain.business.UserFile;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.domain.sys.SystemDictionaryItem;
-import cn.pay.core.obj.qo.UserFileQo;
+import cn.pay.core.pojo.qo.UserFileQo;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.UserFileService;
 import cn.pay.core.service.UserInfoService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 
 @Service
@@ -65,7 +65,7 @@ public class UserFileServiceImpl implements UserFileService {
 	@Transactional
 	public void apply(String fileName) {
 		UserFile userFile = new UserFile();
-		userFile.setApplier(HttpSessionContext.getCurrentLoginInfo());
+		userFile.setApplier(HttpServletContext.getCurrentLoginInfo());
 		userFile.setApplyTime(new Date());
 		userFile.setFile(fileName);
 		userFile.setState(UserFile.AUTH_NORMAL);
@@ -120,7 +120,7 @@ public class UserFileServiceImpl implements UserFileService {
 	public void audit(Long id, int state, int score, String remark) {
 		UserFile userFile = repository.findOne(id);
 		if (userFile.getState() == UserFile.AUTH_NORMAL) {
-			userFile.setAuditor(HttpSessionContext.getCurrentLoginInfo());
+			userFile.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			userFile.setAuditTime(new Date());
 			userFile.setRemark(remark);
 			userFile.setState(state);

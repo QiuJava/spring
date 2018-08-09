@@ -1,8 +1,8 @@
 package cn.pay.core.service;
 
 import cn.pay.core.domain.business.Recharge;
-import cn.pay.core.obj.qo.RechargeQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.RechargeQo;
+import cn.pay.core.pojo.vo.PageResult;
 
 /**
  * 线下充值服务

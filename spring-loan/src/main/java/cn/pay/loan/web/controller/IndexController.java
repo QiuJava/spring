@@ -13,15 +13,15 @@ import cn.pay.core.domain.business.Borrow;
 import cn.pay.core.domain.business.UserFile;
 import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.obj.qo.BorrowQo;
-import cn.pay.core.obj.qo.UserFileQo;
+import cn.pay.core.pojo.qo.BorrowQo;
+import cn.pay.core.pojo.qo.UserFileQo;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.BorrowService;
 import cn.pay.core.service.IndexService;
 import cn.pay.core.service.RealAuthService;
 import cn.pay.core.service.UserFileService;
 import cn.pay.core.service.UserInfoService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 网站首页相关
@@ -90,7 +90,7 @@ public class IndexController {
 
 		model.addAttribute("userFiles", userFileService.page(qo).getContent());
 
-		LoginInfo loginInfo = HttpSessionContext.getCurrentLoginInfo();
+		LoginInfo loginInfo = HttpServletContext.getCurrentLoginInfo();
 		if (loginInfo != null) {
 			Long currentId = loginInfo.getId();
 			if (currentId == borrow.getCreateUser().getId()) {

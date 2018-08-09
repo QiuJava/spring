@@ -3,7 +3,7 @@ package cn.pay.core.service;
 import org.springframework.data.domain.Page;
 
 import cn.pay.core.domain.sys.IpLog;
-import cn.pay.core.obj.qo.IpLogQo;
+import cn.pay.core.pojo.qo.IpLogQo;
 
 /**
  * 用户登录日志服务

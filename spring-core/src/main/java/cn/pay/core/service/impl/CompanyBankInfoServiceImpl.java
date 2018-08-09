@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.CompanyBankInfoRepository;
 import cn.pay.core.domain.business.CompanyBankInfo;
-import cn.pay.core.obj.qo.CompanyBankInfoQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.CompanyBankInfoQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.CompanyBankInfoService;
 
 @Service

@@ -8,12 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.obj.vo.AjaxResult;
+import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.UserBankInfoService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.service.WithdrawServcie;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 提现相关
@@ -37,7 +37,7 @@ public class WithdrawController {
 	@RequestMapping("/withdraw")
 	public String withdraw(Model model) {
 		// 获取当前登录用户
-		Long id = HttpSessionContext.getCurrentLoginInfo().getId();
+		Long id = HttpServletContext.getCurrentLoginInfo().getId();
 		model.addAttribute("bankInfo", userBankInfoService.getByLoginInfoId(id));
 		model.addAttribute("userInfo", userInfoService.get(id));
 		model.addAttribute("account", accountService.get(id));

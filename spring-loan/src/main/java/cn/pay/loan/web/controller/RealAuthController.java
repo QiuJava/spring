@@ -12,10 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cn.pay.core.domain.business.RealAuth;
 import cn.pay.core.domain.business.UserInfo;
-import cn.pay.core.obj.vo.AjaxResult;
+import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.RealAuthService;
 import cn.pay.core.service.UserInfoService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.UploadUtil;
 import lombok.Setter;
 
@@ -42,7 +42,7 @@ public class RealAuthController {
 	@RequestMapping("/realAuth")
 	public String realAuth(Model model) {
 		// 得到当前用户信息
-		UserInfo userInfo = userInfoService.get(HttpSessionContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
 		// 如果用户已经实名认证直接跳到结果
 		if (userInfo.getIsRealAuth()) {
 			// 查询出实名认证的信息并放到Model中

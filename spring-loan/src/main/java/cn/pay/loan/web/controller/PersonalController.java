@@ -11,7 +11,7 @@ import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.IpLogService;
 import cn.pay.core.service.UserInfoService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 个人中心相关
@@ -37,7 +37,7 @@ public class PersonalController {
 	@RequestMapping("/personal")
 	public String personal(Model model) {
 		// 拿到当前登录对象
-		LoginInfo info = HttpSessionContext.getCurrentLoginInfo();
+		LoginInfo info = HttpServletContext.getCurrentLoginInfo();
 		Account account = accountService.get(info.getId());
 		IpLog ipLog = ipLogService.getNewestIpLog(info.getUsername());
 		// 把对象信息放到model中

@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pay.core.domain.business.Recharge;
-import cn.pay.core.obj.qo.RechargeQo;
-import cn.pay.core.obj.vo.AjaxResult;
+import cn.pay.core.pojo.qo.RechargeQo;
+import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.CompanyBankInfoService;
 import cn.pay.core.service.RechargeService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 充值相关
@@ -57,7 +57,7 @@ public class RechargeController {
 	 */
 	@RequestMapping("/recharge/list")
 	public String list(@ModelAttribute("qo") RechargeQo qo, Model model) {
-		qo.setApplierId(HttpSessionContext.getCurrentLoginInfo().getId());
+		qo.setApplierId(HttpServletContext.getCurrentLoginInfo().getId());
 		model.addAttribute("pageResult", service.list(qo));
 		return RECHARGE_LIST;
 	}

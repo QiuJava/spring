@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.obj.vo.IndexSummaryVO;
+import cn.pay.core.pojo.vo.IndexSummaryVO;
 
 /**
  * 首页借款信息服务

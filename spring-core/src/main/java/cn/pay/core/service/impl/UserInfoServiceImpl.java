@@ -8,11 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.UserInfoRepository;
 import cn.pay.core.domain.business.UserInfo;
-import cn.pay.core.obj.vo.VerifyCode;
+import cn.pay.core.pojo.vo.VerifyCode;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;
 import cn.pay.core.util.DateUtil;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 
 @Service
@@ -30,7 +30,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Transactional
 	public void saveBasicInfo(UserInfo userInfo) {
 		// 拿到当前用户基本资料
-		UserInfo info = repository.findOne(HttpSessionContext.getCurrentLoginInfo().getId());
+		UserInfo info = repository.findOne(HttpServletContext.getCurrentLoginInfo().getId());
 		// 设置只需要修改的内容 明细信息
 		info.setEducationBackground(userInfo.getEducationBackground());
 		info.setHouseCondition(userInfo.getHouseCondition());
@@ -51,7 +51,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Transactional
 	public void bind(String phoneNumber, String verifyCode) {
 		// 如果当前用户已经绑定手机,直接略过
-		UserInfo userInfo = get(HttpSessionContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = get(HttpServletContext.getCurrentLoginInfo().getId());
 		if (!userInfo.getIsBindPhone()) {
 			// 检查验证码手机号，验证有效期
 			boolean ret = checkVerifyCode(phoneNumber, verifyCode);
@@ -67,7 +67,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	private boolean checkVerifyCode(String phoneNumber, String verifyCode) {
-		VerifyCode vc = HttpSessionContext.getVerifyCode();
+		VerifyCode vc = HttpServletContext.getVerifyCode();
 		if (vc != null && vc.getPhoneNumber().equals(phoneNumber) && verifyCode.equals(verifyCode)
 				&& DateUtil.setBetweenDate(new Date(), vc.getDate()) < 180) {
 			return true;

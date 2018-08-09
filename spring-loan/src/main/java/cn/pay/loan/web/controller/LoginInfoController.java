@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.obj.vo.AjaxResult;
+import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.LoginInfoService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.StringUtil;
 
 /**
@@ -31,7 +31,7 @@ public class LoginInfoController {
 		if (StringUtil.hasLength(msg)) {
 			return new AjaxResult(msg);
 		}
-		HttpSessionContext.setCurrentLoginInfo(HttpSessionContext.getLoginInfoBySecurity());
+		HttpServletContext.setCurrentLoginInfo(HttpServletContext.getLoginInfoBySecurity());
 		return new AjaxResult(true, "登录成功");
 	}
 

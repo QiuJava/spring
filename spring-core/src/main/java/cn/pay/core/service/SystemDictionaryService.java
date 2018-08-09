@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import cn.pay.core.domain.sys.SystemDictionary;
-import cn.pay.core.obj.qo.SystemDictionaryQo;
+import cn.pay.core.pojo.qo.SystemDictionaryQo;
 
 /**
  * 系统字典服务

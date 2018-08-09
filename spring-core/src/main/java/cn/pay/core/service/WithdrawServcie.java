@@ -2,8 +2,8 @@ package cn.pay.core.service;
 
 import java.math.BigDecimal;
 
-import cn.pay.core.obj.qo.WithdrawQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.WithdrawQo;
+import cn.pay.core.pojo.vo.PageResult;
 
 /**
  * 提现服务

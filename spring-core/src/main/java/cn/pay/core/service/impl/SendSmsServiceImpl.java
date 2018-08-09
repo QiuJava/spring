@@ -16,10 +16,10 @@ import cn.pay.core.domain.business.RealAuth;
 import cn.pay.core.domain.business.Recharge;
 import cn.pay.core.domain.business.RepaymentSchedule;
 import cn.pay.core.domain.business.Withdraw;
-import cn.pay.core.obj.vo.VerifyCode;
+import cn.pay.core.pojo.vo.VerifyCode;
 import cn.pay.core.service.SendSmsService;
 import cn.pay.core.util.DateUtil;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 import lombok.Setter;
 
@@ -40,7 +40,7 @@ public class SendSmsServiceImpl implements SendSmsService {
 
 	@Override
 	public void verifyCode(String phoneNumber) {
-		VerifyCode vc = HttpSessionContext.getVerifyCode();
+		VerifyCode vc = HttpServletContext.getVerifyCode();
 		if (vc == null || DateUtil.setBetweenDate(new Date(), vc.getDate()) > SendSmsServiceImpl.SECONDS) {
 			// 生成验证码纯数字的
 			String verifyCode = Integer.toString(new Random().nextInt(9999));
@@ -65,7 +65,7 @@ public class SendSmsServiceImpl implements SendSmsService {
 				} else {
 					// 创建一个额外的对象存放页面需要的值 并存放到session中
 					VerifyCode code = new VerifyCode(phoneNumber, verifyCode, new Date());
-					HttpSessionContext.setVerifyCode(code);
+					HttpServletContext.setVerifyCode(code);
 				}
 			} catch (Exception e) {
 				throw new LogicException("发送短信失败");

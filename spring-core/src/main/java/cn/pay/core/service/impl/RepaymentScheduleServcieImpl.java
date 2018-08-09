@@ -28,9 +28,9 @@ import cn.pay.core.domain.business.Account;
 import cn.pay.core.domain.business.Borrow;
 import cn.pay.core.domain.business.PaymentPlan;
 import cn.pay.core.domain.business.RepaymentSchedule;
-import cn.pay.core.obj.event.PaymentPlanEvent;
-import cn.pay.core.obj.qo.RepaymentScheduleQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.event.PaymentPlanEvent;
+import cn.pay.core.pojo.qo.RepaymentScheduleQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.AccountFlowService;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.BorrowService;
@@ -38,7 +38,7 @@ import cn.pay.core.service.PaymentPlanService;
 import cn.pay.core.service.RepaymentScheduleService;
 import cn.pay.core.service.SendSmsService;
 import cn.pay.core.util.DateUtil;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 
 @Service
@@ -98,7 +98,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 		// 这一期还款的总金额
 		BigDecimal returnTotalAmount = rs.getTotalAmount();
 		// 得到借款人账户信息
-		Account currentAccount = accountService.get(HttpSessionContext.getCurrentLoginInfo().getId());
+		Account currentAccount = accountService.get(HttpServletContext.getCurrentLoginInfo().getId());
 		// 借款人账户可用余额
 		BigDecimal usableAmount = currentAccount.getUsableAmount();
 		// 1.判断当前用户是否处于还款中

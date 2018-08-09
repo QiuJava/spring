@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.SystemDictionaryItemRepository;
 import cn.pay.core.domain.sys.SystemDictionaryItem;
-import cn.pay.core.obj.qo.SystemDictionaryQo;
+import cn.pay.core.pojo.qo.SystemDictionaryQo;
 import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.SystemDictionaryService;
 import cn.pay.core.util.LogicException;
@@ -36,7 +36,7 @@ public class SystemDictionaryItemServiceImpl implements SystemDictionaryItemServ
 	public List<SystemDictionaryItem> getBySn(String sn) {
 		return repository.findBySystemDictionaryId(systemDictionaryService.listBySn(sn).getId());
 	}
-
+	
 	@Override
 	@Transactional
 	public void delete(Long id) {

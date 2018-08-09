@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import cn.pay.core.consts.BidConst;
 import cn.pay.core.domain.business.Borrow;
-import cn.pay.core.obj.vo.IndexSummaryVO;
+import cn.pay.core.pojo.vo.IndexSummaryVO;
 import cn.pay.core.service.BorrowService;
 import cn.pay.core.service.IndexService;
 

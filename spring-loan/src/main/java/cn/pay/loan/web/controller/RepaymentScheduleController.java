@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.obj.qo.RepaymentScheduleQo;
-import cn.pay.core.obj.vo.AjaxResult;
+import cn.pay.core.pojo.qo.RepaymentScheduleQo;
+import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.RepaymentScheduleService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 还款相关
@@ -35,7 +35,7 @@ public class RepaymentScheduleController {
 	 */
 	@RequestMapping("/repaymentSchedule")
 	public String list(@ModelAttribute("qo") RepaymentScheduleQo qo, Model model) {
-		Long id = HttpSessionContext.getCurrentLoginInfo().getId();
+		Long id = HttpServletContext.getCurrentLoginInfo().getId();
 		qo.setUserId(id);
 		model.addAttribute("pageResult", service.list(qo));
 		model.addAttribute("account", accountService.get(id));

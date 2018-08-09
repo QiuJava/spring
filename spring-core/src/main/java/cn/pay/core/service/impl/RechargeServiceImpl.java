@@ -23,15 +23,15 @@ import cn.pay.core.domain.business.Account;
 import cn.pay.core.domain.business.CompanyBankInfo;
 import cn.pay.core.domain.business.Recharge;
 import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.obj.event.RechargeEvent;
-import cn.pay.core.obj.qo.RechargeQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.event.RechargeEvent;
+import cn.pay.core.pojo.qo.RechargeQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.AccountFlowService;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.CompanyBankInfoService;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.RechargeService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 @Service
 public class RechargeServiceImpl implements RechargeService {
@@ -54,7 +54,7 @@ public class RechargeServiceImpl implements RechargeService {
 	@Override
 	@Transactional
 	public void apply(Recharge recharge) {
-		recharge.setApplier(HttpSessionContext.getCurrentLoginInfo());
+		recharge.setApplier(HttpServletContext.getCurrentLoginInfo());
 		recharge.setApplyTime(new Date());
 		recharge.setState(Recharge.AUTH_NORMAL);
 		repository.saveAndFlush(recharge);
@@ -101,7 +101,7 @@ public class RechargeServiceImpl implements RechargeService {
 	public void audit(Long id, String remark, int state) {
 		Recharge recharge = repository.findOne(id);
 		if (recharge != null && recharge.getState() == Recharge.AUTH_NORMAL) {
-			recharge.setAuditor(HttpSessionContext.getCurrentLoginInfo());
+			recharge.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			recharge.setAuditTime(new Date());
 			recharge.setState(state);
 			recharge.setRemark(remark);

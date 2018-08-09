@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.SystemDictionaryRepository;
 import cn.pay.core.domain.sys.SystemDictionary;
-import cn.pay.core.obj.qo.SystemDictionaryQo;
+import cn.pay.core.pojo.qo.SystemDictionaryQo;
 import cn.pay.core.service.SystemDictionaryService;
 import cn.pay.core.util.LogicException;
 

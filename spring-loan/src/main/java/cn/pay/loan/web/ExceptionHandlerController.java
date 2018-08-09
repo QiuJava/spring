@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import cn.pay.core.obj.vo.AjaxResult;
+import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.util.LogicException;
 
 /**
@@ -18,7 +18,7 @@ import cn.pay.core.util.LogicException;
 @RestControllerAdvice
 public class ExceptionHandlerController {
 
-	private static Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
 	@ExceptionHandler(LogicException.class)
 	public AjaxResult HandlerLogicException(LogicException e, Model model) {

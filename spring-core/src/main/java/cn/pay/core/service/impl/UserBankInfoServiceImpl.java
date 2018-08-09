@@ -10,7 +10,7 @@ import cn.pay.core.domain.business.UserInfo;
 import cn.pay.core.service.UserBankInfoService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 @Service
 public class UserBankInfoServiceImpl implements UserBankInfoService {
@@ -29,7 +29,7 @@ public class UserBankInfoServiceImpl implements UserBankInfoService {
 	@Transactional
 	public void save(UserBankInfo userBankInfo) {
 		// 得到用户信息对象
-		UserInfo info = userInfoService.get(HttpSessionContext.getCurrentLoginInfo().getId());
+		UserInfo info = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
 		if (!info.getIsBankBind() && info.getIsRealAuth()) {
 			// 没绑定 进行绑定 保存用户银行卡信息 修改状态
 			userBankInfo.setAccountName(info.getRealName());

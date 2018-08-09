@@ -3,8 +3,8 @@ package cn.pay.core.service;
 import java.util.List;
 
 import cn.pay.core.domain.business.CompanyBankInfo;
-import cn.pay.core.obj.qo.CompanyBankInfoQo;
-import cn.pay.core.obj.vo.PageResult;
+import cn.pay.core.pojo.qo.CompanyBankInfoQo;
+import cn.pay.core.pojo.vo.PageResult;
 
 /**
  * 公司银行账号信息服务

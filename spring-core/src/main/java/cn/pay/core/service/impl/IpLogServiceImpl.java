@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.IpLogRepository;
 import cn.pay.core.domain.sys.IpLog;
-import cn.pay.core.obj.qo.IpLogQo;
+import cn.pay.core.pojo.qo.IpLogQo;
 import cn.pay.core.service.IpLogService;
 
 @Service

@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pay.core.domain.business.UserInfo;
-import cn.pay.core.obj.vo.AjaxResult;
+import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.SendSmsService;
 import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.UserInfoService;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 /**
  * 用户相关信息相关
@@ -37,7 +37,7 @@ public class UserInfoController {
 	 */
 	@RequestMapping("/basic")
 	public String basicInfo(Model model) {
-		Long id = HttpSessionContext.getCurrentLoginInfo().getId();
+		Long id = HttpServletContext.getCurrentLoginInfo().getId();
 		// 1.拿到用户基本资料
 		model.addAttribute("userInfo", service.get(id));
 		// 2.拿到字典对应的明细

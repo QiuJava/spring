@@ -21,12 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.pay.core.dao.RealAuthRepository;
 import cn.pay.core.domain.business.RealAuth;
 import cn.pay.core.domain.business.UserInfo;
-import cn.pay.core.obj.event.RealAuthEvent;
-import cn.pay.core.obj.qo.RealAuthQo;
+import cn.pay.core.pojo.event.RealAuthEvent;
+import cn.pay.core.pojo.qo.RealAuthQo;
 import cn.pay.core.service.RealAuthService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;
-import cn.pay.core.util.HttpSessionContext;
+import cn.pay.core.util.HttpServletContext;
 
 @Service
 public class RealAuthServiceImpl implements RealAuthService {
@@ -48,10 +48,10 @@ public class RealAuthServiceImpl implements RealAuthService {
 	@Override
 	@Transactional
 	public void save(RealAuth realAuth) {
-		UserInfo userInfo = userInfoService.get(HttpSessionContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
 		if (!userInfo.getIsRealAuth() && userInfo.getRealAuthId() == null) {
 			realAuth.setState(RealAuth.AUTH_NORMAL);
-			realAuth.setApplier(HttpSessionContext.getCurrentLoginInfo());
+			realAuth.setApplier(HttpServletContext.getCurrentLoginInfo());
 			realAuth.setApplyTime(new Date());
 			userInfo.setRealAuthId(realAuth.getId());
 			RealAuth auth = repository.saveAndFlush(realAuth);
@@ -89,7 +89,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 		RealAuth realAuth = repository.findOne(id);
 		if (realAuth.getState() == RealAuth.AUTH_NORMAL) {
 			// 设置审核人审核时间
-			realAuth.setAuditor(HttpSessionContext.getCurrentLoginInfo());
+			realAuth.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			realAuth.setAuditTime(new Date());
 			realAuth.setRemark(remark);
 			realAuth.setState(state);

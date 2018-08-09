@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import cn.pay.core.domain.business.UserFile;
-import cn.pay.core.obj.qo.UserFileQo;
+import cn.pay.core.pojo.qo.UserFileQo;
 
 /**
  * 用户风控材料
