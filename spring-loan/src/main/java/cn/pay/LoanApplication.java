@@ -6,6 +6,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import cn.pay.core.consts.SysConst;
@@ -22,6 +23,11 @@ import cn.pay.loan.web.filter.XssFilter;
 @Profile("dev")
 public class LoanApplication extends WebMvcConfigurerAdapter {
 
+	@Override
+	public void configurePathMatch(PathMatchConfigurer configurer) {
+		configurer.setUseSuffixPatternMatch(false).setUseTrailingSlashMatch(false);
+	}
+
 	@Bean
 	public FilterRegistrationBean xssFilterRegistration() {
 		FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -32,16 +38,16 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 		return registration;
 	}
 
-	/*@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(urlDoInterceptor()).addPathPatterns(SysConst.URL_ALL);
-		super.addInterceptors(registry);
-	}*/
+	/*
+	 * @Override public void addInterceptors(InterceptorRegistry registry) {
+	 * registry.addInterceptor(urlDoInterceptor()).addPathPatterns(SysConst.URL_ALL)
+	 * ; super.addInterceptors(registry); }
+	 */
 
-	/*@Bean
-	public HandlerInterceptor urlDoInterceptor() {
-		return new UrlDoInterceptor();
-	}*/
+	/*
+	 * @Bean public HandlerInterceptor urlDoInterceptor() { return new
+	 * UrlDoInterceptor(); }
+	 */
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(LoanApplication.class, args);

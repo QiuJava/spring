@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import cn.pay.admin.web.filter.XssFilter;
@@ -31,6 +32,12 @@ import cn.pay.core.consts.SysConst;
  * @EnableTransactionManagement 开启事务管理 默认开启
  */
 public class AdminApplication extends WebMvcConfigurerAdapter {
+
+	@Override
+	public void configurePathMatch(PathMatchConfigurer configurer) {
+		configurer.setUseSuffixPatternMatch(false)// 设置是否是后缀匹配模式 true-'/index.*'
+				.setUseTrailingSlashMatch(false);// 置是否自动后缀路径模式匹配 false-'/index' true-'/index/'
+	}
 
 	/**
 	 * 注册自定义过滤器

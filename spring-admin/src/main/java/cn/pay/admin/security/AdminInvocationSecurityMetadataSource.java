@@ -2,7 +2,9 @@ package cn.pay.admin.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
 import cn.pay.core.domain.sys.Role;
-import cn.pay.core.redis.service.ConfigAttributeRedisService;
 import cn.pay.core.service.RoleService;
 
 /**
@@ -34,13 +35,13 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 
 	@Autowired
 	private RoleService roleService;
-	@Autowired
-	private ConfigAttributeRedisService redisService;
+
+	private Map<String, Collection<ConfigAttribute>> collectionConfigAttrMap = null;
 
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-		List<Collection<ConfigAttribute>> list = redisService.getAll();
-		if (list.size() == 0) {
+		if (collectionConfigAttrMap == null) {
+			collectionConfigAttrMap = new HashMap<>();
 			/**
 			 * 加载资源，初始化资源变量
 			 */
@@ -51,17 +52,18 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 				con = new ArrayList<>();
 				config = new SecurityConfig(role.getName());
 				con.add(config);
-				redisService.put(role.getUrl(), con, -1);
+				collectionConfigAttrMap.put(role.getUrl(), con);
 			}
 			log.info("系统安全信息加载成功!!");
 		}
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
-		AntPathRequestMatcher matcher;
-		Set<String> urls = redisService.getKeys();
+
+		AntPathRequestMatcher matcher = null;
+		Set<String> urls = collectionConfigAttrMap.keySet();
 		for (String url : urls) {
 			matcher = new AntPathRequestMatcher(url);
 			if (matcher.matches(request)) {
-				return redisService.get(url);
+				return collectionConfigAttrMap.get(url);
 			}
 		}
 		return null;
