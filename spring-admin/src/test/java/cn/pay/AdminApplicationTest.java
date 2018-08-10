@@ -8,6 +8,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.pay.core.domain.sys.Role;
 import cn.pay.core.service.RoleService;
+import lombok.Setter;
 
 /**
  * 使用SpringBoot测试，再多profile下需要在设置环境变量 spring.profile.active=dev
@@ -24,12 +26,11 @@ import cn.pay.core.service.RoleService;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-// @ConfigurationProperties(prefix = "test.sms")
-public class AdminApplicationTests {
+@ConfigurationProperties(prefix = "test.sms")
+public class AdminApplicationTest {
 
-	/*
-	 * @Setter private String url;
-	 */
+	@Setter
+	private String url;
 
 	@Autowired
 	private ApplicationContext ac;
@@ -39,10 +40,10 @@ public class AdminApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		//setRole(Controller.class);
+		// setRole(Controller.class);
 		updateRoleList();
 	}
-	
+
 	public void updateRoleList() {
 		List<Role> list = roleService.getAll();
 		for (Role role : list) {

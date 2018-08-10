@@ -26,6 +26,7 @@ public interface SystemDictionaryService {
 	 * 保存
 	 * 
 	 * @param systemDictionary
+	 * @return
 	 */
 	SystemDictionary save(SystemDictionary systemDictionary);
 

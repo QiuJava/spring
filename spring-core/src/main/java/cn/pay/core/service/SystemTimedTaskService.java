@@ -12,6 +12,11 @@ import cn.pay.core.pojo.vo.PageResult;
  */
 public interface SystemTimedTaskService {
 
+	/**
+	 * 保存和更新功能
+	 * 
+	 * @param systemTimedTask
+	 */
 	void saveAndUpdate(SystemTimedTask systemTimedTask);
 
 	/**

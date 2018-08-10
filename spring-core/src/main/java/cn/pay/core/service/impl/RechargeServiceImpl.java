@@ -33,6 +33,12 @@ import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.RechargeService;
 import cn.pay.core.util.HttpServletContext;
 
+/**
+ * 充值服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class RechargeServiceImpl implements RechargeService {
 
@@ -52,7 +58,7 @@ public class RechargeServiceImpl implements RechargeService {
 	private ApplicationContext ac;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void apply(Recharge recharge) {
 		recharge.setApplier(HttpServletContext.getCurrentLoginInfo());
 		recharge.setApplyTime(new Date());
@@ -76,8 +82,8 @@ public class RechargeServiceImpl implements RechargeService {
 					list.add(cb.lessThanOrEqualTo(root.get("applyTime").as(Date.class), qo.getEndDate()));
 				}
 				if (qo.getApplierId() != null) {
-					list.add(cb.equal(root.get("applier").as(LoginInfo.class),
-							loginInfoService.get(qo.getApplierId())));
+					list.add(
+							cb.equal(root.get("applier").as(LoginInfo.class), loginInfoService.get(qo.getApplierId())));
 				}
 				if (qo.getTradeCode() != null) {
 					list.add(cb.like(root.get("tradeCode"), qo.getTradeCode() + "%"));
@@ -97,7 +103,7 @@ public class RechargeServiceImpl implements RechargeService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit(Long id, String remark, int state) {
 		Recharge recharge = repository.findOne(id);
 		if (recharge != null && recharge.getState() == Recharge.AUTH_NORMAL) {

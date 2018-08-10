@@ -36,6 +36,12 @@ import cn.pay.core.service.WithdrawServcie;
 import cn.pay.core.util.BidStateUtil;
 import cn.pay.core.util.HttpServletContext;
 
+/**
+ * 提现服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class WithdrawServcieImpl implements WithdrawServcie {
 
@@ -55,7 +61,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 	private ApplicationContext ac;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void apply(BigDecimal moneyAmount) {
 		Long id = HttpServletContext.getCurrentLoginInfo().getId();
 		UserInfo userInfo = userInfoService.get(id);
@@ -90,7 +96,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit(Long id, String remark, int state) {
 		// 拿到当前申请提现对象
 		Withdraw withdraw = repository.findOne(id);

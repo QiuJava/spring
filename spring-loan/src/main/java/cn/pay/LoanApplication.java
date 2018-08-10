@@ -31,23 +31,12 @@ public class LoanApplication extends WebMvcConfigurerAdapter {
 	@Bean
 	public FilterRegistrationBean xssFilterRegistration() {
 		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setFilter(new XssFilter());// 添加过滤器
-		registration.addUrlPatterns(SysConst.URL_ALL);// 设置过滤路径
+		registration.setFilter(new XssFilter());
+		registration.addUrlPatterns(SysConst.URL_ALL);
 		registration.setName("xssFilter");
-		registration.setOrder(1);// 设置优先级
+		registration.setOrder(1);
 		return registration;
 	}
-
-	/*
-	 * @Override public void addInterceptors(InterceptorRegistry registry) {
-	 * registry.addInterceptor(urlDoInterceptor()).addPathPatterns(SysConst.URL_ALL)
-	 * ; super.addInterceptors(registry); }
-	 */
-
-	/*
-	 * @Bean public HandlerInterceptor urlDoInterceptor() { return new
-	 * UrlDoInterceptor(); }
-	 */
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(LoanApplication.class, args);

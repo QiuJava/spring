@@ -41,13 +41,13 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		if (collectionConfigAttrMap == null) {
-			collectionConfigAttrMap = new HashMap<>();
 			/**
 			 * 加载资源，初始化资源变量
 			 */
 			Collection<ConfigAttribute> con;
 			ConfigAttribute config;
 			List<Role> roleList = roleService.getAll();
+			collectionConfigAttrMap = new HashMap<>(roleList.size());
 			for (Role role : roleList) {
 				con = new ArrayList<>();
 				config = new SecurityConfig(role.getName());

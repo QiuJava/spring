@@ -43,29 +43,35 @@ public class BorrowAuditHistroy extends AuthComponent {
 	public Long getId() {
 		return id;
 	}
-
+	
+	@Override
 	public Integer getState() {
 		return state;
 	}
-
+	
+	@Override
 	public String getRemark() {
 		return remark;
 	}
-
+	
+	@Override
 	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
-
+	
+	@Override
 	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}
-
+	
+	@Override
 	public Date getApplyTime() {
 		return applyTime;
 	}
-
+	
+	@Override
 	public Date getAuditTime() {
 		return auditTime;
 	}

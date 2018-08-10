@@ -8,6 +8,12 @@ import cn.pay.core.dao.BidRepository;
 import cn.pay.core.domain.business.Bid;
 import cn.pay.core.service.BidService;
 
+/**
+ * 投标服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class BidServiceImpl implements BidService {
 
@@ -15,7 +21,7 @@ public class BidServiceImpl implements BidService {
 	private BidRepository repository;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveAndUpdate(Bid bid) {
 		repository.saveAndFlush(bid);
 	}

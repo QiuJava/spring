@@ -4,6 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import cn.pay.core.domain.sys.LoginInfo;
 
+/**
+ * 登录信息持久化相关
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 public interface LoginInfoRepository extends JpaRepository<LoginInfo, Long> {
 
 	/**

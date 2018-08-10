@@ -42,10 +42,8 @@ public class LoanAuthenticationProvider implements AuthenticationProvider {
 			StringBuilder errMsg = new StringBuilder();
 			Long seconds = (((loginInfo.getLockTime().getTime() + DateUtil.LOCK_TIME) - System.currentTimeMillis())
 					/ 1000);
-			errMsg.append("密码输错")//
-					.append(LoginInfo.LOSER_MAX_COUNT).append("次，请")//
-					.append(seconds.toString())//
-					.append("秒后再进行登录");//
+			errMsg.append("密码输错").append(LoginInfo.LOSER_MAX_COUNT).append("次，请").append(seconds.toString())
+					.append("秒后再进行登录");
 			throw new LockedException(errMsg.toString());
 		}
 

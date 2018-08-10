@@ -12,31 +12,18 @@ import cn.pay.admin.web.filter.XssFilter;
 import cn.pay.core.consts.SysConst;
 
 /**
- * 后台管理系统应用配置
+ * 后台管理系统配置启动类
  * 
  * @author Qiujian
- */
-/**
- * @SpringBootApplication 注解 1.默认把启动类所在的包作为基础包 Spring中的bean扫描基础包和其子包 2.默认开启自动配置
+ * @date 2018年8月10日
  */
 @SpringBootApplication
-/**
- * @Profile 注解 标明当前的环境
- */
 @Profile("dev")
-/**
- * WebMvcConfigurerAdapter。class 配置WebMvc
- *
- */
-/**
- * @EnableTransactionManagement 开启事务管理 默认开启
- */
 public class AdminApplication extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void configurePathMatch(PathMatchConfigurer configurer) {
-		configurer.setUseSuffixPatternMatch(false)// 设置是否是后缀匹配模式 true-'/index.*'
-				.setUseTrailingSlashMatch(false);// 置是否自动后缀路径模式匹配 false-'/index' true-'/index/'
+		configurer.setUseSuffixPatternMatch(false).setUseTrailingSlashMatch(false);
 	}
 
 	/**
@@ -47,10 +34,10 @@ public class AdminApplication extends WebMvcConfigurerAdapter {
 	@Bean
 	public FilterRegistrationBean xssFilterRegistration() {
 		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setFilter(new XssFilter());// 添加过滤器
-		registration.addUrlPatterns(SysConst.URL_ALL);// 设置过滤路径
+		registration.setFilter(new XssFilter());
+		registration.addUrlPatterns(SysConst.URL_ALL);
 		registration.setName("xssFilter");
-		registration.setOrder(1);// 设置优先级
+		registration.setOrder(1);
 		return registration;
 	}
 

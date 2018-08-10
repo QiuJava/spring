@@ -22,9 +22,9 @@ public interface IpLogService {
 	Page<IpLog> page(IpLogQo qo);
 
 	/**
-	 * 获取用户最新的登录日志信息
+	 * 获取用户最新的登录相关信息
 	 * 
-	 * @param qo
+	 * @param username
 	 * @return
 	 */
 	IpLog getNewestIpLog(String username);

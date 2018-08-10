@@ -41,6 +41,12 @@ import cn.pay.core.util.DateUtil;
 import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 收款计划服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 
@@ -55,7 +61,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 	private BorrowService borrowService;
 	@Autowired
 	private SendSmsService sendSmsService;
-	
+
 	@Autowired
 	private AccountFlowService accountFlowService;
 
@@ -91,7 +97,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void repay(Long id) {
 		// 得到还款计划
 		RepaymentSchedule rs = repository.findOne(id);
@@ -156,13 +162,13 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveAndUpdate(RepaymentSchedule rs) {
 		repository.saveAndFlush(rs);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void autoRepay() {
 		// 2.判断账户余额是否满足还款
 		for (RepaymentSchedule repaymentSchedule : repayList()) {

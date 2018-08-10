@@ -11,10 +11,16 @@ import org.springframework.stereotype.Service;
 
 import cn.pay.core.consts.BidConst;
 import cn.pay.core.domain.business.Borrow;
-import cn.pay.core.pojo.vo.IndexSummaryVO;
+import cn.pay.core.pojo.vo.IndexSummaryVo;
 import cn.pay.core.service.BorrowService;
 import cn.pay.core.service.IndexService;
 
+/**
+ * 首页服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class IndexServiceImpl implements IndexService {
 
@@ -24,10 +30,11 @@ public class IndexServiceImpl implements IndexService {
 	private BorrowService borrowService;
 
 	@Resource
-	private ValueOperations<String, IndexSummaryVO> valueOperations;
+	private ValueOperations<String, IndexSummaryVo> valueOperations;
 
+	@Override
 	public void updateIndexSummaryVO() {
-		IndexSummaryVO indexVO = new IndexSummaryVO();
+		IndexSummaryVo indexVO = new IndexSummaryVo();
 		List<Borrow> borrowList = borrowService.listByState(BidConst.BORROW_STATE_PAYING_BACK,
 				BidConst.BORROW_STATE_COMPLETE_PAY_BACK);
 		BigDecimal totalBorrowAmount = BigDecimal.ZERO;
@@ -43,7 +50,7 @@ public class IndexServiceImpl implements IndexService {
 	}
 
 	@Override
-	public IndexSummaryVO getIndexSummaryVO() {
+	public IndexSummaryVo getIndexSummaryVO() {
 		return valueOperations.get(INDEX_SUMMARY_VO_KEY);
 	}
 

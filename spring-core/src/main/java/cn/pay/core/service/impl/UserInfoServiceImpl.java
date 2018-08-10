@@ -15,6 +15,12 @@ import cn.pay.core.util.DateUtil;
 import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 用户信息服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
@@ -27,7 +33,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveBasicInfo(UserInfo userInfo) {
 		// 拿到当前用户基本资料
 		UserInfo info = repository.findOne(HttpServletContext.getCurrentLoginInfo().getId());
@@ -48,7 +54,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { LogicException.class })
 	public void bind(String phoneNumber, String verifyCode) {
 		// 如果当前用户已经绑定手机,直接略过
 		UserInfo userInfo = get(HttpServletContext.getCurrentLoginInfo().getId());
@@ -76,7 +82,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { LogicException.class })
 	public void update(UserInfo userInfo) {
 		if (repository.saveAndFlush(userInfo) == null) {
 			throw new LogicException("用户信息更新乐观锁异常");
@@ -84,7 +90,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void save(UserInfo userInfo) {
 		repository.saveAndFlush(userInfo);
 	}

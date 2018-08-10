@@ -19,8 +19,14 @@ import cn.pay.core.domain.business.RepaymentSchedule;
 import cn.pay.core.domain.business.Withdraw;
 import cn.pay.core.service.AccountFlowService;
 
+/**
+ * 账户流水服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
-@Transactional
+@Transactional(rollbackFor = { RuntimeException.class })
 public class AccountFlowServiceImpl implements AccountFlowService {
 
 	@Autowired

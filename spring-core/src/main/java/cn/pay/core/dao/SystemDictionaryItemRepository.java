@@ -7,6 +7,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import cn.pay.core.domain.sys.SystemDictionaryItem;
 
+/**
+ * 系统字典明细相关持久化
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 public interface SystemDictionaryItemRepository
 		extends JpaRepository<SystemDictionaryItem, Long>, JpaSpecificationExecutor<SystemDictionaryItem> {
 

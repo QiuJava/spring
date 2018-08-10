@@ -40,6 +40,7 @@ public class AdminAccessDecisionManager implements AccessDecisionManager {
 		if (null == configAttributes || configAttributes.size() <= 0) {
 			return;
 		}
+		
 		ConfigAttribute config;
 		String needRole;
 		for (Iterator<ConfigAttribute> iter = configAttributes.iterator(); iter.hasNext();) {

@@ -5,6 +5,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import cn.pay.core.domain.sys.SystemDictionary;
 
+/**
+ * 系统字典相关持久化
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 public interface SystemDictionaryRepository
 		extends JpaRepository<SystemDictionary, Long>, JpaSpecificationExecutor<SystemDictionary> {
 

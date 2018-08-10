@@ -22,6 +22,12 @@ import cn.pay.core.pojo.qo.SystemTimedTaskQo;
 import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.SystemTimedTaskService;
 
+/**
+ * 系统定时任务服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class SystemTimedTaskServiceImpl implements SystemTimedTaskService {
 
@@ -29,7 +35,7 @@ public class SystemTimedTaskServiceImpl implements SystemTimedTaskService {
 	private SystemTimedTaskRepository repository;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveAndUpdate(SystemTimedTask systemTimedTask) {
 		repository.saveAndFlush(systemTimedTask);
 	}

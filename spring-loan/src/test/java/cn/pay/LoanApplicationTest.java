@@ -26,10 +26,20 @@ import cn.pay.core.service.RoleService;
 import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.SystemDictionaryService;
 
+/**
+ * 借款应用测试
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class LoanApplicationTests {
-
+public class LoanApplicationTest {
+	
+	private static final int FIVE_HUNDRED = 500;
+	private static final int TWO_HUNDRED = 200;
+	private static final int TWENTY = 20;
+	
 	@Autowired
 	private JmsMessagingTemplate jmsMessagingTemplate;
 	@Autowired
@@ -51,7 +61,7 @@ public class LoanApplicationTests {
 		List<LoginInfo> listLoginInfo = loginInfoSerivce.listAll();
 		for (LoginInfo loginInfo : listLoginInfo) {
 			Thread.sleep(1000);
-			for (int i = 0; 0 < 500; i++) {
+			for (int i = 0; 0 < FIVE_HUNDRED; i++) {
 				IpLog ipLog = new IpLog();
 				ipLog.setIp("127.0.0." + i);
 				ipLog.setUsername(loginInfo.getUsername());
@@ -66,7 +76,7 @@ public class LoanApplicationTests {
 	public void initManageLoginInfo() {
 		List<Role> all = roleService.getAll();
 		// 500个后台用户
-		for (int i = 0; i < 500; i++) {
+		for (int i = 0; i < FIVE_HUNDRED; i++) {
 			LoginInfo info = new LoginInfo();
 			info.setAdmin(false);
 			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.LOGIN_PASSWORD));
@@ -79,14 +89,14 @@ public class LoanApplicationTests {
 
 	public void initDictionary() {
 		// 200个数据字典 一个字典20个明细
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < TWO_HUNDRED; i++) {
 			SystemDictionary sd = new SystemDictionary();
 			sd.setIntro(i + "字典" + i);
 			sd.setSequence(i);
 			sd.setSn("system_dictionary_" + i);
 			sd.setTitle(i + "我是字典" + i);
 			SystemDictionary dictionary = systemDictionaryService.save(sd);
-			for (int j = 0; j < 20; j++) {
+			for (int j = 0; j < TWENTY; j++) {
 				SystemDictionaryItem item = new SystemDictionaryItem();
 				item.setIntro(i + "字典明细" + i);
 				item.setSequence(i);

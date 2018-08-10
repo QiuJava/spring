@@ -38,8 +38,10 @@ public class SystemTimedTask implements Serializable {
 	private String groupName;
 	/** 计划任务表达式 */
 	private String cronExpression;
-	private String description;// 描述
-	private Integer status;// 状态
+	/** 描述 */
+	private String description;
+	/** 状态 */
+	private Integer status;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,7 +61,7 @@ public class SystemTimedTask implements Serializable {
 
 	@Transient
 	public String getJsonString() {
-		Map<String, Object> json = new HashMap<>();
+		Map<String, Object> json = new HashMap<>(5);
 		json.put("id", id);
 		json.put("jobName", jobName);
 		json.put("groupName", groupName);

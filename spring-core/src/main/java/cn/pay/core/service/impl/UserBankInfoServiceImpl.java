@@ -12,6 +12,12 @@ import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;
 import cn.pay.core.util.HttpServletContext;
 
+/**
+ * 用户银行卡信息服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class UserBankInfoServiceImpl implements UserBankInfoService {
 
@@ -26,7 +32,7 @@ public class UserBankInfoServiceImpl implements UserBankInfoService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void save(UserBankInfo userBankInfo) {
 		// 得到用户信息对象
 		UserInfo info = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());

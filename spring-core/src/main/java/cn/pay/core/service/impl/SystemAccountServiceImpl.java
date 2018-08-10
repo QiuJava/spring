@@ -24,8 +24,14 @@ import cn.pay.core.service.SystemAccountFlowService;
 import cn.pay.core.service.SystemAccountService;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 系统账户服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
-@Transactional
+@Transactional(rollbackFor = { RuntimeException.class })
 public class SystemAccountServiceImpl implements SystemAccountService {
 
 	@Autowired

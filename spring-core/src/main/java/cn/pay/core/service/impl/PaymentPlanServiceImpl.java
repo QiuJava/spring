@@ -8,13 +8,19 @@ import cn.pay.core.dao.PaymentPlanRepository;
 import cn.pay.core.domain.business.PaymentPlan;
 import cn.pay.core.service.PaymentPlanService;
 
+/**
+ * 还款计划服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class PaymentPlanServiceImpl implements PaymentPlanService {
 	@Autowired
 	private PaymentPlanRepository repository;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveAndUpdate(PaymentPlan paymentPlan) {
 		repository.saveAndFlush(paymentPlan);
 	}

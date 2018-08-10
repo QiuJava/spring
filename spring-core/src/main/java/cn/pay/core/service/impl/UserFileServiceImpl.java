@@ -30,6 +30,12 @@ import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 用户材料服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class UserFileServiceImpl implements UserFileService {
 
@@ -62,7 +68,7 @@ public class UserFileServiceImpl implements UserFileService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void apply(String fileName) {
 		UserFile userFile = new UserFile();
 		userFile.setApplier(HttpServletContext.getCurrentLoginInfo());
@@ -73,7 +79,7 @@ public class UserFileServiceImpl implements UserFileService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { LogicException.class })
 	public void updateType(Long[] id, Long[] fileType) {
 		int idLen = id.length;
 		int typeLen = fileType.length;
@@ -116,7 +122,7 @@ public class UserFileServiceImpl implements UserFileService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit(Long id, int state, int score, String remark) {
 		UserFile userFile = repository.findOne(id);
 		if (userFile.getState() == UserFile.AUTH_NORMAL) {

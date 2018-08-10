@@ -6,8 +6,14 @@ import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Activemq配置类
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Configuration
-public class ActiveMQConfig {
+public class ActivemqConfig {
 
 	public static final String BID_QUEUE = "bid.queue";
 	public static final String LOGIN_QUEUE = "login.queue";

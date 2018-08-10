@@ -45,7 +45,7 @@ public class SystemDictionary implements Serializable {
 
 	@Transient
 	public String getJsonString() {
-		Map<String, Object> json = new HashMap<>();
+		Map<String, Object> json = new HashMap<>(4);
 		json.put("id", this.getId());
 		json.put("sn", sn);
 		json.put("title", title);

@@ -21,6 +21,12 @@ import cn.pay.core.pojo.qo.SystemDictionaryQo;
 import cn.pay.core.service.SystemDictionaryService;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 系统洗点服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class SystemDictionaryServiceImpl implements SystemDictionaryService {
 
@@ -28,19 +34,19 @@ public class SystemDictionaryServiceImpl implements SystemDictionaryService {
 	private SystemDictionaryRepository repository;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void delete(Long id) {
 		repository.delete(id);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { LogicException.class })
 	public SystemDictionary save(SystemDictionary systemDictionary) {
 		SystemDictionary dictionary = repository.saveAndFlush(systemDictionary);
 		if (dictionary == null) {
 			throw new LogicException("系统字典更新异常");
 		}
-		
+
 		return dictionary;
 	}
 

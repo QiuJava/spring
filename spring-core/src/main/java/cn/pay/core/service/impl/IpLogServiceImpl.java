@@ -24,6 +24,12 @@ import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.pojo.qo.IpLogQo;
 import cn.pay.core.service.IpLogService;
 
+/**
+ * 登录日志服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class IpLogServiceImpl implements IpLogService {
 
@@ -69,7 +75,7 @@ public class IpLogServiceImpl implements IpLogService {
 
 	@CacheEvict(value = { "page", "getNewestIpLog" }, allEntries = true)
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveAndUpdate(IpLog ipLog) {
 		repository.saveAndFlush(ipLog);
 	}

@@ -54,9 +54,9 @@ public interface SystemDictionaryItemService {
 	Page<SystemDictionaryItem> page(SystemDictionaryQo qo);
 
 	/**
-	 * 获取字典明细
+	 * 根据id获取单个对象
 	 * 
-	 * @param long1
+	 * @param id
 	 * @return
 	 */
 	SystemDictionaryItem get(Long id);

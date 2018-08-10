@@ -20,14 +20,7 @@ import cn.pay.loan.security.LoanLoginSuccessHandler;
  *
  */
 @Configuration
-// @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	// @Autowired
-	// private AdminFilterSecurityInterceptor adminFilterSecurityInterceptor;
-
-	// @Autowired
-	// private UserDetailsService userDetailsService;
 
 	@Resource
 	private LoanAuthenticationProvider authenticationProvider;
@@ -55,9 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 静态资源可以完全访问
 				.antMatchers("/borrow.html", "/index.html", "/register.html").permitAll()
 				// 登录登录url可以完全访问
-				.antMatchers(SysConst.URL_LOGIN_INFO_AJAX, "/home", "/borrow/home", "/sms/send",
-						"/email/verify", "/borrow_info", "/invest/list", "/loginInfo/register",
-						"/loginInfo/isExist")
+				.antMatchers(SysConst.URL_LOGIN_INFO_AJAX, "/home", "/borrow/home", "/sms/send", "/email/verify",
+						"/borrow_info", "/invest/list", "/loginInfo/register", "/loginInfo/isExist")
 				.permitAll()
 				// .antMatchers("/index").access("hasRole('后台首页')")
 				// 所有以 结尾的请求需要登录之后才能访问

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @param <T>
  */
 @Service
-public abstract class RedisService<T> {
+public abstract class AbstractRedisService<T> {
 
 	/**
 	 * 实例化 RedisTemplate对象

@@ -59,9 +59,6 @@ spring:
     - classpath:/public/
     #图片服务器地址
     - http://localhost:8082/
-  #activemq 配置
-  activemq:
-    broker-url: tcp://127.0.0.1:6161
     
 #日志配置
 logging:

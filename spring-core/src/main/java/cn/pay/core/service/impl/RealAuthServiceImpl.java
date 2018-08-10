@@ -28,6 +28,12 @@ import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;
 import cn.pay.core.util.HttpServletContext;
 
+/**
+ * 实名认证服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class RealAuthServiceImpl implements RealAuthService {
 
@@ -46,7 +52,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void save(RealAuth realAuth) {
 		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
 		if (!userInfo.getIsRealAuth() && userInfo.getRealAuthId() == null) {
@@ -83,7 +89,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void autid(Long id, int state, String remark) {
 		// 查询当前实名认证对象
 		RealAuth realAuth = repository.findOne(id);

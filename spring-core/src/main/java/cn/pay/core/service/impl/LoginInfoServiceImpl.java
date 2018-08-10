@@ -26,6 +26,12 @@ import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 登录信息服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service("loginInfoService")
 public class LoginInfoServiceImpl implements LoginInfoService {
 
@@ -38,7 +44,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	private UserInfoService userInfoService;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void register(String username, String password) {
 		if (repository.countByUsername(username) > 0) {
 			throw new LogicException("用户名已存在");
@@ -86,14 +92,14 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	@CacheEvict(value = { "loadUserByUsername" }, allEntries = true)
 	public void saveAndUpdate(LoginInfo info) {
 		repository.saveAndFlush(info);
 	}
 
 	@Cacheable("loadUserByUsername")
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LoginInfo loginInfo = repository.findByUsername(username);

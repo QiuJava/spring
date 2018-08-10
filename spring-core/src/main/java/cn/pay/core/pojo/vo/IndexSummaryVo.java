@@ -20,7 +20,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class IndexSummaryVO implements Serializable {
+public class IndexSummaryVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer totalBorrowUser;

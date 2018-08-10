@@ -17,8 +17,14 @@ import cn.pay.core.util.BidStateUtil;
 import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 邮箱校验服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
-@Transactional
+@Transactional(rollbackFor = { RuntimeException.class })
 public class EmailVerifyServiceImpl implements EmailVerifyService {
 	@Autowired
 	private EmailVerifyRepository repository;

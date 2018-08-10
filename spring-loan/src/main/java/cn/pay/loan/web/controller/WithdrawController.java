@@ -23,7 +23,7 @@ import cn.pay.core.util.HttpServletContext;
  */
 @Controller
 public class WithdrawController {
-	public static final String withdraw = "withdraw_apply";
+	public static final String WITHDRAW_APPLY = "withdraw_apply";
 
 	@Autowired
 	private WithdrawServcie service;
@@ -41,7 +41,7 @@ public class WithdrawController {
 		model.addAttribute("bankInfo", userBankInfoService.getByLoginInfoId(id));
 		model.addAttribute("userInfo", userInfoService.get(id));
 		model.addAttribute("account", accountService.get(id));
-		return withdraw;
+		return WITHDRAW_APPLY;
 	}
 
 	@RequestMapping("/withdraw/apply")

@@ -17,7 +17,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-// @Embeddable
 public class AuthComponent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 审核中 */

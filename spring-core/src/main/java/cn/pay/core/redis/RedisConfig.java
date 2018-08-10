@@ -60,6 +60,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 * 注解@Cache key生成规则
 	 */
 	@Bean
+	@Override
 	public KeyGenerator keyGenerator() {
 		return new KeyGenerator() {
 			@Override

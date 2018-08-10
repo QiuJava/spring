@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.stereotype.Service;
 
-import cn.pay.core.redis.RedisService;
+import cn.pay.core.redis.AbstractRedisService;
 
 /**
  * 系统权限信息
@@ -14,7 +14,7 @@ import cn.pay.core.redis.RedisService;
  *
  */
 @Service
-public class ConfigAttributeRedisService extends RedisService<Collection<ConfigAttribute>> {
+public class ConfigAttributeRedisService extends AbstractRedisService<Collection<ConfigAttribute>> {
 
 	private static final String CONFIG_ATTRIBUTE_KEY = "CONFIG_ATTRIBUTE_KEY";
 

@@ -23,6 +23,12 @@ import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.SystemDictionaryService;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 系统字典明细服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class SystemDictionaryItemServiceImpl implements SystemDictionaryItemService {
 
@@ -36,9 +42,9 @@ public class SystemDictionaryItemServiceImpl implements SystemDictionaryItemServ
 	public List<SystemDictionaryItem> getBySn(String sn) {
 		return repository.findBySystemDictionaryId(systemDictionaryService.listBySn(sn).getId());
 	}
-	
+
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void delete(Long id) {
 		repository.delete(id);
 	}
@@ -53,7 +59,7 @@ public class SystemDictionaryItemServiceImpl implements SystemDictionaryItemServ
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void update(SystemDictionaryItem item) {
 		SystemDictionaryItem dictionaryItem = repository.saveAndFlush(item);
 		if (dictionaryItem == null) {

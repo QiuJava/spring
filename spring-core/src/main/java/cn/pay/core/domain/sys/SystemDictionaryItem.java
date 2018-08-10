@@ -43,7 +43,7 @@ public class SystemDictionaryItem implements Serializable {
 
 	@Transient
 	public String getJsonString() {
-		Map<String, Object> json = new HashMap<>();
+		Map<String, Object> json = new HashMap<>(5);
 		json.put("id", id);
 		json.put("systemDictionaryId", systemDictionaryId);
 		json.put("title", title);

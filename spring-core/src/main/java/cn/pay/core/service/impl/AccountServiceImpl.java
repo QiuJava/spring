@@ -11,6 +11,12 @@ import cn.pay.core.domain.business.Account;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.util.LogicException;
 
+/**
+ * 账户服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -27,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { LogicException.class })
 	public void update(Account account) {
 		Account a = repository.saveAndFlush(account);
 		if (a == null) {
@@ -36,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { LogicException.class })
 	public void save(Account account) {
 		repository.saveAndFlush(account);
 	}

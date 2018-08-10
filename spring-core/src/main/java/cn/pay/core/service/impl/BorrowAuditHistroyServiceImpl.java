@@ -10,6 +10,12 @@ import cn.pay.core.dao.BorrowAuditHistroyRepository;
 import cn.pay.core.domain.business.BorrowAuditHistroy;
 import cn.pay.core.service.BorrowAuditHistroyService;
 
+/**
+ * 借款审核历史服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class BorrowAuditHistroyServiceImpl implements BorrowAuditHistroyService {
 
@@ -17,7 +23,7 @@ public class BorrowAuditHistroyServiceImpl implements BorrowAuditHistroyService 
 	private BorrowAuditHistroyRepository repository;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveAndUpdate(BorrowAuditHistroy borrowAuditHistroy) {
 		repository.saveAndFlush(borrowAuditHistroy);
 	}

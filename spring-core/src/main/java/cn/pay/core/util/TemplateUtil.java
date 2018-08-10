@@ -38,7 +38,7 @@ public class TemplateUtil {
 	public static void createJavaFile(Class<?> clz) throws TemplateNotFoundException, MalformedTemplateNameException,
 			ParseException, IOException, TemplateException {
 		String simpleName = clz.getSimpleName();
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(1);
 		map.put("className", simpleName);
 		@SuppressWarnings("deprecation")
 		Configuration configuration = new Configuration();

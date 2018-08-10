@@ -14,6 +14,12 @@ import cn.pay.core.pojo.qo.CompanyBankInfoQo;
 import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.CompanyBankInfoService;
 
+/**
+ * 公司银行账号信息服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class CompanyBankInfoServiceImpl implements CompanyBankInfoService {
 
@@ -26,7 +32,7 @@ public class CompanyBankInfoServiceImpl implements CompanyBankInfoService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void update(CompanyBankInfo info) {
 		repositpry.saveAndFlush(info);
 	}

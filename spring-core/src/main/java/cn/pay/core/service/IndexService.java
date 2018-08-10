@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.pojo.vo.IndexSummaryVO;
+import cn.pay.core.pojo.vo.IndexSummaryVo;
 
 /**
  * 首页借款信息服务
@@ -14,7 +14,7 @@ public interface IndexService {
 	 * 
 	 * @return
 	 */
-	IndexSummaryVO getIndexSummaryVO();
+	IndexSummaryVo getIndexSummaryVO();
 
 	/**
 	 * 更新首页借款统计数据

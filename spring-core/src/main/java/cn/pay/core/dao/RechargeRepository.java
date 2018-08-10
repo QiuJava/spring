@@ -5,6 +5,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import cn.pay.core.domain.business.Recharge;
 
+/**
+ * 充值持久化相关
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 public interface RechargeRepository extends JpaRepository<Recharge, Long>, JpaSpecificationExecutor<Recharge> {
 
 }

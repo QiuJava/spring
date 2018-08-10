@@ -31,10 +31,11 @@ public interface BorrowService {
 	void apply(Borrow borrow);
 
 	/**
-	 * 对借款进行投资
+	 * 投标
 	 * 
 	 * @param borrowId
 	 * @param amount
+	 * @param loginInfoId
 	 */
 	void bid(Long borrowId, BigDecimal amount, Long loginInfoId);
 

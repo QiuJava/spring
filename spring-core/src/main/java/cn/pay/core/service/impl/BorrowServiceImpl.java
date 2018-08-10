@@ -58,6 +58,12 @@ import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 import cn.pay.core.util.StringUtil;
 
+/**
+ * 借款服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class BorrowServiceImpl implements BorrowService {
 
@@ -103,7 +109,7 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void apply(Borrow borrow) {
 		LoginInfo currentLoginInfo = HttpServletContext.getCurrentLoginInfo();
 		Account account = accountService.get(currentLoginInfo.getId());
@@ -132,14 +138,14 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void bid(Long borrowId, BigDecimal amount, Long loginInfoId) {
 		// 拿到借款对象
 		Borrow borrow = get(borrowId);
 		// 1.检查标是否存在，检查是否是招标中，检查招标的时间是否到期
 		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_BIDDING
 				&& new Date().before(borrow.getDisableDate())) {
-			//LoginInfo currentLoginInfo = HttpSessionContext.getCurrentLoginInfo();
+			// LoginInfo currentLoginInfo = HttpSessionContext.getCurrentLoginInfo();
 			LoginInfo currentLoginInfo = loginInfoService.get(loginInfoId);
 			// 拿到投资者账户对象
 			Account bidAccount = accountService.get(currentLoginInfo.getId());
@@ -206,7 +212,7 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void publishAudit(Long id, int state, String remark) {
 		// 得到当前用户借款对象
 		Borrow borrow = get(id);
@@ -248,7 +254,7 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit1Audit(Long id, String remark, int state) {
 		Borrow borrow = get(id);
 		// 必须是满标一审状态
@@ -300,7 +306,7 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit2Audit(Long id, String remark, int state) {
 		// 得到借款对象 判定对象是否为满标二审状态
 		Borrow borrow = get(id);
@@ -348,35 +354,9 @@ public class BorrowServiceImpl implements BorrowService {
 
 				// 平台收取手续费(系统账户)，系统账户余额增加
 				systemAccountService.chargeManager(borrow, serviceCharge);
-				// 3.针对投资人 遍历所有投标
-				Map<Long, Account> bidAccountMap = new HashMap<>(borrow.getBidList().size());
-				// 3.1投资人冻结金额减少
-				for (Bid b : borrow.getBidList()) {
-					Long bidUserId = b.getCreateUser().getId();
-					// 获取到当前投资人的账户
-					Account bidAccount = bidAccountMap.get(bidUserId);
-					// 生成成功投标流水
-					if (bidAccount == null) {
-						bidAccount = accountService.get(bidUserId);
-						bidAccountMap.put(bidUserId, bidAccount);
-					}
-					bidAccount.setFreezedAmount(bidAccount.getFreezedAmount().subtract(b.getAmount()));
-					accountFlowService.bidSuccessFlow(b, bidAccount);
-				}
-				// 3.2增加投资人总待收利息和待收本金
-				for (RepaymentSchedule rs : rsList) {
-					for (PaymentPlan pp : rs.getPaymentPlanList()) {
-						// 得到投资人账户
-						Account account = bidAccountMap.get(pp.getCollectLoginInfoId());
-						// 增加投资人总待收利息和本金
-						account.setUnReceiveInterest(account.getUnReceiveInterest().add(pp.getInterest()));
-						account.setUnReceivePrincipal(account.getUnReceivePrincipal().add(pp.getPrincipal()));
-					}
-				}
-				// 更新所有的投资人账户
-				for (Account a : bidAccountMap.values()) {
-					accountService.update(a);
-				}
+
+				// 更新投资人账户
+				updateInvestAccount(borrow, rsList);
 			} else {
 				// 审核失败
 				cancelBorrow(borrow, BidConst.BORROW_STATE_REJECTED);
@@ -386,6 +366,38 @@ public class BorrowServiceImpl implements BorrowService {
 			ac.publishEvent(new BorrowEvent(this, borrow));
 		}
 
+	}
+
+	private void updateInvestAccount(Borrow borrow, List<RepaymentSchedule> rsList) {
+		// 3.针对投资人 遍历所有投标
+		Map<Long, Account> bidAccountMap = new HashMap<>(borrow.getBidList().size());
+		// 3.1投资人冻结金额减少
+		for (Bid b : borrow.getBidList()) {
+			Long bidUserId = b.getCreateUser().getId();
+			// 获取到当前投资人的账户
+			Account bidAccount = bidAccountMap.get(bidUserId);
+			// 生成成功投标流水
+			if (bidAccount == null) {
+				bidAccount = accountService.get(bidUserId);
+				bidAccountMap.put(bidUserId, bidAccount);
+			}
+			bidAccount.setFreezedAmount(bidAccount.getFreezedAmount().subtract(b.getAmount()));
+			accountFlowService.bidSuccessFlow(b, bidAccount);
+		}
+		// 3.2增加投资人总待收利息和待收本金
+		for (RepaymentSchedule rs : rsList) {
+			for (PaymentPlan pp : rs.getPaymentPlanList()) {
+				// 得到投资人账户
+				Account account = bidAccountMap.get(pp.getCollectLoginInfoId());
+				// 增加投资人总待收利息和本金
+				account.setUnReceiveInterest(account.getUnReceiveInterest().add(pp.getInterest()));
+				account.setUnReceivePrincipal(account.getUnReceivePrincipal().add(pp.getPrincipal()));
+			}
+		}
+		// 更新所有的投资人账户
+		for (Account a : bidAccountMap.values()) {
+			accountService.update(a);
+		}
 	}
 
 	private List<RepaymentSchedule> createRepaymentSchedule(Borrow borrow) {
@@ -486,7 +498,7 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { LogicException.class })
 	public void update(Borrow borrow) {
 		Borrow borrowUpdate = repository.saveAndFlush(borrow);
 		if (borrowUpdate == null) {

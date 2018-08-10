@@ -60,6 +60,7 @@ public class LoginInfo implements UserDetails {
 		return roles;
 	}
 
+	@Override
 	@Transient
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
@@ -68,6 +69,7 @@ public class LoginInfo implements UserDetails {
 	/**
 	 * 判断账户是不过期
 	 */
+	@Override
 	@Transient
 	public boolean isAccountNonExpired() {
 		return true;
@@ -76,6 +78,7 @@ public class LoginInfo implements UserDetails {
 	/**
 	 * 判断账户是不锁定
 	 */
+	@Override
 	@Transient
 	public boolean isAccountNonLocked() {
 		return this.status != LoginInfo.LOCK;
@@ -84,6 +87,7 @@ public class LoginInfo implements UserDetails {
 	/**
 	 * 判断用户密码是不过期
 	 */
+	@Override
 	@Transient
 	public boolean isCredentialsNonExpired() {
 		return true;
@@ -92,9 +96,20 @@ public class LoginInfo implements UserDetails {
 	/**
 	 * 判断用户是可用
 	 */
+	@Override
 	@Transient
 	public boolean isEnabled() {
 		return this.status != LoginInfo.DEL;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+	
+	@Override
+	public String getUsername() {
+		return username;
 	}
 
 }

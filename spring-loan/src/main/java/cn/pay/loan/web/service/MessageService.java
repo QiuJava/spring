@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSON;
 
 import cn.pay.core.pojo.dto.BidDto;
 import cn.pay.core.service.BorrowService;
-import cn.pay.loan.config.ActiveMQConfig;
+import cn.pay.loan.config.ActivemqConfig;
 
 /**
  * 消息队列相关服务
@@ -22,13 +22,13 @@ public class MessageService {
 	@Autowired
 	private BorrowService borrowService;
 
-	@JmsListener(destination = ActiveMQConfig.BID_QUEUE)
+	@JmsListener(destination = ActivemqConfig.BID_QUEUE)
 	public void bid(String msg) {
 		BidDto dto = JSON.parseObject(msg, BidDto.class);
 		borrowService.bid(dto.getBorrowId(), dto.getAmount(), dto.getLoginInfoId());
 	}
 
-	@JmsListener(destination = ActiveMQConfig.LOGIN_QUEUE)
+	@JmsListener(destination = ActivemqConfig.LOGIN_QUEUE)
 	public void login(String msg) {
 
 	}

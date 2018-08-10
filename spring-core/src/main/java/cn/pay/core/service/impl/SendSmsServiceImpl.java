@@ -23,6 +23,12 @@ import cn.pay.core.util.HttpServletContext;
 import cn.pay.core.util.LogicException;
 import lombok.Setter;
 
+/**
+ * 发送短信服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 @ConfigurationProperties(prefix = "service.sms")
 public class SendSmsServiceImpl implements SendSmsService {
@@ -78,37 +84,37 @@ public class SendSmsServiceImpl implements SendSmsService {
 	@Override
 	public void borrowSuccess(Borrow eventObj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void paymentSuccess(PaymentPlan eventObj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void realAuthSuccess(RealAuth eventObj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void rechargeSuccess(Recharge eventObj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void withdrawSuccess(Withdraw eventObj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void repayWarn(RepaymentSchedule repaymentSchedule) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

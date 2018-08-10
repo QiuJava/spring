@@ -8,6 +8,12 @@ import cn.pay.core.dao.SystemAccountFlowRepository;
 import cn.pay.core.domain.business.SystemAccountFlow;
 import cn.pay.core.service.SystemAccountFlowService;
 
+/**
+ * 系统账户流水服务实现
+ * 
+ * @author Qiujian
+ * @date 2018年8月10日
+ */
 @Service
 public class SystemAccountFlowServiceImpl implements SystemAccountFlowService {
 
@@ -15,7 +21,7 @@ public class SystemAccountFlowServiceImpl implements SystemAccountFlowService {
 	private SystemAccountFlowRepository repository;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveAndUpdate(SystemAccountFlow flow) {
 		repository.saveAndFlush(flow);
 	}

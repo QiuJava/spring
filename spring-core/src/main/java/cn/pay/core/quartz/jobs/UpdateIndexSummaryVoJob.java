@@ -15,7 +15,7 @@ import cn.pay.core.service.IndexService;
  *
  */
 @Component
-public class UpdateIndexSummaryVOJob implements Job {
+public class UpdateIndexSummaryVoJob implements Job {
 	
 	@Autowired
 	private IndexService indexService;

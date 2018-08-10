@@ -21,13 +21,13 @@ public class ExceptionHandlerController {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
 	@ExceptionHandler(LogicException.class)
-	public AjaxResult HandlerLogicException(LogicException e, Model model) {
+	public AjaxResult handlerLogicException(LogicException e, Model model) {
 		logger.error("逻辑异常", e);
 		return new AjaxResult(false, e.getMessage(), e.getErrCode());
 	}
 
 	@ExceptionHandler(Exception.class)
-	public AjaxResult HandlerException(Exception e, Model model) {
+	public AjaxResult handlerException(Exception e, Model model) {
 		logger.error("系统异常", e);
 		return new AjaxResult(false, e.getMessage());
 	}
