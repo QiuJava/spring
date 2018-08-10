@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -93,12 +91,10 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	@CacheEvict(value = { "loadUserByUsername" }, allEntries = true)
 	public void saveAndUpdate(LoginInfo info) {
 		repository.saveAndFlush(info);
 	}
 
-	@Cacheable("loadUserByUsername")
 	@Transactional(rollbackFor = { RuntimeException.class })
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
