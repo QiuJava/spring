@@ -124,7 +124,7 @@ public class Borrow implements Serializable {
 	/** 还款方式 */
 	@Transient
 	public String getReturnTypeDisplay() {
-		return returnType == BidConst.RETURN_TYPE_MONTH_INTEREST_PRINCIPAL ? "按月分期" : "到月分期";
+		return BidConst.RETURN_TYPE_MONTH_INTEREST_PRINCIPAL.equals(returnType) ? "按月分期" : "到月分期";
 	}
 
 	@Transient

@@ -90,10 +90,10 @@ public class RealAuthServiceImpl implements RealAuthService {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void autid(Long id, int state, String remark) {
+	public void autid(Long id, Integer state, String remark) {
 		// 查询当前实名认证对象
 		RealAuth realAuth = repository.findOne(id);
-		if (realAuth.getState() == RealAuth.AUTH_NORMAL) {
+		if (realAuth.getState().equals(RealAuth.AUTH_NORMAL)) {
 			// 设置审核人审核时间
 			realAuth.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			realAuth.setAuditTime(new Date());
@@ -101,7 +101,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 			realAuth.setState(state);
 			// 拿到申请人基本资料对象
 			UserInfo applierInfo = userInfoService.get(realAuth.getApplier().getId());
-			if (state == RealAuth.AUTH_PASS) {
+			if (state.equals(RealAuth.AUTH_PASS)) {
 				if (!applierInfo.getIsRealAuth()) {
 					applierInfo.addState(BidStateUtil.OP_REAL_AUTH);
 					// 把实名认证对象中的姓名身份证号码设置到申请人

@@ -43,6 +43,6 @@ public interface RealAuthService {
 	 * @param state
 	 * @param remark
 	 */
-	void autid(Long id, int state, String remark);
+	void autid(Long id, Integer state, String remark);
 
 }

@@ -97,11 +97,11 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void audit(Long id, String remark, int state) {
+	public void audit(Long id, String remark, Integer state) {
 		// 拿到当前申请提现对象
 		Withdraw withdraw = repository.findOne(id);
 		// 判断当前是否处于审核状态
-		if (withdraw.getState() == Withdraw.AUTH_NORMAL) {
+		if (withdraw.getState().equals(Withdraw.AUTH_NORMAL)) {
 			// 拿到当前申请人的账户对象
 			Account currentAccount = accountService.get(withdraw.getApplier().getId());
 			// 设置提相关状态
@@ -110,7 +110,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 			withdraw.setAuditTime(new Date());
 			withdraw.setState(state);
 			// 如果审核通过
-			if (state == Withdraw.AUTH_PASS) {
+			if (state.equals(Withdraw.AUTH_PASS)) {
 				// 申请人冻结金额减少 生成成功提现流水
 				currentAccount.setFreezedAmount(currentAccount.getFreezedAmount().subtract(withdraw.getMoneyAmount()));
 				accountFlowService.withdrawSuccessFlow(withdraw, currentAccount);

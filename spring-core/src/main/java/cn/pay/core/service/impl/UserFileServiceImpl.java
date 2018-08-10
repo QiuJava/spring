@@ -81,9 +81,9 @@ public class UserFileServiceImpl implements UserFileService {
 	@Override
 	@Transactional(rollbackFor = { LogicException.class })
 	public void updateType(Long[] id, Long[] fileType) {
-		int idLen = id.length;
-		int typeLen = fileType.length;
-		if (idLen == typeLen && idLen > 0) {
+		Integer idLen = id.length;
+		Integer typeLen = fileType.length;
+		if (idLen > 0 && idLen.equals(typeLen)) {
 			for (int i = 0; i < idLen; i++) {
 				UserFile userFile = repository.findOne(id[i]);
 				userFile.setFileType(systemDictionaryItemService.get(fileType[i]));
@@ -123,14 +123,14 @@ public class UserFileServiceImpl implements UserFileService {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void audit(Long id, int state, int score, String remark) {
+	public void audit(Long id, Integer state, Integer score, String remark) {
 		UserFile userFile = repository.findOne(id);
-		if (userFile.getState() == UserFile.AUTH_NORMAL) {
+		if (userFile.getState().equals(UserFile.AUTH_NORMAL)) {
 			userFile.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			userFile.setAuditTime(new Date());
 			userFile.setRemark(remark);
 			userFile.setState(state);
-			if (state == UserFile.AUTH_PASS) {
+			if (state.equals(UserFile.AUTH_PASS)) {
 				userFile.setScore(score);
 				UserInfo info = userInfoService.get(userFile.getApplier().getId());
 				info.setAuthScore(info.getAuthScore() + score);

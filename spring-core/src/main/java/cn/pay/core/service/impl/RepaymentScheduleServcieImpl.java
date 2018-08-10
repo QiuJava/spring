@@ -110,7 +110,8 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 		// 1.判断当前用户是否处于还款中
 		// 2.判断当前用户是否是还款用户
 		// 3.判断用户的钱是否足够
-		if (rs != null && rs.getState() == RepaymentSchedule.NORMAL && rs.getBorrowUserId() == currentAccount.getId()
+		if (rs != null && rs.getState().equals(RepaymentSchedule.NORMAL)
+				&& rs.getBorrowUserId().equals(currentAccount.getId())
 				&& usableAmount.compareTo(returnTotalAmount) >= 0) {
 			// 1.还款计划改变状态
 			// 修改成已还
@@ -151,7 +152,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 			// 8.如果当前还款是最后一期 改变借款人状态
 			// 得到借款对象
 			Borrow borrow = borrowService.get(rs.getBorrowId());
-			if (rs.getMonthIndex() == borrow.getMonthReturn()) {
+			if (rs.getMonthIndex().equals(borrow.getMonthReturn())) {
 				// 已还清状态
 				borrow.setState(BidConst.BORROW_STATE_COMPLETE_PAY_BACK);
 				borrowService.update(borrow);

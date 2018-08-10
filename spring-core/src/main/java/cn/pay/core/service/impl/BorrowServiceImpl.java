@@ -143,7 +143,7 @@ public class BorrowServiceImpl implements BorrowService {
 		// 拿到借款对象
 		Borrow borrow = get(borrowId);
 		// 1.检查标是否存在，检查是否是招标中，检查招标的时间是否到期
-		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_BIDDING
+		if (borrow != null && borrow.getState().equals(BidConst.BORROW_STATE_BIDDING)
 				&& new Date().before(borrow.getDisableDate())) {
 			// LoginInfo currentLoginInfo = HttpSessionContext.getCurrentLoginInfo();
 			LoginInfo currentLoginInfo = loginInfoService.get(loginInfoId);
@@ -213,13 +213,13 @@ public class BorrowServiceImpl implements BorrowService {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void publishAudit(Long id, int state, String remark) {
+	public void publishAudit(Long id, Integer state, String remark) {
 		// 得到当前用户借款对象
 		Borrow borrow = get(id);
 		if (borrow != null) {
 			// 创建一个审核历史对象 每一次审核对应一条历史记录
 			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.PUSH_AUDIT);
-			if (state == BorrowAuditHistroy.AUTH_PASS) {
+			if (state.equals(BorrowAuditHistroy.AUTH_PASS)) {
 				// 修改状态进入招标中
 				borrow.setState(BidConst.BORROW_STATE_BIDDING);
 				// 修改发布时间
@@ -255,13 +255,13 @@ public class BorrowServiceImpl implements BorrowService {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void audit1Audit(Long id, String remark, int state) {
+	public void audit1Audit(Long id, String remark, Integer state) {
 		Borrow borrow = get(id);
 		// 必须是满标一审状态
-		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_APPROVE_PENDING_1) {
+		if (borrow != null && borrow.getState().equals(BidConst.BORROW_STATE_APPROVE_PENDING_1)) {
 			// 创建审核历史记录
 			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.FULL_AUDIT1);
-			if (state == BorrowAuditHistroy.AUTH_PASS) {
+			if (state.equals(BorrowAuditHistroy.AUTH_PASS)) {
 				borrow.setState(BidConst.BORROW_STATE_APPROVE_PENDING_2);
 			} else {
 				// 退标 满标一审或者满标二审拒绝
@@ -307,15 +307,15 @@ public class BorrowServiceImpl implements BorrowService {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void audit2Audit(Long id, String remark, int state) {
+	public void audit2Audit(Long id, String remark, Integer state) {
 		// 得到借款对象 判定对象是否为满标二审状态
 		Borrow borrow = get(id);
-		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_APPROVE_PENDING_2) {
+		if (borrow != null && borrow.getState().equals(BidConst.BORROW_STATE_APPROVE_PENDING_2)) {
 			// 创建一个借款审核历史对象
 			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.FULL_AUDIT2);
 
 			// 审核成功
-			if (state == BorrowAuditHistroy.AUTH_PASS) {
+			if (state.equals(BorrowAuditHistroy.AUTH_PASS)) {
 				// 1.针对审核人
 				// 1.1修改借款状态(还款状态)
 				borrow.setState(BidConst.BORROW_STATE_PAYING_BACK);
@@ -453,7 +453,7 @@ public class BorrowServiceImpl implements BorrowService {
 		// 前n-1个投的标所有的利息
 		BigDecimal totalInterest = BidConst.ZERO;
 		// 遍历每一个投标
-		for (int i = 0; i < bidList.size(); i++) {
+		for (Integer i = 0; i < bidList.size(); i++) {
 			Bid bid = bidList.get(i);
 			// 为每一个标创建回款计划对象
 			PaymentPlan pp = new PaymentPlan();
@@ -466,7 +466,7 @@ public class BorrowServiceImpl implements BorrowService {
 			pp.setRepaymentSchedule(rs);
 			pp.setReturnType(rs.getReturnType());
 			pp.setCollectLoginInfoId(bid.getCreateUser().getId());
-			if (i == (bidList.size() - 1)) {
+			if (i.equals((bidList.size() - 1))) {
 				// 一个借款只有一个标的情况
 				pp.setPrincipal(rs.getPrincipal().subtract(totalPrincipal));
 				pp.setInterest(rs.getInterest().subtract(totalInterest));
@@ -551,7 +551,7 @@ public class BorrowServiceImpl implements BorrowService {
 				Borrow borrow = iterator.next();
 				if (borrow.getDisableDate().getTime() < date.getTime()) {
 					Borrow newBorrow = get(borrow.getId());
-					if (BidConst.BORROW_STATE_BIDDING == newBorrow.getState()) {
+					if (newBorrow.getState().equals(BidConst.BORROW_STATE_BIDDING)) {
 						// 流标操作
 						cancelBorrow(newBorrow, BidConst.BORROW_STATE_BIDDING_OVERDUE);
 						iterator.remove();

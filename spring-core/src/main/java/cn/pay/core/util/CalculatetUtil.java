@@ -47,14 +47,14 @@ public class CalculatetUtil {
 	 *            还款期限
 	 * @return
 	 */
-	public static BigDecimal calTotalInterest(int returnType, BigDecimal bidRequestAmount, BigDecimal yearRate,
-			int monthes2Return) {
+	public static BigDecimal calTotalInterest(Integer returnType, BigDecimal bidRequestAmount, BigDecimal yearRate,
+			Integer monthes2Return) {
 		BigDecimal totalInterest = BigDecimal.ZERO;
 		BigDecimal monthlyRate = getMonthlyRate(yearRate);
 		// 按月分期
-		if (returnType == BidConst.RETURN_TYPE_MONTH_INTEREST_PRINCIPAL) {
+		if (BidConst.RETURN_TYPE_MONTH_INTEREST_PRINCIPAL.equals(returnType)) {
 			// 只借款一个月
-			if (monthes2Return == 1) {
+			if (monthes2Return.equals(1)) {
 				totalInterest = bidRequestAmount.multiply(monthlyRate).setScale(BidConst.CAL_SCALE,
 						RoundingMode.HALF_UP);
 			} else {
@@ -70,7 +70,7 @@ public class CalculatetUtil {
 				totalInterest = totalReturnMoney.subtract(bidRequestAmount);
 			}
 			// 按月到期
-		} else if (returnType == BidConst.RETURN_TYPE_MONTH_INTEREST) {
+		} else if (BidConst.RETURN_TYPE_MONTH_INTEREST.equals(returnType)) {
 			BigDecimal monthlyInterest = DecimalFormatUtil.amountFormat(bidRequestAmount.multiply(monthlyRate));
 			totalInterest = monthlyInterest.multiply(new BigDecimal(monthes2Return));
 		}
@@ -92,14 +92,14 @@ public class CalculatetUtil {
 	 *            还款期限
 	 * @return
 	 */
-	public static BigDecimal calMonthlyInterest(int returnType, BigDecimal bidRequestAmount, BigDecimal yearRate,
-			int monthIndex, int monthes2Return) {
+	public static BigDecimal calMonthlyInterest(Integer returnType, BigDecimal bidRequestAmount, BigDecimal yearRate,
+			Integer monthIndex, Integer monthes2Return) {
 		BigDecimal monthlyInterest = BigDecimal.ZERO;
 		BigDecimal monthlyRate = getMonthlyRate(yearRate);
 		// 按月分期
-		if (returnType == BidConst.RETURN_TYPE_MONTH_INTEREST_PRINCIPAL) {
+		if (returnType.equals(BidConst.RETURN_TYPE_MONTH_INTEREST_PRINCIPAL)) {
 			// 只借款一个月
-			if (monthes2Return == 1) {
+			if (monthes2Return.equals(1)) {
 				monthlyInterest = bidRequestAmount.multiply(monthlyRate).setScale(BidConst.CAL_SCALE,
 						RoundingMode.HALF_UP);
 			} else {
@@ -118,7 +118,7 @@ public class CalculatetUtil {
 				if (monthIndex < monthes2Return) {
 					monthlyInterest = (temp1.subtract(monthToReturnMoney)).multiply(temp4).add(monthToReturnMoney)
 							.setScale(BidConst.CAL_SCALE, RoundingMode.HALF_UP);
-				} else if (monthIndex == monthes2Return) {
+				} else if (monthIndex.equals(monthes2Return)) {
 					BigDecimal temp6 = BigDecimal.ZERO;
 					// 汇总最后一期之前所有利息之和
 					for (int i = 1; i < monthes2Return; i++) {
@@ -132,7 +132,7 @@ public class CalculatetUtil {
 
 			}
 			// 按月到期
-		} else if (returnType == BidConst.RETURN_TYPE_MONTH_INTEREST) {
+		} else if (returnType.equals(BidConst.RETURN_TYPE_MONTH_INTEREST)) {
 			monthlyInterest = DecimalFormatUtil.amountFormat(bidRequestAmount.multiply(monthlyRate));
 		}
 		return monthlyInterest;
@@ -153,13 +153,13 @@ public class CalculatetUtil {
 	 *            还款期限
 	 * @return
 	 */
-	public static BigDecimal calMonthlyReturnMoney(int returnType, BigDecimal bidRequestAmount, BigDecimal yearRate,
-			int monthIndex, int monthes2Return) {
+	public static BigDecimal calMonthlyReturnMoney(Integer returnType, BigDecimal bidRequestAmount, BigDecimal yearRate,
+			Integer monthIndex, Integer monthes2Return) {
 		BigDecimal monthToReturnMoney = BigDecimal.ZERO;
 		BigDecimal monthlyRate = getMonthlyRate(yearRate);
 		// 按月分期
-		if (returnType == BidConst.RETURN_TYPE_MONTH_INTEREST_PRINCIPAL) {
-			if (monthes2Return == 1) {
+		if (returnType.equals(BidConst.RETURN_TYPE_MONTH_INTEREST_PRINCIPAL)) {
+			if (monthes2Return.equals(1)) {
 				monthToReturnMoney = bidRequestAmount.add(bidRequestAmount.multiply(monthlyRate))
 						.setScale(BidConst.CAL_SCALE, RoundingMode.HALF_UP);
 			} else {
@@ -170,10 +170,10 @@ public class CalculatetUtil {
 				monthToReturnMoney = temp1.multiply(temp2).divide(temp3, BidConst.CAL_SCALE, RoundingMode.HALF_UP);
 			}
 			// 按月到期
-		} else if (returnType == BidConst.RETURN_TYPE_MONTH_INTEREST) {
+		} else if (returnType.equals(BidConst.RETURN_TYPE_MONTH_INTEREST)) {
 			BigDecimal monthlyInterest = bidRequestAmount.multiply(monthlyRate).setScale(BidConst.CAL_SCALE,
 					RoundingMode.HALF_UP);
-			if (monthIndex == monthes2Return) {
+			if (monthIndex.equals(monthes2Return)) {
 				monthToReturnMoney = bidRequestAmount.add(monthlyInterest).setScale(BidConst.CAL_SCALE,
 						RoundingMode.HALF_UP);
 			} else if (monthIndex < monthes2Return) {

@@ -34,6 +34,6 @@ public interface RechargeService {
 	 * @param remark
 	 * @param state
 	 */
-	void audit(Long id, String remark, int state);
+	void audit(Long id, String remark, Integer state);
 
 }

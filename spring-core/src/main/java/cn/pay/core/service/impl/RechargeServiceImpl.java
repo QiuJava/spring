@@ -104,14 +104,14 @@ public class RechargeServiceImpl implements RechargeService {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void audit(Long id, String remark, int state) {
+	public void audit(Long id, String remark, Integer state) {
 		Recharge recharge = repository.findOne(id);
-		if (recharge != null && recharge.getState() == Recharge.AUTH_NORMAL) {
+		if (recharge != null && recharge.getState().equals(Recharge.AUTH_NORMAL)) {
 			recharge.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			recharge.setAuditTime(new Date());
 			recharge.setState(state);
 			recharge.setRemark(remark);
-			if (state == Recharge.AUTH_PASS) {
+			if (state.equals(Recharge.AUTH_PASS)) {
 				// 拿到用户账户对象
 				Account account = accountService.get(recharge.getApplier().getId());
 				// 修改账户可用余额

@@ -44,6 +44,6 @@ public class IpLog implements Serializable {
 
 	@Transient
 	public String getDisplayState() {
-		return loginState == IpLog.LOGIN_FAIL ? "登陆失败" : "登陆成功";
+		return loginState.equals(IpLog.LOGIN_FAIL) ? "登陆失败" : "登陆成功";
 	}
 }

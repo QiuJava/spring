@@ -46,7 +46,7 @@ public interface UserFileService {
 	 * @param score
 	 * @param remark
 	 */
-	void audit(Long id, int state, int score, String remark);
+	void audit(Long id, Integer state, Integer score, String remark);
 
 	/**
 	 * 获取用户的风控材料列表

@@ -54,7 +54,7 @@ public interface BorrowService {
 	 * @param state
 	 * @param remark
 	 */
-	void publishAudit(Long id, int state, String remark);
+	void publishAudit(Long id, Integer state, String remark);
 
 	/**
 	 * 借款满标一审
@@ -63,7 +63,7 @@ public interface BorrowService {
 	 * @param remark
 	 * @param state
 	 */
-	void audit1Audit(Long id, String remark, int state);
+	void audit1Audit(Long id, String remark, Integer state);
 
 	/**
 	 * 借款满标二审
@@ -72,7 +72,7 @@ public interface BorrowService {
 	 * @param remark
 	 * @param state
 	 */
-	void audit2Audit(Long id, String remark, int state);
+	void audit2Audit(Long id, String remark, Integer state);
 
 	/**
 	 * 根据借款ID获取借款

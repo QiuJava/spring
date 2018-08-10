@@ -93,7 +93,7 @@ public class IndexController {
 		LoginInfo loginInfo = HttpServletContext.getCurrentLoginInfo();
 		if (loginInfo != null) {
 			Long currentId = loginInfo.getId();
-			if (currentId == borrow.getCreateUser().getId()) {
+			if (currentId.equals(borrow.getCreateUser().getId())) {
 				model.addAttribute("self", true);
 			} else {
 				model.addAttribute("self", false);

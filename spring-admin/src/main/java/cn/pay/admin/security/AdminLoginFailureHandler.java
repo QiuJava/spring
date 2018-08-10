@@ -41,7 +41,7 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			String username = request.getParameter(SysConst.USERNAME);
 			LoginInfo loginInfo = loginInfoService.getByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
-			if (loginInfo.getLoserCount() == LoginInfo.LOSER_MAX_COUNT) {
+			if (loginInfo.getLoserCount().equals(LoginInfo.LOSER_MAX_COUNT)) {
 				// 达到次数进行锁定
 				loginInfo.setStatus(LoginInfo.LOCK);
 				loginInfo.setLockTime(new Date());

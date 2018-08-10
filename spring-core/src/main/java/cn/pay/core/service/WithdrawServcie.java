@@ -28,7 +28,7 @@ public interface WithdrawServcie {
 	 * @param remark
 	 * @param state
 	 */
-	void audit(Long id, String remark, int state);
+	void audit(Long id, String remark, Integer state);
 
 	/**
 	 * 提现申请
