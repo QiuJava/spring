@@ -11,7 +11,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.pay.core.domain.sys.SystemTimedTask;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
@@ -84,7 +83,4 @@ public class TemplateUtil {
 		}
 	}
 	
-	public static void main(String[] args) {
-		domainTemplate(SystemTimedTask.class);
-	}
 }
