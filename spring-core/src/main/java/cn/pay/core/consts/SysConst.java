@@ -12,7 +12,7 @@ public class SysConst {
 	
 	/** 后台系统超级管理员名字 */
 	public static final String ADMIN_NAME = "admin";
-	public static final String USERNAME = "username";
+	public static final String USERNAME_STR = "username";
 	/** 开发时默认密码 */
 	public static final String LOGIN_PASSWORD = "123456";
 

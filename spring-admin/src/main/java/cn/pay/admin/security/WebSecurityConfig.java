@@ -1,4 +1,4 @@
-package cn.pay.admin.config;
+package cn.pay.admin.security;
 
 import javax.annotation.Resource;
 
@@ -8,16 +8,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import cn.pay.admin.security.AdminAuthenticationProvider;
-import cn.pay.admin.security.AdminLoginFailureHandler;
-import cn.pay.admin.security.AdminLoginSuccessHandler;
 import cn.pay.core.consts.SysConst;
 
 /**
- * SpringSecurity 配置类
+ * 安全配置
  * 
  * @author Qiujian
- *
+ * @date 2018年8月13日
  */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -37,19 +34,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();// 禁用csrf防护
+		// 禁用csrf防护
+		http.csrf().disable();
 
-		http.authorizeRequests()
-				.and()
+		http.authorizeRequests().and()
 				// 登录配置
 				.formLogin()
 				// 登录页面
 				.loginPage(SysConst.URL_LOGIN_HTML)
 				// 登录处理URL
 				.loginProcessingUrl(SysConst.URL_LOGIN_INFO_LOGIN).permitAll()
-				.successHandler(successHandler).failureHandler(failureHandler)
+				// 登录成功处理
+				.successHandler(successHandler)
+				// 登录失败处理
+				.failureHandler(failureHandler)
 
-				.and()//
+				.and()
 				// 登出配置
 				.logout()
 				// 登出的URL

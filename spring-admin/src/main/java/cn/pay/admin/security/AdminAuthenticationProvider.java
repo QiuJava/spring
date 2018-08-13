@@ -18,7 +18,7 @@ import cn.pay.core.util.DateUtil;
  * 自定义认证
  * 
  * @author Qiujian
- *
+ * @date 2018年8月13日
  */
 @Component
 public class AdminAuthenticationProvider implements AuthenticationProvider {
@@ -29,22 +29,29 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();
+		// 页面输入的密码
 		String password = (String) authentication.getCredentials();
 		LoginInfo loginInfo = (LoginInfo) loginInfoService.loadUserByUsername(username);
 
-		// 初始化
-		if (!loginInfo.isAccountNonLocked()
-				&& System.currentTimeMillis() - loginInfo.getLockTime().getTime() >= DateUtil.LOCK_TIME) {
-			loginInfo.setStatus(LoginInfo.NORMAL);
-		}
-
 		if (!loginInfo.isAccountNonLocked()) {
-			StringBuilder errMsg = new StringBuilder();
-			Long seconds = (((loginInfo.getLockTime().getTime() + DateUtil.LOCK_TIME) - System.currentTimeMillis())
-					/ 1000);
-			errMsg.append("密码输错").append(LoginInfo.LOSER_MAX_COUNT).append("次，请").append(seconds.toString())
-					.append("秒后再进行登录");
-			throw new LockedException(errMsg.toString());
+			long lockTimeLong = loginInfo.getLockTime().getTime();
+			// 锁定时间过了 恢复为正常状态
+			if (System.currentTimeMillis() - lockTimeLong >= DateUtil.LOCK_TIME) {
+				loginInfo.setStatus(LoginInfo.NORMAL);
+				loginInfo.setLoserCount(0);
+				loginInfo.setLockTime(null);
+				loginInfoService.saveAndUpdate(loginInfo);
+			} else {
+				Long seconds = (((lockTimeLong + DateUtil.LOCK_TIME) - System.currentTimeMillis()) / 1000);
+
+				StringBuilder errMsgStr = new StringBuilder();
+				errMsgStr.append("密码输错");
+				errMsgStr.append(LoginInfo.LOSER_MAX_COUNT);
+				errMsgStr.append("次，请");
+				errMsgStr.append(seconds.toString());
+				errMsgStr.append("秒后再进行登录");
+				throw new LockedException(errMsgStr.toString());
+			}
 		}
 
 		// 密码匹配
@@ -52,9 +59,6 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
 			throw new BadCredentialsException("密码错误");
 		}
 
-		loginInfo.setLoserCount(0);
-		loginInfo.setLockTime(null);
-		loginInfoService.saveAndUpdate(loginInfo);
 		return new UsernamePasswordAuthenticationToken(loginInfo, password, loginInfo.getAuthorities());
 	}
 

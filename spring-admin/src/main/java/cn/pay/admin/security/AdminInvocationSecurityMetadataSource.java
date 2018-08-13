@@ -23,10 +23,10 @@ import cn.pay.core.domain.sys.Role;
 import cn.pay.core.service.RoleService;
 
 /**
- * 获取权限资源
+ * 初始化权限
  * 
  * @author Qiujian
- *
+ * @date 2018年8月13日
  */
 @Component
 public class AdminInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
@@ -41,11 +41,8 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		if (collectionConfigAttrMap == null) {
-			/**
-			 * 加载资源，初始化资源变量
-			 */
-			Collection<ConfigAttribute> con;
-			ConfigAttribute config;
+			Collection<ConfigAttribute> con = null;
+			ConfigAttribute config = null;
 			List<Role> roleList = roleService.getAll();
 			collectionConfigAttrMap = new HashMap<>(roleList.size());
 			for (Role role : roleList) {

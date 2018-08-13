@@ -19,10 +19,10 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 
 /**
- * Spring Security 过滤
+ * 安全过滤拦截
  * 
  * @author Qiujian
- *
+ * @date 2018年8月13日
  */
 @Component
 public class AdminFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
@@ -43,13 +43,9 @@ public class AdminFilterSecurityInterceptor extends AbstractSecurityInterceptor 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		/**
-		 * 获取拦截相关调用
-		 */
 		FilterInvocation filterInvocation = new FilterInvocation(request, response, chain);
 		InterceptorStatusToken token = super.beforeInvocation(filterInvocation);
 		try {
-			// 执行下一个拦截器
 			filterInvocation.getChain().doFilter(filterInvocation.getRequest(), filterInvocation.getResponse());
 		} finally {
 			super.afterInvocation(token, null);

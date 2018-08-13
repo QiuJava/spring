@@ -15,8 +15,8 @@ import cn.pay.core.service.SendSmsService;
 /**
  * 相关业务审核成功事件监听
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018年8月13日
  */
 @Component
 public class AuditSuccessListener implements ApplicationListener<ApplicationEvent> {
@@ -29,16 +29,24 @@ public class AuditSuccessListener implements ApplicationListener<ApplicationEven
 		if (event instanceof BorrowEvent) {
 			BorrowEvent borrowEvent = (BorrowEvent) event;
 			sendSmsService.borrowSuccess(borrowEvent.getEventObj());
-		} else if (event instanceof PaymentPlanEvent) {
+		}
+
+		if (event instanceof PaymentPlanEvent) {
 			PaymentPlanEvent paymentPlanEvent = (PaymentPlanEvent) event;
 			sendSmsService.paymentSuccess(paymentPlanEvent.getEventObj());
-		} else if (event instanceof RealAuthEvent) {
+		}
+
+		if (event instanceof RealAuthEvent) {
 			RealAuthEvent realAuthEvent = (RealAuthEvent) event;
 			sendSmsService.realAuthSuccess(realAuthEvent.getEventObj());
-		} else if (event instanceof RechargeEvent) {
+		}
+
+		if (event instanceof RechargeEvent) {
 			RechargeEvent rechargeEvent = (RechargeEvent) event;
 			sendSmsService.rechargeSuccess(rechargeEvent.getEventObj());
-		} else if (event instanceof WithdrawEvent) {
+		}
+
+		if (event instanceof WithdrawEvent) {
 			WithdrawEvent withdrawEvent = (WithdrawEvent) event;
 			sendSmsService.withdrawSuccess(withdrawEvent.getEventObj());
 		}

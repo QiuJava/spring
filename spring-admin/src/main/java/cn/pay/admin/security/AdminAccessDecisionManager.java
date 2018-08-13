@@ -18,7 +18,7 @@ import cn.pay.core.domain.sys.LoginInfo;
  * 权限校验管理
  * 
  * @author Qiujian
- *
+ * @date 2018年8月13日
  */
 @Component
 public class AdminAccessDecisionManager implements AccessDecisionManager {
@@ -26,9 +26,10 @@ public class AdminAccessDecisionManager implements AccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		// 超级管理员拥有所有权限
+
 		if (authentication instanceof UsernamePasswordAuthenticationToken) {
 			LoginInfo info = (LoginInfo) authentication.getPrincipal();
+			// 超级管理员拥有所有权限
 			if (info.isAdmin()) {
 				return;
 			}
@@ -40,9 +41,9 @@ public class AdminAccessDecisionManager implements AccessDecisionManager {
 		if (null == configAttributes || configAttributes.size() <= 0) {
 			return;
 		}
-		
-		ConfigAttribute config;
-		String needRole;
+
+		ConfigAttribute config = null;
+		String needRole = null;
 		for (Iterator<ConfigAttribute> iter = configAttributes.iterator(); iter.hasNext();) {
 			config = iter.next();
 			needRole = config.getAttribute();
@@ -52,7 +53,6 @@ public class AdminAccessDecisionManager implements AccessDecisionManager {
 				}
 			}
 		}
-
 		throw new AccessDeniedException("没有权限");
 	}
 

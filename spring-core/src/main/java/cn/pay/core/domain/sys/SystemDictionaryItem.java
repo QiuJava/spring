@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -28,20 +27,15 @@ import lombok.ToString;
 @Entity
 public class SystemDictionaryItem implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long systemDictionaryId;
 	private String title;
 	private String intro;
 	private Integer sequence;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
-		return id;
-	}
-
-	@Transient
 	public String getJsonString() {
 		Map<String, Object> json = new HashMap<>(5);
 		json.put("id", id);

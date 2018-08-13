@@ -37,40 +37,31 @@ public class LoginInfo implements UserDetails {
 	public static final Integer USER = 0;
 	public static final Integer MANAGER = 1;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
 	private String password;
-	private Integer userType = LoginInfo.USER;
+	private Integer userType;
 	private boolean admin;
-	private Integer status = LoginInfo.NORMAL;
-	private Integer loserCount = 0;
+	private Integer status;
+	private Integer loserCount;
 	private Date lockTime;
+	@ManyToMany
 	private List<Role> roles;
 
+	@Transient
 	private Collection<? extends GrantedAuthority> authorities;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
-		return id;
-	}
-
-	@ManyToMany
-	public List<Role> getRoles() {
-		return roles;
-	}
-
 	@Override
-	@Transient
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
 
 	/**
-	 * 判断账户是不过期
+	 * 账户不过期
 	 */
 	@Override
-	@Transient
 	public boolean isAccountNonExpired() {
 		return true;
 	}
@@ -79,16 +70,14 @@ public class LoginInfo implements UserDetails {
 	 * 判断账户是不锁定
 	 */
 	@Override
-	@Transient
 	public boolean isAccountNonLocked() {
-		return this.status != LoginInfo.LOCK;
+		return !status.equals(LoginInfo.LOCK);
 	}
 
 	/**
 	 * 判断用户密码是不过期
 	 */
 	@Override
-	@Transient
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
@@ -97,16 +86,15 @@ public class LoginInfo implements UserDetails {
 	 * 判断用户是可用
 	 */
 	@Override
-	@Transient
 	public boolean isEnabled() {
-		return this.status != LoginInfo.DEL;
+		return !status.equals(LoginInfo.DEL);
 	}
 
 	@Override
 	public String getPassword() {
 		return password;
 	}
-	
+
 	@Override
 	public String getUsername() {
 		return username;

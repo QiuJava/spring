@@ -25,7 +25,9 @@ import lombok.ToString;
 @Entity
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	/** 权限名称 */
 	private String name;
@@ -35,18 +37,7 @@ public class Role implements Serializable {
 	private String url;
 	/** 父节点ID */
 	private Long parentId;
-
-	private List<LoginInfo> loginInfos;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
-		return id;
-	}
-
 	@ManyToMany(mappedBy = "roles")
-	public List<LoginInfo> getLoginInfos() {
-		return loginInfos;
-	}
+	private List<LoginInfo> loginInfos;
 
 }

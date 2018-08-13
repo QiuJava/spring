@@ -21,10 +21,10 @@ import cn.pay.core.service.IpLogService;
 import cn.pay.core.service.LoginInfoService;
 
 /**
- * 自定义登录失败处理
+ * 登录失败
  * 
  * @author Qiujian
- *
+ * @date 2018年8月13日
  */
 @Component
 public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
@@ -38,11 +38,12 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		if (exception instanceof BadCredentialsException) {
-			String username = request.getParameter(SysConst.USERNAME);
+			String username = request.getParameter(SysConst.USERNAME_STR);
 			LoginInfo loginInfo = loginInfoService.getByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
-			if (loginInfo.getLoserCount().equals(LoginInfo.LOSER_MAX_COUNT)) {
-				// 达到次数进行锁定
+			Integer loserCount = loginInfo.getLoserCount();
+			// 达到次数进行锁定
+			if (loserCount >= LoginInfo.LOSER_MAX_COUNT) {
 				loginInfo.setStatus(LoginInfo.LOCK);
 				loginInfo.setLockTime(new Date());
 			}
@@ -53,6 +54,7 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			ipLog.setUserType(LoginInfo.MANAGER);
 			ipLog.setLoginTime(new Date());
 			ipLog.setLoginState(IpLog.LOGIN_FAIL);
+
 			loginInfoService.saveAndUpdate(loginInfo);
 			ipLogService.saveAndUpdate(ipLog);
 		}

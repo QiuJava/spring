@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +27,9 @@ public class IpLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final int LOGIN_SUCCESS = 1;
 	public static final int LOGIN_FAIL = 0;
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
 	private Integer loginState = IpLog.LOGIN_FAIL;
@@ -36,13 +37,6 @@ public class IpLog implements Serializable {
 	private Date loginTime;
 	private Integer userType;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
-		return id;
-	}
-
-	@Transient
 	public String getDisplayState() {
 		return loginState.equals(IpLog.LOGIN_FAIL) ? "登陆失败" : "登陆成功";
 	}

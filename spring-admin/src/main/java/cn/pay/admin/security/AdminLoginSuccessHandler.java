@@ -20,10 +20,10 @@ import cn.pay.core.service.IpLogService;
 import cn.pay.core.util.HttpServletContext;
 
 /**
- * 自定义登录成功处理 记录登录日志
+ * 登录成功处理
  * 
  * @author Qiujian
- *
+ * @date 2018年8月13日
  */
 @Component
 public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {

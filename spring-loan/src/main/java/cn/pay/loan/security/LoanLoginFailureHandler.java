@@ -38,7 +38,7 @@ public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		if (exception instanceof BadCredentialsException) {
-			String username = request.getParameter(SysConst.USERNAME);
+			String username = request.getParameter(SysConst.USERNAME_STR);
 			LoginInfo loginInfo = loginInfoService.getByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
 			if (loginInfo.getLoserCount().equals(LoginInfo.LOSER_MAX_COUNT)) {

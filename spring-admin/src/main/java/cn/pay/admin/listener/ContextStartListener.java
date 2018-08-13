@@ -17,12 +17,10 @@ import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.SystemAccountService;
 
 /**
- * 后台应用初始化事件监听
- * 创建Admin登录信息
- * 创建系统账户
+ * 后台应用初始化事件监听 创建Admin登录信息 创建系统账户
  * 
  * @author Qiujian
- *
+ * @date 2018年8月13日
  */
 @Component
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
@@ -46,16 +44,16 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 			loginInfoService.saveAndUpdate(info);
 		}
 
-		Long count = systemAccountService.count();
-		if (count < 1) {
+		Long accountCount = systemAccountService.count();
+		if (accountCount < 1) {
 			// 创建系统账户
 			SystemAccount systemAccount = new SystemAccount();
-			Date date = new Date();
-			systemAccount.setCreateDate(date);
+			Date currentDate = new Date();
+			systemAccount.setCreateDate(currentDate);
 			systemAccount.setTotalBalance(BigDecimal.ZERO);
 			systemAccount.setFreezedAmount(BigDecimal.ZERO);
-			systemAccount.setBeginDate(date);
-			systemAccount.setEndDate(DateUtils.addYears(date, 1));
+			systemAccount.setBeginDate(currentDate);
+			systemAccount.setEndDate(DateUtils.addYears(currentDate, 1));
 			systemAccountService.save(systemAccount);
 		}
 	}

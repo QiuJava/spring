@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -31,7 +30,9 @@ public class SystemTimedTask implements Serializable {
 
 	public static final int PAUSE = 1;
 	public static final int NORMAL = 0;
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String jobName;
 	/** 定时任务的组 */
@@ -43,23 +44,10 @@ public class SystemTimedTask implements Serializable {
 	/** 状态 */
 	private Integer status;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
-		return id;
-	}
-
-	@Transient
 	public String getStatusDisplay() {
-		switch (status) {
-		case PAUSE:
-			return "暂停";
-		default:
-			return "开启";
-		}
+		return status.equals(PAUSE) ? "暂停" : "开启";
 	}
 
-	@Transient
 	public String getJsonString() {
 		Map<String, Object> json = new HashMap<>(5);
 		json.put("id", id);
