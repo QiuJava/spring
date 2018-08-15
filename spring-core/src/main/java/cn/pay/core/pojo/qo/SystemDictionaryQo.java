@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class SystemDictionaryQo extends BaseQo {
+public class SystemDictionaryQo extends PageConditionQo {
 	private static final long serialVersionUID = 1L;
 	private String keyword;
 	private Long systemDictionaryId = -1L;

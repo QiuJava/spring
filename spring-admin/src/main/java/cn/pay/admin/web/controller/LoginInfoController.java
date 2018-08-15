@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.pay.admin.security.AdminLoginFailureHandler;
 import cn.pay.core.consts.SysConst;
 import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.util.StringUtil;
@@ -28,11 +29,11 @@ public class LoginInfoController {
 	@RequestMapping(SysConst.URL_LOGIN_INFO_AJAX)
 	@ResponseBody
 	public AjaxResult ajax(HttpServletRequest request) {
-		String msg = (String) request.getAttribute("msg");
+		String msg = (String) request.getAttribute(AdminLoginFailureHandler.LOGIN_ERR_MSG);
 		if (StringUtil.hasLength(msg)) {
 			return new AjaxResult(msg);
 		}
 		return new AjaxResult(true, "登录成功");
 	}
-
+	
 }

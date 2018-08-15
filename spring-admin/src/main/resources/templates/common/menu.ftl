@@ -11,7 +11,7 @@
 		<ul class="in" id="permissionmanage_detail">
 			<li class="systemDictionary"><a href="/systemDictionary/page"><span>系统数据字典目录</span></a></li>
 			<li class="systemDictionaryItem"><a href="/systemDictionaryItem/list"><span>系统数据字典明细</span></a></li>
-			<li class="systemTimedTask_list"><a href="/systemTimedTask/list"><span>定时任务管理</span></a></li>
+			<li class="systemTimedTask"><a href="/systemTimedTask/pageQuery"><span>定时任务管理</span></a></li>
 			<li><a href="#"><span>权限管理</span></a></li>
 			<li><a href="#"><span>角色管理</span></a></li>
 			<li><a href="#"><span>菜单管理</span></a></li>

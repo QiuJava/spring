@@ -1,6 +1,7 @@
 package cn.pay.core.domain.sys;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -35,8 +36,10 @@ public class Role implements Serializable {
 	private String descritpion;
 	/** 权限连接 */
 	private String url;
-	/** 父节点ID */
-	private Long parentId;
+	/** 创建时间 */
+	private Date gmtCreate;
+	/** 修改时间 */
+	private Date gmtModified;
 	@ManyToMany(mappedBy = "roles")
 	private List<LoginInfo> loginInfos;
 

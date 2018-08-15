@@ -17,10 +17,10 @@ import cn.pay.core.consts.SysConst;
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.domain.sys.LoginInfo;
 import cn.pay.core.service.IpLogService;
+import cn.pay.core.util.HttpServletContext;
 
 /**
- * 自定义登录成功处理
- * 记录登录日志
+ * 自定义登录成功处理 记录登录日志
  * 
  * @author Qiujian
  *
@@ -37,14 +37,16 @@ public class LoanLoginSuccessHandler implements AuthenticationSuccessHandler {
 		LoginInfo loginInfo = (LoginInfo) authentication.getPrincipal();
 		// 登录日志记录
 		IpLog ipLog = new IpLog();
+		Date currentDate = new Date();
 		ipLog.setIp(request.getRemoteAddr());
 		ipLog.setUsername(loginInfo.getUsername());
 		ipLog.setUserType(LoginInfo.MANAGER);
-		ipLog.setLoginTime(new Date());
+		ipLog.setLoginTime(currentDate);
 		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
-		ipLogService.saveAndUpdate(ipLog);
-
-		// response.sendRedirect(SysConst.INDEX);
+		ipLog.setGmtCreate(currentDate);
+		ipLog.setGmtModified(currentDate);
+		ipLogService.saveIpLog(ipLog);
+		HttpServletContext.setCurrentLoginInfo(loginInfo);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}

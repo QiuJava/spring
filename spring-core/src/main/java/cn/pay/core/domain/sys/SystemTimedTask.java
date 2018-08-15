@@ -1,6 +1,7 @@
 package cn.pay.core.domain.sys;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +44,10 @@ public class SystemTimedTask implements Serializable {
 	private String description;
 	/** 状态 */
 	private Integer status;
+	/** 创建时间 */
+	private Date gmtCreate;
+	/** 修改时间 */
+	private Date gmtModified;
 
 	public String getStatusDisplay() {
 		return status.equals(PAUSE) ? "暂停" : "开启";

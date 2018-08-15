@@ -30,7 +30,7 @@ import cn.pay.core.util.HttpServletContext;
  * 
  */
 @Controller
-public class IndexController {
+public class HomeController {
 	public static final String MAIN = "main";
 	public static final String INVERST = "invest";
 	public static final String INVERST_LIST = "invest_list";

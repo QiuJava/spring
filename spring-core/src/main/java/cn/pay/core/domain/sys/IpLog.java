@@ -25,6 +25,7 @@ import lombok.ToString;
 @Entity
 public class IpLog implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	public static final int LOGIN_SUCCESS = 1;
 	public static final int LOGIN_FAIL = 0;
 	
@@ -32,10 +33,14 @@ public class IpLog implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
-	private Integer loginState = IpLog.LOGIN_FAIL;
+	private Integer loginState;
 	private String ip;
 	private Date loginTime;
 	private Integer userType;
+	/** 创建时间 */
+	private Date gmtCreate;
+	/** 修改时间 */
+	private Date gmtModified;
 
 	public String getDisplayState() {
 		return loginState.equals(IpLog.LOGIN_FAIL) ? "登陆失败" : "登陆成功";

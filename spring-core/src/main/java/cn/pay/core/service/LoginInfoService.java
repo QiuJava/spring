@@ -28,15 +28,15 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @param username
 	 * @return
 	 */
-	boolean isExist(String username);
+	Boolean isExistByUsername(String username);
 
 	/**
-	 * 获取用户登录信息
+	 * 获取用户id获取登录信息
 	 * 
 	 * @param id
 	 * @return
 	 */
-	LoginInfo get(Long id);
+	LoginInfo getLoginInfoById(Long id);
 
 	/**
 	 * 根据登录名获取用户信息
@@ -44,14 +44,7 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @param username
 	 * @return
 	 */
-	LoginInfo getByUsername(String username);
-
-	/**
-	 * 保存或更新
-	 * 
-	 * @param info
-	 */
-	void saveAndUpdate(LoginInfo info);
+	LoginInfo getLoginInfoByUsername(String username);
 
 	/**
 	 * 查询所有用户
@@ -59,5 +52,21 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @return
 	 */
 	List<LoginInfo> listAll();
+
+	/**
+	 * 更新登录信息
+	 * 
+	 * @param loginInfo
+	 * @return
+	 */
+	LoginInfo updateLoginInfo(LoginInfo loginInfo);
+
+	/**
+	 * 保存登录信息
+	 * 
+	 * @param loginInfo
+	 * @return
+	 */
+	LoginInfo saveLoginInfo(LoginInfo loginInfo);
 
 }

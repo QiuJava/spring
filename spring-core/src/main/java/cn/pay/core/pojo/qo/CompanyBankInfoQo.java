@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CompanyBankInfoQo extends BaseQo {
+public class CompanyBankInfoQo extends PageConditionQo {
 	private static final long serialVersionUID = 1L;
 
 }

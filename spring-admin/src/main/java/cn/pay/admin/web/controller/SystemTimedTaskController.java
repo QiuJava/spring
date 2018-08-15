@@ -1,5 +1,7 @@
 package cn.pay.admin.web.controller;
 
+import java.util.Date;
+
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
@@ -41,11 +43,12 @@ public class SystemTimedTaskController {
 	 */
 	@RequestMapping("/pause")
 	public String pause(Long id) throws Exception {
-		SystemTimedTask std = service.get(id);
+		SystemTimedTask std = service.getSystemTimedTaskById(id);
 		scheduler.pauseJob(JobKey.jobKey(std.getJobName(), std.getGroupName()));
 		std.setStatus(SystemTimedTask.PAUSE);
-		service.saveAndUpdate(std);
-		return "redirect:/systemTimedTask/list.do";
+		std.setGmtModified(new Date());
+		service.updateSystemTimedTask(std);
+		return "redirect:/systemTimedTask/pageQuery";
 	}
 
 	/**
@@ -53,21 +56,22 @@ public class SystemTimedTaskController {
 	 */
 	@RequestMapping("/resume")
 	public String resume(Long id) throws Exception {
-		SystemTimedTask std = service.get(id);
+		SystemTimedTask std = service.getSystemTimedTaskById(id);
 		scheduler.resumeJob(JobKey.jobKey(std.getJobName(), std.getGroupName()));
 		std.setStatus(SystemTimedTask.NORMAL);
-		service.saveAndUpdate(std);
-		return "redirect:/systemTimedTask/list.do";
+		std.setGmtModified(new Date());
+		service.updateSystemTimedTask(std);
+		return "redirect:/systemTimedTask/pageQuery";
 	}
 
 	@RequestMapping("/delete")
 	public String delete(Long id) throws Exception {
-		SystemTimedTask std = service.get(id);
+		SystemTimedTask std = service.getSystemTimedTaskById(id);
 		scheduler.pauseTrigger(TriggerKey.triggerKey(std.getJobName(), std.getGroupName()));
 		scheduler.unscheduleJob(TriggerKey.triggerKey(std.getJobName(), std.getGroupName()));
 		scheduler.deleteJob(JobKey.jobKey(std.getJobName(), std.getGroupName()));
-		service.delete(id);
-		return "redirect:/systemTimedTask/list.do";
+		service.deleteById(id);
+		return "redirect:/systemTimedTask/pageQuery";
 	}
 
 	@RequestMapping("/update")
@@ -78,17 +82,23 @@ public class SystemTimedTaskController {
 
 		// 执行计划构建
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
-
+		Date currentDate = new Date();
 		if (systemTimedTask.getId() != null) {
+			SystemTimedTask std = service.getSystemTimedTaskById(systemTimedTask.getId());
+			std.setStatus(SystemTimedTask.NORMAL);
+			std.setGmtModified(currentDate);
+			service.updateSystemTimedTask(std);
 			// 重新设置该定时任务
 			TriggerKey triggerKey = TriggerKey.triggerKey(jobName, groupName);
 			CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 			trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
-
 			// 按新的trigger重新设置job执行
 			scheduler.rescheduleJob(triggerKey, trigger);
-
 		} else {
+			systemTimedTask.setStatus(SystemTimedTask.NORMAL);
+			systemTimedTask.setGmtModified(currentDate);
+			systemTimedTask.setGmtCreate(currentDate);
+			service.saveSystemTimedTask(systemTimedTask);
 			// 新开启一个定时任务
 			scheduler.start();
 			Class<?> clz = Class.forName(jobName);
@@ -102,18 +112,14 @@ public class SystemTimedTaskController {
 					.withSchedule(scheduleBuilder).build();
 
 			scheduler.scheduleJob(jobDetail, trigger);
-
 		}
-
-		systemTimedTask.setStatus(SystemTimedTask.NORMAL);
-		service.saveAndUpdate(systemTimedTask);
-		return "redirect:/systemTimedTask/list.do";
+		return "redirect:/systemTimedTask/pageQuery";
 	}
 
-	@RequestMapping("/list")
-	public String list(@ModelAttribute("qo") SystemTimedTaskQo qo, Model model) {
-		PageResult page = service.listQuery(qo);
-		model.addAttribute("page", page);
+	@RequestMapping("/pageQuery")
+	public String pageQuerySystemTimedTask(@ModelAttribute("qo") SystemTimedTaskQo qo, Model model) {
+		PageResult pageResult = service.pageQuerySystemTimedTask(qo);
+		model.addAttribute("pageResult", pageResult);
 		return "systemTimedTask/systemTimedTask_list";
 	}
 

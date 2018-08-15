@@ -11,9 +11,9 @@
 <script type="text/javascript">
 	$(function(){
 		$("#pagination").twbsPagination({
-			totalPages:${page.totalPages},
+			totalPages:${pageResult.totalPages}||1,
 			visiblePages:5,
-			startPage:${page.currentPage},
+			startPage:${pageResult.currentPage},
 			first : "首页",
 			prev : "上一页",
 			next : "下一页",
@@ -31,7 +31,6 @@
 		});
 		
 		$("#query").click(function(){
-			$("#currentPage").val(1);
 			$("#searchForm").submit();
 		})
 	});
@@ -47,18 +46,18 @@
 	<div class="container">
 		<div class="row">
 			<!--导航菜单-->
-			<div class="col-sm-3"><#assign currentMenu="iplog" /> <#include "common/leftmenu-tpl.ftl" /></div>
+			<div class="col-sm-3"><#assign currentMenu="ipLog" /> <#include "common/leftmenu-tpl.ftl" /></div>
 			<!-- 功能页面 -->
 			<div class="col-sm-9">
-				<form action="/ipLog/page" name="searchForm" id="searchForm" class="form-inline" method="post">
+				<form action="/ipLog/pageQuery" name="searchForm" id="searchForm" class="form-inline" method="post">
 					<input type="hidden" id="currentPage" name="currentPage" value="1" />
 					<div class="form-group">
 						<label>时间范围</label> <input type="text" class="form-control beginDate" name="beginDate"
-							value='${(qo.beginDate?date)!""}' />
+							value='${(ipLogQo.beginDate?date)!""}' />
 					</div>
 					<div class="form-group">
 						<label></label> <input type="text" class="form-control endDate" name="endDate"
-							value='${(qo.endDate?date)!""}' />
+							value='${(ipLogQo.endDate?date)!""}' />
 					</div>
 					<div class="form-group">
 						<label>状态</label> <select class="form-control" name="state">
@@ -67,9 +66,9 @@
 							<option value="1">登录成功</option>
 						</select>
 						<script type="text/javascript">
-								/* 回显登陆状态 */
-						    	$('[name=status] option[value=${(qo.status)!"-1"}]').attr("selected","selected");
-						    </script>
+							/* 回显登陆状态 */
+						    $('[name=state] option[value=${(ipLogQo.state)!"-1"}]').attr("selected","selected");
+						</script>
 					</div>
 					<div class="form-group">
 						<button id="query" class="btn btn-success">
@@ -90,12 +89,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<#list page.content as vo>
+							<#list pageResult.content as ipLog>
 							<tr>
-								<td>${vo.username}</a></td>
-								<td>${vo.loginTime?datetime}</td>
-								<td>${vo.ip}</td>
-								<td>${vo.displayState}</td>
+								<td>${ipLog.username}</a></td>
+								<td>${ipLog.loginTime?datetime}</td>
+								<td>${ipLog.ip}</td>
+								<td>${ipLog.displayState}</td>
 							</tr>
 							</#list>
 						</tbody>

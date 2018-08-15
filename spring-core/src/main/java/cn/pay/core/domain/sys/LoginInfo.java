@@ -30,12 +30,14 @@ import lombok.ToString;
 @Entity
 public class LoginInfo implements UserDetails {
 	private static final long serialVersionUID = 1L;
+
 	public static final int NORMAL = 0;
 	public static final int DEL = -1;
 	public static final int LOCK = 1;
-	public static final int LOSER_MAX_COUNT = 5;
-	public static final Integer USER = 0;
-	public static final Integer MANAGER = 1;
+	public static final int USER_PLATFORM = 0;
+	public static final int MANAGER = 1;
+
+	public static final Integer LOSER_MAX_COUNT = 5;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,10 +45,14 @@ public class LoginInfo implements UserDetails {
 	private String username;
 	private String password;
 	private Integer userType;
-	private boolean admin;
+	private Boolean isAdmin;
 	private Integer status;
 	private Integer loserCount;
 	private Date lockTime;
+	/** 创建时间 */
+	private Date gmtCreate;
+	/** 修改时间 */
+	private Date gmtModified;
 	@ManyToMany
 	private List<Role> roles;
 

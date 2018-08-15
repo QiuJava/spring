@@ -33,28 +33,31 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// 检查是否有admin
-		LoginInfo info = loginInfoService.getByUsername(SysConst.ADMIN_NAME);
+		LoginInfo info = loginInfoService.getLoginInfoByUsername(SysConst.ADMIN_NAME);
 		if (info == null) {
 			// 没有创建
 			info = new LoginInfo();
-			info.setAdmin(true);
+			info.setIsAdmin(true);
 			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.LOGIN_PASSWORD));
 			info.setUsername(SysConst.ADMIN_NAME);
 			info.setUserType(LoginInfo.MANAGER);
-			loginInfoService.saveAndUpdate(info);
+			Date currentDate = new Date();
+			info.setGmtCreate(currentDate);
+			info.setGmtModified(currentDate);
+			loginInfoService.saveLoginInfo(info);
 		}
 
 		Long accountCount = systemAccountService.count();
 		if (accountCount < 1) {
 			// 创建系统账户
-			SystemAccount systemAccount = new SystemAccount();
+			SystemAccount sysAcc = new SystemAccount();
 			Date currentDate = new Date();
-			systemAccount.setCreateDate(currentDate);
-			systemAccount.setTotalBalance(BigDecimal.ZERO);
-			systemAccount.setFreezedAmount(BigDecimal.ZERO);
-			systemAccount.setBeginDate(currentDate);
-			systemAccount.setEndDate(DateUtils.addYears(currentDate, 1));
-			systemAccountService.save(systemAccount);
+			sysAcc.setCreateDate(currentDate);
+			sysAcc.setTotalBalance(BigDecimal.ZERO);
+			sysAcc.setFreezedAmount(BigDecimal.ZERO);
+			sysAcc.setBeginDate(currentDate);
+			sysAcc.setEndDate(DateUtils.addYears(currentDate, 1));
+			systemAccountService.save(sysAcc);
 		}
 	}
 

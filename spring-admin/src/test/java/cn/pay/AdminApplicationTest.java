@@ -1,9 +1,8 @@
 package cn.pay;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,14 +11,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import cn.pay.core.consts.SysConst;
 import cn.pay.core.domain.sys.Role;
 import cn.pay.core.service.RoleService;
 import lombok.Setter;
 
 /**
- * 使用SpringBoot测试，再多profile下需要在设置环境变量 spring.profile.active=dev
  * 
  * @author Qiujian
  *
@@ -40,57 +41,32 @@ public class AdminApplicationTest {
 
 	@Test
 	public void contextLoads() {
-		// setRole(Controller.class);
-		updateRoleList();
-	}
-
-	public void updateRoleList() {
-		List<Role> list = roleService.getAll();
-		for (Role role : list) {
-			String url = role.getUrl();
-			url = url.replace(".do", "");
-			role.setUrl(url);
-			roleService.save(role);
-		}
-	}
-
-	public void setRole(Class<? extends Annotation> clz) {
-		Map<String, Object> map = ac.getBeansWithAnnotation(clz);
-
-		for (Map.Entry<String, Object> entry : map.entrySet()) {
-			Object value = entry.getValue();
-			String[] classMappingStrs = getRequestMappingValue(value);
-			for (Method m : value.getClass().getMethods()) {
-				String[] methodStrs = getReqMappingValuesFromMethod(m);
-				if (this.isNotEmpty(methodStrs)) {
-					Role role = new Role();
-					StringBuilder sb = new StringBuilder();
-					if (this.isNotEmpty(classMappingStrs)) {
-						sb.append(classMappingStrs[0]);
-					}
-					sb.append(methodStrs[0]);
-					sb.append(".do");
-					role.setUrl(sb.toString());
-					role.setName("ROLE_" + sb.toString());
-					// 保存权限
-					roleService.save(role);
+		roleService.deleteAll(roleService.listAll());
+		RequestMappingHandlerMapping mapping = ac.getBean(RequestMappingHandlerMapping.class);
+		// 获取url与类和方法的对应信息
+		Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
+		for (RequestMappingInfo info : map.keySet()) {
+			// 获取url的Set集合，一个方法可能对应多个url
+			Set<String> patterns = info.getPatternsCondition().getPatterns();
+			for (String url : patterns) {
+				if (SysConst.URL_LOGIN_INFO_AJAX.equals(url)) {
+					break;
 				}
+				if ("/error".equals(url)) {
+					break;
+				}
+				Role role = new Role();
+				Date currentDate = new Date();
+				role.setUrl(url);
+				role.setName("ROLE_" + url);
+				role.setDescritpion("角色");
+				role.setGmtCreate(currentDate);
+				role.setGmtModified(currentDate);
+				// 保存权限
+				roleService.saveRole(role);
 			}
 		}
-	}
 
-	private String[] getRequestMappingValue(Object obj) {
-		return obj.getClass().getAnnotation(RequestMapping.class) == null ? null
-				: obj.getClass().getAnnotation(RequestMapping.class).value();
-	}
-
-	private String[] getReqMappingValuesFromMethod(Method method) {
-		return method.getAnnotation(RequestMapping.class) == null ? null
-				: method.getAnnotation(RequestMapping.class).value();
-	}
-
-	private boolean isNotEmpty(String[] strs) {
-		return strs != null && strs.length > 0;
 	}
 
 }

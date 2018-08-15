@@ -1,7 +1,5 @@
 package cn.pay.admin.security;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,9 +17,8 @@ import cn.pay.core.consts.SysConst;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Resource
+	@Autowired
 	private AdminAuthenticationProvider authenticationProvider;
-
 	@Autowired
 	private AdminLoginSuccessHandler successHandler;
 	@Autowired

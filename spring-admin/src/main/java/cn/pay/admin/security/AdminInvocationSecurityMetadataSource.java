@@ -43,7 +43,7 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 		if (collectionConfigAttrMap == null) {
 			Collection<ConfigAttribute> con = null;
 			ConfigAttribute config = null;
-			List<Role> roleList = roleService.getAll();
+			List<Role> roleList = roleService.listAll();
 			collectionConfigAttrMap = new HashMap<>(roleList.size());
 			for (Role role : roleList) {
 				con = new ArrayList<>();

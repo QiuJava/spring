@@ -16,9 +16,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class BaseConditionQo extends BaseQo {
+public class BaseConditionQo extends PageConditionQo {
 	private static final long serialVersionUID = 1L;
-	protected int state = -1;
+	
+	protected Integer state = -1;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	protected Date beginDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

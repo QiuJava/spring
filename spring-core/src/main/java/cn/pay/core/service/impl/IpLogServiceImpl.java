@@ -18,10 +18,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import cn.pay.core.dao.IpLogRepository;
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.pojo.qo.IpLogQo;
+import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.IpLogService;
 
 /**
@@ -37,47 +39,63 @@ public class IpLogServiceImpl implements IpLogService {
 	private IpLogRepository repository;
 
 	@Override
-	@Cacheable("page")
-	public Page<IpLog> page(IpLogQo qo) {
+	@Cacheable("pageQueryIpLog")
+	public PageResult pageQueryIpLog(IpLogQo qo) {
 		Page<IpLog> page = repository.findAll(new Specification<IpLog>() {
 			@Override
 			public Predicate toPredicate(Root<IpLog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> list = new ArrayList<>();
+				List<Predicate> predicateList = new ArrayList<>();
 				if (qo.getState() != -1) {
-					list.add(cb.equal(root.get("loginState").as(Integer.class), qo.getState()));
+					Predicate loginState = cb.equal(root.get("loginState").as(Integer.class), qo.getState());
+					predicateList.add(loginState);
 				}
 				if (qo.getBeginDate() != null) {
-					list.add(cb.greaterThanOrEqualTo(root.get("loginTime").as(Date.class), qo.getBeginDate()));
+					Predicate beginLoginTime = cb.greaterThanOrEqualTo(root.get("loginTime").as(Date.class),
+							qo.getBeginDate());
+					predicateList.add(beginLoginTime);
 				}
 				if (qo.getEndDate() != null) {
-					list.add(cb.lessThanOrEqualTo(root.get("loginTime").as(Date.class), qo.getEndDate()));
+					Predicate endLoginTime = cb.lessThanOrEqualTo(root.get("loginTime").as(Date.class),
+							qo.getEndDate());
+					predicateList.add(endLoginTime);
 				}
-				if (qo.getUsername() != null) {
-					if (qo.isLike()) {
-						list.add(cb.like(root.get("username"), qo.getUsername() + "%"));
+				if (StringUtils.hasLength(qo.getUsername())) {
+					if (qo.getIsLike()) {
+						Predicate likeUsername = cb.like(root.get("username"), qo.getUsername() + "%");
+						predicateList.add(likeUsername);
 					} else {
-						list.add(cb.equal(root.get("username"), qo.getUsername()));
+						Predicate equalUsername = cb.equal(root.get("username"), qo.getUsername());
+						predicateList.add(equalUsername);
 					}
 				}
-				Predicate[] ps = new Predicate[list.size()];
-				return cb.and(list.toArray(ps));
+				Predicate[] predicateArray = new Predicate[predicateList.size()];
+				return cb.and(predicateList.toArray(predicateArray));
 			}
 		}, new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize(), Direction.DESC, "loginTime"));
-		return page;
+		if (page.getTotalElements() < 1) {
+			return PageResult.empty(qo.getPageSize());
+		}
+		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}
 
 	@Override
-	@Cacheable("getNewestIpLog")
-	public IpLog getNewestIpLog(String username) {
-		List<IpLog> list = repository.findByUsernameOrderByLoginTimeDesc(username, new PageRequest(0, 1));
-		return list.get(0);
+	@Cacheable("getNewestIpLogByUsername")
+	public IpLog getNewestIpLogByUsername(String username) {
+		return repository.findByUsernameOrderByLoginTimeDesc(username, new PageRequest(0, 1)).get(0);
 	}
 
-	@CacheEvict(value = { "page", "getNewestIpLog" }, allEntries = true)
-	@Override
+	@CacheEvict(value = { "pageQueryIpLog", "getNewestIpLogByUsername" }, allEntries = true)
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void saveAndUpdate(IpLog ipLog) {
-		repository.saveAndFlush(ipLog);
+	@Override
+	public IpLog saveIpLog(IpLog ipLog) {
+		return repository.saveAndFlush(ipLog);
+	}
+
+	@CacheEvict(value = { "pageQueryIpLog", "getNewestIpLogByUsername" }, allEntries = true)
+	@Transactional(rollbackFor = { RuntimeException.class })
+	@Override
+	public IpLog updateIpLog(IpLog ipLog) {
+		return repository.saveAndFlush(ipLog);
 	}
 
 }

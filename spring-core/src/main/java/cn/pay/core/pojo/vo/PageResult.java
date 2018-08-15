@@ -1,5 +1,6 @@
 package cn.pay.core.pojo.vo;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,13 +17,13 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @ToString
-public class PageResult {
-
+public class PageResult implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private List<?> content;
 	private Integer totalPages;
 	private Integer currentPage;
 	private Integer size;
-
 
 	public static PageResult empty(Integer pageSize) {
 		return new PageResult(Collections.EMPTY_LIST, 0, 1, pageSize);

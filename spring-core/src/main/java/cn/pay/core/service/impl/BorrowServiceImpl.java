@@ -146,7 +146,7 @@ public class BorrowServiceImpl implements BorrowService {
 		if (borrow != null && borrow.getState().equals(BidConst.BORROW_STATE_BIDDING)
 				&& new Date().before(borrow.getDisableDate())) {
 			// LoginInfo currentLoginInfo = HttpSessionContext.getCurrentLoginInfo();
-			LoginInfo currentLoginInfo = loginInfoService.get(loginInfoId);
+			LoginInfo currentLoginInfo = loginInfoService.getLoginInfoById(loginInfoId);
 			// 拿到投资者账户对象
 			Account bidAccount = accountService.get(currentLoginInfo.getId());
 			// 2.检查投资 投标金额小于可用金额 大于最小投标金额 小于剩余可投金额

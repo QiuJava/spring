@@ -1,5 +1,7 @@
 package cn.pay.admin.security;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -40,7 +42,8 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
 				loginInfo.setStatus(LoginInfo.NORMAL);
 				loginInfo.setLoserCount(0);
 				loginInfo.setLockTime(null);
-				loginInfoService.saveAndUpdate(loginInfo);
+				loginInfo.setGmtModified(new Date());
+				loginInfoService.updateLoginInfo(loginInfo);
 			} else {
 				Long seconds = (((lockTimeLong + DateUtil.LOCK_TIME) - System.currentTimeMillis()) / 1000);
 

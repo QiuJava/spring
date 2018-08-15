@@ -32,10 +32,10 @@ public class DltConfig {
 	public void freeMarkerConfigurer() {
 		List<String> tlds = new ArrayList<String>();
 		tlds.add(SPIRNG_SECURITY_TAGS_TLD_STATIC_PATH);
-		TaglibFactory taglibFactory = configurer.getTaglibFactory();
-		taglibFactory.setClasspathTlds(tlds);
-		if (taglibFactory.getObjectWrapper() == null) {
-			taglibFactory.setObjectWrapper(configurer.getConfiguration().getObjectWrapper());
+		TaglibFactory factory = configurer.getTaglibFactory();
+		factory.setClasspathTlds(tlds);
+		if (factory.getObjectWrapper() == null) {
+			factory.setObjectWrapper(configurer.getConfiguration().getObjectWrapper());
 		}
 	}
 }

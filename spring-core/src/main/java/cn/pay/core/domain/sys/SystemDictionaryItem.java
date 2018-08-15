@@ -1,6 +1,7 @@
 package cn.pay.core.domain.sys;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +36,9 @@ public class SystemDictionaryItem implements Serializable {
 	private String title;
 	private String intro;
 	private Integer sequence;
+	private Date gmtCreate;
+	private Date gmtModified;
+	
 
 	public String getJsonString() {
 		Map<String, Object> json = new HashMap<>(5);

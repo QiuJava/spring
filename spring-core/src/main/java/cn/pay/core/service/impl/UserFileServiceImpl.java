@@ -55,7 +55,7 @@ public class UserFileServiceImpl implements UserFileService {
 			@Override
 			public Predicate toPredicate(Root<UserFile> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> list = new ArrayList<>();
-				list.add(cb.equal(root.get("applier").as(LoginInfo.class), loginInfoService.get(id)));
+				list.add(cb.equal(root.get("applier").as(LoginInfo.class), loginInfoService.getLoginInfoById(id)));
 				if (b) {
 					list.add(cb.isNotNull(root.get("fileType").as(SystemDictionaryItem.class)));
 				} else {
@@ -112,7 +112,7 @@ public class UserFileServiceImpl implements UserFileService {
 				}
 				if (qo.getLoginInfoId() != null) {
 					list.add(cb.equal(root.get("applier").as(LoginInfo.class),
-							loginInfoService.get(qo.getLoginInfoId())));
+							loginInfoService.getLoginInfoById((qo.getLoginInfoId()))));
 				}
 				Predicate[] ps = new Predicate[list.size()];
 				return cb.and(list.toArray(ps));

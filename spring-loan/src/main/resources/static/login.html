@@ -44,7 +44,7 @@
 				$(form).ajaxSubmit(function(data){
 					if(data.success){
 						$.messager.confirm("提示","登陆成功,点击确定跳转到个人中心",function(){
-							window.location.href="/personal";
+							window.location.href="/personalCenter";
 						});
 					}else{
 						$.messager.alert("提示",data.msg);

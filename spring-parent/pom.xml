@@ -99,9 +99,14 @@
 		</dependency>
 
 		<!-- 热启动 -->
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-devtools</artifactId> 
-			<optional>true</optional> </dependency> -->
-
+		<!-- 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		 -->
+		
 		<!-- freemarker模板使用Spring Security进行权限控制依赖 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>

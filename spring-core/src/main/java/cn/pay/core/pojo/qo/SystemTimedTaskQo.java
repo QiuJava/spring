@@ -2,7 +2,6 @@ package cn.pay.core.pojo.qo;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 系统作业查询对象
@@ -12,9 +11,15 @@ import lombok.ToString;
  */
 @Setter
 @Getter
-@ToString
-public class SystemTimedTaskQo extends BaseQo {
+public class SystemTimedTaskQo extends PageConditionQo {
 	private static final long serialVersionUID = 1L;
 	
 	private String groupName;
+
+	@Override
+	public String toString() {
+		return "SystemTimedTaskQo [groupName=" + groupName + ", currentPage=" + currentPage + ", pageSize=" + pageSize
+				+ "]";
+	}
+	
 }

@@ -17,7 +17,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class BorrowQo extends BaseQo {
+public class BorrowQo extends PageConditionQo {
 	private static final long serialVersionUID = 1L;
 	/** 根据借款状态来进行查询 */
 	private Integer borrowState = -1;

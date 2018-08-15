@@ -83,7 +83,7 @@ public class RechargeServiceImpl implements RechargeService {
 				}
 				if (qo.getApplierId() != null) {
 					list.add(
-							cb.equal(root.get("applier").as(LoginInfo.class), loginInfoService.get(qo.getApplierId())));
+							cb.equal(root.get("applier").as(LoginInfo.class), loginInfoService.getLoginInfoById(qo.getApplierId())));
 				}
 				if (qo.getTradeCode() != null) {
 					list.add(cb.like(root.get("tradeCode"), qo.getTradeCode() + "%"));

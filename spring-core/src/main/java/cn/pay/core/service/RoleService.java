@@ -17,13 +17,26 @@ public interface RoleService {
 	 * 
 	 * @return
 	 */
-	List<Role> getAll();
+	List<Role> listAll();
 
 	/**
 	 * 保存角色
 	 * 
 	 * @param p
 	 */
-	void save(Role p);
+	Role saveRole(Role role);
+	
+	/**
+	 * 删除所有角色
+	 * @param roleListAll 
+	 */
+	void deleteAll(List<Role> roleListAll);
+	
+	/**
+	 * 更新角色
+	 * 
+	 * @param p
+	 */
+	Role updateRole(Role role);
 
 }

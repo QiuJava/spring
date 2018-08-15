@@ -20,7 +20,7 @@ import cn.pay.core.util.HttpServletContext;
  *
  */
 @Controller
-public class PersonalController {
+public class PersonalCenterController {
 
 	@Autowired
 	private AccountService accountService;
@@ -34,16 +34,16 @@ public class PersonalController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/personal")
+	@RequestMapping("/personalCenter")
 	public String personal(Model model) {
 		// 拿到当前登录对象
 		LoginInfo info = HttpServletContext.getCurrentLoginInfo();
 		Account account = accountService.get(info.getId());
-		IpLog ipLog = ipLogService.getNewestIpLog(info.getUsername());
+		IpLog ipLog = ipLogService.getNewestIpLogByUsername(info.getUsername());
 		// 把对象信息放到model中
 		model.addAttribute("userInfo", userInfoService.get(info.getId()));
 		model.addAttribute("account", account);
 		model.addAttribute("ipLog", ipLog);
-		return "personal";
+		return "personalCenter";
 	}
 }

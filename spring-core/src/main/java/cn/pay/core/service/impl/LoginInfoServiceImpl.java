@@ -75,24 +75,18 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	}
 
 	@Override
-	public boolean isExist(String username) {
+	public Boolean isExistByUsername(String username) {
 		return repository.countByUsername(username) > 0;
 	}
 
 	@Override
-	public LoginInfo get(Long id) {
+	public LoginInfo getLoginInfoById(Long id) {
 		return repository.findOne(id);
 	}
 
 	@Override
-	public LoginInfo getByUsername(String username) {
+	public LoginInfo getLoginInfoByUsername(String username) {
 		return repository.findByUsername(username);
-	}
-
-	@Override
-	@Transactional(rollbackFor = { RuntimeException.class })
-	public void saveAndUpdate(LoginInfo info) {
-		repository.saveAndFlush(info);
 	}
 
 	@Transactional(rollbackFor = { RuntimeException.class })
@@ -116,5 +110,17 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	@Override
 	public List<LoginInfo> listAll() {
 		return repository.findAll();
+	}
+	
+	@Transactional(rollbackFor = { RuntimeException.class })
+	@Override
+	public LoginInfo updateLoginInfo(LoginInfo loginInfo) {
+		return repository.saveAndFlush(loginInfo);
+	}
+	
+	@Transactional(rollbackFor = { RuntimeException.class })
+	@Override
+	public LoginInfo saveLoginInfo(LoginInfo loginInfo) {
+		return repository.saveAndFlush(loginInfo);
 	}
 }

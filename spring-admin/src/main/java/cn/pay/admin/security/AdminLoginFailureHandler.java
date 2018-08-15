@@ -29,6 +29,8 @@ import cn.pay.core.service.LoginInfoService;
 @Component
 public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 
+	public static final String LOGIN_ERR_MSG = "loginErrMsg";
+
 	@Autowired
 	private IpLogService ipLogService;
 	@Autowired
@@ -39,26 +41,31 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			AuthenticationException exception) throws IOException, ServletException {
 		if (exception instanceof BadCredentialsException) {
 			String username = request.getParameter(SysConst.USERNAME_STR);
-			LoginInfo loginInfo = loginInfoService.getByUsername(username);
+			LoginInfo loginInfo = loginInfoService.getLoginInfoByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
+			
 			Integer loserCount = loginInfo.getLoserCount();
+			Date currentDate = new Date();
 			// 达到次数进行锁定
 			if (loserCount >= LoginInfo.LOSER_MAX_COUNT) {
 				loginInfo.setStatus(LoginInfo.LOCK);
-				loginInfo.setLockTime(new Date());
+				loginInfo.setLockTime(currentDate);
+				loginInfo.setGmtModified(currentDate);
 			}
 			// 登录日志记录
 			IpLog ipLog = new IpLog();
 			ipLog.setIp(request.getRemoteAddr());
 			ipLog.setUsername(username);
 			ipLog.setUserType(LoginInfo.MANAGER);
-			ipLog.setLoginTime(new Date());
+			ipLog.setLoginTime(currentDate);
 			ipLog.setLoginState(IpLog.LOGIN_FAIL);
-
-			loginInfoService.saveAndUpdate(loginInfo);
-			ipLogService.saveAndUpdate(ipLog);
+			ipLog.setGmtCreate(currentDate);
+			ipLog.setGmtModified(currentDate);
+			
+			loginInfoService.saveLoginInfo(loginInfo);
+			ipLogService.saveIpLog(ipLog);
 		}
-		request.setAttribute("msg", exception.getMessage());
+		request.setAttribute(LOGIN_ERR_MSG, exception.getMessage());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}

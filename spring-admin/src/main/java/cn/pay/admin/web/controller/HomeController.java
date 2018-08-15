@@ -4,16 +4,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 登录相关
+ * 首页控制
  * 
  * @author Administrator
  *
  */
 @Controller
-public class IndexController {
+public class HomeController {
 
-	@RequestMapping("/index")
-	public String index() {
+	@RequestMapping("/home")
+	public String home() {
 		return "main";
 	}
 

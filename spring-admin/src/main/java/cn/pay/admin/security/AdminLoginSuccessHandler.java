@@ -37,12 +37,15 @@ public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {
 		LoginInfo loginInfo = (LoginInfo) authentication.getPrincipal();
 		// 登录日志记录
 		IpLog ipLog = new IpLog();
+		Date currentDate = new Date();
 		ipLog.setIp(request.getRemoteAddr());
 		ipLog.setUsername(loginInfo.getUsername());
 		ipLog.setUserType(LoginInfo.MANAGER);
-		ipLog.setLoginTime(new Date());
+		ipLog.setLoginTime(currentDate);
 		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
-		ipLogService.saveAndUpdate(ipLog);
+		ipLog.setGmtCreate(currentDate);
+		ipLog.setGmtModified(currentDate);
+		ipLogService.saveIpLog(ipLog);
 		// 登录成功把用户登录信息存储到session
 		HttpServletContext.setCurrentLoginInfo(loginInfo);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);

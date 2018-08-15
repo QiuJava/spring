@@ -1,9 +1,9 @@
-<#list page.content as data>
+<#list pageResult.content as ipLog>
 <tr>
-	<td>${data.username}</a></td>
-	<td>${data.loginTime?datetime}</td>
-	<td>${data.ip}</td>
-	<td>${data.displayState}</td>
+	<td>${ipLog.username}</td>
+	<td>${ipLog.loginTime?datetime}</td>
+	<td>${ipLog.ip}</td>
+	<td>${ipLog.displayState}</td>
 </tr>
 </#list>
 
@@ -11,8 +11,8 @@
 	$(function(){
 		$("#page_container").empty().append($('<ul id="pagination" class="pagination"></ul>'));
 		$("#pagination").twbsPagination({
-			totalPages:${page.totalPages}||1,
-			startPage:${page.currentPage},
+			totalPages:${pageResult.totalPages}||1,
+			startPage:${pageResult.currentPage},
 			first : "首页",
 			prev : "上一页",
 			next : "下一页",

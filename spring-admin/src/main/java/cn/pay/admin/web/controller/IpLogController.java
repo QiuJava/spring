@@ -1,14 +1,11 @@
 package cn.pay.admin.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.pojo.qo.IpLogQo;
-import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.IpLogService;
 
 /**
@@ -22,13 +19,10 @@ public class IpLogController {
 	@Autowired
 	private IpLogService service;
 
-	@RequestMapping("/iplog/page")
-	public String iplogPage(IpLogQo qo, Model model) {
-		qo.setLike(true);
-		Page<IpLog> page = service.page(qo);
-		PageResult pageResult = new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(),
-				qo.getPageSize());
-		model.addAttribute("page", pageResult);
+	@RequestMapping("/iplog/pageQuery")
+	public String pageQueryIpLog(IpLogQo qo, Model model) {
+		qo.setIsLike(true);
+		model.addAttribute("pageResult", service.pageQueryIpLog(qo));
 		return "iplog/list_detail";
 	}
 

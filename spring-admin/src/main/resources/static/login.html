@@ -26,9 +26,8 @@ body{
 <script type="text/javascript">
 	$(function(){
 		$("#loginForm").ajaxForm({success:function(data){
-			console.debug(data);
 			if(data.success){
-				window.location.href="/index";
+				window.location.href="/home";
 			}else{
 				$.messager.alert("错误",data.msg);
 			}

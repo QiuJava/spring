@@ -26,6 +26,6 @@ public class RoleController {
 		Role role = new Role();
 		role.setUrl("/systemDictionary/page.do");
 		role.setName("ROLE_系统字典列表查询");
-		service.save(role);
+		service.saveRole(role);
 	}
 }

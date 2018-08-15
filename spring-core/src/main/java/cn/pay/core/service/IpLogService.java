@@ -1,9 +1,8 @@
 package cn.pay.core.service;
 
-import org.springframework.data.domain.Page;
-
 import cn.pay.core.domain.sys.IpLog;
 import cn.pay.core.pojo.qo.IpLogQo;
+import cn.pay.core.pojo.vo.PageResult;
 
 /**
  * 用户登录日志服务
@@ -14,26 +13,35 @@ import cn.pay.core.pojo.qo.IpLogQo;
 public interface IpLogService {
 
 	/**
-	 * 根据登录日志查询条件对象登录历史页面结果集
+	 * 根据查询对象进行分页查询
 	 * 
 	 * @param qo
 	 * @return
 	 */
-	Page<IpLog> page(IpLogQo qo);
+	PageResult pageQueryIpLog(IpLogQo qo);
 
 	/**
-	 * 获取用户最新的登录相关信息
+	 * 根据用户名获取最新的登录相关信息
 	 * 
 	 * @param username
 	 * @return
 	 */
-	IpLog getNewestIpLog(String username);
+	IpLog getNewestIpLogByUsername(String username);
 
 	/**
-	 * 保存或者更新
+	 * 保存登录日志
 	 * 
 	 * @param ipLog
+	 * @return
 	 */
-	void saveAndUpdate(IpLog ipLog);
+	IpLog saveIpLog(IpLog ipLog);
+
+	/**
+	 * 更新登录日志
+	 * 
+	 * @param ipLog
+	 * @return
+	 */
+	IpLog updateIpLog(IpLog ipLog);
 
 }

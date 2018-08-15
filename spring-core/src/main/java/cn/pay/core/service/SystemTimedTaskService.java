@@ -13,11 +13,20 @@ import cn.pay.core.pojo.vo.PageResult;
 public interface SystemTimedTaskService {
 
 	/**
-	 * 保存和更新功能
+	 * 保存系统定时任务
 	 * 
 	 * @param systemTimedTask
+	 * @return
 	 */
-	void saveAndUpdate(SystemTimedTask systemTimedTask);
+	SystemTimedTask saveSystemTimedTask(SystemTimedTask systemTimedTask);
+
+	/**
+	 * 更新系统定时任务
+	 * 
+	 * @param systemTimedTask
+	 * @return
+	 */
+	SystemTimedTask updateSystemTimedTask(SystemTimedTask systemTimedTask);
 
 	/**
 	 * 定时任务分页查询
@@ -25,7 +34,7 @@ public interface SystemTimedTaskService {
 	 * @param qo
 	 * @return
 	 */
-	PageResult listQuery(SystemTimedTaskQo qo);
+	PageResult pageQuerySystemTimedTask(SystemTimedTaskQo qo);
 
 	/**
 	 * 根据id查询定时任务信息
@@ -33,13 +42,13 @@ public interface SystemTimedTaskService {
 	 * @param id
 	 * @return
 	 */
-	SystemTimedTask get(Long id);
+	SystemTimedTask getSystemTimedTaskById(Long id);
 
 	/**
-	 * 删除定时任务
+	 * 根据定时任务Id删除
 	 * 
 	 * @param id
 	 */
-	void delete(Long id);
+	void deleteById(Long id);
 
 }

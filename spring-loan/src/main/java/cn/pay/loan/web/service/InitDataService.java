@@ -27,11 +27,11 @@ public class InitDataService {
 
 	@JmsListener(destination = ActivemqConfig.LOGIN_INFO_QUEUE)
 	public void loginInfo(String msg) {
-		loginInfoService.saveAndUpdate(JSON.parseObject(msg, LoginInfo.class));
+		loginInfoService.updateLoginInfo(JSON.parseObject(msg, LoginInfo.class));
 	}
 
 	@JmsListener(destination = ActivemqConfig.IP_LOG_QUEUE)
 	public void ipLog(String msg) {
-		ipLogService.saveAndUpdate(JSON.parseObject(msg, IpLog.class));
+		ipLogService.saveIpLog(JSON.parseObject(msg, IpLog.class));
 	}
 }

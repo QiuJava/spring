@@ -39,22 +39,26 @@ public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
 			AuthenticationException exception) throws IOException, ServletException {
 		if (exception instanceof BadCredentialsException) {
 			String username = request.getParameter(SysConst.USERNAME_STR);
-			LoginInfo loginInfo = loginInfoService.getByUsername(username);
+			LoginInfo loginInfo = loginInfoService.getLoginInfoByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
+			
+			Date currentDate = new Date();
 			if (loginInfo.getLoserCount().equals(LoginInfo.LOSER_MAX_COUNT)) {
 				// 达到次数进行锁定
 				loginInfo.setStatus(LoginInfo.LOCK);
-				loginInfo.setLockTime(new Date());
+				loginInfo.setLockTime(currentDate);
 			}
 			// 登录日志记录
 			IpLog ipLog = new IpLog();
 			ipLog.setIp(request.getRemoteAddr());
 			ipLog.setUsername(username);
 			ipLog.setUserType(LoginInfo.MANAGER);
-			ipLog.setLoginTime(new Date());
+			ipLog.setLoginTime(currentDate);
 			ipLog.setLoginState(IpLog.LOGIN_FAIL);
-			loginInfoService.saveAndUpdate(loginInfo);
-			ipLogService.saveAndUpdate(ipLog);
+			ipLog.setGmtCreate(currentDate);
+			ipLog.setGmtModified(currentDate);
+			loginInfoService.saveLoginInfo(loginInfo);
+			ipLogService.saveIpLog(ipLog);
 		}
 		request.setAttribute("msg", exception.getMessage());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);

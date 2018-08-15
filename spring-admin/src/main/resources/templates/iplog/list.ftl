@@ -15,10 +15,6 @@
 				dateFmt : "yyyy-MM-dd"
 			});
 		})
-		// 设置当前页默认为一
-		$("#query").click(function() {
-			$("#currentPage").val(1);
-		})
 		var searchForm = $("#searchForm");
 		var gridBody = $("#gridBody");
 		searchForm.ajaxForm(function(data) {
@@ -43,7 +39,7 @@
 					<h3>登录日志查询</h3>
 				</div>
 				<form id="searchForm" class="form-inline" method="post"
-					action="/iplog/page">
+					action="/iplog/pageQuery">
 					<input type="hidden" id="currentPage" name="currentPage" value="1" />
 					<div class="form-group">
 						<label>状态</label> <select class="form-control" name="state">

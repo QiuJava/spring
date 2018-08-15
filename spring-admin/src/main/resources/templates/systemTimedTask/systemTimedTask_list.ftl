@@ -13,9 +13,9 @@
 <script type="text/javascript">
 	$(function(){
 		$("#pagination").twbsPagination({
-			totalPages:${page.totalPages}||1,
+			totalPages:${pageResult.totalPages}||1,
 			visiblePages:5,
-			startPage:${page.currentPage},
+			startPage:${pageResult.currentPage},
 			first : "首页",
 			prev : "上一页",
 			next : "下一页",
@@ -84,7 +84,7 @@
 	<div class="container">
 		<#include "../common/top.ftl"/>
 		<div class="row">
-			<div class="col-sm-3"><#assign currentMenu="systemTimedTask_list">
+			<div class="col-sm-3"><#assign currentMenu="systemTimedTask">
 				<#include "../common/menu.ftl" /></div>
 			<div class="col-sm-9">
 				<div class="page-header">
@@ -93,7 +93,7 @@
 				<div class="row">
 					<!-- 提交分页的表单 -->
 					<form id="searchForm" class="form-inline" method="post"
-						action="/systemTimedTask/list">
+						action="/systemTimedTask/pageQuery">
 						<input type="hidden" id="currentPage" name="currentPage" value="1" />
 						<div class="form-group">
 							<label>组名</label> <input class="form-control" type="text"
@@ -121,21 +121,21 @@
 							</tr>
 						</thead>
 						<tbody>
-							<#list page.content as data>
+							<#list pageResult.content as systemTimedTask>
 							<tr>
-								<td>${data.jobName}</td>
-								<td>${data.groupName}</td>
-								<td>${data.cronExpression}</td>
-								<td>${(data.description)!''}</td>
-								<td>${data.statusDisplay}</td>
+								<td>${systemTimedTask.jobName}</td>
+								<td>${systemTimedTask.groupName}</td>
+								<td>${systemTimedTask.cronExpression}</td>
+								<td>${(systemTimedTask.description)!''}</td>
+								<td>${systemTimedTask.statusDisplay}</td>
 								<td><a href="javascript:void(-1);" class="edit_Btn"
-									data-json='${data.jsonString}'>修改</a>&nbsp; <a
+									data-json='${systemTimedTask.jsonString}'>修改</a>&nbsp; <a
 									href="javascript:void(-1);" class="deleteClass"
-									data-dataid='${data.id}'>删除</a>&nbsp; <a
+									data-dataid='${systemTimedTask.id}'>删除</a>&nbsp; <a
 									href="javascript:void(-1);" class="pauseClass"
-									data-dataid='${data.id}'>暂停</a>&nbsp; <a
+									data-dataid='${systemTimedTask.id}'>暂停</a>&nbsp; <a
 									href="javascript:void(-1);" class="resumeClass"
-									data-dataid='${data.id}'>重新开启</a></td>
+									data-dataid='${systemTimedTask.id}'>重新开启</a></td>
 							</tr>
 							</#list>
 						</tbody>

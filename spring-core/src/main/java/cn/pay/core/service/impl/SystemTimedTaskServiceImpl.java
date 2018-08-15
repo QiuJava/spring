@@ -36,12 +36,18 @@ public class SystemTimedTaskServiceImpl implements SystemTimedTaskService {
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
-	public void saveAndUpdate(SystemTimedTask systemTimedTask) {
-		repository.saveAndFlush(systemTimedTask);
+	public SystemTimedTask saveSystemTimedTask(SystemTimedTask systemTimedTask) {
+		return repository.saveAndFlush(systemTimedTask);
+	}
+	
+	@Override
+	@Transactional(rollbackFor = { RuntimeException.class })
+	public SystemTimedTask updateSystemTimedTask(SystemTimedTask systemTimedTask) {
+		return repository.saveAndFlush(systemTimedTask);
 	}
 
 	@Override
-	public PageResult listQuery(SystemTimedTaskQo qo) {
+	public PageResult pageQuerySystemTimedTask(SystemTimedTaskQo qo) {
 		Page<SystemTimedTask> page = repository.findAll(new Specification<SystemTimedTask>() {
 			@Override
 			public Predicate toPredicate(Root<SystemTimedTask> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -61,12 +67,12 @@ public class SystemTimedTaskServiceImpl implements SystemTimedTaskService {
 	}
 
 	@Override
-	public SystemTimedTask get(Long id) {
+	public SystemTimedTask getSystemTimedTaskById(Long id) {
 		return repository.findById(id);
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void deleteById(Long id) {
 		repository.delete(id);
 	}
 
