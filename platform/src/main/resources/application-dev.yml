@@ -1,0 +1,46 @@
+server:
+  port: 8088
+  session:
+    timeout: 1800
+spring:
+  datasource:
+    druid:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false
+      username: root
+      password: root123
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password: null
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: 1
+    timeout: 5000
+  resources:
+    static-locations:
+    - classpath:/META-INF/resources/
+    - classpath:/static/
+    - classpath:/public/
+    - http://localhost:8082/
+service:
+  sms:
+    password: 123456
+    username: admin
+    apikey: admin123
+    url: http://localhost:8081/sms/send.do
+  email:
+    username: admin@qq.com
+    password: 123456
+    host: localhost
+    url: http://localhost:8081/email/verify.do
+upload:
+  path:
+    img: E:/www/upload/
+logging:
+  file: E:/logs/loan/logback_spring.log
+  level:
+    root: info

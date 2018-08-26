@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active:
+    - dev
+  freemarker:
+    expose-session-attributes: true
+    suffix: .ftl
+    settings:
+      number_format: 0.#
+      date_format: yyyy-MM-dd
+      datetime_format: yyyy-MM-dd HH:mm:ss
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+security:
+  basic:
+    enabled: false

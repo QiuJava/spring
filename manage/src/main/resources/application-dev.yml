@@ -1,0 +1,31 @@
+server:
+  port: 8087
+  session:
+    timeout: 1800
+spring:
+  datasource:
+    druid:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8&useSSL=false
+      username: root
+      password: root123
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password: null
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: 1
+    timeout: 5000
+  resources:
+    static-locations:
+    - classpath:/META-INF/resources/
+    - classpath:/static/
+    - classpath:/public/
+logging:
+  file: E:/logs/admin/logback_spring.log
+  level:
+    root: info
