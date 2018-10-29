@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cn.pay.core.domain.business.BorrowAuditHistroy;
+import cn.pay.core.entity.business.BorrowAuditHistroy;
 
 /**
  * 借款审核历史持久化相关

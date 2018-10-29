@@ -15,10 +15,10 @@ import org.springframework.util.StringUtils;
 
 import cn.pay.core.consts.BidConst;
 import cn.pay.core.dao.LoginInfoRepository;
-import cn.pay.core.domain.business.Account;
-import cn.pay.core.domain.business.UserInfo;
-import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.domain.sys.Role;
+import cn.pay.core.entity.business.Account;
+import cn.pay.core.entity.business.UserInfo;
+import cn.pay.core.entity.sys.LoginInfo;
+import cn.pay.core.entity.sys.Role;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.UserInfoService;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.RoleRepository;
-import cn.pay.core.domain.sys.Role;
+import cn.pay.core.entity.sys.Role;
 import cn.pay.core.service.RoleService;
 
 /**

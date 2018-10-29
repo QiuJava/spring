@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.UserInfoRepository;
-import cn.pay.core.domain.business.UserInfo;
+import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.pojo.vo.VerifyCode;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;

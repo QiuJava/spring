@@ -14,8 +14,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import cn.pay.core.consts.SysConst;
-import cn.pay.core.domain.sys.IpLog;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.sys.IpLog;
+import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.service.IpLogService;
 import cn.pay.core.util.HttpServletContext;
 

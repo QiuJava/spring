@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.domain.business.RealAuth;
+import cn.pay.core.entity.business.RealAuth;
 import cn.pay.core.pojo.qo.RealAuthQo;
 import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.pojo.vo.PageResult;

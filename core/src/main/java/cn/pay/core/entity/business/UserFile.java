@@ -1,4 +1,4 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,38 +13,32 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.AuthComponent;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.base.AuthComponent;
+import cn.pay.core.entity.sys.LoginInfo;
+import cn.pay.core.entity.sys.SystemDictionaryItem;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 实名认证
+ * 用户风控材料
  * 
- * @author Qiujian
+ * @author Administrator
  *
  */
 @Getter
 @Setter
 @ToString
 @Entity
-public class RealAuth extends AuthComponent {
+public class UserFile extends AuthComponent {
 	private static final long serialVersionUID = 1L;
-	public static final Integer MAN = 0;
-	public static final Integer WOMAN = 1;
 
 	private Long id;
-	private String realname;
-	private Integer sex;
-	private String birthDate;
-	/** 身份证号码 */
-	private String idNumber;
-	private String address;
-	/** 身份证正面 */
-	private String image1;
-	/** 身份证反面 */
-	private String image2;
+	/** 认证分 */
+	private Integer score = 0;
+	/** 材料文件名 */
+	private String file;
+	private SystemDictionaryItem fileType;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,33 +46,38 @@ public class RealAuth extends AuthComponent {
 		return id;
 	}
 
+	@OneToOne
+	public SystemDictionaryItem getFileType() {
+		return fileType;
+	}
+	
 	@Override
 	public Integer getState() {
 		return state;
 	}
-
+	
 	@Override
 	public String getRemark() {
 		return remark;
 	}
-
+	
 	@Override
 	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
-
+	
 	@Override
 	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}
-
+	
 	@Override
 	public Date getApplyTime() {
 		return applyTime;
 	}
-
+	
 	@Override
 	public Date getAuditTime() {
 		return auditTime;
@@ -86,22 +85,11 @@ public class RealAuth extends AuthComponent {
 
 	@Transient
 	public String getJsonString() {
-		Map<String, Object> map = new HashMap<String, Object>(10);
-		map.put("id", getId());
-		map.put("username", applier.getUsername());
-		map.put("realname", realname);
-		map.put("idNumber", idNumber);
-		map.put("sex", getSexDisplay());
-		map.put("birthDate", birthDate);
-		map.put("address", address);
-		map.put("image1", image1);
-		map.put("image2", image2);
-		return JSONObject.toJSONString(map);
+		Map<String, Object> json = new HashMap<String, Object>(5);
+		json.put("id", getId());
+		json.put("file", file);
+		json.put("fileType", fileType.getTitle());
+		json.put("name", applier.getUsername());
+		return JSONObject.toJSONString(json);
 	}
-
-	@Transient
-	public String getSexDisplay() {
-		return (RealAuth.MAN).equals(sex) ? "男" : "女";
-	}
-
 }

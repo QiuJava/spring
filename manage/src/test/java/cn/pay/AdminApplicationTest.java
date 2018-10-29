@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import cn.pay.core.consts.SysConst;
-import cn.pay.core.domain.sys.Role;
+import cn.pay.core.entity.sys.Role;
 import cn.pay.core.service.RoleService;
 import lombok.Setter;
 

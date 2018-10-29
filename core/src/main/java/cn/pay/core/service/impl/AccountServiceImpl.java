@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.AccountRepository;
-import cn.pay.core.domain.business.Account;
+import cn.pay.core.entity.business.Account;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.util.LogicException;
 

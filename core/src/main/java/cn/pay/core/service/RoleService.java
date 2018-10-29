@@ -2,7 +2,7 @@ package cn.pay.core.service;
 
 import java.util.List;
 
-import cn.pay.core.domain.sys.Role;
+import cn.pay.core.entity.sys.Role;
 
 /**
  * 角色服务
@@ -22,20 +22,23 @@ public interface RoleService {
 	/**
 	 * 保存角色
 	 * 
-	 * @param p
+	 * @param role
+	 * @return
 	 */
 	Role saveRole(Role role);
-	
+
 	/**
 	 * 删除所有角色
-	 * @param roleListAll 
+	 * 
+	 * @param roleListAll
 	 */
 	void deleteAll(List<Role> roleListAll);
-	
+
 	/**
 	 * 更新角色
 	 * 
-	 * @param p
+	 * @param role
+	 * @return
 	 */
 	Role updateRole(Role role);
 

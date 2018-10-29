@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import cn.pay.core.dao.EmailVerifyRepository;
-import cn.pay.core.domain.business.EmailVerify;
-import cn.pay.core.domain.business.UserInfo;
+import cn.pay.core.entity.business.EmailVerify;
+import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.service.EmailVerifyService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;

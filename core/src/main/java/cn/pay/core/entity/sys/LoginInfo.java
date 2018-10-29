@@ -1,4 +1,4 @@
-package cn.pay.core.domain.sys;
+package cn.pay.core.entity.sys;
 
 import java.util.Collection;
 import java.util.Date;
@@ -77,7 +77,7 @@ public class LoginInfo implements UserDetails {
 	 */
 	@Override
 	public boolean isAccountNonLocked() {
-		return !(status == LoginInfo.LOCK);
+		return status != LoginInfo.LOCK;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class LoginInfo implements UserDetails {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return !(status == LoginInfo.DEL);
+		return status == LoginInfo.DEL;
 	}
 
 	@Override

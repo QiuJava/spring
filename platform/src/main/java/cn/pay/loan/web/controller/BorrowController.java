@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.domain.business.Borrow;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.business.Borrow;
+import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.pojo.dto.BidDto;
 import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.AccountService;

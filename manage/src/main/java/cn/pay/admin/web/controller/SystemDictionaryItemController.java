@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.pay.core.domain.sys.SystemDictionaryItem;
+import cn.pay.core.entity.sys.SystemDictionaryItem;
 import cn.pay.core.pojo.qo.SystemDictionaryItemQo;
 import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.SystemDictionaryService;

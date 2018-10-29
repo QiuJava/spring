@@ -1,4 +1,4 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import cn.pay.core.domain.sys.SystemDictionaryItem;
+import cn.pay.core.entity.sys.SystemDictionaryItem;
 import cn.pay.core.util.BidStateUtil;
 import lombok.Getter;
 import lombok.Setter;

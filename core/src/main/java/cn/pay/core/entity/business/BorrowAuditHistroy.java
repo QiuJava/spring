@@ -1,8 +1,6 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,44 +9,39 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import com.alibaba.fastjson.JSONObject;
-
-import cn.pay.core.domain.base.AuthComponent;
-import cn.pay.core.domain.sys.LoginInfo;
-import cn.pay.core.domain.sys.SystemDictionaryItem;
+import cn.pay.core.entity.base.AuthComponent;
+import cn.pay.core.entity.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 用户风控材料
+ * 借款审核历史
  * 
- * @author Administrator
+ * @author Qiujian
  *
  */
 @Getter
 @Setter
 @ToString
 @Entity
-public class UserFile extends AuthComponent {
+public class BorrowAuditHistroy extends AuthComponent {
 	private static final long serialVersionUID = 1L;
+	/** 发标审核 */
+	public static final int PUSH_AUDIT = 0;
+	/** 满标一审 */
+	public static final int FULL_AUDIT1 = 1;
+	/** 满标二审 */
+	public static final int FULL_AUDIT2 = 2;
 
 	private Long id;
-	/** 认证分 */
-	private Integer score = 0;
-	/** 材料文件名 */
-	private String file;
-	private SystemDictionaryItem fileType;
+	private Integer auditType;
+	private Long borrowId;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
-	}
-
-	@OneToOne
-	public SystemDictionaryItem getFileType() {
-		return fileType;
 	}
 	
 	@Override
@@ -84,12 +77,16 @@ public class UserFile extends AuthComponent {
 	}
 
 	@Transient
-	public String getJsonString() {
-		Map<String, Object> json = new HashMap<String, Object>(5);
-		json.put("id", getId());
-		json.put("file", file);
-		json.put("fileType", fileType.getTitle());
-		json.put("name", applier.getUsername());
-		return JSONObject.toJSONString(json);
+	public String getAuditTypeDisplay() {
+		switch (auditType) {
+		case PUSH_AUDIT:
+			return "发标审核";
+		case FULL_AUDIT1:
+			return "满标一审";
+		case FULL_AUDIT2:
+			return "满标二审";
+		default:
+			return "异常状态";
+		}
 	}
 }

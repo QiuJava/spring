@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.sys.LoginInfo;
 
 /**
  * 用户登录

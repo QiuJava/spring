@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.RealAuthRepository;
-import cn.pay.core.domain.business.RealAuth;
-import cn.pay.core.domain.business.UserInfo;
+import cn.pay.core.entity.business.RealAuth;
+import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.pojo.event.RealAuthEvent;
 import cn.pay.core.pojo.qo.RealAuthQo;
 import cn.pay.core.service.RealAuthService;

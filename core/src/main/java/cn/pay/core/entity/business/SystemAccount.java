@@ -1,4 +1,4 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,40 +8,44 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 账户流水
+ * 系统账户
  * 
- * @author Administrator
+ * @author QIujian
  *
  */
 @Setter
 @Getter
 @ToString
 @Entity
-public class AccountFlow implements Serializable {
+public class SystemAccount implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private Long accountId;
-	private BigDecimal amount;
-	/** 发生变化的时间 */
-	private Date actionTime;
-	private String remark;
-	private BigDecimal freezed;
-	/** 当前可用余额 */
-	private BigDecimal balance;
-	private Integer accountActionType;
-	/** 操作信息 */
-	private String note;
+	private Integer version;
+	private Date beginDate;
+	private Date endDate;
+	private Date createDate;
+	/** 系统账户可用余额 */
+	private BigDecimal totalBalance;
+	/** 系统账户冻结金额 */
+	private BigDecimal freezedAmount;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
+
 }

@@ -1,4 +1,4 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,34 +14,30 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 系统账户流水
+ * 账户流水
  * 
- * @author Qiujian
+ * @author Administrator
  *
  */
 @Setter
 @Getter
 @ToString
 @Entity
-public class SystemAccountFlow implements Serializable {
+public class AccountFlow implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private Date createDate;
-	/** 系统账户流水类型 */
-	private int accountActionType;
-	/** 交易金额 */
+	private Long accountId;
 	private BigDecimal amount;
-	/** 流水说明 */
-	private String note;
-	/** 账户余额 */
+	/** 发生变化的时间 */
+	private Date actionTime;
+	private String remark;
+	private BigDecimal freezed;
+	/** 当前可用余额 */
 	private BigDecimal balance;
-	/** 冻结金额 */
-	private BigDecimal freezedAmount;
-	/** 系统账户id */
-	private Long systemAccountId;
-	/** 对于用户id */
-	private Long targetUserId;
+	private Integer accountActionType;
+	/** 操作信息 */
+	private String note;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

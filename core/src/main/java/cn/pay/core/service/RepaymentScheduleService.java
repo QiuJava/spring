@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.domain.business.RepaymentSchedule;
+import cn.pay.core.entity.business.RepaymentSchedule;
 import cn.pay.core.pojo.qo.RepaymentScheduleQo;
 import cn.pay.core.pojo.vo.PageResult;
 

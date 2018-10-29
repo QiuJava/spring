@@ -2,8 +2,8 @@ package cn.pay.core.service;
 
 import java.math.BigDecimal;
 
-import cn.pay.core.domain.business.Borrow;
-import cn.pay.core.domain.business.SystemAccount;
+import cn.pay.core.entity.business.Borrow;
+import cn.pay.core.entity.business.SystemAccount;
 
 /**
  * 系统账号服务

@@ -1,4 +1,4 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ import javax.persistence.Version;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

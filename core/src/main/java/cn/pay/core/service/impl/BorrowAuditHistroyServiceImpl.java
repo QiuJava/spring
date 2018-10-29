@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.dao.BorrowAuditHistroyRepository;
-import cn.pay.core.domain.business.BorrowAuditHistroy;
+import cn.pay.core.entity.business.BorrowAuditHistroy;
 import cn.pay.core.service.BorrowAuditHistroyService;
 
 /**

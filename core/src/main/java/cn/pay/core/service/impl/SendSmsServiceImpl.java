@@ -10,12 +10,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
-import cn.pay.core.domain.business.Borrow;
-import cn.pay.core.domain.business.PaymentPlan;
-import cn.pay.core.domain.business.RealAuth;
-import cn.pay.core.domain.business.Recharge;
-import cn.pay.core.domain.business.RepaymentSchedule;
-import cn.pay.core.domain.business.Withdraw;
+import cn.pay.core.entity.business.Borrow;
+import cn.pay.core.entity.business.PaymentPlan;
+import cn.pay.core.entity.business.RealAuth;
+import cn.pay.core.entity.business.Recharge;
+import cn.pay.core.entity.business.RepaymentSchedule;
+import cn.pay.core.entity.business.Withdraw;
 import cn.pay.core.pojo.vo.VerifyCode;
 import cn.pay.core.service.SendSmsService;
 import cn.pay.core.util.DateUtil;

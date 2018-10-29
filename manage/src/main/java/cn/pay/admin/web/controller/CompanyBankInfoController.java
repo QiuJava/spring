@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.pay.core.domain.business.CompanyBankInfo;
+import cn.pay.core.entity.business.CompanyBankInfo;
 import cn.pay.core.pojo.qo.CompanyBankInfoQo;
 import cn.pay.core.pojo.vo.PageResult;
 import cn.pay.core.service.CompanyBankInfoService;

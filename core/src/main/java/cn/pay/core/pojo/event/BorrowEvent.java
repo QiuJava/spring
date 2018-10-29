@@ -2,7 +2,7 @@ package cn.pay.core.pojo.event;
 
 import org.springframework.context.ApplicationEvent;
 
-import cn.pay.core.domain.business.Borrow;
+import cn.pay.core.entity.business.Borrow;
 import lombok.Getter;
 
 /**

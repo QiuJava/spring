@@ -11,8 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import cn.pay.core.consts.SysConst;
-import cn.pay.core.domain.business.SystemAccount;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.business.SystemAccount;
+import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.SystemAccountService;
 

@@ -2,7 +2,7 @@ package cn.pay.core.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cn.pay.core.domain.business.PaymentPlan;
+import cn.pay.core.entity.business.PaymentPlan;
 
 /**
  * 回款计划持久化相关

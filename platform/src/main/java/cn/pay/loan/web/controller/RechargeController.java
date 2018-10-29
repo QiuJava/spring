@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.domain.business.Recharge;
+import cn.pay.core.entity.business.Recharge;
 import cn.pay.core.pojo.qo.RechargeQo;
 import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.CompanyBankInfoService;

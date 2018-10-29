@@ -1,6 +1,5 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,39 +11,40 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.AuthComponent;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.base.AuthComponent;
+import cn.pay.core.entity.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 充值
+ * 实名认证
  * 
  * @author Qiujian
  *
  */
-@Setter
 @Getter
+@Setter
 @ToString
 @Entity
-public class Recharge extends AuthComponent {
+public class RealAuth extends AuthComponent {
 	private static final long serialVersionUID = 1L;
+	public static final Integer MAN = 0;
+	public static final Integer WOMAN = 1;
 
 	private Long id;
-	/** 系统银行账户信息 */
-	private CompanyBankInfo bankInfo;
-	/** 交易号 */
-	private String tradeCode;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date tradeTime;
-	private BigDecimal amount;
-	/** 操作记录 */
-	private String note;
+	private String realname;
+	private Integer sex;
+	private String birthDate;
+	/** 身份证号码 */
+	private String idNumber;
+	private String address;
+	/** 身份证正面 */
+	private String image1;
+	/** 身份证反面 */
+	private String image2;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,38 +52,33 @@ public class Recharge extends AuthComponent {
 		return id;
 	}
 
-	@OneToOne
-	public CompanyBankInfo getBankInfo() {
-		return bankInfo;
-	}
-	
 	@Override
 	public Integer getState() {
 		return state;
 	}
-	
+
 	@Override
 	public String getRemark() {
 		return remark;
 	}
-	
+
 	@Override
 	@OneToOne
 	public LoginInfo getAuditor() {
 		return auditor;
 	}
-	
+
 	@Override
 	@OneToOne
 	public LoginInfo getApplier() {
 		return applier;
 	}
-	
+
 	@Override
 	public Date getApplyTime() {
 		return applyTime;
 	}
-	
+
 	@Override
 	public Date getAuditTime() {
 		return auditTime;
@@ -91,12 +86,22 @@ public class Recharge extends AuthComponent {
 
 	@Transient
 	public String getJsonString() {
-		Map<String, Object> json = new HashMap<String, Object>(6);
-		json.put("id", getId());
-		json.put("name", getApplier().getUsername());
-		json.put("tradeCode", tradeCode);
-		json.put("amount", amount);
-		json.put("tradeTime", tradeTime);
-		return JSONObject.toJSONString(json);
+		Map<String, Object> map = new HashMap<String, Object>(10);
+		map.put("id", getId());
+		map.put("username", applier.getUsername());
+		map.put("realname", realname);
+		map.put("idNumber", idNumber);
+		map.put("sex", getSexDisplay());
+		map.put("birthDate", birthDate);
+		map.put("address", address);
+		map.put("image1", image1);
+		map.put("image2", image2);
+		return JSONObject.toJSONString(map);
 	}
+
+	@Transient
+	public String getSexDisplay() {
+		return (RealAuth.MAN).equals(sex) ? "男" : "女";
+	}
+
 }

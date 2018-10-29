@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.pay.core.domain.sys.IpLog;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.sys.IpLog;
+import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.service.IpLogService;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.loan.config.ActivemqConfig;

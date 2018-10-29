@@ -21,10 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.consts.BidConst;
 import cn.pay.core.dao.WithdrawRepository;
-import cn.pay.core.domain.business.Account;
-import cn.pay.core.domain.business.UserBankInfo;
-import cn.pay.core.domain.business.UserInfo;
-import cn.pay.core.domain.business.Withdraw;
+import cn.pay.core.entity.business.Account;
+import cn.pay.core.entity.business.UserBankInfo;
+import cn.pay.core.entity.business.UserInfo;
+import cn.pay.core.entity.business.Withdraw;
 import cn.pay.core.pojo.event.WithdrawEvent;
 import cn.pay.core.pojo.qo.WithdrawQo;
 import cn.pay.core.pojo.vo.PageResult;

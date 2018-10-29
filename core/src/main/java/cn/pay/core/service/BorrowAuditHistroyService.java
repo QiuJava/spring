@@ -2,7 +2,7 @@ package cn.pay.core.service;
 
 import java.util.List;
 
-import cn.pay.core.domain.business.BorrowAuditHistroy;
+import cn.pay.core.entity.business.BorrowAuditHistroy;
 
 /**
  * 借款审核历史服务

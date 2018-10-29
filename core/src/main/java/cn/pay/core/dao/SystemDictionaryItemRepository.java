@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import cn.pay.core.domain.sys.SystemDictionaryItem;
+import cn.pay.core.entity.sys.SystemDictionaryItem;
 
 /**
  * 系统字典明细相关持久化

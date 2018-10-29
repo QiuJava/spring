@@ -2,7 +2,7 @@ package cn.pay.core.service;
 
 import java.util.List;
 
-import cn.pay.core.domain.business.CompanyBankInfo;
+import cn.pay.core.entity.business.CompanyBankInfo;
 import cn.pay.core.pojo.qo.CompanyBankInfoQo;
 import cn.pay.core.pojo.vo.PageResult;
 

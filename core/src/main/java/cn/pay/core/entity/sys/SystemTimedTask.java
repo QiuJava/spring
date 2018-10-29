@@ -1,4 +1,4 @@
-package cn.pay.core.domain.sys;
+package cn.pay.core.entity.sys;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -2,7 +2,7 @@ package cn.pay.core.service;
 
 import java.util.List;
 
-import cn.pay.core.domain.sys.SystemDictionary;
+import cn.pay.core.entity.sys.SystemDictionary;
 import cn.pay.core.pojo.qo.SystemDictionaryQo;
 import cn.pay.core.pojo.vo.PageResult;
 
@@ -55,6 +55,7 @@ public interface SystemDictionaryService {
 	/**
 	 * 更新系统字典
 	 * 
+	 * @param systemDictionary
 	 * @return
 	 */
 	SystemDictionary updateSystemDictionary(SystemDictionary systemDictionary);

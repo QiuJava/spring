@@ -2,7 +2,7 @@ package cn.pay.core.service;
 
 import java.util.List;
 
-import cn.pay.core.domain.sys.SystemDictionaryItem;
+import cn.pay.core.entity.sys.SystemDictionaryItem;
 import cn.pay.core.pojo.qo.SystemDictionaryItemQo;
 import cn.pay.core.pojo.vo.PageResult;
 

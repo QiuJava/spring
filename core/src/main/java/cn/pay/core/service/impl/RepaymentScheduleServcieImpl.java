@@ -24,10 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.consts.BidConst;
 import cn.pay.core.dao.RepaymentScheduleRepository;
-import cn.pay.core.domain.business.Account;
-import cn.pay.core.domain.business.Borrow;
-import cn.pay.core.domain.business.PaymentPlan;
-import cn.pay.core.domain.business.RepaymentSchedule;
+import cn.pay.core.entity.business.Account;
+import cn.pay.core.entity.business.Borrow;
+import cn.pay.core.entity.business.PaymentPlan;
+import cn.pay.core.entity.business.RepaymentSchedule;
 import cn.pay.core.pojo.event.PaymentPlanEvent;
 import cn.pay.core.pojo.qo.RepaymentScheduleQo;
 import cn.pay.core.pojo.vo.PageResult;

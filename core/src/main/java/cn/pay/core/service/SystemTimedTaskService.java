@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.domain.sys.SystemTimedTask;
+import cn.pay.core.entity.sys.SystemTimedTask;
 import cn.pay.core.pojo.qo.SystemTimedTaskQo;
 import cn.pay.core.pojo.vo.PageResult;
 

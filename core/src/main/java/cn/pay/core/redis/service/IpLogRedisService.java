@@ -2,7 +2,7 @@ package cn.pay.core.redis.service;
 
 import org.springframework.stereotype.Service;
 
-import cn.pay.core.domain.sys.IpLog;
+import cn.pay.core.entity.sys.IpLog;
 import cn.pay.core.redis.AbstractRedisService;
 
 /**

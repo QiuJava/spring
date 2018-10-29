@@ -1,11 +1,11 @@
-package cn.pay.core.domain.base;
+package cn.pay.core.entity.base;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
 

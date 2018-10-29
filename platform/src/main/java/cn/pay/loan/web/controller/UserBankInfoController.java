@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.pay.core.domain.business.UserBankInfo;
-import cn.pay.core.domain.business.UserInfo;
+import cn.pay.core.entity.business.UserBankInfo;
+import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.service.UserBankInfoService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.HttpServletContext;

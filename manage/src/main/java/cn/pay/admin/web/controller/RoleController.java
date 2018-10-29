@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.domain.sys.Role;
+import cn.pay.core.entity.sys.Role;
 import cn.pay.core.service.RoleService;
 
 /**

@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.sys.LoginInfo;
 
 /**
  * 权限校验管理

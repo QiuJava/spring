@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.domain.business.Borrow;
+import cn.pay.core.entity.business.Borrow;
 import cn.pay.core.pojo.vo.IndexSummaryVo;
 import cn.pay.core.service.BorrowService;
 import cn.pay.core.service.IndexService;

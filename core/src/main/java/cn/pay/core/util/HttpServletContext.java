@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.pojo.vo.VerifyCode;
 
 /**

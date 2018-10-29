@@ -19,7 +19,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
-import cn.pay.core.domain.sys.Role;
+import cn.pay.core.entity.sys.Role;
 import cn.pay.core.service.RoleService;
 
 /**

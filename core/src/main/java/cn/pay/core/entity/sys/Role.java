@@ -1,48 +1,46 @@
-
-package cn.pay.core.domain.sys;
+package cn.pay.core.entity.sys;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 用戶Ip日志
+ * 角色
  * 
- * @author Qiujian
+ * @author Administrator
  *
  */
-@Getter
 @Setter
+@Getter
 @ToString
 @Entity
-public class IpLog implements Serializable {
+public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	public static final int LOGIN_SUCCESS = 0;
-	public static final int LOGIN_FAIL = 1;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String username;
-	private Integer loginState;
-	private String ip;
-	private Date loginTime;
-	private Integer userType;
+	/** 权限名称 */
+	private String name;
+	/** 权限描述 */
+	private String descritpion;
+	/** 权限连接 */
+	private String url;
 	/** 创建时间 */
 	private Date gmtCreate;
 	/** 修改时间 */
 	private Date gmtModified;
+	@ManyToMany(mappedBy = "roles")
+	private List<LoginInfo> loginInfos;
 
-	public String getDisplayState() {
-		return loginState == IpLog.LOGIN_FAIL ? "登陆失败" : "登陆成功";
-	}
 }

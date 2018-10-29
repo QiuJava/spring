@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import cn.pay.core.domain.business.UserFile;
+import cn.pay.core.entity.business.UserFile;
 import cn.pay.core.pojo.qo.UserFileQo;
 
 /**

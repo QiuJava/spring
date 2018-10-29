@@ -3,7 +3,7 @@ package cn.pay.core.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import cn.pay.core.domain.sys.Role;
+import cn.pay.core.entity.sys.Role;
 
 /**
  * 系统角色相关持久化

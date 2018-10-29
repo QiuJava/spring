@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.domain.business.PaymentPlan;
+import cn.pay.core.entity.business.PaymentPlan;
 
 /**
  * 收款计划服务

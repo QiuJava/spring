@@ -2,7 +2,7 @@ package cn.pay.core.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cn.pay.core.domain.business.EmailVerify;
+import cn.pay.core.entity.business.EmailVerify;
 
 /**
  * 邮箱校验信息持久化相关

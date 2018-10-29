@@ -1,6 +1,9 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,34 +12,35 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import cn.pay.core.domain.base.AuthComponent;
-import cn.pay.core.domain.sys.LoginInfo;
+import com.alibaba.fastjson.JSONObject;
+
+import cn.pay.core.entity.base.AuthComponent;
+import cn.pay.core.entity.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 借款审核历史
+ * 提现
  * 
  * @author Qiujian
  *
  */
-@Getter
 @Setter
+@Getter
 @ToString
 @Entity
-public class BorrowAuditHistroy extends AuthComponent {
+public class Withdraw extends AuthComponent {
 	private static final long serialVersionUID = 1L;
-	/** 发标审核 */
-	public static final int PUSH_AUDIT = 0;
-	/** 满标一审 */
-	public static final int FULL_AUDIT1 = 1;
-	/** 满标二审 */
-	public static final int FULL_AUDIT2 = 2;
 
 	private Long id;
-	private Integer auditType;
-	private Long borrowId;
+	/** 提现申请的银行卡账号 */
+	private String accountNumber;
+	/** 支行名称 */
+	private String bankForkName;
+	private String bankName;
+	private String realName;
+	private BigDecimal moneyAmount;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,16 +81,15 @@ public class BorrowAuditHistroy extends AuthComponent {
 	}
 
 	@Transient
-	public String getAuditTypeDisplay() {
-		switch (auditType) {
-		case PUSH_AUDIT:
-			return "发标审核";
-		case FULL_AUDIT1:
-			return "满标一审";
-		case FULL_AUDIT2:
-			return "满标二审";
-		default:
-			return "异常状态";
-		}
+	public String getJsonString() {
+		Map<String, Object> json = new HashMap<String, Object>(8);
+		json.put("id", getId());
+		json.put("name", applier.getUsername());
+		json.put("realName", realName);
+		json.put("accountNumber", accountNumber);
+		json.put("bankForkName", bankForkName);
+		json.put("moneyAmount", moneyAmount);
+		json.put("bankName", bankName);
+		return JSONObject.toJSONString(json);
 	}
 }

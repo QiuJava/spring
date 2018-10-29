@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.domain.business.UserInfo;
+import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.SendSmsService;
 import cn.pay.core.service.SystemDictionaryItemService;

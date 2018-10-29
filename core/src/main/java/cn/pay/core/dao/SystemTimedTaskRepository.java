@@ -3,7 +3,7 @@ package cn.pay.core.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import cn.pay.core.domain.sys.SystemTimedTask;
+import cn.pay.core.entity.sys.SystemTimedTask;
 
 /**
  * 系统定时任务持久化

@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.pay.core.domain.business.Account;
-import cn.pay.core.domain.sys.IpLog;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.business.Account;
+import cn.pay.core.entity.sys.IpLog;
+import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.IpLogService;
 import cn.pay.core.service.UserInfoService;

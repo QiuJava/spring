@@ -1,4 +1,4 @@
-package cn.pay.core.domain.business;
+package cn.pay.core.entity.business;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,16 +12,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.alibaba.fastjson.JSONObject;
 
-import cn.pay.core.domain.base.AuthComponent;
-import cn.pay.core.domain.sys.LoginInfo;
+import cn.pay.core.entity.base.AuthComponent;
+import cn.pay.core.entity.sys.LoginInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 提现
+ * 充值
  * 
  * @author Qiujian
  *
@@ -30,22 +32,29 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-public class Withdraw extends AuthComponent {
+public class Recharge extends AuthComponent {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	/** 提现申请的银行卡账号 */
-	private String accountNumber;
-	/** 支行名称 */
-	private String bankForkName;
-	private String bankName;
-	private String realName;
-	private BigDecimal moneyAmount;
+	/** 系统银行账户信息 */
+	private CompanyBankInfo bankInfo;
+	/** 交易号 */
+	private String tradeCode;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date tradeTime;
+	private BigDecimal amount;
+	/** 操作记录 */
+	private String note;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
+	}
+
+	@OneToOne
+	public CompanyBankInfo getBankInfo() {
+		return bankInfo;
 	}
 	
 	@Override
@@ -82,14 +91,12 @@ public class Withdraw extends AuthComponent {
 
 	@Transient
 	public String getJsonString() {
-		Map<String, Object> json = new HashMap<String, Object>(8);
+		Map<String, Object> json = new HashMap<String, Object>(6);
 		json.put("id", getId());
-		json.put("name", applier.getUsername());
-		json.put("realName", realName);
-		json.put("accountNumber", accountNumber);
-		json.put("bankForkName", bankForkName);
-		json.put("moneyAmount", moneyAmount);
-		json.put("bankName", bankName);
+		json.put("name", getApplier().getUsername());
+		json.put("tradeCode", tradeCode);
+		json.put("amount", amount);
+		json.put("tradeTime", tradeTime);
 		return JSONObject.toJSONString(json);
 	}
 }

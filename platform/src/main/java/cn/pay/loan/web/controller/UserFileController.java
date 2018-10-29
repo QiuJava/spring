@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.pay.core.domain.business.UserFile;
+import cn.pay.core.entity.business.UserFile;
 import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.UserFileService;
 import cn.pay.core.util.HttpServletContext;

@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.domain.business.Bid;
+import cn.pay.core.entity.business.Bid;
 
 /**
  * 投标服务

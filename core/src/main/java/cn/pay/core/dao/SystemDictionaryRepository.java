@@ -3,7 +3,7 @@ package cn.pay.core.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import cn.pay.core.domain.sys.SystemDictionary;
+import cn.pay.core.entity.sys.SystemDictionary;
 
 /**
  * 系统字典相关持久化

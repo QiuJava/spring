@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.pay.core.domain.business.RealAuth;
-import cn.pay.core.domain.business.UserInfo;
+import cn.pay.core.entity.business.RealAuth;
+import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.service.RealAuthService;
 import cn.pay.core.service.UserInfoService;

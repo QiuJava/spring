@@ -2,7 +2,7 @@ package cn.pay.core.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cn.pay.core.domain.business.Bid;
+import cn.pay.core.entity.business.Bid;
 
 /**
  * 投标持久化相关

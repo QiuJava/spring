@@ -2,7 +2,7 @@ package cn.pay.core.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cn.pay.core.domain.business.UserBankInfo;
+import cn.pay.core.entity.business.UserBankInfo;
 
 /**
  * 用户银行卡信息持久化

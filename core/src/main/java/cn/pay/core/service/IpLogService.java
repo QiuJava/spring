@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.domain.sys.IpLog;
+import cn.pay.core.entity.sys.IpLog;
 import cn.pay.core.pojo.qo.IpLogQo;
 import cn.pay.core.pojo.vo.PageResult;
 

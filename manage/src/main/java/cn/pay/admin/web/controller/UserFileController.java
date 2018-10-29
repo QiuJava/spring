@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.pay.core.domain.business.UserFile;
+import cn.pay.core.entity.business.UserFile;
 import cn.pay.core.pojo.qo.UserFileQo;
 import cn.pay.core.pojo.vo.AjaxResult;
 import cn.pay.core.pojo.vo.PageResult;

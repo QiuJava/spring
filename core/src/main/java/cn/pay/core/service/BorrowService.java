@@ -3,8 +3,8 @@ package cn.pay.core.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import cn.pay.core.domain.business.Borrow;
-import cn.pay.core.domain.business.BorrowAuditHistroy;
+import cn.pay.core.entity.business.Borrow;
+import cn.pay.core.entity.business.BorrowAuditHistroy;
 import cn.pay.core.pojo.qo.BorrowQo;
 import cn.pay.core.pojo.vo.PageResult;
 

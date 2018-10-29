@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.domain.business.Recharge;
+import cn.pay.core.entity.business.Recharge;
 import cn.pay.core.pojo.qo.RechargeQo;
 import cn.pay.core.pojo.vo.PageResult;
 

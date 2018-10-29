@@ -2,7 +2,7 @@ package cn.pay.core.service;
 
 import org.springframework.data.domain.Page;
 
-import cn.pay.core.domain.business.RealAuth;
+import cn.pay.core.entity.business.RealAuth;
 import cn.pay.core.pojo.qo.RealAuthQo;
 
 /**

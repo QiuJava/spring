@@ -3,7 +3,7 @@ package cn.pay.core.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import cn.pay.core.domain.business.SystemAccount;
+import cn.pay.core.entity.business.SystemAccount;
 
 /**
  * 系统账户相关持久化

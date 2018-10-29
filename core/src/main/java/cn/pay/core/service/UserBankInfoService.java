@@ -1,6 +1,6 @@
 package cn.pay.core.service;
 
-import cn.pay.core.domain.business.UserBankInfo;
+import cn.pay.core.entity.business.UserBankInfo;
 
 /**
  * 用户银行卡信息
