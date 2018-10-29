@@ -29,7 +29,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.dao.BorrowRepository;
 import cn.pay.core.entity.business.Account;
 import cn.pay.core.entity.business.Bid;
 import cn.pay.core.entity.business.Borrow;
@@ -41,6 +40,7 @@ import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.pojo.event.BorrowEvent;
 import cn.pay.core.pojo.qo.BorrowQo;
 import cn.pay.core.pojo.vo.PageResult;
+import cn.pay.core.repository.BorrowRepository;
 import cn.pay.core.service.AccountFlowService;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.BidService;

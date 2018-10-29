@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.pay.core.dao.UserInfoRepository;
 import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.pojo.vo.VerifyCode;
+import cn.pay.core.repository.UserInfoRepository;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;
 import cn.pay.core.util.DateUtil;

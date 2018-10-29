@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import cn.pay.core.dao.SystemDictionaryRepository;
 import cn.pay.core.entity.sys.SystemDictionary;
 import cn.pay.core.pojo.qo.SystemDictionaryQo;
 import cn.pay.core.pojo.vo.PageResult;
+import cn.pay.core.repository.SystemDictionaryRepository;
 import cn.pay.core.service.SystemDictionaryService;
 
 /**

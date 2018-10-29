@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import cn.pay.core.dao.SystemTimedTaskRepository;
 import cn.pay.core.entity.sys.SystemTimedTask;
 import cn.pay.core.pojo.qo.SystemTimedTaskQo;
 import cn.pay.core.pojo.vo.PageResult;
+import cn.pay.core.repository.SystemTimedTaskRepository;
 import cn.pay.core.service.SystemTimedTaskService;
 
 /**

@@ -11,7 +11,7 @@
 	<li class="list-group-item">
 		<a href="#"><span class="text-title">我的账户</span></a>
 		<ul class="in">
-			<li name="account"><a href="/personal">账户信息</a></li>
+			<li name="account"><a href="/personalCenter">账户信息</a></li>
 			<li name="realAuth"><a href="/realAuth">实名认证</a></li>
 			<li name="userFile"><a href="/userFile">风控资料认证</a></li>
 			<li name="bankInfo"><a href="/bankInfo">银行卡管理</a></li>

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import cn.pay.core.dao.EmailVerifyRepository;
 import cn.pay.core.entity.business.EmailVerify;
 import cn.pay.core.entity.business.UserInfo;
+import cn.pay.core.repository.EmailVerifyRepository;
 import cn.pay.core.service.EmailVerifyService;
 import cn.pay.core.service.UserInfoService;
 import cn.pay.core.util.BidStateUtil;

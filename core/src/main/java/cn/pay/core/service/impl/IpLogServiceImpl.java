@@ -20,10 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import cn.pay.core.dao.IpLogRepository;
 import cn.pay.core.entity.sys.IpLog;
 import cn.pay.core.pojo.qo.IpLogQo;
 import cn.pay.core.pojo.vo.PageResult;
+import cn.pay.core.repository.IpLogRepository;
 import cn.pay.core.service.IpLogService;
 
 /**

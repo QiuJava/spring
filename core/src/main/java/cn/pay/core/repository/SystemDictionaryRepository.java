@@ -1,4 +1,4 @@
-package cn.pay.core.dao;
+package cn.pay.core.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

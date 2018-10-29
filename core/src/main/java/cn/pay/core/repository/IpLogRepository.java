@@ -1,4 +1,4 @@
-package cn.pay.core.dao;
+package cn.pay.core.repository;
 
 import java.util.List;
 

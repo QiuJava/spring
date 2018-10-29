@@ -14,11 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.dao.LoginInfoRepository;
 import cn.pay.core.entity.business.Account;
 import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.entity.sys.Role;
+import cn.pay.core.repository.LoginInfoRepository;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.UserInfoService;

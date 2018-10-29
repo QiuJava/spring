@@ -17,12 +17,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.pay.core.dao.UserFileRepository;
 import cn.pay.core.entity.business.UserFile;
 import cn.pay.core.entity.business.UserInfo;
 import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.entity.sys.SystemDictionaryItem;
 import cn.pay.core.pojo.qo.UserFileQo;
+import cn.pay.core.repository.UserFileRepository;
 import cn.pay.core.service.LoginInfoService;
 import cn.pay.core.service.SystemDictionaryItemService;
 import cn.pay.core.service.UserFileService;

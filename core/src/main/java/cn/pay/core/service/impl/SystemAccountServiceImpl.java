@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.dao.SystemAccountRepository;
 import cn.pay.core.entity.business.Borrow;
 import cn.pay.core.entity.business.SystemAccount;
 import cn.pay.core.entity.business.SystemAccountFlow;
+import cn.pay.core.repository.SystemAccountRepository;
 import cn.pay.core.service.SystemAccountFlowService;
 import cn.pay.core.service.SystemAccountService;
 import cn.pay.core.util.LogicException;

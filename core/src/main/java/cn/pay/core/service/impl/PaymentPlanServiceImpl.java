@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.pay.core.dao.PaymentPlanRepository;
 import cn.pay.core.entity.business.PaymentPlan;
+import cn.pay.core.repository.PaymentPlanRepository;
 import cn.pay.core.service.PaymentPlanService;
 
 /**

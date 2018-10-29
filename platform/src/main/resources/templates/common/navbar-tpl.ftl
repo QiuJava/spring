@@ -9,7 +9,7 @@
 			<li id="index"><a href="/index.html">首页</a></li>
 			<li id="invest"><a href="/invest">我要投资</a></li>
 			<li id="borrow"><a href="/borrow/home">我要借款</a></li>
-			<li id="personal"><a href="/personal">个人中心</a></li>
+			<li id="personal"><a href="/personalCenter">个人中心</a></li>
 			<li><a href="#">新手指引</a></li>
 			<li><a href="#">关于我们</a></li>
 		</ul>

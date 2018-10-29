@@ -18,7 +18,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.pay.core.dao.RechargeRepository;
 import cn.pay.core.entity.business.Account;
 import cn.pay.core.entity.business.CompanyBankInfo;
 import cn.pay.core.entity.business.Recharge;
@@ -26,6 +25,7 @@ import cn.pay.core.entity.sys.LoginInfo;
 import cn.pay.core.pojo.event.RechargeEvent;
 import cn.pay.core.pojo.qo.RechargeQo;
 import cn.pay.core.pojo.vo.PageResult;
+import cn.pay.core.repository.RechargeRepository;
 import cn.pay.core.service.AccountFlowService;
 import cn.pay.core.service.AccountService;
 import cn.pay.core.service.CompanyBankInfoService;

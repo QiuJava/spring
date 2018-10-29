@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.pay.core.consts.BidConst;
-import cn.pay.core.dao.AccountFlowRepository;
 import cn.pay.core.entity.business.Account;
 import cn.pay.core.entity.business.AccountFlow;
 import cn.pay.core.entity.business.Bid;
@@ -17,6 +16,7 @@ import cn.pay.core.entity.business.PaymentPlan;
 import cn.pay.core.entity.business.Recharge;
 import cn.pay.core.entity.business.RepaymentSchedule;
 import cn.pay.core.entity.business.Withdraw;
+import cn.pay.core.repository.AccountFlowRepository;
 import cn.pay.core.service.AccountFlowService;
 
 /**
