@@ -1,29 +1,28 @@
-package cn.pay.core.quartz.jobs;
+package cn.pay.admin.quartz.jobs;
 
 import org.quartz.Job;
-
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cn.pay.core.service.BorrowService;
+import cn.pay.core.service.RepaymentScheduleService;
 
 /**
- * 获取接下来一个小时内可能流标的借款作业
+ * 自动还款发送短信通知充值还款作业
  * 
- * @author Qiu Jian
+ * @author Administrator
  *
  */
 @Component
-public class GetFailBorrowJob implements Job {
+public class AutoRepaySmsJob implements Job {
 
 	@Autowired
-	private BorrowService borrowService;
+	private RepaymentScheduleService service;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		borrowService.getFailBorrow();
+		service.autoRepaySms();
 	}
 
 }

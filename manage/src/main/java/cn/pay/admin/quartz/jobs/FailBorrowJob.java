@@ -1,4 +1,4 @@
-package cn.pay.core.quartz.jobs;
+package cn.pay.admin.quartz.jobs;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -6,23 +6,23 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cn.pay.core.service.RepaymentScheduleService;
+import cn.pay.core.service.BorrowService;
 
 /**
- * 自动还款发送短信通知充值还款作业
+ * 每一秒执行流标操作作业
  * 
- * @author Administrator
+ * @author Qiu Jian
  *
  */
 @Component
-public class AutoRepaySmsJob implements Job {
+public class FailBorrowJob implements Job {
 
 	@Autowired
-	private RepaymentScheduleService service;
+	private BorrowService borrowService;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		service.autoRepaySms();
+		borrowService.failBorrow();
 	}
 
 }

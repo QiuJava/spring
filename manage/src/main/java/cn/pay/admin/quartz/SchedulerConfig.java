@@ -1,4 +1,4 @@
-package cn.pay.core.quartz;
+package cn.pay.admin.quartz;
 
 import java.io.IOException;
 import java.util.Properties;

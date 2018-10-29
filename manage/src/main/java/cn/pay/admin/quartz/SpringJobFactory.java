@@ -1,4 +1,4 @@
-package cn.pay.core.quartz;
+package cn.pay.admin.quartz;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.annotation.Autowired;
