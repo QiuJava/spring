@@ -82,8 +82,8 @@ public class RechargeServiceImpl implements RechargeService {
 					list.add(cb.lessThanOrEqualTo(root.get("applyTime").as(Date.class), qo.getEndDate()));
 				}
 				if (qo.getApplierId() != null) {
-					list.add(
-							cb.equal(root.get("applier").as(LoginInfo.class), loginInfoService.getLoginInfoById(qo.getApplierId())));
+					list.add(cb.equal(root.get("applier").as(LoginInfo.class),
+							loginInfoService.getLoginInfoById(qo.getApplierId())));
 				}
 				if (qo.getTradeCode() != null) {
 					list.add(cb.like(root.get("tradeCode"), qo.getTradeCode() + "%"));
@@ -106,7 +106,7 @@ public class RechargeServiceImpl implements RechargeService {
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit(Long id, String remark, Integer state) {
 		Recharge recharge = repository.findOne(id);
-		if (recharge != null && recharge.getState().equals(Recharge.AUTH_NORMAL)) {
+		if (recharge != null && recharge.getState() == Recharge.AUTH_NORMAL) {
 			recharge.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			recharge.setAuditTime(new Date());
 			recharge.setState(state);

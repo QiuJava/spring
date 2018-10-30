@@ -37,6 +37,6 @@ public class EmailVerifyController {
 	@ResponseBody
 	public AjaxResult send(String email) {
 		service.send(email);
-		return new AjaxResult(true, "");
+		return new AjaxResult(true, "", 200);
 	}
 }

@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.entity.Account;
 import cn.qj.core.repository.AccountRepository;
 import cn.qj.core.service.AccountService;
-import cn.qj.core.util.LogicException;
 
 /**
  * 账户服务实现

@@ -16,10 +16,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 投标类
+ * 投标
  * 
  * @author Qiujian
- *
+ * @date 2018/10/30
  */
 @Setter
 @Getter
@@ -28,10 +28,10 @@ import lombok.ToString;
 public class Bid implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final int SUCCEED = 1;
-	public static final int FAILD = -1;
+	public static final int SUCCEED = 0;
+	public static final int FAILD = 1;
 
-	private Long id;
+	private long id;
 	/** 实际年利率 */
 	private BigDecimal actualRate;
 	private BigDecimal amount;
@@ -41,11 +41,11 @@ public class Bid implements Serializable {
 	/** 投标人 投资人 */
 	private LoginInfo createUser;
 	private Date createTime;
-	private Integer state = Bid.SUCCEED;
+	private int state = Bid.SUCCEED;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 

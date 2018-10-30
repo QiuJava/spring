@@ -19,8 +19,8 @@ public class BidConst {
 	/** 计算精度为8位 */
 	public static final Integer CAL_SCALE = 8;
 
-	public static final BigDecimal ZERO = new BigDecimal("0.0000");
-	public static final BigDecimal INIT_BORROW_LIMIT = new BigDecimal("50000.0000");
+	public static final BigDecimal ZERO = BigDecimal.ZERO;
+	public static final BigDecimal INIT_BORROW_LIMIT = new BigDecimal("50000");
 
 	/** 借款需要的信用分 */
 	public static final Integer BORROW_CREDIT_SCORE = 30;

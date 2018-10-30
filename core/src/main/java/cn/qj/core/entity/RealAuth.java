@@ -29,12 +29,12 @@ import lombok.ToString;
 @Entity
 public class RealAuth extends AuthComponent {
 	private static final long serialVersionUID = 1L;
-	public static final Integer MAN = 0;
-	public static final Integer WOMAN = 1;
+	public static final int MAN = 0;
+	public static final int WOMAN = 1;
 
 	private Long id;
 	private String realname;
-	private Integer sex;
+	private int sex;
 	private String birthDate;
 	/** 身份证号码 */
 	private String idNumber;
@@ -51,7 +51,7 @@ public class RealAuth extends AuthComponent {
 	}
 
 	@Override
-	public Integer getState() {
+	public int getState() {
 		return state;
 	}
 
@@ -99,7 +99,7 @@ public class RealAuth extends AuthComponent {
 
 	@Transient
 	public String getSexDisplay() {
-		return (RealAuth.MAN).equals(sex) ? "男" : "女";
+		return RealAuth.MAN == sex ? "男" : "女";
 	}
 
 }

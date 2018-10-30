@@ -23,6 +23,14 @@ public interface LoginInfoService extends UserDetailsService {
 	void register(String username, String password);
 
 	/**
+	 * 是否存在超级管理员
+	 * 
+	 * @param isAdmin
+	 * @return
+	 */
+	Boolean isExistAdmin(boolean isAdmin);
+
+	/**
 	 * 根据用户名判断用户名是否已存在
 	 * 
 	 * @param username

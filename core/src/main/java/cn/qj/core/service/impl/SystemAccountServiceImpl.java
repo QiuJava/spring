@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.entity.Borrow;
 import cn.qj.core.entity.SystemAccount;
@@ -22,7 +23,6 @@ import cn.qj.core.entity.SystemAccountFlow;
 import cn.qj.core.repository.SystemAccountRepository;
 import cn.qj.core.service.SystemAccountFlowService;
 import cn.qj.core.service.SystemAccountService;
-import cn.qj.core.util.LogicException;
 
 /**
  * 系统账户服务实现

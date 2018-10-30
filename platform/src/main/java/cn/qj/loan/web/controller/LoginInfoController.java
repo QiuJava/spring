@@ -26,15 +26,15 @@ public class LoginInfoController {
 	public AjaxResult ajax(HttpServletRequest request) {
 		String msg = (String) request.getAttribute("msg");
 		if (StringUtil.hasLength(msg)) {
-			return new AjaxResult(msg);
+			return new AjaxResult(false, msg, 200);
 		}
-		return new AjaxResult(true, "登录成功");
+		return new AjaxResult(true, "登录成功", 200);
 	}
 
 	@RequestMapping("/register")
 	public AjaxResult register(String username, String password) {
 		service.register(username, password);
-		return new AjaxResult(true, "注册成功");
+		return new AjaxResult(true, "注册成功", 200);
 	}
 
 	@RequestMapping("/isExist")

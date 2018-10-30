@@ -62,14 +62,14 @@ public class UserInfoController {
 	@ResponseBody
 	public AjaxResult bindPhone(String phoneNumber, String verifyCode) {
 		service.bind(phoneNumber, verifyCode);
-		return new AjaxResult(true, "绑定成功");
+		return new AjaxResult(true, "绑定成功", 200);
 	}
 
 	@RequestMapping("/verifyCode")
 	@ResponseBody
 	public AjaxResult verifyCode(String phoneNumber) {
 		sendSmsService.verifyCode(phoneNumber);
-		return new AjaxResult(true, "发送成功");
+		return new AjaxResult(true, "发送成功", 200);
 	}
 
 }

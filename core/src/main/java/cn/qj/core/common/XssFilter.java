@@ -1,5 +1,5 @@
 
-package cn.qj.admin.web.filter;
+package cn.qj.core.common;
 
 import java.io.IOException;
 

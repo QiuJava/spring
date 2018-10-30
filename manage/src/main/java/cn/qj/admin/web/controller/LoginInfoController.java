@@ -31,9 +31,9 @@ public class LoginInfoController {
 	public AjaxResult ajax(HttpServletRequest request) {
 		String msg = (String) request.getAttribute(AdminLoginFailureHandler.LOGIN_ERR_MSG);
 		if (StringUtil.hasLength(msg)) {
-			return new AjaxResult(msg);
+			return new AjaxResult(false, msg, 400);
 		}
-		return new AjaxResult(true, "登录成功");
+		return new AjaxResult(true, "登录成功", 200);
 	}
-	
+
 }

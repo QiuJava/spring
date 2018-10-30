@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.entity.SystemDictionary;
 import cn.qj.core.entity.SystemDictionaryItem;
 import cn.qj.core.pojo.qo.SystemDictionaryItemQo;
@@ -24,7 +25,6 @@ import cn.qj.core.pojo.vo.PageResult;
 import cn.qj.core.repository.SystemDictionaryItemRepository;
 import cn.qj.core.service.SystemDictionaryItemService;
 import cn.qj.core.service.SystemDictionaryService;
-import cn.qj.core.util.LogicException;
 
 /**
  * 系统字典明细服务实现

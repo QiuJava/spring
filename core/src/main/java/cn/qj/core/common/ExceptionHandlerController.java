@@ -1,4 +1,4 @@
-package cn.qj.admin.web;
+package cn.qj.core.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,13 +6,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import cn.qj.core.pojo.vo.AjaxResult;
-import cn.qj.core.util.LogicException;
 
 /**
- * 系统异常处理相关
+ * 系统异常处理
  * 
  * @author Qiujian
- *
+ * @date 2018/10/30
  */
 @RestControllerAdvice
 public class ExceptionHandlerController {
@@ -28,7 +27,7 @@ public class ExceptionHandlerController {
 	@ExceptionHandler(Exception.class)
 	public AjaxResult handlerException(Exception e) {
 		logger.error("系统异常", e);
-		return new AjaxResult(false, "系统异常");
+		return new AjaxResult(false, "系统异常", 500);
 	}
 
 }

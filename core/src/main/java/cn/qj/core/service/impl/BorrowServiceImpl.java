@@ -28,6 +28,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.Bid;
@@ -55,7 +56,6 @@ import cn.qj.core.util.BidStateUtil;
 import cn.qj.core.util.CalculatetUtil;
 import cn.qj.core.util.DecimalFormatUtil;
 import cn.qj.core.util.HttpServletContext;
-import cn.qj.core.util.LogicException;
 import cn.qj.core.util.StringUtil;
 
 /**
@@ -143,7 +143,7 @@ public class BorrowServiceImpl implements BorrowService {
 		// 拿到借款对象
 		Borrow borrow = get(borrowId);
 		// 1.检查标是否存在，检查是否是招标中，检查招标的时间是否到期
-		if (borrow != null && borrow.getState().equals(BidConst.BORROW_STATE_BIDDING)
+		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_BIDDING
 				&& new Date().before(borrow.getDisableDate())) {
 			// LoginInfo currentLoginInfo = HttpSessionContext.getCurrentLoginInfo();
 			LoginInfo currentLoginInfo = loginInfoService.getLoginInfoById(loginInfoId);
@@ -258,7 +258,7 @@ public class BorrowServiceImpl implements BorrowService {
 	public void audit1Audit(Long id, String remark, Integer state) {
 		Borrow borrow = get(id);
 		// 必须是满标一审状态
-		if (borrow != null && borrow.getState().equals(BidConst.BORROW_STATE_APPROVE_PENDING_1)) {
+		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_APPROVE_PENDING_1) {
 			// 创建审核历史记录
 			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.FULL_AUDIT1);
 			if (state.equals(BorrowAuditHistroy.AUTH_PASS)) {
@@ -310,7 +310,7 @@ public class BorrowServiceImpl implements BorrowService {
 	public void audit2Audit(Long id, String remark, Integer state) {
 		// 得到借款对象 判定对象是否为满标二审状态
 		Borrow borrow = get(id);
-		if (borrow != null && borrow.getState().equals(BidConst.BORROW_STATE_APPROVE_PENDING_2)) {
+		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_APPROVE_PENDING_2) {
 			// 创建一个借款审核历史对象
 			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.FULL_AUDIT2);
 
@@ -551,7 +551,7 @@ public class BorrowServiceImpl implements BorrowService {
 				Borrow borrow = iterator.next();
 				if (borrow.getDisableDate().getTime() < date.getTime()) {
 					Borrow newBorrow = get(borrow.getId());
-					if (newBorrow.getState().equals(BidConst.BORROW_STATE_BIDDING)) {
+					if (newBorrow.getState() == BidConst.BORROW_STATE_BIDDING) {
 						// 流标操作
 						cancelBorrow(newBorrow, BidConst.BORROW_STATE_BIDDING_OVERDUE);
 						iterator.remove();

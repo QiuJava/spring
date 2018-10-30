@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.entity.Borrow;
 import cn.qj.core.entity.PaymentPlan;
 import cn.qj.core.entity.RealAuth;
@@ -20,7 +21,6 @@ import cn.qj.core.pojo.vo.VerifyCode;
 import cn.qj.core.service.SendSmsService;
 import cn.qj.core.util.DateUtil;
 import cn.qj.core.util.HttpServletContext;
-import cn.qj.core.util.LogicException;
 import lombok.Setter;
 
 /**

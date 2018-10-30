@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.LoginInfo;
@@ -22,7 +23,6 @@ import cn.qj.core.repository.LoginInfoRepository;
 import cn.qj.core.service.AccountService;
 import cn.qj.core.service.LoginInfoService;
 import cn.qj.core.service.UserInfoService;
-import cn.qj.core.util.LogicException;
 
 /**
  * 登录信息服务实现
@@ -111,16 +111,21 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	public List<LoginInfo> listAll() {
 		return repository.findAll();
 	}
-	
+
 	@Transactional(rollbackFor = { RuntimeException.class })
 	@Override
 	public LoginInfo updateLoginInfo(LoginInfo loginInfo) {
 		return repository.saveAndFlush(loginInfo);
 	}
-	
+
 	@Transactional(rollbackFor = { RuntimeException.class })
 	@Override
 	public LoginInfo saveLoginInfo(LoginInfo loginInfo) {
 		return repository.saveAndFlush(loginInfo);
+	}
+
+	@Override
+	public Boolean isExistAdmin(boolean isAdmin) {
+		return repository.countByIsAdmin(isAdmin) == 1;
 	}
 }

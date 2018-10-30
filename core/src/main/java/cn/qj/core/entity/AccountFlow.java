@@ -16,8 +16,8 @@ import lombok.ToString;
 /**
  * 账户流水
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/10/30
  */
 @Setter
 @Getter
@@ -26,8 +26,8 @@ import lombok.ToString;
 public class AccountFlow implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private Long accountId;
+	private long id;
+	private long accountId;
 	private BigDecimal amount;
 	/** 发生变化的时间 */
 	private Date actionTime;
@@ -41,7 +41,7 @@ public class AccountFlow implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 }

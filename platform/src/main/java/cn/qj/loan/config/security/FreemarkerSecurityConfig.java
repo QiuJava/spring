@@ -12,29 +12,29 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import freemarker.ext.jsp.TaglibFactory;
 
 /**
- * Dlt配置 让Freemaker模板使用Security标签
+ * 模板使用Spring Security标签
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/10/16
  */
 @Configuration
-public class DltConfig {
-	
+public class FreemarkerSecurityConfig {
+
 	@Autowired
 	private FreeMarkerConfigurer configurer;
-	
+
 	/**
-	 * @PostConstruct 注解  
-	 * 所贴的方法在配置类进行创建初始化之后就会执行
+	 * @PostConstruct 注解 所贴的方法在配置类进行创建初始化之后就会执行
 	 */
 	@PostConstruct
 	public void freeMarkerConfigurer() {
 		List<String> tlds = new ArrayList<String>();
 		tlds.add("/static/tags/security.tld");
-		TaglibFactory taglibFactory = configurer.getTaglibFactory();
-		taglibFactory.setClasspathTlds(tlds);
-		if (taglibFactory.getObjectWrapper() == null) {
-			taglibFactory.setObjectWrapper(configurer.getConfiguration().getObjectWrapper());
+		TaglibFactory factory = configurer.getTaglibFactory();
+		factory.setClasspathTlds(tlds);
+		if (factory.getObjectWrapper() == null) {
+			factory.setObjectWrapper(configurer.getConfiguration().getObjectWrapper());
 		}
-	}                                                                                                                                              
+	}
+
 }

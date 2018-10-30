@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.entity.SystemDictionaryItem;
 import cn.qj.core.entity.UserFile;
@@ -28,7 +29,6 @@ import cn.qj.core.service.SystemDictionaryItemService;
 import cn.qj.core.service.UserFileService;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.HttpServletContext;
-import cn.qj.core.util.LogicException;
 
 /**
  * 用户材料服务实现
@@ -125,7 +125,7 @@ public class UserFileServiceImpl implements UserFileService {
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit(Long id, Integer state, Integer score, String remark) {
 		UserFile userFile = repository.findOne(id);
-		if (userFile.getState().equals(UserFile.AUTH_NORMAL)) {
+		if (userFile.getState() == UserFile.AUTH_NORMAL) {
 			userFile.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			userFile.setAuditTime(new Date());
 			userFile.setRemark(remark);

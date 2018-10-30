@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.entity.EmailVerify;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.repository.EmailVerifyRepository;
@@ -15,7 +16,6 @@ import cn.qj.core.service.EmailVerifyService;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.BidStateUtil;
 import cn.qj.core.util.HttpServletContext;
-import cn.qj.core.util.LogicException;
 
 /**
  * 邮箱校验服务实现

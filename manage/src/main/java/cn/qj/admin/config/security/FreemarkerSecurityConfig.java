@@ -12,15 +12,13 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import freemarker.ext.jsp.TaglibFactory;
 
 /**
- * 给模板注入安全标签
+ * 模板使用Spring Security标签
  * 
  * @author Qiujian
- * @date 2018年8月13日
+ * @date 2018/10/16
  */
 @Configuration
-public class DltConfig {
-
-	private static final String SPIRNG_SECURITY_TAGS_TLD_STATIC_PATH = "/static/tags/security.tld";
+public class FreemarkerSecurityConfig {
 
 	@Autowired
 	private FreeMarkerConfigurer configurer;
@@ -31,11 +29,12 @@ public class DltConfig {
 	@PostConstruct
 	public void freeMarkerConfigurer() {
 		List<String> tlds = new ArrayList<String>();
-		tlds.add(SPIRNG_SECURITY_TAGS_TLD_STATIC_PATH);
+		tlds.add("/static/tags/security.tld");
 		TaglibFactory factory = configurer.getTaglibFactory();
 		factory.setClasspathTlds(tlds);
 		if (factory.getObjectWrapper() == null) {
 			factory.setObjectWrapper(configurer.getConfiguration().getObjectWrapper());
 		}
 	}
+
 }

@@ -9,7 +9,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import cn.qj.core.consts.BidConst;
-import cn.qj.core.util.Md5;
+import cn.qj.core.consts.SysConst;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +18,7 @@ import lombok.ToString;
  * 账户
  * 
  * @author Qiujian
- *
+ * @date 2018/10/30
  */
 @Getter
 @Setter
@@ -27,9 +27,9 @@ import lombok.ToString;
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private long id;
 	/** 乐观锁版本号 */
-	private Integer version;
+	private int version;
 	/** 交易密码 */
 	private String tradePassword;
 	/** 可用余额 */
@@ -50,21 +50,24 @@ public class Account implements Serializable {
 	private String verifyKey;
 
 	@Id
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
 	@Version
-	public Integer getVersion() {
+	public int getVersion() {
 		return version;
 	}
 
 	public String getVerifyKey() {
-		return Md5.encode(this.usableAmount.hashCode() + "" + this.freezedAmount.hashCode());
+		String rawPass = this.usableAmount.hashCode() + "" + this.freezedAmount.hashCode();
+		return SysConst.MD5.encodePassword(rawPass, null);
 	}
 
+	@Transient
 	public boolean checkVerifyKey() {
-		return Md5.encode(this.usableAmount.hashCode() + "" + this.freezedAmount.hashCode()).equals(this.verifyKey);
+		String rawPass = this.usableAmount.hashCode() + "" + this.freezedAmount.hashCode();
+		return SysConst.MD5.encodePassword(rawPass, null).equals(this.verifyKey);
 	}
 
 	@Transient

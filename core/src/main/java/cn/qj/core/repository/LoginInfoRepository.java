@@ -8,9 +8,17 @@ import cn.qj.core.entity.LoginInfo;
  * 登录信息持久化相关
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface LoginInfoRepository extends JpaRepository<LoginInfo, Long> {
+
+	/**
+	 * 统计管理员的个数
+	 * 
+	 * @param isAdmin
+	 * @return
+	 */
+	int countByIsAdmin(boolean isAdmin);
 
 	/**
 	 * 根据用户名精确查找用户

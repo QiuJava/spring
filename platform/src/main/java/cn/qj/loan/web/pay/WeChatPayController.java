@@ -16,10 +16,8 @@ public class WeChatPayController {
 
 	@GetMapping("/pay/wechat")
 	public AjaxResult pay() {
-		AjaxResult result = new AjaxResult(true, "支付成功");
-		
-		
-		
+		AjaxResult result = new AjaxResult(true, "支付成功", 200);
+
 		return result;
 	}
 

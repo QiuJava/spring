@@ -1,19 +1,18 @@
-package cn.qj.core.util;
+package cn.qj.core.common;
+
+import lombok.Getter;
 
 /**
- * 系统逻辑异常类=工具类
+ * 逻辑异常
  * 
  * @author Qiujian
- *
+ * @date 2018/10/30
  */
 public class LogicException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	private Integer errCode;
-
-	public Integer getErrCode() {
-		return errCode;
-	}
+	@Getter
+	private Integer errCode = 400;
 
 	public LogicException(String message) {
 		super(message);

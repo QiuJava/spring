@@ -33,13 +33,13 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// 检查是否有admin
-		LoginInfo info = loginInfoService.getLoginInfoByUsername(SysConst.ADMIN_NAME);
-		if (info == null) {
+		Boolean isAdmin = loginInfoService.isExistAdmin(true);
+		if (isAdmin) {
 			// 没有创建
-			info = new LoginInfo();
+			LoginInfo info = new LoginInfo();
 			info.setIsAdmin(true);
-			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.LOGIN_PASSWORD));
-			info.setUsername(SysConst.ADMIN_NAME);
+			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.INIT_PASSWORD));
+			info.setUsername("超级管理员");
 			info.setUserType(LoginInfo.MANAGER);
 			Date currentDate = new Date();
 			info.setGmtCreate(currentDate);

@@ -36,18 +36,18 @@ import lombok.ToString;
 public class Borrow implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private Integer version;
+	private long id;
+	private int version;
 	/** 借款类型 */
-	private Integer type;
-	private Integer state;
+	private int type;
+	private int state;
 	private BigDecimal amount;
 	/** 借款利率 */
 	private BigDecimal rate;
 	/** 还款期限(月数) */
-	private Integer monthReturn;
+	private int monthReturn;
 	/** 投标总数 */
-	private Integer bidCount = 0;
+	private int bidCount = 0;
 	/** 产生总利息 */
 	private BigDecimal totalInterestAmount;
 	/** 当前投标总金额 */
@@ -60,26 +60,26 @@ public class Borrow implements Serializable {
 	/** 投标截止日期 */
 	private Date disableDate;
 	/** 招标天数 */
-	private Integer disableDays;
+	private int disableDays;
 	/** 最小投标金额 */
 	private BigDecimal minBidAmount;
 	private Date applyTime;
 	/** 发布时间 */
 	private Date publishTime;
 	/** 还款方式 */
-	private Integer returnType;
+	private int returnType;
 	/** 借款人 */
 	private LoginInfo createUser;
 	private List<Bid> bidList;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
 	@Version
-	public Integer getVersion() {
+	public int getVersion() {
 		return version;
 	}
 

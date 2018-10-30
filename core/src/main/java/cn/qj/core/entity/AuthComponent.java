@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 public class AuthComponent implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	/** 审核中 */
 	public static final int AUTH_NORMAL = 0;
 	/** 通过 */
@@ -26,7 +27,7 @@ public class AuthComponent implements Serializable {
 	public static final int AUTH_REJECT = 2;
 
 	/** 状态 */
-	protected Integer state;
+	protected int state;
 	/** 备注 */
 	protected String remark;
 	/** 审核人 */

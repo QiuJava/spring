@@ -1,4 +1,4 @@
-package cn.qj.admin.web.filter;
+package cn.qj.core.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;

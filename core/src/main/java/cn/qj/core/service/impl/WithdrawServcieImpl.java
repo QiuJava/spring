@@ -101,7 +101,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 		// 拿到当前申请提现对象
 		Withdraw withdraw = repository.findOne(id);
 		// 判断当前是否处于审核状态
-		if (withdraw.getState().equals(Withdraw.AUTH_NORMAL)) {
+		if (withdraw.getState() == Withdraw.AUTH_NORMAL) {
 			// 拿到当前申请人的账户对象
 			Account currentAccount = accountService.get(withdraw.getApplier().getId());
 			// 设置提相关状态

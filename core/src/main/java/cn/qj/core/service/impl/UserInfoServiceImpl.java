@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.qj.core.common.LogicException;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.pojo.vo.VerifyCode;
 import cn.qj.core.repository.UserInfoRepository;
@@ -13,7 +14,6 @@ import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.BidStateUtil;
 import cn.qj.core.util.DateUtil;
 import cn.qj.core.util.HttpServletContext;
-import cn.qj.core.util.LogicException;
 
 /**
  * 用户信息服务实现
