@@ -40,12 +40,12 @@ service:
 
 pay:
   wechat:
-    appid: wx0281f93238d254a1
-    merchantid: 1484366432
+    appId: wx0281f93238d254a1
+    merchantId: 1484366432
     key: nl089QrXQXZotDrhN25v8jddlz2MRPZh
-    callbackurl: http://hmh.qhylpay.com/pay/wxPayCallBack
+    callbackUrl: http://hmh.qhylpay.com/pay/wxPayCallBack
     url: https://api.mch.weixin.qq.com/pay/unifiedorder
-    queryurl: https://api.mch.weixin.qq.com/pay/orderquery
+    queryUrl: https://api.mch.weixin.qq.com/pay/orderquery
   alipay:
     url: https://openapi.alipay.com/gateway.do
     

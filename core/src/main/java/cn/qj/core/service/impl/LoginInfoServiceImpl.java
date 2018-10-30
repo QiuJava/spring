@@ -126,6 +126,6 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 
 	@Override
 	public Boolean isExistAdmin(boolean isAdmin) {
-		return repository.countByIsAdmin(isAdmin) == 1;
+		return repository.countByIsAdmin(isAdmin) > 0;
 	}
 }

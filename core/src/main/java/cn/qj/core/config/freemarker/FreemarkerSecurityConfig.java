@@ -1,4 +1,4 @@
-package cn.qj.loan.config.security;
+package cn.qj.core.config.freemarker;
 
 import java.util.ArrayList;
 import java.util.List;

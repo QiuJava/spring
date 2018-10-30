@@ -34,8 +34,8 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// 检查是否有admin
 		Boolean isAdmin = loginInfoService.isExistAdmin(true);
-		if (isAdmin) {
-			// 没有创建
+		// 没有创建
+		if (!isAdmin) {
 			LoginInfo info = new LoginInfo();
 			info.setIsAdmin(true);
 			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.INIT_PASSWORD));
