@@ -1,6 +1,6 @@
-package cn.pay.core.service;
+package cn.qj.core.service;
 
-import cn.pay.core.entity.business.${className};
+import cn.qj.core.entity.business.${className};
 
 public interface ${className}Service {
 

@@ -7,9 +7,9 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
+		<config>java:cn.qj.ManageApplication</config>
 	</configs>
 	<autoconfigs>
-		<config>java:cn.pay.AdminApplication</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

@@ -37,6 +37,18 @@ service:
     password: 123456
     host: 127.0.0.1
     url: http://127.0.0.1:8081/email/verify.do
+
+pay:
+  wechat:
+    appid: wx0281f93238d254a1
+    merchantid: 1484366432
+    key: nl089QrXQXZotDrhN25v8jddlz2MRPZh
+    callbackurl: http://hmh.qhylpay.com/pay/wxPayCallBack
+    url: https://api.mch.weixin.qq.com/pay/unifiedorder
+    queryurl: https://api.mch.weixin.qq.com/pay/orderquery
+  alipay:
+    url: https://openapi.alipay.com/gateway.do
+    
 upload:
   path:
     img: E:/www/upload/
