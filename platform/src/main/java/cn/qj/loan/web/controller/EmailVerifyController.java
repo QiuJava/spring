@@ -10,10 +10,10 @@ import cn.qj.core.pojo.vo.AjaxResult;
 import cn.qj.core.service.EmailVerifyService;
 
 /**
- * 邮箱验证相关
+ * 邮箱校验
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/10/31
  */
 @Controller
 public class EmailVerifyController {
