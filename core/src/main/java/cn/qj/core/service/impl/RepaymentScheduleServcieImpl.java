@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.qj.core.common.LogicException;
+import cn.qj.core.common.PageResult;
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.Borrow;
@@ -30,7 +31,6 @@ import cn.qj.core.entity.PaymentPlan;
 import cn.qj.core.entity.RepaymentSchedule;
 import cn.qj.core.pojo.event.PaymentPlanEvent;
 import cn.qj.core.pojo.qo.RepaymentScheduleQo;
-import cn.qj.core.pojo.vo.PageResult;
 import cn.qj.core.repository.RepaymentScheduleRepository;
 import cn.qj.core.service.AccountFlowService;
 import cn.qj.core.service.AccountService;

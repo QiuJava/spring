@@ -8,8 +8,8 @@ import lombok.Getter;
 /**
  * 提现成功事件
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Getter
 public class WithdrawEvent extends ApplicationEvent {

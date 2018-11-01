@@ -8,8 +8,8 @@ import cn.qj.core.pojo.qo.RealAuthQo;
 /**
  * 实名认证服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface RealAuthService {
 

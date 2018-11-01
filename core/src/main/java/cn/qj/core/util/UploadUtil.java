@@ -9,10 +9,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 文件上传工具类
+ * 上传工具
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 public class UploadUtil {
 	private UploadUtil() {

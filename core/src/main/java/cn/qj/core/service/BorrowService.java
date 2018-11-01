@@ -3,16 +3,16 @@ package cn.qj.core.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.Borrow;
 import cn.qj.core.entity.BorrowAuditHistroy;
 import cn.qj.core.pojo.qo.BorrowQo;
-import cn.qj.core.pojo.vo.PageResult;
 
 /**
  * 借款服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface BorrowService {
 

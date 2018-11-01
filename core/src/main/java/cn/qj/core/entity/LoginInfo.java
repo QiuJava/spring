@@ -14,19 +14,15 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
- * 登陆信息
+ * 登录信息
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 public class LoginInfo implements UserDetails {
 	private static final long serialVersionUID = 1L;

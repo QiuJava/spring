@@ -9,7 +9,7 @@ import cn.qj.core.entity.Recharge;
  * 充值持久化相关
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface RechargeRepository extends JpaRepository<Recharge, Long>, JpaSpecificationExecutor<Recharge> {
 

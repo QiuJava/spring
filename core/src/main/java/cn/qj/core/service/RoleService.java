@@ -8,7 +8,7 @@ import cn.qj.core.entity.Role;
  * 角色服务
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface RoleService {
 

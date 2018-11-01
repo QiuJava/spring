@@ -10,7 +10,7 @@ import cn.qj.core.entity.BorrowAuditHistroy;
  * 借款审核历史持久化相关
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface BorrowAuditHistroyRepository extends JpaRepository<BorrowAuditHistroy, Long> {
 

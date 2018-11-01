@@ -1,13 +1,11 @@
-package cn.qj.core.pojo.vo;
-
-import java.util.Date;
+package cn.qj.core.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 手机验证码
+ * Api接口返回结果
  * 
  * @author Qiujian
  * @date 2018/11/01
@@ -15,8 +13,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VerifyCode {
-	private String phoneNumber;
-	private String verifyCode;
-	private Date date;
+public class ApiResult {
+
+	private String msg;
+	private Integer status;
+	private Object data;
+
 }

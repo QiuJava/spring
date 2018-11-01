@@ -1,10 +1,8 @@
-package cn.qj.core.pojo.vo;
+package cn.qj.core.common;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Ajax请求返回
@@ -12,11 +10,9 @@ import lombok.ToString;
  * @author Qiujian
  * @date 2018/10/30
  */
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class AjaxResult {
 
 	private boolean success;

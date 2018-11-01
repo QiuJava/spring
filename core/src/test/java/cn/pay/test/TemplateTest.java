@@ -6,7 +6,7 @@ import org.junit.Test;
  * 模板生成器测试
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public class TemplateTest {
 

@@ -5,8 +5,8 @@ import cn.qj.core.entity.Account;
 /**
  * 账户服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface AccountService {
 

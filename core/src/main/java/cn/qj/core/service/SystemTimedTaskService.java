@@ -1,14 +1,14 @@
 package cn.qj.core.service;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.SystemTimedTask;
 import cn.qj.core.pojo.qo.SystemTimedTaskQo;
-import cn.qj.core.pojo.vo.PageResult;
 
 /**
  * 系统定时任务服务
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 public interface SystemTimedTaskService {
 

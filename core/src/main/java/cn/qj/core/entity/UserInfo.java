@@ -9,19 +9,15 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import cn.qj.core.util.BidStateUtil;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
- * 用户基本信息
+ * 用户信息
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 public class UserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;

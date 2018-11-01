@@ -18,13 +18,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.CompanyBankInfo;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.entity.Recharge;
 import cn.qj.core.pojo.event.RechargeEvent;
 import cn.qj.core.pojo.qo.RechargeQo;
-import cn.qj.core.pojo.vo.PageResult;
 import cn.qj.core.repository.RechargeRepository;
 import cn.qj.core.service.AccountFlowService;
 import cn.qj.core.service.AccountService;

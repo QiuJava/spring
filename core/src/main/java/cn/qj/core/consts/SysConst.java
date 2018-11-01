@@ -3,10 +3,10 @@ package cn.qj.core.consts;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 /**
- * 系统常量类
+ * 系统常量
  * 
- * @author Qiu Jian
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public class SysConst {
 	private SysConst() {
@@ -20,6 +20,5 @@ public class SysConst {
 	public static final String URL_LOGIN_INFO_LOGIN = "/loginInfo/login";
 	public static final String URL_LOGIN_INFO_LOGOUT = "/loginInfo/logout";
 	public static final String URL_LOGIN_INFO_AJAX = "/loginInfo/ajax";
-
 
 }

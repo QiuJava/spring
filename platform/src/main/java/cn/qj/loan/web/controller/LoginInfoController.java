@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.qj.core.pojo.vo.AjaxResult;
+import cn.qj.core.common.AjaxResult;
 import cn.qj.core.service.LoginInfoService;
 import cn.qj.core.util.StringUtil;
 

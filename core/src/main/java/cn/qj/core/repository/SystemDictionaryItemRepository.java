@@ -11,7 +11,7 @@ import cn.qj.core.entity.SystemDictionaryItem;
  * 系统字典明细相关持久化
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface SystemDictionaryItemRepository
 		extends JpaRepository<SystemDictionaryItem, Long>, JpaSpecificationExecutor<SystemDictionaryItem> {

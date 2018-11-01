@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import cn.qj.core.entity.LoginInfo;
 
 /**
- * 用户登录
+ * 登录信息服务
  * 
- * @author Qiu jian
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface LoginInfoService extends UserDetailsService {
 

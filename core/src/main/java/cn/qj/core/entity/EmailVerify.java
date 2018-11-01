@@ -10,20 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import cn.qj.core.util.HttpServletContext;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
- * 绑定邮箱的验证相关内容
+ * 邮箱验证
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
-@Setter
-@Getter
-@ToString
+@Data
 @NoArgsConstructor
 @Entity
 public class EmailVerify implements Serializable {

@@ -4,17 +4,15 @@ import org.springframework.util.StringUtils;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * 线下充值查询对象
+ * 充值条件
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Setter
 @Getter
-@ToString
 public class RechargeQo extends BaseConditionQo {
 	private static final long serialVersionUID = 1L;
 	private Long applierId;
@@ -25,4 +23,12 @@ public class RechargeQo extends BaseConditionQo {
 	public String getTradeCode() {
 		return StringUtils.hasLength(tradeCode) ? tradeCode : null;
 	}
+
+	@Override
+	public String toString() {
+		return "RechargeQo [applierId=" + applierId + ", bankInfoId=" + bankInfoId + ", tradeCode=" + tradeCode
+				+ ", state=" + state + ", beginDate=" + beginDate + ", endDate=" + endDate + ", currentPage="
+				+ currentPage + ", pageSize=" + pageSize + "]";
+	}
+
 }

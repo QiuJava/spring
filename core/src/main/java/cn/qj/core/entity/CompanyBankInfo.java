@@ -12,19 +12,15 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
- * 公司银行账号信息
+ * 公司银行卡信息
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
-@Setter
-@Getter
-@ToString
+@Data
 @Entity
 public class CompanyBankInfo implements Serializable {
 	private static final long serialVersionUID = 1L;

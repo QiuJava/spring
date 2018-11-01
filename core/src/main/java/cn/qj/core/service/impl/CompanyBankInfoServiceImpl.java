@@ -8,9 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.CompanyBankInfo;
 import cn.qj.core.pojo.qo.CompanyBankInfoQo;
-import cn.qj.core.pojo.vo.PageResult;
 import cn.qj.core.repository.CompanyBankInfoRepository;
 import cn.qj.core.service.CompanyBankInfoService;
 

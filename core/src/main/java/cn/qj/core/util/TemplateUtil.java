@@ -19,10 +19,10 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 
 /**
- * freemaker 代码生成工具
+ * 模板工具
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 public class TemplateUtil {
 	private TemplateUtil() {
@@ -30,9 +30,9 @@ public class TemplateUtil {
 
 	private static Logger logger = LoggerFactory.getLogger(TemplateUtil.class);
 
-	private static String templatePath = "C:/Users/Administrator/git/spring/spring-core/src/main/resources/java_template/";
-	private static String daoPath = "C:/Users/Administrator/git/spring/spring-core/src/main/java/cn/pay/core/dao/";
-	private static String servicePath = "C:/Users/Administrator/git/spring/spring-core/src/main/java/cn/pay/core/service/";
+	private static String templatePath = "C:/Users/Administrator/git/spring/core/src/main/resources/java_template/";
+	private static String daoPath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/dao/";
+	private static String servicePath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/service/";
 
 	public static void createJavaFile(Class<?> clz) throws TemplateNotFoundException, MalformedTemplateNameException,
 			ParseException, IOException, TemplateException {
@@ -82,5 +82,5 @@ public class TemplateUtil {
 			logger.error(e.getMessage());
 		}
 	}
-	
+
 }

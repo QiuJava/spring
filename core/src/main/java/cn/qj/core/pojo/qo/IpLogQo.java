@@ -4,10 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 登录日志查询对象
+ * Ip日志条件
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Setter
 @Getter

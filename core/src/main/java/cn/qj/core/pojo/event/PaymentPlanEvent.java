@@ -8,8 +8,8 @@ import lombok.Getter;
 /**
  * 收款成功事件
  * 
- * @author Qiu Jian
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Getter
 public class PaymentPlanEvent extends ApplicationEvent {

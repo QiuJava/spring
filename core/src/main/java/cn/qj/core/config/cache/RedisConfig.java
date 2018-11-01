@@ -22,18 +22,15 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * Redis配置类
+ * Redis配置
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
-	/**
-	 * 注入Spring自动配好的Redis连接工厂
-	 */
 	@Autowired
 	private RedisConnectionFactory redisConnectionFactory;
 

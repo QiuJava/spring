@@ -24,7 +24,7 @@ public class Order implements Serializable {
 
 	public static final int IN_TRADING = 0;
 	public static final int SUCCESS_TRADING = 1;
-	public static final int Fail_TRADING = 2;
+	public static final int FAIL_TRADING = 2;
 
 	public static final int TRANS_TYPE_WECHAT = 0;
 	public static final int TRANS_TYPE_ALIPAY = 1;

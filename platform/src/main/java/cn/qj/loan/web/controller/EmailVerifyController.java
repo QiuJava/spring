@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.pojo.vo.AjaxResult;
+import cn.qj.core.common.AjaxResult;
 import cn.qj.core.service.EmailVerifyService;
 
 /**

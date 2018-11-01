@@ -3,10 +3,10 @@ package cn.qj.core.service;
 import cn.qj.core.entity.UserBankInfo;
 
 /**
- * 用户银行卡信息
+ * 用户银行卡信息服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface UserBankInfoService {
 

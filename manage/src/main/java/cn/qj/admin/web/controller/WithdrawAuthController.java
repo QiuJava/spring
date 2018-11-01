@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.qj.core.common.AjaxResult;
 import cn.qj.core.pojo.qo.WithdrawQo;
-import cn.qj.core.pojo.vo.AjaxResult;
 import cn.qj.core.service.WithdrawServcie;
 
 /**

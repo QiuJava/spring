@@ -12,10 +12,10 @@ import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.pojo.vo.VerifyCode;
 
 /**
- * HttpSession 工具类
+ * Servlet上下文
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 public class HttpServletContext {
 	private HttpServletContext() {

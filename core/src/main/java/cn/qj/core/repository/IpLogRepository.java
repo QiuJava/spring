@@ -12,7 +12,7 @@ import cn.qj.core.entity.IpLog;
  * 登录日志持久化相关
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface IpLogRepository extends JpaRepository<IpLog, Long>, JpaSpecificationExecutor<IpLog> {
 

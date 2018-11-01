@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.qj.core.common.AjaxResult;
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.entity.Borrow;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.pojo.dto.BidDto;
-import cn.qj.core.pojo.vo.AjaxResult;
 import cn.qj.core.service.AccountService;
 import cn.qj.core.service.BorrowService;
 import cn.qj.core.service.UserInfoService;

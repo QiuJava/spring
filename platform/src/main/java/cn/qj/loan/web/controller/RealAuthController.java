@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.qj.core.common.AjaxResult;
 import cn.qj.core.entity.RealAuth;
 import cn.qj.core.entity.UserInfo;
-import cn.qj.core.pojo.vo.AjaxResult;
 import cn.qj.core.service.RealAuthService;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.HttpServletContext;

@@ -2,18 +2,21 @@ package cn.qj.core.pojo.qo;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * 查询平台账户信息查询对象
+ * 平台账户条件
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Getter
 @Setter
-@ToString
 public class CompanyBankInfoQo extends PageConditionQo {
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public String toString() {
+		return "CompanyBankInfoQo [currentPage=" + currentPage + ", pageSize=" + pageSize + "]";
+	}
 
 }

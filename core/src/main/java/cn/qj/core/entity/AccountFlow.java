@@ -9,9 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 账户流水
@@ -19,9 +17,7 @@ import lombok.ToString;
  * @author Qiujian
  * @date 2018/10/30
  */
-@Setter
-@Getter
-@ToString
+@Data
 @Entity
 public class AccountFlow implements Serializable {
 	private static final long serialVersionUID = 1L;

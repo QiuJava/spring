@@ -1,10 +1,10 @@
 package cn.qj.core.util;
 
 /**
- * 用户认证信息状态工具 记录用户在平台使用系统中所有的状态。
+ * 业务状态工具
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 public class BidStateUtil {
 	private BidStateUtil() {

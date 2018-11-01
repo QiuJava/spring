@@ -6,17 +6,15 @@ import org.springframework.data.domain.Sort.Direction;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * 借款查询对象
+ * 借款查询
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Setter
 @Getter
-@ToString
 public class BorrowQo extends PageConditionQo {
 	private static final long serialVersionUID = 1L;
 	/** 根据借款状态来进行查询 */
@@ -25,4 +23,11 @@ public class BorrowQo extends PageConditionQo {
 	private List<Integer> status;
 	private String orderBy;
 	private Direction orderType = Direction.DESC;
+
+	@Override
+	public String toString() {
+		return "BorrowQo [borrowState=" + borrowState + ", status=" + status + ", orderBy=" + orderBy + ", orderType="
+				+ orderType + ", currentPage=" + currentPage + ", pageSize=" + pageSize + "]";
+	}
+
 }

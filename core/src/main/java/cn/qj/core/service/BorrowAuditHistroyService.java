@@ -7,8 +7,8 @@ import cn.qj.core.entity.BorrowAuditHistroy;
 /**
  * 借款审核历史服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface BorrowAuditHistroyService {
 

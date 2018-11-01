@@ -19,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.UserBankInfo;
@@ -26,7 +27,6 @@ import cn.qj.core.entity.UserInfo;
 import cn.qj.core.entity.Withdraw;
 import cn.qj.core.pojo.event.WithdrawEvent;
 import cn.qj.core.pojo.qo.WithdrawQo;
-import cn.qj.core.pojo.vo.PageResult;
 import cn.qj.core.repository.WithdrawRepository;
 import cn.qj.core.service.AccountFlowService;
 import cn.qj.core.service.AccountService;

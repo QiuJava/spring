@@ -17,9 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.SystemTimedTask;
 import cn.qj.core.pojo.qo.SystemTimedTaskQo;
-import cn.qj.core.pojo.vo.PageResult;
 import cn.qj.core.service.SystemTimedTaskService;
 
 /**

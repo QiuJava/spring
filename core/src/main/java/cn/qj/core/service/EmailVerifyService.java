@@ -3,8 +3,8 @@ package cn.qj.core.service;
 /**
  * 邮箱验证服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface EmailVerifyService {
 

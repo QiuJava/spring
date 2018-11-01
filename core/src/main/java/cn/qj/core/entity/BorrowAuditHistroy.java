@@ -17,7 +17,7 @@ import lombok.ToString;
  * 借款审核历史
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Getter
 @Setter

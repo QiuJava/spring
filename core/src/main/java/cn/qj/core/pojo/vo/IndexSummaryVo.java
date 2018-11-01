@@ -4,20 +4,16 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
- * 首页借款统计数据
+ * 首页统计
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
-@Setter
-@Getter
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class IndexSummaryVo implements Serializable {

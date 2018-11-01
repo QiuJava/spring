@@ -3,7 +3,7 @@ package cn.qj.core.common;
 import lombok.Getter;
 
 /**
- * 逻辑异常
+ * 系统逻辑异常
  * 
  * @author Qiujian
  * @date 2018/10/30

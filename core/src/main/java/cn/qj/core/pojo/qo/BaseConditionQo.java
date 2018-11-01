@@ -9,16 +9,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 基础条件查询对象
+ * 基础条件
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Getter
 @Setter
 public class BaseConditionQo extends PageConditionQo {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected Integer state = -1;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	protected Date beginDate;

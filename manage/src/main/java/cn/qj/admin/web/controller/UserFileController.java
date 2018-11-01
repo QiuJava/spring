@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.UserFile;
 import cn.qj.core.pojo.qo.UserFileQo;
-import cn.qj.core.pojo.vo.AjaxResult;
-import cn.qj.core.pojo.vo.PageResult;
 import cn.qj.core.service.UserFileService;
 
 /**

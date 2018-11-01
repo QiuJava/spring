@@ -8,10 +8,10 @@ import cn.qj.core.entity.UserFile;
 import cn.qj.core.pojo.qo.UserFileQo;
 
 /**
- * 用户风控材料
+ * 用户材料服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface UserFileService {
 

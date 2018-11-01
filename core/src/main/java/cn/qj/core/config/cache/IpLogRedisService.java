@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 import cn.qj.core.entity.IpLog;
 
 /**
- * 用户登录历史Redis服务
+ * 登录历史缓存服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Service
 public class IpLogRedisService extends AbstractRedisService<IpLog> {

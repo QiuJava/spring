@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import cn.qj.core.pojo.vo.AjaxResult;
-
 /**
  * 系统异常处理
  * 
@@ -27,7 +25,7 @@ public class ExceptionHandlerController {
 	@ExceptionHandler(Exception.class)
 	public AjaxResult handlerException(Exception e) {
 		logger.error("系统异常", e);
-		return new AjaxResult(false, "系统异常", 500);
+		return new AjaxResult(false, "系统异常", 400);
 	}
 
 }

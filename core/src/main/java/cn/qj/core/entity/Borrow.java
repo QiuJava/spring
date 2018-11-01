@@ -19,19 +19,15 @@ import javax.persistence.Version;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.qj.core.consts.BidConst;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 借款
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 public class Borrow implements Serializable {
 	private static final long serialVersionUID = 1L;

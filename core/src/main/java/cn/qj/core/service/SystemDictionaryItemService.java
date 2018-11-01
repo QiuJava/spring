@@ -2,15 +2,15 @@ package cn.qj.core.service;
 
 import java.util.List;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.SystemDictionaryItem;
 import cn.qj.core.pojo.qo.SystemDictionaryItemQo;
-import cn.qj.core.pojo.vo.PageResult;
 
 /**
- * 系统字典明细
+ * 系统字典明细服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface SystemDictionaryItemService {
 

@@ -18,10 +18,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 用户风控材料
+ * 用户材料
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Getter
 @Setter

@@ -13,19 +13,15 @@ import javax.persistence.ManyToOne;
 
 import com.alibaba.fastjson.JSONObject;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
- * 字典明细
+ * 系统字典明细
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
-@Setter
-@Getter
-@ToString
+@Data
 @Entity
 public class SystemDictionaryItem implements Serializable {
 	private static final long serialVersionUID = 1L;

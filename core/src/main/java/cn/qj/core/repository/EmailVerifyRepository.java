@@ -8,7 +8,7 @@ import cn.qj.core.entity.EmailVerify;
  * 邮箱校验信息持久化相关
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface EmailVerifyRepository extends JpaRepository<EmailVerify, Long> {
 

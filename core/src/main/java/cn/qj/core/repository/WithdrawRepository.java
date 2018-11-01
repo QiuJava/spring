@@ -9,7 +9,7 @@ import cn.qj.core.entity.Withdraw;
  * 提现持久化
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface WithdrawRepository extends JpaRepository<Withdraw, Long>, JpaSpecificationExecutor<Withdraw> {
 

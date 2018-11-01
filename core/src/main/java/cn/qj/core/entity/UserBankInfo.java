@@ -7,19 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 用户银行卡信息
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
-@Setter
-@Getter
-@ToString
+@Data
 @Entity
 public class UserBankInfo implements Serializable {
 	private static final long serialVersionUID = 1L;

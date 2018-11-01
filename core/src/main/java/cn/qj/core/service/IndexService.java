@@ -3,10 +3,10 @@ package cn.qj.core.service;
 import cn.qj.core.pojo.vo.IndexSummaryVo;
 
 /**
- * 首页借款信息服务
+ * 首页信息服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface IndexService {
 	/**

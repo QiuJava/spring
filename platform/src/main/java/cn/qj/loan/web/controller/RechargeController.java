@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.qj.core.common.AjaxResult;
 import cn.qj.core.entity.Recharge;
 import cn.qj.core.pojo.qo.RechargeQo;
-import cn.qj.core.pojo.vo.AjaxResult;
 import cn.qj.core.service.CompanyBankInfoService;
 import cn.qj.core.service.RechargeService;
 import cn.qj.core.util.HttpServletContext;

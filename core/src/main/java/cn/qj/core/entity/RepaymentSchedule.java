@@ -12,19 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 还款计划
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
-@Setter
-@Getter
-@ToString
+@Data
 @Entity
 public class RepaymentSchedule implements Serializable {
 	private static final long serialVersionUID = 1L;

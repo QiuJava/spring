@@ -6,10 +6,10 @@ import java.math.RoundingMode;
 import cn.qj.core.consts.BidConst;
 
 /**
- * 金额格式化工具类
+ * 数字格式化工具
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 public class DecimalFormatUtil {
 	private DecimalFormatUtil() {

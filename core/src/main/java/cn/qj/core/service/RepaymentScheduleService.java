@@ -1,14 +1,14 @@
 package cn.qj.core.service;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.RepaymentSchedule;
 import cn.qj.core.pojo.qo.RepaymentScheduleQo;
-import cn.qj.core.pojo.vo.PageResult;
 
 /**
- * 还款计划
+ * 还款计划服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface RepaymentScheduleService {
 

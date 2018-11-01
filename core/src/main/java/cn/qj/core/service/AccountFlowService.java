@@ -11,10 +11,10 @@ import cn.qj.core.entity.RepaymentSchedule;
 import cn.qj.core.entity.Withdraw;
 
 /**
- * 账户流水服务
+ * 账户流水
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface AccountFlowService {
 

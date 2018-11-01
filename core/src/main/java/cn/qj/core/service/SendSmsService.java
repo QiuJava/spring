@@ -10,8 +10,8 @@ import cn.qj.core.entity.Withdraw;
 /**
  * 发送短信服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface SendSmsService {
 

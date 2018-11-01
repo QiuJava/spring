@@ -10,9 +10,7 @@ import javax.persistence.Version;
 
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.consts.SysConst;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 账户
@@ -20,9 +18,7 @@ import lombok.ToString;
  * @author Qiujian
  * @date 2018/10/30
  */
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;

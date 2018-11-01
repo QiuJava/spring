@@ -10,19 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 收款计划
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
-@Setter
-@Getter
-@ToString
+@Data
 @Entity
 public class PaymentPlan implements Serializable {
 	private static final long serialVersionUID = 1L;

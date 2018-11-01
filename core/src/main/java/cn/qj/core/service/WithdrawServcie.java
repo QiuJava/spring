@@ -2,14 +2,14 @@ package cn.qj.core.service;
 
 import java.math.BigDecimal;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.pojo.qo.WithdrawQo;
-import cn.qj.core.pojo.vo.PageResult;
 
 /**
  * 提现服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface WithdrawServcie {
 

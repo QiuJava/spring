@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.qj.admin.config.security.AdminLoginFailureHandler;
+import cn.qj.core.common.AjaxResult;
 import cn.qj.core.consts.SysConst;
-import cn.qj.core.pojo.vo.AjaxResult;
 import cn.qj.core.util.StringUtil;
 
 /**

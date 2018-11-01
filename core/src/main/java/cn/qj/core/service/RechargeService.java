@@ -1,14 +1,14 @@
 package cn.qj.core.service;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.Recharge;
 import cn.qj.core.pojo.qo.RechargeQo;
-import cn.qj.core.pojo.vo.PageResult;
 
 /**
- * 线下充值服务
+ * 充值服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface RechargeService {
 

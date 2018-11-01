@@ -9,7 +9,7 @@ import cn.qj.core.entity.SystemTimedTask;
  * 系统定时任务持久化
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 public interface SystemTimedTaskRepository
 		extends JpaRepository<SystemTimedTask, Long>, JpaSpecificationExecutor<SystemTimedTask> {

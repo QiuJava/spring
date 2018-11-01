@@ -11,9 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 投标
@@ -21,9 +19,7 @@ import lombok.ToString;
  * @author Qiujian
  * @date 2018/10/30
  */
-@Setter
-@Getter
-@ToString
+@Data
 @Entity
 public class Bid implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -6,10 +6,10 @@ import java.util.Date;
 import org.apache.commons.lang.time.DateUtils;
 
 /**
- * 系统日期工具
+ * 日期工具
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 public class DateUtil {
 	private DateUtil() {
@@ -17,7 +17,7 @@ public class DateUtil {
 
 	public static final long LOCK_TIME = 1000 * 60;
 	public static final long ONE_HOUR = 1000 * 60 * 60;
-	
+
 	public static final String DATE_TIME_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
 	/**

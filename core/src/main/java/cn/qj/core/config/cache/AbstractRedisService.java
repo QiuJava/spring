@@ -12,29 +12,23 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * Redis服务基础类
+ * RedisHash服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  * @param <T>
  */
 @Service
 public abstract class AbstractRedisService<T> {
 
-	/**
-	 * 实例化 RedisTemplate对象
-	 */
 	@Autowired
 	protected RedisTemplate<String, Object> redisTemplate;
 
-	/**
-	 * 定义Hash结构 操作存储实体对象
-	 */
 	@Resource
 	protected HashOperations<String, String, T> hashOperations;
 
 	/**
-	 * 定义Hash表的redis key名称
+	 * 定义Hash表 key名称
 	 *
 	 * @return
 	 */

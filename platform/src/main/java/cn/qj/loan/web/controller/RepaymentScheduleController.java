@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.qj.core.common.AjaxResult;
 import cn.qj.core.pojo.qo.RepaymentScheduleQo;
-import cn.qj.core.pojo.vo.AjaxResult;
 import cn.qj.core.service.AccountService;
 import cn.qj.core.service.RepaymentScheduleService;
 import cn.qj.core.util.HttpServletContext;

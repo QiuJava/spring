@@ -5,8 +5,8 @@ import cn.qj.core.entity.Bid;
 /**
  * 投标服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface BidService {
 

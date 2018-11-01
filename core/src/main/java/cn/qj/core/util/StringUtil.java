@@ -1,10 +1,10 @@
 package cn.qj.core.util;
 
 /**
- * 系统字符串操作工具类
+ * 字符串工具
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public class StringUtil {
 	private StringUtil() {

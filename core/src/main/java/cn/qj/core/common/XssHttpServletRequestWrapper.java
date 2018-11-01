@@ -24,6 +24,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		int len = values.length;
 		String[] newValues = new String[len];
 		for (int i = 0; i < len; i++) {
+			// 清掉参数中的Xss
 			newValues[i] = cleanXSS(values[i]);
 		}
 		return newValues;
@@ -56,4 +57,5 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		str = str.replaceAll("script", "");
 		return str.trim();
 	}
+
 }

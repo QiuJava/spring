@@ -20,9 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.pojo.qo.IpLogQo;
-import cn.qj.core.pojo.vo.PageResult;
 import cn.qj.core.repository.IpLogRepository;
 import cn.qj.core.service.IpLogService;
 

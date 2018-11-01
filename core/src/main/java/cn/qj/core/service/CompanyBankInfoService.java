@@ -2,15 +2,15 @@ package cn.qj.core.service;
 
 import java.util.List;
 
+import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.CompanyBankInfo;
 import cn.qj.core.pojo.qo.CompanyBankInfoQo;
-import cn.qj.core.pojo.vo.PageResult;
 
 /**
- * 公司银行账号信息服务
+ * 公司银行卡服务
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public interface CompanyBankInfoService {
 

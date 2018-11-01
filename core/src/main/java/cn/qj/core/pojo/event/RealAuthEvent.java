@@ -8,8 +8,8 @@ import lombok.Getter;
 /**
  * 实名认证成功事件
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Getter
 public class RealAuthEvent extends ApplicationEvent {

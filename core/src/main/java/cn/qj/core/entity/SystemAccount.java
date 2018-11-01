@@ -10,19 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 系统账户
  * 
- * @author QIujian
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
-@Setter
-@Getter
-@ToString
+@Data
 @Entity
 public class SystemAccount implements Serializable {
 	private static final long serialVersionUID = 1L;

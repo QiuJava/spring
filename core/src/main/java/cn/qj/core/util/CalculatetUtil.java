@@ -6,10 +6,10 @@ import java.math.RoundingMode;
 import cn.qj.core.consts.BidConst;
 
 /**
- * 系统计算器
+ * 计算工具
  * 
- * @author Stef
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 public class CalculatetUtil {
 	private CalculatetUtil() {
