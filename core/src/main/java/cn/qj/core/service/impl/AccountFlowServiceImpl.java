@@ -23,7 +23,7 @@ import cn.qj.core.service.AccountFlowService;
  * 账户流水服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 @Transactional(rollbackFor = { RuntimeException.class })

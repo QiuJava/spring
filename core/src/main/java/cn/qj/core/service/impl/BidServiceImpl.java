@@ -12,7 +12,7 @@ import cn.qj.core.service.BidService;
  * 投标服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class BidServiceImpl implements BidService {

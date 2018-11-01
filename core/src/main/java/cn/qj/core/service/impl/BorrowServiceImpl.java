@@ -62,7 +62,7 @@ import cn.qj.core.util.StringUtil;
  * 借款服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class BorrowServiceImpl implements BorrowService {

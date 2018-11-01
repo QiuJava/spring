@@ -16,7 +16,7 @@ import cn.qj.core.util.HttpServletContext;
  * 用户银行卡信息服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class UserBankInfoServiceImpl implements UserBankInfoService {

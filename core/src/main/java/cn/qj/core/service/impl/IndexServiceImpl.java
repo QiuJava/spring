@@ -19,7 +19,7 @@ import cn.qj.core.service.IndexService;
  * 首页服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class IndexServiceImpl implements IndexService {

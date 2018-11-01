@@ -21,7 +21,7 @@ import cn.qj.core.util.HttpServletContext;
  * 邮箱校验服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 @Transactional(rollbackFor = { RuntimeException.class })

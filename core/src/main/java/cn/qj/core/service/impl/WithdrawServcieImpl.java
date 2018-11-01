@@ -40,7 +40,7 @@ import cn.qj.core.util.HttpServletContext;
  * 提现服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class WithdrawServcieImpl implements WithdrawServcie {

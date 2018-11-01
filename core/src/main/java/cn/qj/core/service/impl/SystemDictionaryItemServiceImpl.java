@@ -30,7 +30,7 @@ import cn.qj.core.service.SystemDictionaryService;
  * 系统字典明细服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class SystemDictionaryItemServiceImpl implements SystemDictionaryItemService {

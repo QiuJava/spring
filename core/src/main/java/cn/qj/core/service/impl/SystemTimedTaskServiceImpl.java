@@ -26,7 +26,7 @@ import cn.qj.core.service.SystemTimedTaskService;
  * 系统定时任务服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class SystemTimedTaskServiceImpl implements SystemTimedTaskService {

@@ -12,7 +12,7 @@ import cn.qj.core.service.PaymentPlanService;
  * 还款计划服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class PaymentPlanServiceImpl implements PaymentPlanService {

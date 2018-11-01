@@ -18,7 +18,7 @@ import cn.qj.core.service.CompanyBankInfoService;
  * 公司银行账号信息服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 public class CompanyBankInfoServiceImpl implements CompanyBankInfoService {

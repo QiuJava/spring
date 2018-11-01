@@ -27,7 +27,7 @@ import lombok.Setter;
  * 发送短信服务实现
  * 
  * @author Qiujian
- * @date 2018年8月10日
+ * @date 2018/8/10
  */
 @Service
 @ConfigurationProperties(prefix = "service.sms")
