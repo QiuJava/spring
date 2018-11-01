@@ -12,10 +12,10 @@ import cn.qj.core.consts.SysConst;
 import cn.qj.core.util.StringUtil;
 
 /**
- * 登录信息控制
+ * 登录信息控制器
  * 
  * @author Qiujian
- * @date 2018年8月13日
+ * @date 2018/8/13
  */
 @Controller
 public class LoginInfoController {

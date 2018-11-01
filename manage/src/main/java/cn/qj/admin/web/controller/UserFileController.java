@@ -15,10 +15,10 @@ import cn.qj.core.pojo.qo.UserFileQo;
 import cn.qj.core.service.UserFileService;
 
 /**
- * 用户材料审核相关
+ * 用户材料控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class UserFileController {

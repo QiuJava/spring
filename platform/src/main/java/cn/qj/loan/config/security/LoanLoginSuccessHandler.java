@@ -20,10 +20,10 @@ import cn.qj.core.service.IpLogService;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 自定义登录成功处理 记录登录日志
+ * 登录成功处理
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Component
 public class LoanLoginSuccessHandler implements AuthenticationSuccessHandler {

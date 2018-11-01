@@ -24,10 +24,10 @@ import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 网站首页相关
+ * 首页控制器
  * 
- * @author Administrator
- * 
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class HomeController {
@@ -68,7 +68,7 @@ public class HomeController {
 		model.addAttribute("summaryVO", service.getIndexSummaryVO());
 		return MAIN;
 	}
-	
+
 	/**
 	 * 借款信息
 	 * 

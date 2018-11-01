@@ -15,10 +15,10 @@ import cn.qj.core.pojo.qo.RealAuthQo;
 import cn.qj.core.service.RealAuthService;
 
 /**
- * 实名认证相关
+ * 实名认证控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 @RequestMapping("/realAuth")

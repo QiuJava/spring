@@ -18,7 +18,7 @@ import cn.qj.core.entity.LoginInfo;
  * 权限校验管理
  * 
  * @author Qiujian
- * @date 2018年8月13日
+ * @date 2018/8/13
  */
 @Component
 public class AdminAccessDecisionManager implements AccessDecisionManager {

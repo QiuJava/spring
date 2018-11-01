@@ -15,7 +15,7 @@ import cn.qj.core.service.SystemDictionaryService;
  * 系统字典明细控制器
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Controller
 @RequestMapping("/systemDictionaryItem")

@@ -23,10 +23,10 @@ import cn.qj.core.pojo.qo.SystemTimedTaskQo;
 import cn.qj.core.service.SystemTimedTaskService;
 
 /**
- * 系统定时作业相关
+ * 系统定时任务控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 @RequestMapping("/systemTimedTask")

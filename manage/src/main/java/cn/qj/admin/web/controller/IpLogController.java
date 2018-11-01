@@ -9,9 +9,10 @@ import cn.qj.core.pojo.qo.IpLogQo;
 import cn.qj.core.service.IpLogService;
 
 /**
- * 登录日志相关器
+ * Ip日志控制器
  * 
  * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class IpLogController {

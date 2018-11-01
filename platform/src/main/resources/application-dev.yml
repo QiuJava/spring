@@ -38,6 +38,7 @@ service:
     host: 127.0.0.1
     url: http://127.0.0.1:8081/email/verify.do
 
+# 微信支付相关配置
 pay:
   wechat:
     appId: wx0281f93238d254a1
@@ -49,6 +50,6 @@ upload:
   path:
     img: E:/www/upload/
 logging:
-  file: E:/logs/loan/logback_spring.log
+  file: E:/logs/platform/logback_spring.log
   level:
     root: info

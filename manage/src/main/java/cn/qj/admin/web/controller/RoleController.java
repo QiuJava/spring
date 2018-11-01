@@ -9,10 +9,10 @@ import cn.qj.core.entity.Role;
 import cn.qj.core.service.RoleService;
 
 /**
- * 权限相关控制器
+ * 角色控制器
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Controller
 public class RoleController {

@@ -14,10 +14,10 @@ import cn.qj.core.service.RepaymentScheduleService;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 还款相关
+ * 还款计划控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class RepaymentScheduleController {

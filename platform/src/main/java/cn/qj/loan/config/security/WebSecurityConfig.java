@@ -11,10 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import cn.qj.core.consts.SysConst;
 
 /**
- * SpringSecurity 配置类
+ * 安全配置
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

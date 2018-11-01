@@ -23,7 +23,7 @@ import cn.qj.core.util.HttpServletContext;
  * 登录成功处理
  * 
  * @author Qiujian
- * @date 2018年8月13日
+ * @date 2018/8/13
  */
 @Component
 public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {

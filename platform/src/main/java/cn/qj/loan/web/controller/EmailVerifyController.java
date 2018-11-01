@@ -10,7 +10,7 @@ import cn.qj.core.common.AjaxResult;
 import cn.qj.core.service.EmailVerifyService;
 
 /**
- * 邮箱校验
+ * 邮箱校验控制器
  * 
  * @author Qiujian
  * @date 2018/10/31

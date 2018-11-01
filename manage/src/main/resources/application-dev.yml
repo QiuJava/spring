@@ -1,7 +1,9 @@
+# 服务器配置
 server:
   port: 8087
   session:
     timeout: 1800
+    
 spring:
   datasource:
     druid:
@@ -25,7 +27,8 @@ spring:
     - classpath:/META-INF/resources/
     - classpath:/static/
     - classpath:/public/
+    
 logging:
-  file: E:/logs/admin/logback_spring.log
+  file: E:/logs/manage/logback_spring.log
   level:
     root: info

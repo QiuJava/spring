@@ -11,10 +11,10 @@ import cn.qj.core.pojo.qo.SystemDictionaryQo;
 import cn.qj.core.service.SystemDictionaryService;
 
 /**
- * 系统字典相关
+ * 系统字典控制器
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Controller
 @RequestMapping("/systemDictionary")
@@ -32,10 +32,10 @@ public class SystemDictionaryController {
 	@RequestMapping("/update")
 	public String update(SystemDictionary systemDictionary) {
 		Long id = systemDictionary.getId();
-		
+
 		if (id != null) {
 			service.updateSystemDictionary(systemDictionary);
-		}else {
+		} else {
 			service.saveSystemDictionary(systemDictionary);
 		}
 		return "redirect:/systemDictionary/pageQuery";

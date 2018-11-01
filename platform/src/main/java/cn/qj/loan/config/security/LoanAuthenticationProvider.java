@@ -20,7 +20,7 @@ import cn.qj.core.util.DateUtil;
  * 自定义认证
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Component
 public class LoanAuthenticationProvider implements AuthenticationProvider {

@@ -14,10 +14,10 @@ import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 个人中心相关
+ * 个人中心控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class PersonalCenterController {

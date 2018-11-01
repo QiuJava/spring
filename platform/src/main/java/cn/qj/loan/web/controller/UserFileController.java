@@ -21,10 +21,10 @@ import cn.qj.core.util.UploadUtil;
 import lombok.Setter;
 
 /**
- * 用户风控材料相关
+ * 用户材料控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 @ConfigurationProperties(prefix = "upload.path")

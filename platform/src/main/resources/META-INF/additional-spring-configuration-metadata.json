@@ -48,5 +48,20 @@
     "name": "pay.wechat.app-id",
     "type": "java.lang.String",
     "description": "A description for 'pay.wechat.app-id'"
+  },
+  {
+    "name": "pay.wechat.mch-id",
+    "type": "java.lang.String",
+    "description": "A description for 'pay.wechat.mch-id'"
+  },
+  {
+    "name": "pay.wechat.mch-key",
+    "type": "java.lang.String",
+    "description": "A description for 'pay.wechat.mch-key'"
+  },
+  {
+    "name": "pay.wechat.notify-url",
+    "type": "java.lang.String",
+    "description": "A description for 'pay.wechat.notify-url'"
   }
 ]}

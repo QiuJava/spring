@@ -8,10 +8,10 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * 借款网页应用相关配置
+ * 借款平台配置启动
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @SpringBootApplication
 @EnableRedisHttpSession

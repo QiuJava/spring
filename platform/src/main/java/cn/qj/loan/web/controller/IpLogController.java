@@ -10,10 +10,10 @@ import cn.qj.core.service.IpLogService;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 用户登录日志相关
+ * IP日志控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 @RequestMapping("/ipLog")

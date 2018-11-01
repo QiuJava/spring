@@ -12,7 +12,7 @@ import cn.qj.core.consts.SysConst;
  * 安全配置
  * 
  * @author Qiujian
- * @date 2018年8月13日
+ * @date 2018/8/13
  */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

@@ -9,7 +9,7 @@ import cn.qj.core.entity.Order;
 import cn.qj.core.service.OrderService;
 
 /**
- * 微信支付
+ * 订单控制器
  * 
  * @author Qiujian
  * @date 2018/10/30

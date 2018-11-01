@@ -11,10 +11,10 @@ import cn.qj.core.pojo.qo.CompanyBankInfoQo;
 import cn.qj.core.service.CompanyBankInfoService;
 
 /**
- * 平台账户相关
+ * 公司银行卡信息控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class CompanyBankInfoController {

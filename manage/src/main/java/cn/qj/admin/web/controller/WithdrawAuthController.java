@@ -12,10 +12,10 @@ import cn.qj.core.pojo.qo.WithdrawQo;
 import cn.qj.core.service.WithdrawServcie;
 
 /**
- * 提现审核相关
+ * 提现审核控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class WithdrawAuthController {

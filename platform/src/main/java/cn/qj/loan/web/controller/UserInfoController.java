@@ -14,10 +14,10 @@ import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 用户相关信息相关
+ * 用户信息控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 @RequestMapping("/userInfo")

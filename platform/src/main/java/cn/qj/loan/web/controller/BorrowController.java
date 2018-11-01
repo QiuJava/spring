@@ -24,10 +24,10 @@ import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 借款相关
+ * 借款控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class BorrowController {

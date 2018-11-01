@@ -11,10 +11,10 @@ import cn.qj.core.service.LoginInfoService;
 import cn.qj.core.util.StringUtil;
 
 /**
- * 登陆相关
+ * 登录信息控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @RestController
 @RequestMapping("/loginInfo")

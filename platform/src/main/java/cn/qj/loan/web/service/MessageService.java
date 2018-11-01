@@ -11,10 +11,10 @@ import cn.qj.core.service.BorrowService;
 import cn.qj.loan.config.mq.ActivemqConfig;
 
 /**
- * 消息队列相关服务
+ * 消息服务
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Service
 public class MessageService {

@@ -21,10 +21,10 @@ import cn.qj.core.service.IpLogService;
 import cn.qj.core.service.LoginInfoService;
 
 /**
- * 登录失败
+ * 登录失败处理
  * 
  * @author Qiujian
- * @date 2018年8月13日
+ * @date 2018/8/13
  */
 @Component
 public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
@@ -43,7 +43,7 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			String username = request.getParameter(SysConst.USERNAME_STR);
 			LoginInfo loginInfo = loginInfoService.getLoginInfoByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
-			
+
 			Integer loserCount = loginInfo.getLoserCount();
 			Date currentDate = new Date();
 			// 达到次数进行锁定
@@ -61,7 +61,7 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			ipLog.setLoginState(IpLog.LOGIN_FAIL);
 			ipLog.setGmtCreate(currentDate);
 			ipLog.setGmtModified(currentDate);
-			
+
 			loginInfoService.saveLoginInfo(loginInfo);
 			ipLogService.saveIpLog(ipLog);
 		}

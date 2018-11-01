@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  * 安全过滤拦截
  * 
  * @author Qiujian
- * @date 2018年8月13日
+ * @date 2018/8/13
  */
 @Component
 public class AdminFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {

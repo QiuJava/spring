@@ -26,7 +26,7 @@ import cn.qj.core.service.RoleService;
  * 初始化权限
  * 
  * @author Qiujian
- * @date 2018年8月13日
+ * @date 2018/8/13
  */
 @Component
 public class AdminInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {

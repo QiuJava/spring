@@ -12,16 +12,16 @@ import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 绑定银行卡相关
+ * 用户银行卡控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class UserBankInfoController {
 	public static final String BANKINFO = "bankInfo";
 	public static final String BANKINFO_RESULT = "bankInfo_result";
-	
+
 	@Autowired
 	private UserInfoService userInfoService;
 	@Autowired

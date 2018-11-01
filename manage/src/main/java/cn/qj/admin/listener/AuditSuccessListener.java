@@ -13,7 +13,7 @@ import cn.qj.core.pojo.event.WithdrawEvent;
 import cn.qj.core.service.SendSmsService;
 
 /**
- * 相关业务审核成功事件监听
+ * 审核成功事件监听
  * 
  * @author Qiujian
  * @date 2018/10/30

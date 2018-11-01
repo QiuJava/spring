@@ -20,10 +20,10 @@ import cn.qj.core.util.UploadUtil;
 import lombok.Setter;
 
 /**
- * 实名认证相关
+ * 实名认证控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 @ConfigurationProperties(prefix = "upload.path")

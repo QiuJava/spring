@@ -16,10 +16,10 @@ import cn.qj.core.service.WithdrawServcie;
 import cn.qj.core.util.HttpServletContext;
 
 /**
- * 提现相关
+ * 提现控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class WithdrawController {

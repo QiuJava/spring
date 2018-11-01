@@ -21,10 +21,10 @@ import cn.qj.core.service.IpLogService;
 import cn.qj.core.service.LoginInfoService;
 
 /**
- * 自定义登录失败处理
+ * 登录失败处理
  * 
  * @author Qiujian
- *
+ * @date 2018/11/01
  */
 @Component
 public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
@@ -41,7 +41,7 @@ public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
 			String username = request.getParameter(SysConst.USERNAME_STR);
 			LoginInfo loginInfo = loginInfoService.getLoginInfoByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
-			
+
 			Date currentDate = new Date();
 			if (loginInfo.getLoserCount().equals(LoginInfo.LOSER_MAX_COUNT)) {
 				// 达到次数进行锁定

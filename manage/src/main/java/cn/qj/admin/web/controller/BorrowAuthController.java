@@ -21,10 +21,10 @@ import cn.qj.core.service.UserFileService;
 import cn.qj.core.service.UserInfoService;
 
 /**
- * 借款审核相关
+ * 借款审核控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 @RequestMapping("/borrow")

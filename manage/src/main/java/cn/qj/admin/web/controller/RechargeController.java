@@ -13,10 +13,10 @@ import cn.qj.core.service.CompanyBankInfoService;
 import cn.qj.core.service.RechargeService;
 
 /**
- * 充值相关
+ * 充值控制器
  * 
- * @author Administrator
- *
+ * @author Qiujian
+ * @date 2018/11/01
  */
 @Controller
 public class RechargeController {
