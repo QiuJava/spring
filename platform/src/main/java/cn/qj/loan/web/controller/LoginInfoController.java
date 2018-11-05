@@ -37,10 +37,10 @@ public class LoginInfoController {
 		return new AjaxResult(true, "注册成功", 200);
 	}
 
-	@RequestMapping("/isExist")
+	@RequestMapping("/isNotExist")
 	public AjaxResult isExist(String username) {
 		AjaxResult result = new AjaxResult();
-		result.setSuccess(service.isExistByUsername(username));
+		result.setSuccess(service.isNotExistByUsername(username));
 		return result;
 	}
 

@@ -75,8 +75,8 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	}
 
 	@Override
-	public Boolean isExistByUsername(String username) {
-		return repository.countByUsername(username) > 0;
+	public Boolean isNotExistByUsername(String username) {
+		return repository.countByUsername(username) == 0;
 	}
 
 	@Override

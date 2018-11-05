@@ -36,7 +36,7 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @param username
 	 * @return
 	 */
-	Boolean isExistByUsername(String username);
+	Boolean isNotExistByUsername(String username);
 
 	/**
 	 * 获取用户id获取登录信息

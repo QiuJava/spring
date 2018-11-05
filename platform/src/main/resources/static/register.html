@@ -29,7 +29,7 @@
 	jQuery.validator.addMethod("checkLoginName",function(value,element){
 		var ret=false;
 		$.ajax({
-			url:"/loginInfo/isExist",
+			url:"/loginInfo/isNotExist",
 			dataType:"json",
 			type:"post",
 			// 使用同步提交的方式
