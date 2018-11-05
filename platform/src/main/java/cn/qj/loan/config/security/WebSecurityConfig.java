@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/borrow.html", "/index.html", "/register.html").permitAll()
 				// 登录登录url可以完全访问
 				.antMatchers(SysConst.URL_LOGIN_INFO_AJAX, "/home", "/borrow/home", "/sms/send", "/email/verify",
-						"/borrow_info", "/invest/list", "/loginInfo/register", "/loginInfo/isExist")
+						"/borrow_info", "/invest/list", "/loginInfo/register", "/loginInfo/isNotExist")
 				.permitAll()
 				// .antMatchers("/index").access("hasRole('后台首页')")
 				// 所有以 结尾的请求需要登录之后才能访问

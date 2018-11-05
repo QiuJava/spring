@@ -57,13 +57,15 @@ public class Account implements Serializable {
 
 	public String getVerifyKey() {
 		String rawPass = this.usableAmount.hashCode() + "" + this.freezedAmount.hashCode();
-		return SysConst.MD5.encodePassword(rawPass, null);
+		String encodePassword = SysConst.MD5.encodePassword(rawPass, null);
+		return encodePassword;
 	}
 
 	@Transient
 	public boolean checkVerifyKey() {
 		String rawPass = this.usableAmount.hashCode() + "" + this.freezedAmount.hashCode();
-		return SysConst.MD5.encodePassword(rawPass, null).equals(this.verifyKey);
+		String encodePassword = SysConst.MD5.encodePassword(rawPass, null);
+		return encodePassword.equals(this.verifyKey);
 	}
 
 	@Transient

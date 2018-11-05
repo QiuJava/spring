@@ -38,7 +38,7 @@ public class LoginInfoController {
 	}
 
 	@RequestMapping("/isNotExist")
-	public AjaxResult isExist(String username) {
+	public AjaxResult isNotExist(String username) {
 		AjaxResult result = new AjaxResult();
 		result.setSuccess(service.isNotExistByUsername(username));
 		return result;
