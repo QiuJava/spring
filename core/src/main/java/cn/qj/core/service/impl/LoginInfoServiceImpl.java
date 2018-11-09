@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 
 import cn.qj.core.common.LogicException;
 import cn.qj.core.consts.BidConst;
+import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.entity.Role;
@@ -65,6 +66,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 			account.setId(info.getId());
 			account.setBorrowLimit(BidConst.INIT_BORROW_LIMIT);
 			account.setRemainBorrowLimit(BidConst.INIT_BORROW_LIMIT);
+			account.setTradePassword(SysConst.INIT_PASSWORD);
 			accountService.save(account);
 
 			UserInfo userInfo = new UserInfo();

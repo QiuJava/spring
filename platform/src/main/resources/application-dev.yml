@@ -44,7 +44,8 @@ pay:
     appId: wx0281f93238d254a1
     mchId: 1484366432
     mchKey: nl089QrXQXZotDrhN25v8jddlz2MRPZh
-    notifyUrl: http://hmh.qhylpay.com/pay/wxPayCallBack
+    notifyUrl: http://192.168.3.31/onlineRecharge/wechatPayCallBack
+    wechatPayUrl: https://api.mch.weixin.qq.com/pay/unifiedorder
     
 upload:
   path:

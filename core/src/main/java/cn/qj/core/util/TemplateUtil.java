@@ -31,7 +31,7 @@ public class TemplateUtil {
 	private static Logger logger = LoggerFactory.getLogger(TemplateUtil.class);
 
 	private static String templatePath = "C:/Users/Administrator/git/spring/core/src/main/resources/java_template/";
-	private static String daoPath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/dao/";
+	private static String daoPath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/repository/";
 	private static String servicePath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/service/";
 
 	public static void createJavaFile(Class<?> clz) throws TemplateNotFoundException, MalformedTemplateNameException,

@@ -18,5 +18,21 @@ public class AjaxResult {
 	private boolean success;
 	private String msg;
 	private Integer errCode;
+	
+	public static AjaxResult success(String msg) {
+		AjaxResult result = new AjaxResult();
+		result.setSuccess(true);
+		result.setMsg(msg);
+		result.setErrCode(200);
+		return result;
+	}
+	
+	public static AjaxResult err(String msg) {
+		AjaxResult result = new AjaxResult();
+		result.setSuccess(true);
+		result.setMsg(msg);
+		result.setErrCode(400);
+		return result;
+	}
 
 }
