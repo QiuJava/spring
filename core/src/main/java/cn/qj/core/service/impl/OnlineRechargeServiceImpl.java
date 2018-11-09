@@ -13,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.thoughtworks.xstream.XStream;
-
 import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.OnlineRecharge;
 import cn.qj.core.repository.OnlineRechargeRepository;
@@ -77,6 +75,7 @@ public class OnlineRechargeServiceImpl implements OnlineRechargeService {
 
 	}
 
+	
 	private void wechatPay(Long id, BigDecimal amount) {
 		// 单位分
 		amount = amount.multiply(new BigDecimal("100"));
