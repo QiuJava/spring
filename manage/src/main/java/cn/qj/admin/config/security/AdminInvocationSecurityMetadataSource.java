@@ -54,7 +54,6 @@ public class AdminInvocationSecurityMetadataSource implements FilterInvocationSe
 			log.info("系统安全信息加载成功!!");
 		}
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
-
 		AntPathRequestMatcher matcher = null;
 		Set<String> urls = collectionConfigAttrMap.keySet();
 		for (String url : urls) {

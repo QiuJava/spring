@@ -48,11 +48,12 @@ public class OnlineRechargeController {
 			Integer status = recharge.getTransStatus();
 			if (OnlineRecharge.TRANS_SUCCESS == status) {
 				return AjaxResult.err("该笔充值已支付，请勿重复支付");
+				
 			}
 		}
 		recharge.setChannel(channel);
 		// 进行充值
-		service.pay(recharge);
+		// service.pay(recharge);
 
 		return AjaxResult.success("支付成功");
 	}
