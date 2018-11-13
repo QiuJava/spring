@@ -6,13 +6,15 @@ spring:
     expose-session-attributes: true
     suffix: .ftl
     settings:
-      number_format: 0.#
+      number_format: 0.##
       date_format: yyyy-MM-dd
       datetime_format: yyyy-MM-dd HH:mm:ss
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+      
+  jackson:
+    # 中国时区
+    time-zone: GMT+8
+    # 格式化
+    date-format: yyyy-MM-dd HH:mm:ss
 
 # 关闭Spring安全基本认证    
 security:

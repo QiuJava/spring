@@ -42,7 +42,7 @@ public class LoginInfo implements UserDetails {
 	private String password;
 	private Integer userType;
 	private Boolean isAdmin;
-	private Integer status;
+	private Integer status = NORMAL;
 	private Integer loserCount;
 	private Date lockTime;
 	/** 创建时间 */
