@@ -20,11 +20,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import cn.qj.core.common.DataSourceKey;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.pojo.qo.IpLogQo;
 import cn.qj.core.repository.IpLogRepository;
 import cn.qj.core.service.IpLogService;
+import cn.qj.core.util.DataSourceUtil;
 
 /**
  * 登录日志服务实现
@@ -40,6 +42,7 @@ public class IpLogServiceImpl implements IpLogService {
 
 	@Override
 	@Cacheable("pageQueryIpLog")
+	@DataSourceKey(DataSourceUtil.READ_ONE_KEY)
 	public PageResult pageQueryIpLog(IpLogQo qo) {
 		Page<IpLog> page = repository.findAll(new Specification<IpLog>() {
 			@Override
