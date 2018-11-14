@@ -2,13 +2,15 @@ server:
   port: 8088
   session:
     timeout: 1800
+    
 spring:
   datasource:
     druid:
       driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/loan?characterEncoding=utf8&useSSL=false
       username: root
-      password: root123
+      password: 123456
+      
   redis:
     database: 0
     host: 127.0.0.1
@@ -20,12 +22,14 @@ spring:
       max-active: 8
       max-wait: 1
     timeout: 5000
+    
   resources:
     static-locations:
     - classpath:/META-INF/resources/
     - classpath:/static/
     - classpath:/public/
     - http://127.0.0.1:8082/
+    
 service:
   sms:
     password: 123456
@@ -37,6 +41,31 @@ service:
     password: 123456
     host: 127.0.0.1
     url: http://127.0.0.1:8081/email/verify.do
+    
+datasource:
+  write:
+    druid:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.3.31:3306/loan?characterEncoding=utf8&useSSL=false
+      username: root
+      password: 123456
+      
+  read:
+    druid:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.3.31:3307/loan?characterEncoding=utf8&useSSL=false
+      username: root
+      password: 123456
+
+statViewServlet:
+  initParameter:
+    # 白名单Ip
+    allow: 192.168.3.31
+    # 黑名单Ip
+    deny: 192.168.1.100
+    loginUsername: admin
+    loginPassword: 123
+    resetEnable: false    
 
 # 微信支付相关配置
 pay:
@@ -50,6 +79,7 @@ pay:
 upload:
   path:
     img: E:/www/upload/
+    
 logging:
   file: E:/logs/platform/logback_spring.log
   level:
