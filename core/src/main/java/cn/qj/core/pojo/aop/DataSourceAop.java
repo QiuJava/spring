@@ -25,6 +25,7 @@ public class DataSourceAop {
 		// DataSourceKey dataSourceKey =
 		// signature.getMethod().getAnnotation(DataSourceKey.class);
 		DataSourceUtil.setDataSourceKey(dataSourceKey.value());
+
 		Object proceed = null;
 		try {
 			proceed = joinPoint.proceed();

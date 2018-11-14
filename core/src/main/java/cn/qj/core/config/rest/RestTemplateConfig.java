@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Rest请求配置
+ * Rest模板配置
  * 
  * @author Qiujian
  * @date 2018/09/29

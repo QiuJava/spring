@@ -6,7 +6,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.stereotype.Service;
 
 /**
- * 权限配置缓存
+ * 权限配置属性缓存服务
  * 
  * @author Qiujian
  * @date 2018/11/01

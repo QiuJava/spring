@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 系统异常处理
+ * 异常处理控制器
  * 
  * @author Qiujian
  * @date 2018/10/30
@@ -18,7 +18,6 @@ public class ExceptionHandlerController {
 
 	@ExceptionHandler(LogicException.class)
 	public AjaxResult handlerLogicException(LogicException e) {
-		logger.error("逻辑异常", e);
 		return new AjaxResult(false, e.getMessage(), e.getErrCode());
 	}
 

@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * RedisHash服务
+ * RedisHash服务抽象类
  * 
  * @author Qiujian
  * @date 2018/11/01
@@ -35,12 +35,10 @@ public abstract class AbstractRedisService<T> {
 	protected abstract String getRedisKey();
 
 	/**
-	 * 在相应Hash表中添加键值对 key:Object(doamin)
+	 * 在相应Hash表中添加键值对 key:Object
 	 *
 	 * @param key
-	 *            key
 	 * @param doamin
-	 *            对象
 	 * @param expire
 	 *            过期时间(单位:秒),传入 -1 时表示不设置过期时间
 	 */
@@ -55,7 +53,6 @@ public abstract class AbstractRedisService<T> {
 	 * 在相应Hash表中删除key名称的元素
 	 *
 	 * @param key
-	 *            传入key的名称
 	 */
 	public void remove(String key) {
 		hashOperations.delete(getRedisKey(), key);
@@ -65,7 +62,6 @@ public abstract class AbstractRedisService<T> {
 	 * 在相应Hash表中查询key名称的元素
 	 *
 	 * @param key
-	 *            查询的key
 	 * @return
 	 */
 	public T get(String key) {
@@ -94,7 +90,6 @@ public abstract class AbstractRedisService<T> {
 	 * 判断在相应Hash表下key是否存在
 	 *
 	 * @param key
-	 *            传入key的名称
 	 * @return
 	 */
 	public boolean isKeyExists(String key) {
@@ -117,4 +112,5 @@ public abstract class AbstractRedisService<T> {
 		Set<String> set = hashOperations.keys(getRedisKey());
 		set.stream().forEach(key -> hashOperations.delete(getRedisKey(), key));
 	}
+
 }

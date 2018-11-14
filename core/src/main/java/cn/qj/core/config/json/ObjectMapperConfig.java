@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cn.qj.core.util.DateUtil;
 
 /**
- * 使用Jackson作为系统的json处理工具
+ * json处理配置
  * 
  * @author Qiujian
  * @date 2018/09/27
