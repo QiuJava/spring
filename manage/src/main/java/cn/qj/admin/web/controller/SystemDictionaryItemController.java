@@ -34,7 +34,7 @@ public class SystemDictionaryItemController {
 
 	@RequestMapping("/saveOrupdate")
 	public String saveOrupdate(SystemDictionaryItem item) {
-		// service.update(item);
+		service.update(item);
 		return "redirect:/systemDictionaryItem/pageQuery?systemDictionaryId=";
 	}
 

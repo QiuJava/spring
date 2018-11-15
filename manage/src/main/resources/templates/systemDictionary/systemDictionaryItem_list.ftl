@@ -167,7 +167,7 @@
 							        <h4 class="modal-title">编辑/增加</h4>
 							      </div>
 							      <div class="modal-body">
-							       	  <form id="editForm" class="form-horizontal" method="post" action="/systemDictionaryItem/update" style="margin: -3px 118px">
+							       	  <form id="editForm" class="form-horizontal" method="post" action="/systemDictionaryItem/saveOrupdate" style="margin: -3px 118px">
 										    <input type="hidden" id="itemId"  name="id" value="" />
 									    	<input id="itemSystemDictionaryId" type="hidden" name="systemDictionary.id" value="" />
 										   	<div class="form-group">

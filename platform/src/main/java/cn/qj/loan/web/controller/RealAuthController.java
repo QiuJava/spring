@@ -60,7 +60,7 @@ public class RealAuthController {
 	}
 
 	/**
-	 * 处理文件上传
+	 * 身份证正反面上传
 	 */
 	@RequestMapping("/realAuth/upload")
 	@ResponseBody
@@ -77,7 +77,7 @@ public class RealAuthController {
 	/**
 	 * 保存实名认证信息
 	 */
-	@RequestMapping("realAuth/save")
+	@RequestMapping("/realAuth/save")
 	@ResponseBody
 	public AjaxResult save(RealAuth realAuth) {
 		service.save(realAuth);
