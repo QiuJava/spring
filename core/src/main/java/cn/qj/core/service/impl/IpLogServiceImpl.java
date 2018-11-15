@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,6 +28,7 @@ import cn.qj.core.common.DataSourceKey;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.pojo.qo.IpLogQo;
+import cn.qj.core.pojo.vo.IpLogVo;
 import cn.qj.core.repository.IpLogRepository;
 import cn.qj.core.service.IpLogService;
 import cn.qj.core.util.DataSourceUtil;
@@ -39,6 +44,9 @@ public class IpLogServiceImpl implements IpLogService {
 
 	@Autowired
 	private IpLogRepository repository;
+
+	@Autowired
+	private EntityManager entityManager;
 
 	@Override
 	@Cacheable("pageQueryIpLog")
@@ -99,6 +107,22 @@ public class IpLogServiceImpl implements IpLogService {
 	@Override
 	public IpLog updateIpLog(IpLog ipLog) {
 		return repository.saveAndFlush(ipLog);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IpLogVo> listAllVo() {
+		Query nativeQuery = entityManager.createNativeQuery(
+				"SELECT i_l.ip AS ip,i_l.username AS username FROM ip_log i_l WHERE i_l.username=?1 ");
+		nativeQuery.setParameter(1, "独孤求败");
+		org.hibernate.Query query = nativeQuery.unwrap(SQLQuery.class)
+				.setResultTransformer(Transformers.aliasToBean(IpLogVo.class));
+		return query.list();
+	}
+
+	@Override
+	public Page<IpLog> page() {
+		return repository.findAll(new PageRequest(1, 10, Direction.DESC, "loginTime"));
 	}
 
 }
