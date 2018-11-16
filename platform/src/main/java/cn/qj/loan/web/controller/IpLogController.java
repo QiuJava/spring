@@ -42,7 +42,7 @@ public class IpLogController {
 		result.setData(service.listAllVo());
 		return result;
 	}
-	
+
 	@RequestMapping("/page")
 	@ResponseBody
 	public ApiResult page() {
@@ -52,4 +52,15 @@ public class IpLogController {
 		result.setData(service.page());
 		return result;
 	}
+
+	@RequestMapping("/count")
+	@ResponseBody
+	public ApiResult count() {
+		ApiResult result = new ApiResult();
+		result.setMsg("统计成功");
+		result.setStatus(200);
+		result.setData(service.count());
+		return result;
+	}
+
 }

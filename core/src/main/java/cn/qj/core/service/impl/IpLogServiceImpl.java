@@ -28,6 +28,7 @@ import cn.qj.core.common.DataSourceKey;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.pojo.qo.IpLogQo;
+import cn.qj.core.pojo.vo.IpLogCountVo;
 import cn.qj.core.pojo.vo.IpLogVo;
 import cn.qj.core.repository.IpLogRepository;
 import cn.qj.core.service.IpLogService;
@@ -112,8 +113,8 @@ public class IpLogServiceImpl implements IpLogService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<IpLogVo> listAllVo() {
-		Query nativeQuery = entityManager.createNativeQuery(
-				"SELECT i_l.ip AS ip,i_l.username AS username FROM ip_log i_l WHERE i_l.username=?1 ");
+		String querySql = "SELECT i_l.ip AS ip,i_l.username AS username FROM ip_log i_l WHERE i_l.username=?1 ";
+		Query nativeQuery = entityManager.createNativeQuery(querySql);
 		nativeQuery.setParameter(1, "独孤求败");
 		org.hibernate.Query query = nativeQuery.unwrap(SQLQuery.class)
 				.setResultTransformer(Transformers.aliasToBean(IpLogVo.class));
@@ -123,6 +124,16 @@ public class IpLogServiceImpl implements IpLogService {
 	@Override
 	public Page<IpLog> page() {
 		return repository.findAll(new PageRequest(1, 10, Direction.DESC, "loginTime"));
+	}
+
+	@Override
+	public IpLogCountVo count() {
+		String querySql = "SELECT count(i_l.id) AS count,i_l.username AS username FROM ip_log i_l WHERE i_l.username = ?1 GROUP BY username";
+		Query nativeQuery = entityManager.createNativeQuery(querySql);
+		nativeQuery.setParameter(1, "独孤求败111");
+		org.hibernate.Query query = nativeQuery.unwrap(SQLQuery.class)
+				.setResultTransformer(Transformers.aliasToBean(IpLogCountVo.class));
+		return (IpLogCountVo) query.uniqueResult();
 	}
 
 }

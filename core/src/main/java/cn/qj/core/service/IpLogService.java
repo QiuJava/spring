@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.pojo.qo.IpLogQo;
+import cn.qj.core.pojo.vo.IpLogCountVo;
 import cn.qj.core.pojo.vo.IpLogVo;
 
 /**
@@ -62,5 +63,12 @@ public interface IpLogService {
 	 * @return
 	 */
 	Page<IpLog> page();
+
+	/**
+	 * 统计登录日志
+	 * 
+	 * @return
+	 */
+	IpLogCountVo count();
 
 }
