@@ -56,9 +56,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		str = str.replaceAll("eval\\((.*)\\)", "");
 		str = str.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 		str = str.replaceAll("script", "");
-		str = str.replaceAll("[*]", "[" + "*]");
-		str = str.replaceAll("[+]", "[" + "+]");
-		str = str.replaceAll("[?]", "[" + "?]");
 
 		// 清除SQL
 		String[] strs = str.split(" ");

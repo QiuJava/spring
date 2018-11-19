@@ -30,21 +30,11 @@ public class ActivemqConfig {
 		return new ActiveMQQueue(IP_LOG_QUEUE);
 	}
 
-	/**
-	 * 投标队列
-	 * 
-	 * @return
-	 */
 	@Bean
 	public Queue bidQueue() {
 		return new ActiveMQQueue(BID_QUEUE);
 	}
 
-	/**
-	 * 登录队列
-	 * 
-	 * @return
-	 */
 	@Bean
 	public Queue loginQueue() {
 		return new ActiveMQQueue(LOGIN_QUEUE);

@@ -62,6 +62,11 @@ public class LoanAuthenticationProvider implements AuthenticationProvider {
 			throw new BadCredentialsException("密码错误");
 		}
 
+		// 登录失败次数清0
+		loginInfo.setLoserCount(0);
+		loginInfo.setGmtModified(new Date());
+		loginInfoService.saveLoginInfo(loginInfo);
+
 		return new UsernamePasswordAuthenticationToken(loginInfo, password, loginInfo.getAuthorities());
 	}
 
