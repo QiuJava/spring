@@ -9,16 +9,14 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Xss过滤器
+ * Xss过滤
  * 
  * @author Qiujian
  * @date 2018/10/30
  */
-@WebFilter(filterName = "xssFilter", urlPatterns = "/*")
 public class XssFilter implements Filter {
 
 	FilterConfig filterConfig = null;

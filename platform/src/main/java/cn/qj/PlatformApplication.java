@@ -22,7 +22,7 @@ public class PlatformApplication extends WebMvcConfigurerAdapter {
 	public void configurePathMatch(PathMatchConfigurer configurer) {
 		configurer.setUseSuffixPatternMatch(false).setUseTrailingSlashMatch(false);
 	}
-
+	
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(PlatformApplication.class, args);
 	}

@@ -43,7 +43,7 @@ public class LoginInfo implements UserDetails {
 	private Integer userType;
 	private Boolean isAdmin;
 	private Integer status = NORMAL;
-	private Integer loserCount;
+	private Integer loserCount = 0;
 	private Date lockTime;
 	/** 创建时间 */
 	private Date gmtCreate;
