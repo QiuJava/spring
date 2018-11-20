@@ -60,9 +60,9 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		// 清除SQL
 		String[] strs = str.split(" ");
 		String badStr = "drop|select|declare|information_schema.columns|use|insert|"
-				+ "update|mid|delete|like'|truncate|and|by|sitename|create|from|where"
-				+ "|xp_cmdshell|table|order|--|//|or|#|%|like|'|count|column_name|+|union"
-				+ "|chr|net user|,|execute|-|master|/|group_concat|char|table_schema|;|grant|exec\r\n";
+				+ "update|mid|delete|like'|truncate|and|by|sitename|create|from|where|"
+				+ "xp_cmdshell|table|order|--|//|or|#|%|like|'|count|column_name|+|union|"
+				+ "chr|net user|,|execute|-|master|/|group_concat|char|table_schema|;|grant|exec\r\n";
 		String[] badStrs = badStr.split("\\|");
 		for (int i = 0; i < badStrs.length; i++) {
 			for (int j = 0; j < strs.length; j++) {
@@ -73,16 +73,14 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		}
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < strs.length; i++) {
-			if (i == strs.length - 1) {
-				sb.append(strs[i]);
-			} else {
-				sb.append(strs[i] + " ");
-			}
+			sb.append(strs[i]);
+			sb.append(" ");
 		}
+		sb.deleteCharAt(sb.length() - 1);
 		str = sb.toString();
 
 		str = str.trim();
 		return str;
 	}
-
+	
 }

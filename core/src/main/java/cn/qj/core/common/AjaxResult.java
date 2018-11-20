@@ -29,7 +29,7 @@ public class AjaxResult {
 	
 	public static AjaxResult err(String msg) {
 		AjaxResult result = new AjaxResult();
-		result.setSuccess(true);
+		result.setSuccess(false);
 		result.setMsg(msg);
 		result.setErrCode(400);
 		return result;
