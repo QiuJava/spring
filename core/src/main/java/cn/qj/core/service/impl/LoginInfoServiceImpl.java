@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 
 import cn.qj.core.common.LogicException;
 import cn.qj.core.consts.BidConst;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.LoginInfo;
@@ -58,7 +59,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 			LoginInfo loginInfo = new LoginInfo();
 			loginInfo.setUsername(username);
 			loginInfo.setPassword(new BCryptPasswordEncoder().encode(password));
-			loginInfo.setStatus(LoginInfo.NORMAL);
+			loginInfo.setStatus(StatusConst.NORMAL);
 			LoginInfo info = repository.saveAndFlush(loginInfo);
 
 			// 注册账号时创建额外的对象 账户 和 用户信息

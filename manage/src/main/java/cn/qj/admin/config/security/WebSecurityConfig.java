@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import cn.qj.core.consts.SysConst;
+import cn.qj.core.consts.RequestConst;
 
 /**
  * 安全配置
@@ -38,9 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登录配置
 				.formLogin()
 				// 登录页面
-				.loginPage(SysConst.URL_LOGIN_HTML)
+				.loginPage(RequestConst.LOGIN_HTML)
 				// 登录处理URL
-				.loginProcessingUrl(SysConst.URL_LOGIN_INFO_LOGIN).permitAll()
+				.loginProcessingUrl(RequestConst.LOGIN_INFO_LOGIN).permitAll()
 				// 登录成功处理
 				.successHandler(successHandler)
 				// 登录失败处理
@@ -50,9 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登出配置
 				.logout()
 				// 登出的URL
-				.logoutUrl(SysConst.URL_LOGIN_INFO_LOGOUT).permitAll()
+				.logoutUrl(RequestConst.LOGIN_INFO_LOGOUT).permitAll()
 				// 登出成功的URL
-				.logoutSuccessUrl(SysConst.URL_LOGIN_HTML)
+				.logoutSuccessUrl(RequestConst.LOGIN_HTML)
 				// 登出时让HttpSession无效
 				.invalidateHttpSession(true);
 	}

@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.qj.core.common.LogicException;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.consts.BidConst;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.Bid;
 import cn.qj.core.entity.Borrow;
@@ -219,8 +220,8 @@ public class BorrowServiceImpl implements BorrowService {
 		Borrow borrow = get(id);
 		if (borrow != null) {
 			// 创建一个审核历史对象 每一次审核对应一条历史记录
-			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.PUSH_AUDIT);
-			if (state.equals(BorrowAuditHistroy.AUTH_PASS)) {
+			createBorrowAuditHistroy(state, borrow, remark, StatusConst.PUSH_AUDIT);
+			if (state.equals(StatusConst.AUTH_PASS)) {
 				// 修改状态进入招标中
 				borrow.setState(BidConst.BORROW_STATE_BIDDING);
 				// 修改发布时间
@@ -261,8 +262,8 @@ public class BorrowServiceImpl implements BorrowService {
 		// 必须是满标一审状态
 		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_APPROVE_PENDING_1) {
 			// 创建审核历史记录
-			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.FULL_AUDIT1);
-			if (state.equals(BorrowAuditHistroy.AUTH_PASS)) {
+			createBorrowAuditHistroy(state, borrow, remark, StatusConst.FULL_AUDIT1);
+			if (state.equals(StatusConst.AUTH_PASS)) {
 				borrow.setState(BidConst.BORROW_STATE_APPROVE_PENDING_2);
 			} else {
 				// 退标 满标一审或者满标二审拒绝
@@ -313,10 +314,10 @@ public class BorrowServiceImpl implements BorrowService {
 		Borrow borrow = get(id);
 		if (borrow != null && borrow.getState() == BidConst.BORROW_STATE_APPROVE_PENDING_2) {
 			// 创建一个借款审核历史对象
-			createBorrowAuditHistroy(state, borrow, remark, BorrowAuditHistroy.FULL_AUDIT2);
+			createBorrowAuditHistroy(state, borrow, remark, StatusConst.FULL_AUDIT2);
 
 			// 审核成功
-			if (state.equals(BorrowAuditHistroy.AUTH_PASS)) {
+			if (state.equals(StatusConst.AUTH_PASS)) {
 				// 1.针对审核人
 				// 1.1修改借款状态(还款状态)
 				borrow.setState(BidConst.BORROW_STATE_PAYING_BACK);
@@ -419,7 +420,7 @@ public class BorrowServiceImpl implements BorrowService {
 			rs.setMonthIndex(i);
 			// 设置每一期的还款时间
 			rs.setDeadline(DateUtils.addMonths(nowDate, i));
-			rs.setState(RepaymentSchedule.NORMAL);
+			rs.setState(StatusConst.NORMAL);
 			rs.setReturnType(borrow.getReturnType());
 			if (i < borrow.getMonthReturn()) {
 				// 这一期的利息

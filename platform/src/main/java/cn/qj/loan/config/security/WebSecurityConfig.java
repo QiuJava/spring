@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import cn.qj.core.consts.SysConst;
+import cn.qj.core.consts.RequestConst;
 
 /**
  * 安全配置
@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 静态资源可以完全访问
 				.antMatchers("/borrow.html", "/index.html", "/register.html").permitAll()
 				// 登录登录url可以完全访问
-				.antMatchers(SysConst.URL_LOGIN_INFO_AJAX, "/home", "/borrow/home", "/sms/send", "/email/verify",
+				.antMatchers(RequestConst.LOGIN_INFO_AJAX, "/home", "/borrow/home", "/sms/send", "/email/verify",
 						"/borrow_info", "/invest/list", "/loginInfo/register", "/loginInfo/isNotExist")
 				.permitAll()
 				// .antMatchers("/index").access("hasRole('后台首页')")
@@ -55,9 +55,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登录配置
 				.formLogin()
 				// 登录页面
-				.loginPage(SysConst.URL_LOGIN_HTML)
+				.loginPage(RequestConst.LOGIN_HTML)
 				// 登录处理URL
-				.loginProcessingUrl(SysConst.URL_LOGIN_INFO_LOGIN).permitAll()
+				.loginProcessingUrl(RequestConst.LOGIN_INFO_LOGIN).permitAll()
 				// 登录失败跳转的页面
 				// .failureForwardUrl("/login.html")
 				// 登录成功之后跳转的url
@@ -68,9 +68,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登出配置
 				.logout()
 				// 登出的URL
-				.logoutUrl(SysConst.URL_LOGIN_INFO_LOGOUT).permitAll()
+				.logoutUrl(RequestConst.LOGIN_INFO_LOGOUT).permitAll()
 				// 登出成功的URL
-				.logoutSuccessUrl(SysConst.URL_LOGIN_HTML)
+				.logoutSuccessUrl(RequestConst.LOGIN_HTML)
 				// 登出时让HttpSession无效
 				.invalidateHttpSession(true);
 

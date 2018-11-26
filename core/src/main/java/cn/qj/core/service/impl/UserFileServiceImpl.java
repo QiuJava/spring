@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.qj.core.common.LogicException;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.entity.SystemDictionaryItem;
 import cn.qj.core.entity.UserFile;
@@ -74,7 +75,7 @@ public class UserFileServiceImpl implements UserFileService {
 		userFile.setApplier(HttpServletContext.getCurrentLoginInfo());
 		userFile.setApplyTime(new Date());
 		userFile.setFile(fileName);
-		userFile.setState(UserFile.AUTH_NORMAL);
+		userFile.setState(StatusConst.AUTH_NORMAL);
 		repository.saveAndFlush(userFile);
 	}
 
@@ -125,12 +126,12 @@ public class UserFileServiceImpl implements UserFileService {
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit(Long id, Integer state, Integer score, String remark) {
 		UserFile userFile = repository.findOne(id);
-		if (userFile.getState() == UserFile.AUTH_NORMAL) {
+		if (userFile.getState() == StatusConst.AUTH_NORMAL) {
 			userFile.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			userFile.setAuditTime(new Date());
 			userFile.setRemark(remark);
 			userFile.setState(state);
-			if (state.equals(UserFile.AUTH_PASS)) {
+			if (state.equals(StatusConst.AUTH_PASS)) {
 				userFile.setScore(score);
 				UserInfo info = userInfoService.get(userFile.getApplier().getId());
 				info.setAuthScore(info.getAuthScore() + score);

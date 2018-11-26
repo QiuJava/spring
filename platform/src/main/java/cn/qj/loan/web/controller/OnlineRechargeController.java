@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.qj.core.common.BaseResult;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.OnlineRecharge;
 import cn.qj.core.service.OnlineRechargeService;
 import cn.qj.core.util.ResultUtil;
@@ -47,7 +48,7 @@ public class OnlineRechargeController {
 			return ResultUtil.err("无此笔充值");
 		} else {
 			Integer status = recharge.getTransStatus();
-			if (OnlineRecharge.TRANS_SUCCESS == status) {
+			if (StatusConst.TRANS_SUCCESS == status) {
 				return ResultUtil.err("该笔充值已支付，请勿重复支付");
 				
 			}

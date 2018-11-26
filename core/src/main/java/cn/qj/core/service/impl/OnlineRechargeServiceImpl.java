@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.OnlineRecharge;
 import cn.qj.core.repository.OnlineRechargeRepository;
@@ -51,7 +52,7 @@ public class OnlineRechargeServiceImpl implements OnlineRechargeService {
 	@Override
 	public OnlineRecharge save(OnlineRecharge onlineRecharge) {
 		onlineRecharge.setCreateTime(new Date());
-		onlineRecharge.setTransStatus(OnlineRecharge.TRANS_IN);
+		onlineRecharge.setTransStatus(StatusConst.TRANS_IN);
 		return repository.save(onlineRecharge);
 	}
 
@@ -63,7 +64,7 @@ public class OnlineRechargeServiceImpl implements OnlineRechargeService {
 	@Override
 	public void pay(OnlineRecharge recharge) {
 		// 更新充值状态为交易中
-		recharge.setTransStatus(OnlineRecharge.TRANS_IN);
+		recharge.setTransStatus(StatusConst.TRANS_IN);
 		repository.saveAndFlush(recharge);
 
 		// 根据渠道进行交易

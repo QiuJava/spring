@@ -26,10 +26,6 @@ public class OnlineRecharge implements Serializable {
 	public static final String ALIPAY_CHANNEL = "zfb";
 	public static final String UNIONPAY_FAST_CHANNEL = "kj";
 
-	public static final int TRANS_IN = 0;
-	public static final int TRANS_SUCCESS = 1;
-	public static final int TRANS_FAILURE = 2;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

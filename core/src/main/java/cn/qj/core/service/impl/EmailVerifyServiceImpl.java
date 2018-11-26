@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import cn.qj.core.common.LogicException;
+import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.EmailVerify;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.repository.EmailVerifyRepository;
@@ -37,7 +38,7 @@ public class EmailVerifyServiceImpl implements EmailVerifyService {
 		if (StringUtils.hasLength(verify)) {
 			EmailVerify emailVerify = repository.findByVerify(verify);
 			if (emailVerify != null
-					&& new Date().before(DateUtils.addDays(emailVerify.getVerifyDate(), EmailVerify.VALIDITY_DAY))) {
+					&& new Date().before(DateUtils.addDays(emailVerify.getVerifyDate(), SysConst.VALIDITY_DAY))) {
 				UserInfo userInfo = userInfoService.get(emailVerify.getUserId());
 				if (!userInfo.getIsBindEmail()) {
 					userInfo.setEmail(emailVerify.getEmail());

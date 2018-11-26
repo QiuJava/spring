@@ -19,8 +19,6 @@ import cn.qj.core.util.HttpServletContext;
  */
 @Controller
 public class UserBankInfoController {
-	public static final String BANKINFO = "bankInfo";
-	public static final String BANKINFO_RESULT = "bankInfo_result";
 
 	@Autowired
 	private UserInfoService userInfoService;
@@ -34,10 +32,10 @@ public class UserBankInfoController {
 		if (userInfo.getIsBankBind()) {
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("bankInfo", service.getByLoginInfoId(id));
-			return BANKINFO_RESULT;
+			return "bankInfo_result";
 		}
 		model.addAttribute("userInfo", userInfo);
-		return BANKINFO;
+		return "bankInfo";
 	}
 
 	@RequestMapping("/bankInfo/save")

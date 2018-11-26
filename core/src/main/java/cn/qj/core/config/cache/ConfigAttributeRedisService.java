@@ -5,6 +5,8 @@ import java.util.Collection;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.stereotype.Service;
 
+import cn.qj.core.consts.RedisKeyConst;
+
 /**
  * 权限配置属性缓存服务
  * 
@@ -14,11 +16,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConfigAttributeRedisService extends AbstractRedisService<Collection<ConfigAttribute>> {
 
-	private static final String CONFIG_ATTRIBUTE_KEY = "CONFIG_ATTRIBUTE_KEY";
-
 	@Override
 	protected String getRedisKey() {
-		return CONFIG_ATTRIBUTE_KEY;
+		return RedisKeyConst.CONFIG_ATTRIBUTE_KEY;
 	}
 
 }

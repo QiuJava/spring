@@ -12,6 +12,7 @@ import javax.persistence.Id;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.qj.core.consts.StatusConst;
 import lombok.Data;
 
 /**
@@ -24,9 +25,6 @@ import lombok.Data;
 @Entity
 public class SystemTimedTask implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	public static final int PAUSE = 1;
-	public static final int NORMAL = 0;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +44,7 @@ public class SystemTimedTask implements Serializable {
 	private Date gmtModified;
 
 	public String getStatusDisplay() {
-		return status == PAUSE ? "暂停" : "开启";
+		return status == StatusConst.PAUSE ? "暂停" : "开启";
 	}
 
 	public String getJsonString() {

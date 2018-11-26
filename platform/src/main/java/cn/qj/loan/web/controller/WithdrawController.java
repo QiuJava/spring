@@ -23,7 +23,6 @@ import cn.qj.core.util.HttpServletContext;
  */
 @Controller
 public class WithdrawController {
-	public static final String WITHDRAW_APPLY = "withdraw_apply";
 
 	@Autowired
 	private WithdrawServcie service;
@@ -41,7 +40,7 @@ public class WithdrawController {
 		model.addAttribute("bankInfo", userBankInfoService.getByLoginInfoId(id));
 		model.addAttribute("userInfo", userInfoService.get(id));
 		model.addAttribute("account", accountService.get(id));
-		return WITHDRAW_APPLY;
+		return "withdraw_apply";
 	}
 
 	@RequestMapping("/withdraw/apply")

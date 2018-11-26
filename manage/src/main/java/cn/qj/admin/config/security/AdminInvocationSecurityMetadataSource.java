@@ -31,7 +31,7 @@ import cn.qj.core.service.RoleService;
 @Component
 public class AdminInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-	private static Logger log = LoggerFactory.getLogger(AdminInvocationSecurityMetadataSource.class);
+	private static final Logger log = LoggerFactory.getLogger(AdminInvocationSecurityMetadataSource.class);
 
 	@Autowired
 	private RoleService roleService;

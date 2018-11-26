@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import cn.qj.core.consts.StatusConst;
 import lombok.Data;
 
 /**
@@ -26,12 +27,6 @@ public class RepaymentSchedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	/** 正常待还 */
-	public static final int NORMAL = 0;
-	/** 已还 */
-	public static final int PAYBACK = 1;
-	/** 逾期 */
-	public static final int OVERDUE = 2;
 
 	/** 应还时间 */
 	private Date deadline;
@@ -45,7 +40,7 @@ public class RepaymentSchedule implements Serializable {
 	private BigDecimal interest;
 	/** 第几期 */
 	private Integer monthIndex;
-	private Integer state = RepaymentSchedule.NORMAL;
+	private Integer state = StatusConst.NORMAL;
 	/** 借款类型 */
 	private Integer borrowType;
 	private Integer returnType;
@@ -69,11 +64,11 @@ public class RepaymentSchedule implements Serializable {
 	@Transient
 	public String getStateDisplay() {
 		switch (state) {
-		case NORMAL:
+		case StatusConst.NORMAL:
 			return "正常待还";
-		case PAYBACK:
+		case StatusConst.PAYBACK:
 			return "已还";
-		case OVERDUE:
+		case StatusConst.OVERDUE:
 			return "逾期";
 		default:
 			return "异常状态";

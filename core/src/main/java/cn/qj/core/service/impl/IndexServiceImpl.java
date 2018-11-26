@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import cn.qj.core.consts.BidConst;
+import cn.qj.core.consts.RedisKeyConst;
 import cn.qj.core.entity.Borrow;
 import cn.qj.core.pojo.vo.IndexSummaryVo;
 import cn.qj.core.service.BorrowService;
@@ -23,8 +24,6 @@ import cn.qj.core.service.IndexService;
  */
 @Service
 public class IndexServiceImpl implements IndexService {
-
-	private static final String INDEX_SUMMARY_VO_KEY = "INDEX_SUMMARY_VO_KEY";
 
 	@Autowired
 	private BorrowService borrowService;
@@ -46,12 +45,12 @@ public class IndexServiceImpl implements IndexService {
 		indexVO.setTotalBorrowAmount(totalBorrowAmount);
 		indexVO.setTotalBorrowUser(borrowList.size());
 		indexVO.setTotalInterestAmount(totalInterestAmount);
-		valueOperations.set(INDEX_SUMMARY_VO_KEY, indexVO);
+		valueOperations.set(RedisKeyConst.INDEX_SUMMARY_VO_KEY, indexVO);
 	}
 
 	@Override
 	public IndexSummaryVo getIndexSummaryVO() {
-		return valueOperations.get(INDEX_SUMMARY_VO_KEY);
+		return valueOperations.get(RedisKeyConst.INDEX_SUMMARY_VO_KEY);
 	}
 
 }

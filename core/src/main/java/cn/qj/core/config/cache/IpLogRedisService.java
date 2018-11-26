@@ -2,6 +2,7 @@ package cn.qj.core.config.cache;
 
 import org.springframework.stereotype.Service;
 
+import cn.qj.core.consts.RedisKeyConst;
 import cn.qj.core.entity.IpLog;
 
 /**
@@ -13,11 +14,9 @@ import cn.qj.core.entity.IpLog;
 @Service
 public class IpLogRedisService extends AbstractRedisService<IpLog> {
 
-	private static final String IP_LOG_KEY = "IP_LOG_KEY";
-
 	@Override
 	protected String getRedisKey() {
-		return IP_LOG_KEY;
+		return RedisKeyConst.IP_LOG_KEY;
 	}
 
 }

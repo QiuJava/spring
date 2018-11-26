@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.qj.core.common.PageResult;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.CompanyBankInfo;
 import cn.qj.core.entity.LoginInfo;
@@ -63,7 +64,7 @@ public class RechargeServiceImpl implements RechargeService {
 	public void apply(Recharge recharge) {
 		recharge.setApplier(HttpServletContext.getCurrentLoginInfo());
 		recharge.setApplyTime(new Date());
-		recharge.setState(Recharge.AUTH_NORMAL);
+		recharge.setState(StatusConst.AUTH_NORMAL);
 		repository.saveAndFlush(recharge);
 	}
 
@@ -107,12 +108,12 @@ public class RechargeServiceImpl implements RechargeService {
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void audit(Long id, String remark, Integer state) {
 		Recharge recharge = repository.findOne(id);
-		if (recharge != null && recharge.getState() == Recharge.AUTH_NORMAL) {
+		if (recharge != null && recharge.getState() == StatusConst.AUTH_NORMAL) {
 			recharge.setAuditor(HttpServletContext.getCurrentLoginInfo());
 			recharge.setAuditTime(new Date());
 			recharge.setState(state);
 			recharge.setRemark(remark);
-			if (state.equals(Recharge.AUTH_PASS)) {
+			if (state.equals(StatusConst.AUTH_PASS)) {
 				// 拿到用户账户对象
 				Account account = accountService.get(recharge.getApplier().getId());
 				// 修改账户可用余额

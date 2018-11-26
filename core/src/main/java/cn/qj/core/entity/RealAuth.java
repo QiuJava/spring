@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.qj.core.consts.StatusConst;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,8 +30,6 @@ import lombok.ToString;
 @Entity
 public class RealAuth extends AuthComponent {
 	private static final long serialVersionUID = 1L;
-	public static final int MAN = 0;
-	public static final int WOMAN = 1;
 
 	private Long id;
 	private String realname;
@@ -99,7 +98,7 @@ public class RealAuth extends AuthComponent {
 
 	@Transient
 	public String getSexDisplay() {
-		return RealAuth.MAN == sex ? "男" : "女";
+		return StatusConst.MAN == sex ? "男" : "女";
 	}
 
 }

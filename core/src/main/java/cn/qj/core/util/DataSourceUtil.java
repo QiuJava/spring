@@ -13,7 +13,7 @@ public class DataSourceUtil {
 	public static final String READ_ONE_KEY = "read_one";
 	public static final String WRITE_KEY = "write";
 
-	private static ThreadLocal<String> dataSourceKeyThreadLocal = new ThreadLocal<>();
+	private static final ThreadLocal<String> dataSourceKeyThreadLocal = new ThreadLocal<>();
 
 	public static void setDataSourceKey(String key) {
 		dataSourceKeyThreadLocal.set(key);

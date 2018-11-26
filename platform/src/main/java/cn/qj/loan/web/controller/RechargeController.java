@@ -22,8 +22,6 @@ import cn.qj.core.util.HttpServletContext;
  */
 @Controller
 public class RechargeController {
-	public static final String RECHARGE = "recharge";
-	public static final String RECHARGE_LIST = "recharge_list";
 
 	@Autowired
 	private CompanyBankInfoService companyBankInfoService;
@@ -37,7 +35,7 @@ public class RechargeController {
 	public String recharge(Model model) {
 		// 查询出所有的银行账户信息
 		model.addAttribute("banks", companyBankInfoService.list());
-		return RECHARGE;
+		return "recharge";
 	}
 
 	/**
@@ -59,6 +57,6 @@ public class RechargeController {
 	public String list(@ModelAttribute("qo") RechargeQo qo, Model model) {
 		qo.setApplierId(HttpServletContext.getCurrentLoginInfo().getId());
 		model.addAttribute("pageResult", service.list(qo));
-		return RECHARGE_LIST;
+		return "recharge_list";
 	}
 }

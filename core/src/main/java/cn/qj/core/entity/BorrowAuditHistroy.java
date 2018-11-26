@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import cn.qj.core.consts.StatusConst;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,12 +26,6 @@ import lombok.ToString;
 @Entity
 public class BorrowAuditHistroy extends AuthComponent {
 	private static final long serialVersionUID = 1L;
-	/** 发标审核 */
-	public static final int PUSH_AUDIT = 0;
-	/** 满标一审 */
-	public static final int FULL_AUDIT1 = 1;
-	/** 满标二审 */
-	public static final int FULL_AUDIT2 = 2;
 
 	private Long id;
 	private int auditType;
@@ -77,11 +72,11 @@ public class BorrowAuditHistroy extends AuthComponent {
 	@Transient
 	public String getAuditTypeDisplay() {
 		switch (auditType) {
-		case PUSH_AUDIT:
+		case StatusConst.PUSH_AUDIT:
 			return "发标审核";
-		case FULL_AUDIT1:
+		case StatusConst.FULL_AUDIT1:
 			return "满标一审";
-		case FULL_AUDIT2:
+		case StatusConst.FULL_AUDIT2:
 			return "满标二审";
 		default:
 			return "异常状态";

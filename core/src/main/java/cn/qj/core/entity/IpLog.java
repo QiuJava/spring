@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import cn.qj.core.consts.StatusConst;
 import lombok.Data;
 
 /**
@@ -21,9 +22,6 @@ import lombok.Data;
 @Entity
 public class IpLog implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	public static final int LOGIN_SUCCESS = 0;
-	public static final int LOGIN_FAIL = 1;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +37,6 @@ public class IpLog implements Serializable {
 	private Date gmtModified;
 
 	public String getDisplayState() {
-		return loginState == IpLog.LOGIN_FAIL ? "登陆失败" : "登陆成功";
+		return loginState == StatusConst.LOGIN_FAIL ? "登陆失败" : "登陆成功";
 	}
 }

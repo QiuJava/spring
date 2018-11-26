@@ -31,7 +31,6 @@ import cn.qj.core.util.HttpServletContext;
  */
 @Controller
 public class BorrowController {
-	public static final String BORROW = "borrow";
 
 	@Autowired
 	private BorrowService service;
@@ -61,7 +60,7 @@ public class BorrowController {
 		model.addAttribute("userInfo", userInfoService.get(current.getId()));
 		model.addAttribute("creditBorrowScore", BidConst.BORROW_CREDIT_SCORE);
 		model.addAttribute("initBorrowLimit", BidConst.INIT_BORROW_LIMIT);
-		return BORROW;
+		return "borrow";
 	}
 
 	@RequestMapping("/borrow/info")

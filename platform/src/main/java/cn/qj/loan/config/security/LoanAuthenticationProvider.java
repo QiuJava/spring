@@ -12,6 +12,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import cn.qj.core.consts.StatusConst;
+import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.service.LoginInfoService;
 import cn.qj.core.util.DateUtil;
@@ -39,7 +41,7 @@ public class LoanAuthenticationProvider implements AuthenticationProvider {
 			long lockTimeLong = loginInfo.getLockTime().getTime();
 			// 锁定时间过了 恢复为正常状态
 			if (System.currentTimeMillis() - lockTimeLong >= DateUtil.LOCK_TIME) {
-				loginInfo.setStatus(LoginInfo.NORMAL);
+				loginInfo.setStatus(StatusConst.NORMAL);
 				loginInfo.setLoserCount(0);
 				loginInfo.setLockTime(null);
 				loginInfo.setGmtModified(new Date());
@@ -49,7 +51,7 @@ public class LoanAuthenticationProvider implements AuthenticationProvider {
 
 				StringBuilder errMsgStr = new StringBuilder();
 				errMsgStr.append("密码输错");
-				errMsgStr.append(LoginInfo.LOSER_MAX_COUNT);
+				errMsgStr.append(SysConst.LOSER_MAX_COUNT);
 				errMsgStr.append("次，请");
 				errMsgStr.append(seconds.toString());
 				errMsgStr.append("秒后再进行登录");

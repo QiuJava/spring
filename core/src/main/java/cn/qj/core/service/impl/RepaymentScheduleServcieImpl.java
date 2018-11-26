@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.qj.core.common.LogicException;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.consts.BidConst;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.Borrow;
 import cn.qj.core.entity.PaymentPlan;
@@ -111,12 +112,12 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 		// 1.判断当前用户是否处于还款中
 		// 2.判断当前用户是否是还款用户
 		// 3.判断用户的钱是否足够
-		if (rs != null && rs.getState().equals(RepaymentSchedule.NORMAL)
+		if (rs != null && rs.getState().equals(StatusConst.NORMAL)
 				&& rs.getBorrowUserId().equals(currentAccount.getId())
 				&& usableAmount.compareTo(returnTotalAmount) >= 0) {
 			// 1.还款计划改变状态
 			// 修改成已还
-			rs.setState(RepaymentSchedule.PAYBACK);
+			rs.setState(StatusConst.PAYBACK);
 			// 针对还款人
 			// 2.可用余额减少，生成还款成功流水
 			currentAccount.setUsableAmount(usableAmount.subtract(returnTotalAmount));
@@ -192,7 +193,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 			@Override
 			public Predicate toPredicate(Root<RepaymentSchedule> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> list = new ArrayList<>();
-				list.add(cb.equal(root.get("state").as(Integer.class), RepaymentSchedule.NORMAL));
+				list.add(cb.equal(root.get("state").as(Integer.class), StatusConst.NORMAL));
 				try {
 					list.add(cb.between(root.get("deadline").as(Date.class), format.parse(dateStr),
 							format.parse(endOfDayStr)));

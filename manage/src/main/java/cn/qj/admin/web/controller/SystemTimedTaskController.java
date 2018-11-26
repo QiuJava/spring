@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.qj.core.common.PageResult;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.SystemTimedTask;
 import cn.qj.core.pojo.qo.SystemTimedTaskQo;
 import cn.qj.core.service.SystemTimedTaskService;
@@ -45,7 +46,7 @@ public class SystemTimedTaskController {
 	public String pause(Long id) throws Exception {
 		SystemTimedTask std = service.getSystemTimedTaskById(id);
 		scheduler.pauseJob(JobKey.jobKey(std.getJobName(), std.getGroupName()));
-		std.setStatus(SystemTimedTask.PAUSE);
+		std.setStatus(StatusConst.PAUSE);
 		std.setGmtModified(new Date());
 		service.updateSystemTimedTask(std);
 		return "redirect:/systemTimedTask/pageQuery";
@@ -58,7 +59,7 @@ public class SystemTimedTaskController {
 	public String resume(Long id) throws Exception {
 		SystemTimedTask std = service.getSystemTimedTaskById(id);
 		scheduler.resumeJob(JobKey.jobKey(std.getJobName(), std.getGroupName()));
-		std.setStatus(SystemTimedTask.NORMAL);
+		std.setStatus(StatusConst.NORMAL);
 		std.setGmtModified(new Date());
 		service.updateSystemTimedTask(std);
 		return "redirect:/systemTimedTask/pageQuery";
@@ -85,7 +86,7 @@ public class SystemTimedTaskController {
 		Date currentDate = new Date();
 		if (systemTimedTask.getId() != null) {
 			SystemTimedTask std = service.getSystemTimedTaskById(systemTimedTask.getId());
-			std.setStatus(SystemTimedTask.NORMAL);
+			std.setStatus(StatusConst.NORMAL);
 			std.setGmtModified(currentDate);
 			service.updateSystemTimedTask(std);
 			// 重新设置该定时任务
@@ -95,7 +96,7 @@ public class SystemTimedTaskController {
 			// 按新的trigger重新设置job执行
 			scheduler.rescheduleJob(triggerKey, trigger);
 		} else {
-			systemTimedTask.setStatus(SystemTimedTask.NORMAL);
+			systemTimedTask.setStatus(StatusConst.NORMAL);
 			systemTimedTask.setGmtModified(currentDate);
 			systemTimedTask.setGmtCreate(currentDate);
 			service.saveSystemTimedTask(systemTimedTask);

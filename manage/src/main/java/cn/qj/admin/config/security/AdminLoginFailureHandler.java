@@ -14,6 +14,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import cn.qj.core.consts.RequestConst;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.entity.LoginInfo;
@@ -29,8 +31,6 @@ import cn.qj.core.service.LoginInfoService;
 @Component
 public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 
-	public static final String LOGIN_ERR_MSG = "loginErrMsg";
-
 	@Autowired
 	private IpLogService ipLogService;
 	@Autowired
@@ -40,15 +40,15 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		if (exception instanceof BadCredentialsException) {
-			String username = request.getParameter(SysConst.USERNAME_STR);
+			String username = request.getParameter(SysConst.USERNAME_PARAM);
 			LoginInfo loginInfo = loginInfoService.getLoginInfoByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
 
 			Integer loserCount = loginInfo.getLoserCount();
 			Date currentDate = new Date();
 			// 达到次数进行锁定
-			if (loserCount >= LoginInfo.LOSER_MAX_COUNT) {
-				loginInfo.setStatus(LoginInfo.LOCK);
+			if (loserCount >= SysConst.LOSER_MAX_COUNT) {
+				loginInfo.setStatus(StatusConst.LOCK);
 				loginInfo.setLockTime(currentDate);
 				loginInfo.setGmtModified(currentDate);
 			}
@@ -56,17 +56,17 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			IpLog ipLog = new IpLog();
 			ipLog.setIp(request.getRemoteAddr());
 			ipLog.setUsername(username);
-			ipLog.setUserType(LoginInfo.MANAGER);
+			ipLog.setUserType(StatusConst.MANAGER);
 			ipLog.setLoginTime(currentDate);
-			ipLog.setLoginState(IpLog.LOGIN_FAIL);
+			ipLog.setLoginState(StatusConst.LOGIN_FAIL);
 			ipLog.setGmtCreate(currentDate);
 			ipLog.setGmtModified(currentDate);
 
 			loginInfoService.saveLoginInfo(loginInfo);
 			ipLogService.saveIpLog(ipLog);
 		}
-		request.setAttribute(LOGIN_ERR_MSG, exception.getMessage());
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);
+		request.setAttribute(SysConst.LOGIN_ERR_MSG, exception.getMessage());
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(RequestConst.LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}
 

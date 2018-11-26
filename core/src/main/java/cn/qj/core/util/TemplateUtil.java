@@ -28,11 +28,11 @@ public class TemplateUtil {
 	private TemplateUtil() {
 	}
 
-	private static Logger logger = LoggerFactory.getLogger(TemplateUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(TemplateUtil.class);
 
-	private static String templatePath = "C:/Users/Administrator/git/spring/core/src/main/resources/java_template/";
-	private static String daoPath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/repository/";
-	private static String servicePath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/service/";
+	private static final String templatePath = "C:/Users/Administrator/git/spring/core/src/main/resources/java_template/";
+	private static final String daoPath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/repository/";
+	private static final String servicePath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/service/";
 
 	public static void createJavaFile(Class<?> clz) throws TemplateNotFoundException, MalformedTemplateNameException,
 			ParseException, IOException, TemplateException {

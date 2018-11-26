@@ -28,7 +28,7 @@ public class HttpServletContext {
 	/** Spring Security 放到session中的认证相关信息 */
 	public static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
 	/** 绑定当前线程 */
-	private static final ThreadLocal<HttpSession> CURRENT_THREAD_LOCAL = new ThreadLocal<>();
+	private static final ThreadLocal<HttpSession> threadLocal = new ThreadLocal<>();
 
 	public static UsernamePasswordAuthenticationToken getAuthenticationToken() {
 		SecurityContextImpl impl = (SecurityContextImpl) getHttpSession().getAttribute(SPRING_SECURITY_CONTEXT);
@@ -65,14 +65,14 @@ public class HttpServletContext {
 	}
 
 	public static void setSessionToThread(HttpSession session) {
-		CURRENT_THREAD_LOCAL.set(session);
+		threadLocal.set(session);
 	}
 
 	public static HttpSession getSessionByThread() {
-		return CURRENT_THREAD_LOCAL.get();
+		return threadLocal.get();
 	}
 
 	public static void removeThread() {
-		CURRENT_THREAD_LOCAL.remove();
+		threadLocal.remove();
 	}
 }

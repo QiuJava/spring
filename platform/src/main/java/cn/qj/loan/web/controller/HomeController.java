@@ -9,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.qj.core.consts.BidConst;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.Borrow;
 import cn.qj.core.entity.LoginInfo;
-import cn.qj.core.entity.UserFile;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.pojo.qo.BorrowQo;
 import cn.qj.core.pojo.qo.UserFileQo;
@@ -31,10 +31,6 @@ import cn.qj.core.util.HttpServletContext;
  */
 @Controller
 public class HomeController {
-	public static final String MAIN = "main";
-	public static final String INVERST = "invest";
-	public static final String INVERST_LIST = "invest_list";
-	public static final String BORROW_INFO = "borrow_info";
 
 	@Autowired
 	private BorrowService borrowService;
@@ -48,7 +44,7 @@ public class HomeController {
 	private UserFileService userFileService;
 	@Autowired
 	private IndexService service;
-	
+
 	/**
 	 * 前台系统首页
 	 * 
@@ -66,7 +62,7 @@ public class HomeController {
 		model.addAttribute("borrowList", borrowService.list(qo).getContent());
 		// 添加统计数据
 		model.addAttribute("summaryVO", service.getIndexSummaryVO());
-		return MAIN;
+		return "main";
 	}
 
 	/**
@@ -86,7 +82,7 @@ public class HomeController {
 
 		UserFileQo qo = new UserFileQo();
 		qo.setLoginInfoId(borrow.getCreateUser().getId());
-		qo.setState(UserFile.AUTH_PASS);
+		qo.setState(StatusConst.AUTH_PASS);
 
 		model.addAttribute("userFiles", userFileService.page(qo).getContent());
 
@@ -102,7 +98,7 @@ public class HomeController {
 		} else {
 			model.addAttribute("self", false);
 		}
-		return BORROW_INFO;
+		return "borrow_info";
 	}
 
 	/**
@@ -110,7 +106,7 @@ public class HomeController {
 	 */
 	@RequestMapping("/invest")
 	public String invest() {
-		return INVERST;
+		return "invest";
 	}
 
 	/**
@@ -124,6 +120,6 @@ public class HomeController {
 				BidConst.BORROW_STATE_COMPLETE_PAY_BACK };
 		qo.setStatus(Arrays.asList(status));
 		model.addAttribute("pageResult", borrowService.list(qo));
-		return INVERST_LIST;
+		return "invest_list";
 	}
 }

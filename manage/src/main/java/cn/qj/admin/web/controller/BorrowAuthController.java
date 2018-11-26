@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.qj.core.common.BaseResult;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.consts.BidConst;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.Borrow;
-import cn.qj.core.entity.UserFile;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.pojo.qo.BorrowQo;
 import cn.qj.core.pojo.qo.UserFileQo;
@@ -29,9 +29,6 @@ import cn.qj.core.service.UserInfoService;
 @Controller
 @RequestMapping("/borrow")
 public class BorrowAuthController {
-	public static final String AUDIT_1 = "borrow/audit1";
-	public static final String AUDIT_2 = "borrow/audit2";
-	public static final String PUBLISH_AUDIT = "borrow/publish";
 
 	@Autowired
 	private BorrowService service;
@@ -55,7 +52,7 @@ public class BorrowAuthController {
 		qo.setBorrowState(BidConst.BORROW_STATE_PUBLISH_PENDING);
 		PageResult pageResult = service.list(qo);
 		model.addAttribute("pageResult", pageResult);
-		return PUBLISH_AUDIT;
+		return "borrow/publish";
 	}
 
 	@RequestMapping("/publish/audit")
@@ -71,7 +68,7 @@ public class BorrowAuthController {
 	public String audit1(@ModelAttribute("qo") BorrowQo qo, Model model) {
 		qo.setBorrowState(BidConst.BORROW_STATE_APPROVE_PENDING_1);
 		model.addAttribute("pageResult", service.list(qo));
-		return AUDIT_1;
+		return "borrow/audit1";
 	}
 
 	@RequestMapping("/audit1/audit")
@@ -88,7 +85,7 @@ public class BorrowAuthController {
 		qo.setBorrowState(BidConst.BORROW_STATE_APPROVE_PENDING_2);
 		PageResult pageResult = service.list(qo);
 		model.addAttribute("pageResult", pageResult);
-		return AUDIT_2;
+		return "borrow/audit2";
 	}
 
 	@RequestMapping("/audit2/audit")
@@ -112,7 +109,7 @@ public class BorrowAuthController {
 		model.addAttribute("authHistroyList", service.getAuthHistroys(id));
 		model.addAttribute("realAuth", realAuthService.get(userInfo.getRealAuthId()));
 		UserFileQo qo = new UserFileQo();
-		qo.setState(UserFile.AUTH_PASS);
+		qo.setState(StatusConst.AUTH_PASS);
 		qo.setLoginInfoId(borrow.getCreateUser().getId());
 		model.addAttribute("userFiles", userFileService.page(qo).getContent());
 		return "borrow/info";

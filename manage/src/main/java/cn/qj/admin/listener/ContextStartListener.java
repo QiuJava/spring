@@ -10,6 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.entity.SystemAccount;
@@ -39,8 +40,8 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 			LoginInfo info = new LoginInfo();
 			info.setIsAdmin(true);
 			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.INIT_PASSWORD));
-			info.setUsername("超级管理员");
-			info.setUserType(LoginInfo.MANAGER);
+			info.setUsername(SysConst.ADMIN_NAME);
+			info.setUserType(StatusConst.MANAGER);
 			Date currentDate = new Date();
 			info.setGmtCreate(currentDate);
 			info.setGmtModified(currentDate);

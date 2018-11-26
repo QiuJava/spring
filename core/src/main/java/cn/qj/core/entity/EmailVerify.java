@@ -24,8 +24,6 @@ import lombok.NoArgsConstructor;
 @Entity
 public class EmailVerify implements Serializable {
 	private static final long serialVersionUID = 1L;
-	/** 邮箱验证码有效时间 */
-	public static final int VALIDITY_DAY = 5;
 
 	private Long id;
 	private String verify;

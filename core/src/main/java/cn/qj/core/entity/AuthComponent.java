@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import cn.qj.core.consts.StatusConst;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,13 +19,6 @@ import lombok.Setter;
 @Setter
 public class AuthComponent implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	/** 审核中 */
-	public static final int AUTH_NORMAL = 0;
-	/** 通过 */
-	public static final int AUTH_PASS = 1;
-	/** 拒绝 */
-	public static final int AUTH_REJECT = 2;
 
 	/** 状态 */
 	protected int state;
@@ -41,11 +35,11 @@ public class AuthComponent implements Serializable {
 
 	public String getStateDisplay() {
 		switch (state) {
-		case AuthComponent.AUTH_NORMAL:
+		case StatusConst.AUTH_NORMAL:
 			return "审核中";
-		case AuthComponent.AUTH_PASS:
+		case StatusConst.AUTH_PASS:
 			return "审核通过";
-		case AuthComponent.AUTH_REJECT:
+		case StatusConst.AUTH_REJECT:
 			return "审核拒绝";
 		default:
 			return "异常状态";

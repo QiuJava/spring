@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import cn.qj.core.consts.StatusConst;
 import lombok.Data;
 
 /**
@@ -24,9 +25,6 @@ import lombok.Data;
 public class Bid implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final int SUCCEED = 0;
-	public static final int FAILD = 1;
-
 	private long id;
 	/** 实际年利率 */
 	private BigDecimal actualRate;
@@ -37,7 +35,7 @@ public class Bid implements Serializable {
 	/** 投标人 投资人 */
 	private LoginInfo createUser;
 	private Date createTime;
-	private int state = Bid.SUCCEED;
+	private int state = StatusConst.SUCCEED;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

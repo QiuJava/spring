@@ -13,7 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import cn.qj.core.consts.SysConst;
+import cn.qj.core.consts.RequestConst;
+import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.service.IpLogService;
@@ -40,15 +41,15 @@ public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {
 		Date currentDate = new Date();
 		ipLog.setIp(request.getRemoteAddr());
 		ipLog.setUsername(loginInfo.getUsername());
-		ipLog.setUserType(LoginInfo.MANAGER);
+		ipLog.setUserType(StatusConst.MANAGER);
 		ipLog.setLoginTime(currentDate);
-		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
+		ipLog.setLoginState(StatusConst.LOGIN_SUCCESS);
 		ipLog.setGmtCreate(currentDate);
 		ipLog.setGmtModified(currentDate);
 		ipLogService.saveIpLog(ipLog);
 		// 登录成功把用户登录信息存储到session
 		HttpServletContext.setCurrentLoginInfo(loginInfo);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(SysConst.URL_LOGIN_INFO_AJAX);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(RequestConst.LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}
 

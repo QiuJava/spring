@@ -15,7 +15,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import cn.qj.core.consts.SysConst;
+import cn.qj.core.consts.RequestConst;
 import cn.qj.core.entity.Role;
 import cn.qj.core.service.RoleService;
 import lombok.Setter;
@@ -49,7 +49,7 @@ public class ManageApplicationTest {
 			// 获取url的Set集合，一个方法可能对应多个url
 			Set<String> patterns = info.getPatternsCondition().getPatterns();
 			for (String url : patterns) {
-				if (SysConst.URL_LOGIN_INFO_AJAX.equals(url)) {
+				if (RequestConst.LOGIN_INFO_AJAX.equals(url)) {
 					break;
 				}
 				if ("/error".equals(url)) {

@@ -12,13 +12,16 @@ public class SysConst {
 	private SysConst() {
 	}
 
-	public static final String USERNAME_STR = "username";
+	public static final String ADMIN_NAME = "超级管理员";
+	public static final String USERNAME_PARAM = "username";
 	public static final String INIT_PASSWORD = "123456";
+
 	public static final Md5PasswordEncoder MD5 = new Md5PasswordEncoder();
 
-	public static final String URL_LOGIN_HTML = "/login.html";
-	public static final String URL_LOGIN_INFO_LOGIN = "/loginInfo/login";
-	public static final String URL_LOGIN_INFO_LOGOUT = "/loginInfo/logout";
-	public static final String URL_LOGIN_INFO_AJAX = "/loginInfo/ajax";
+	public static final String LOGIN_ERR_MSG = "loginErrMsg";
+	
+	/** 邮箱验证码有效时间 */
+	public static final int VALIDITY_DAY = 5;
+	public static final Integer LOSER_MAX_COUNT = 5;
 
 }
