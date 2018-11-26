@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.pojo.qo.WithdrawQo;
 import cn.qj.core.service.WithdrawServcie;
 
@@ -30,8 +30,8 @@ public class WithdrawAuthController {
 
 	@RequestMapping("/withdraw/audit")
 	@ResponseBody
-	public AjaxResult withdrawAudit(Long id, String remark, int state) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult withdrawAudit(Long id, String remark, int state) {
+		BaseResult result = new BaseResult();
 		service.audit(id, remark, state);
 		result.setSuccess(true);
 		return result;

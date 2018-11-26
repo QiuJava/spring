@@ -12,7 +12,7 @@ public class LogicException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private Integer errCode = 400;
+	private Integer errCode;
 
 	public LogicException(String message) {
 		super(message);

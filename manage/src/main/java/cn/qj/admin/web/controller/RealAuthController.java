@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.RealAuth;
 import cn.qj.core.pojo.qo.RealAuthQo;
@@ -38,9 +38,9 @@ public class RealAuthController {
 
 	@RequestMapping("/audit")
 	@ResponseBody
-	public AjaxResult audit(Long id, int state, String remark) {
+	public BaseResult audit(Long id, int state, String remark) {
 		service.autid(id, state, remark);
-		AjaxResult result = new AjaxResult();
+		BaseResult result = new BaseResult();
 		result.setSuccess(true);
 		return result;
 	}

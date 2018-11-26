@@ -21,10 +21,9 @@ public class DataSourceAop {
 	@Around("@annotation(dataSourceKey)")
 	public Object around(ProceedingJoinPoint joinPoint, DataSourceKey dataSourceKey) {
 		// 获取方法签名
-		// MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		// DataSourceKey dataSourceKey =
-		// signature.getMethod().getAnnotation(DataSourceKey.class);
-		DataSourceUtil.setDataSourceKey(dataSourceKey.value());
+		/*MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		DataSourceKey dataSourceKey = signature.getMethod().getAnnotation(DataSourceKey.class);
+		DataSourceUtil.setDataSourceKey(dataSourceKey.value());*/
 
 		Object proceed = null;
 		try {

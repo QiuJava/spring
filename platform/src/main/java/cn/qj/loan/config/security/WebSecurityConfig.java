@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();// 禁用csrf防护
-
+		// http.headers().httpStrictTransportSecurity();
 		http.authorizeRequests()
 				// 静态资源可以完全访问
 				.antMatchers("/borrow.html", "/index.html", "/register.html").permitAll()

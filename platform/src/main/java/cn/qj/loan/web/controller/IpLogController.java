@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.ApiResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.pojo.qo.IpLogQo;
 import cn.qj.core.service.IpLogService;
 import cn.qj.core.util.HttpServletContext;
@@ -35,30 +35,30 @@ public class IpLogController {
 
 	@RequestMapping("/listAllVo")
 	@ResponseBody
-	public ApiResult listAllVo() {
-		ApiResult result = new ApiResult();
+	public BaseResult listAllVo() {
+		BaseResult result = new BaseResult();
 		result.setMsg("查询成功");
-		result.setStatus(200);
+		result.setStatusCode(200);
 		result.setData(service.listAllVo());
 		return result;
 	}
 
 	@RequestMapping("/page")
 	@ResponseBody
-	public ApiResult page() {
-		ApiResult result = new ApiResult();
+	public BaseResult page() {
+		BaseResult result = new BaseResult();
 		result.setMsg("查询成功");
-		result.setStatus(200);
+		result.setStatusCode(200);
 		result.setData(service.page());
 		return result;
 	}
 
 	@RequestMapping("/count")
 	@ResponseBody
-	public ApiResult count() {
-		ApiResult result = new ApiResult();
+	public BaseResult count() {
+		BaseResult result = new BaseResult();
 		result.setMsg("统计成功");
-		result.setStatus(200);
+		result.setStatusCode(200);
 		result.setData(service.count());
 		return result;
 	}

@@ -13,6 +13,7 @@ import cn.qj.core.entity.CompanyBankInfo;
 import cn.qj.core.pojo.qo.CompanyBankInfoQo;
 import cn.qj.core.repository.CompanyBankInfoRepository;
 import cn.qj.core.service.CompanyBankInfoService;
+import cn.qj.core.util.ResultUtil;
 
 /**
  * 公司银行账号信息服务实现
@@ -41,7 +42,7 @@ public class CompanyBankInfoServiceImpl implements CompanyBankInfoService {
 	public PageResult page(CompanyBankInfoQo qo) {
 		Page<CompanyBankInfo> page = repositpry.findAll(new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize()));
 		if (page.getContent().isEmpty()) {
-			return PageResult.empty(qo.getPageSize());
+			return ResultUtil.empty(qo.getPageSize());
 		}
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}

@@ -22,6 +22,7 @@ import cn.qj.core.entity.SystemDictionary;
 import cn.qj.core.pojo.qo.SystemDictionaryQo;
 import cn.qj.core.repository.SystemDictionaryRepository;
 import cn.qj.core.service.SystemDictionaryService;
+import cn.qj.core.util.ResultUtil;
 
 /**
  * 系统洗点服务实现
@@ -58,7 +59,7 @@ public class SystemDictionaryServiceImpl implements SystemDictionaryService {
 			}
 		}, new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize()));
 		if (page.getTotalElements() < 1) {
-			return PageResult.empty((qo.getPageSize()));
+			return ResultUtil.empty((qo.getPageSize()));
 		}
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}

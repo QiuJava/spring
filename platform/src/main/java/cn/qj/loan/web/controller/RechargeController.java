@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.entity.Recharge;
 import cn.qj.core.pojo.qo.RechargeQo;
 import cn.qj.core.service.CompanyBankInfoService;
@@ -45,8 +45,8 @@ public class RechargeController {
 	 */
 	@RequestMapping("/recharge/save")
 	@ResponseBody
-	public AjaxResult save(Recharge recharge) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult save(Recharge recharge) {
+		BaseResult result = new BaseResult();
 		service.apply(recharge);
 		result.setSuccess(true);
 		return result;

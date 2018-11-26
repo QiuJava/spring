@@ -40,6 +40,7 @@ import cn.qj.core.service.RepaymentScheduleService;
 import cn.qj.core.service.SendSmsService;
 import cn.qj.core.util.DateUtil;
 import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.ResultUtil;
 
 /**
  * 收款计划服务实现
@@ -91,7 +92,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 			}
 		}, new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize(), Direction.ASC, "deadline"));
 		if (page.getTotalElements() < 1) {
-			return PageResult.empty(qo.getPageSize());
+			return ResultUtil.empty(qo.getPageSize());
 		}
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}

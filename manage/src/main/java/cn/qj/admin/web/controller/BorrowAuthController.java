@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.entity.Borrow;
@@ -60,8 +60,8 @@ public class BorrowAuthController {
 
 	@RequestMapping("/publish/audit")
 	@ResponseBody
-	public AjaxResult publishAudit(Long id, int state, String remark) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult publishAudit(Long id, int state, String remark) {
+		BaseResult result = new BaseResult();
 		service.publishAudit(id, state, remark);
 		result.setSuccess(true);
 		return result;
@@ -76,8 +76,8 @@ public class BorrowAuthController {
 
 	@RequestMapping("/audit1/audit")
 	@ResponseBody
-	public AjaxResult audit1Audit(Long id, String remark, int state) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult audit1Audit(Long id, String remark, int state) {
+		BaseResult result = new BaseResult();
 		service.audit1Audit(id, remark, state);
 		result.setSuccess(true);
 		return result;
@@ -93,8 +93,8 @@ public class BorrowAuthController {
 
 	@RequestMapping("/audit2/audit")
 	@ResponseBody
-	public AjaxResult audit2Audit(Long id, String remark, int state) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult audit2Audit(Long id, String remark, int state) {
+		BaseResult result = new BaseResult();
 		service.audit2Audit(id, remark, state);
 		result.setSuccess(true);
 		return result;

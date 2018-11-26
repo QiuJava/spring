@@ -25,6 +25,7 @@ import cn.qj.core.pojo.qo.SystemDictionaryItemQo;
 import cn.qj.core.repository.SystemDictionaryItemRepository;
 import cn.qj.core.service.SystemDictionaryItemService;
 import cn.qj.core.service.SystemDictionaryService;
+import cn.qj.core.util.ResultUtil;
 
 /**
  * 系统字典明细服务实现
@@ -81,7 +82,7 @@ public class SystemDictionaryItemServiceImpl implements SystemDictionaryItemServ
 			}
 		}, new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize(), Direction.ASC, "sequence"));
 		if (page == null) {
-			return PageResult.empty(qo.getPageSize());
+			return ResultUtil.empty(qo.getPageSize());
 		}
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}

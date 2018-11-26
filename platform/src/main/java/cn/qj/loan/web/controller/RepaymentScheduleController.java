@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.pojo.qo.RepaymentScheduleQo;
 import cn.qj.core.service.AccountService;
 import cn.qj.core.service.RepaymentScheduleService;
@@ -44,8 +44,8 @@ public class RepaymentScheduleController {
 
 	@RequestMapping("/repaymentSchedule/repay")
 	@ResponseBody
-	public AjaxResult repay(Long id) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult repay(Long id) {
+		BaseResult result = new BaseResult();
 		service.repay(id);
 		result.setSuccess(true);
 		return result;

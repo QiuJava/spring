@@ -56,6 +56,7 @@ import cn.qj.core.util.BidStateUtil;
 import cn.qj.core.util.CalculatetUtil;
 import cn.qj.core.util.DecimalFormatUtil;
 import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.ResultUtil;
 import cn.qj.core.util.StringUtil;
 
 /**
@@ -206,7 +207,7 @@ public class BorrowServiceImpl implements BorrowService {
 		}, new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize(), qo.getOrderType(),
 				StringUtil.hasLength(qo.getOrderBy()) ? qo.getOrderBy() : "applyTime"));
 		if (page.getTotalElements() < 1) {
-			return PageResult.empty(qo.getPageSize());
+			return ResultUtil.empty(qo.getPageSize());
 		}
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}

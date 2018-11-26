@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.UserFile;
 import cn.qj.core.pojo.qo.UserFileQo;
@@ -37,8 +37,8 @@ public class UserFileController {
 
 	@RequestMapping("/userFile/audit")
 	@ResponseBody
-	public AjaxResult audit(Long id, int state, int score, String remark) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult audit(Long id, int state, int score, String remark) {
+		BaseResult result = new BaseResult();
 		service.audit(id, state, score, remark);
 		result.setSuccess(true);
 		return result;

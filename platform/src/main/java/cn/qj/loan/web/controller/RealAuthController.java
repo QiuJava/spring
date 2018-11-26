@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.entity.RealAuth;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.service.RealAuthService;
@@ -79,9 +79,9 @@ public class RealAuthController {
 	 */
 	@RequestMapping("/realAuth/save")
 	@ResponseBody
-	public AjaxResult save(RealAuth realAuth) {
+	public BaseResult save(RealAuth realAuth) {
 		service.save(realAuth);
-		AjaxResult result = new AjaxResult();
+		BaseResult result = new BaseResult();
 		result.setSuccess(true);
 		return result;
 	}

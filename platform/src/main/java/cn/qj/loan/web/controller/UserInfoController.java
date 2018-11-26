@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.service.SendSmsService;
 import cn.qj.core.service.SystemDictionaryItemService;
@@ -51,8 +51,8 @@ public class UserInfoController {
 
 	@RequestMapping("/basic/save")
 	@ResponseBody
-	public AjaxResult basicInfoSave(UserInfo userInfo) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult basicInfoSave(UserInfo userInfo) {
+		BaseResult result = new BaseResult();
 		service.saveBasicInfo(userInfo);
 		result.setSuccess(true);
 		return result;
@@ -60,16 +60,16 @@ public class UserInfoController {
 
 	@RequestMapping("/bindPhone")
 	@ResponseBody
-	public AjaxResult bindPhone(String phoneNumber, String verifyCode) {
+	public BaseResult bindPhone(String phoneNumber, String verifyCode) {
 		service.bind(phoneNumber, verifyCode);
-		return new AjaxResult(true, "绑定成功", 200);
+		return new BaseResult(true, "绑定成功", 200);
 	}
 
 	@RequestMapping("/verifyCode")
 	@ResponseBody
-	public AjaxResult verifyCode(String phoneNumber) {
+	public BaseResult verifyCode(String phoneNumber) {
 		sendSmsService.verifyCode(phoneNumber);
-		return new AjaxResult(true, "发送成功", 200);
+		return new BaseResult(true, "发送成功", 200);
 	}
 
 }

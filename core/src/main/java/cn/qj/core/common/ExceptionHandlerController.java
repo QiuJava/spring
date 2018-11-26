@@ -17,14 +17,14 @@ public class ExceptionHandlerController {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
 	@ExceptionHandler(LogicException.class)
-	public AjaxResult handlerLogicException(LogicException e) {
-		return new AjaxResult(false, e.getMessage(), e.getErrCode());
+	public BaseResult handlerLogicException(LogicException e) {
+		return new BaseResult(false, e.getMessage(), e.getErrCode());
 	}
 
 	@ExceptionHandler(Exception.class)
-	public AjaxResult handlerException(Exception e) {
+	public BaseResult handlerException(Exception e) {
 		logger.error("系统异常", e);
-		return new AjaxResult(false, "系统异常", 400);
+		return new BaseResult(false, "系统异常", 400);
 	}
 
 }

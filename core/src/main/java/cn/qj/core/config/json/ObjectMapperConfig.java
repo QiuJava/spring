@@ -32,6 +32,7 @@ public class ObjectMapperConfig {
 	public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
 		ObjectMapper objectMapper = builder.createXmlMapper(false).build();
 		objectMapper.setDateFormat(new SimpleDateFormat(DateUtil.DATE_TIME_FORMAT_PATTERN));
+		// null 替换成""
 		objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
 			@Override
 			public void serialize(Object o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)

@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 数据源标记
+ * 数据源KEY
  * 
  * @author Qiujian
  * @date 2018/11/14

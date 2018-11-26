@@ -24,31 +24,15 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		int len = values.length;
 		String[] newValues = new String[len];
 		for (int i = 0; i < len; i++) {
-			newValues[i] = cleanXSS(values[i]);
+			String newValue = newValues[i].trim();
+			newValue = cleanXSS(newValue);
+			newValue = cleanSQL(newValue);
+			newValues[i] = newValue;
 		}
 		return newValues;
 	}
 
-	@Override
-	public String getParameter(String parameter) {
-		String value = super.getParameter(parameter);
-		if (value == null) {
-			return null;
-		}
-		return cleanXSS(value);
-	}
-
-	@Override
-	public String getHeader(String name) {
-		String value = super.getHeader(name);
-		if (value == null) {
-			return null;
-		}
-		return cleanXSS(value);
-	}
-
 	private String cleanXSS(String str) {
-
 		// 清除Html5和JavaScript
 		str = str.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 		str = str.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
@@ -56,7 +40,13 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		str = str.replaceAll("eval\\((.*)\\)", "");
 		str = str.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 		str = str.replaceAll("script", "");
+		str = str.replaceAll("[*]", "[" + "*]");
+		str = str.replaceAll("[+]", "[" + "+]");
+		str = str.replaceAll("[?]", "[" + "?]");
+		return str;
+	}
 
+	private String cleanSQL(String str) {
 		// 清除SQL
 		String[] strs = str.split(" ");
 		String badStr = "drop|select|declare|information_schema.columns|use|insert|"
@@ -79,8 +69,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		sb.deleteCharAt(sb.length() - 1);
 		str = sb.toString();
 
-		str = str.trim();
 		return str;
 	}
-	
+
 }

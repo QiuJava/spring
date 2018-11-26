@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.consts.BidConst;
 import cn.qj.core.entity.Borrow;
 import cn.qj.core.entity.LoginInfo;
@@ -85,8 +85,8 @@ public class BorrowController {
 
 	@RequestMapping("/borrow/bid")
 	@ResponseBody
-	public AjaxResult bid(Long borrowId, BigDecimal amount) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult bid(Long borrowId, BigDecimal amount) {
+		BaseResult result = new BaseResult();
 		// service.bid(borrowId, amount);
 		BidDto dto = new BidDto();
 		dto.setBorrowId(borrowId);

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.service.LoginInfoService;
 import cn.qj.core.util.StringUtil;
 
@@ -23,23 +23,23 @@ public class LoginInfoController {
 	private LoginInfoService service;
 
 	@RequestMapping("/ajax")
-	public AjaxResult ajax(HttpServletRequest request) {
+	public BaseResult ajax(HttpServletRequest request) {
 		String msg = (String) request.getAttribute("msg");
 		if (StringUtil.hasLength(msg)) {
-			return new AjaxResult(false, msg, 200);
+			return new BaseResult(false, msg, 200);
 		}
-		return new AjaxResult(true, "登录成功", 200);
+		return new BaseResult(true, "登录成功", 200);
 	}
 
 	@RequestMapping("/register")
-	public AjaxResult register(String username, String password) {
+	public BaseResult register(String username, String password) {
 		service.register(username, password);
-		return new AjaxResult(true, "注册成功", 200);
+		return new BaseResult(true, "注册成功", 200);
 	}
 
 	@RequestMapping("/isNotExist")
-	public AjaxResult isNotExist(String username) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult isNotExist(String username) {
+		BaseResult result = new BaseResult();
 		result.setSuccess(service.isNotExistByUsername(username));
 		return result;
 	}

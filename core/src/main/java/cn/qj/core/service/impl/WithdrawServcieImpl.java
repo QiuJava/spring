@@ -35,6 +35,7 @@ import cn.qj.core.service.UserInfoService;
 import cn.qj.core.service.WithdrawServcie;
 import cn.qj.core.util.BidStateUtil;
 import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.ResultUtil;
 
 /**
  * 提现服务实现
@@ -151,7 +152,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 			}
 		}, new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize(), Direction.DESC, "applyTime"));
 		if (page.getTotalElements() < 1) {
-			return PageResult.empty(qo.getPageSize());
+			return ResultUtil.empty(qo.getPageSize());
 		}
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}

@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.service.EmailVerifyService;
 
 /**
@@ -35,8 +35,8 @@ public class EmailVerifyController {
 
 	@RequestMapping("/email/send")
 	@ResponseBody
-	public AjaxResult send(String email) {
+	public BaseResult send(String email) {
 		service.send(email);
-		return new AjaxResult(true, "", 200);
+		return new BaseResult(true, "", 200);
 	}
 }

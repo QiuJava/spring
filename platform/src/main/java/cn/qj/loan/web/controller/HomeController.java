@@ -48,7 +48,7 @@ public class HomeController {
 	private UserFileService userFileService;
 	@Autowired
 	private IndexService service;
-
+	
 	/**
 	 * 前台系统首页
 	 * 

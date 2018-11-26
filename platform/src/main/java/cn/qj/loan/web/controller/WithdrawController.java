@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.qj.core.common.AjaxResult;
+import cn.qj.core.common.BaseResult;
 import cn.qj.core.service.AccountService;
 import cn.qj.core.service.UserBankInfoService;
 import cn.qj.core.service.UserInfoService;
@@ -46,8 +46,8 @@ public class WithdrawController {
 
 	@RequestMapping("/withdraw/apply")
 	@ResponseBody
-	public AjaxResult apply(BigDecimal moneyAmount) {
-		AjaxResult result = new AjaxResult();
+	public BaseResult apply(BigDecimal moneyAmount) {
+		BaseResult result = new BaseResult();
 		service.apply(moneyAmount);
 		result.setSuccess(true);
 		return result;

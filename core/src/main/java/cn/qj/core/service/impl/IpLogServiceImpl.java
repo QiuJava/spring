@@ -33,6 +33,7 @@ import cn.qj.core.pojo.vo.IpLogVo;
 import cn.qj.core.repository.IpLogRepository;
 import cn.qj.core.service.IpLogService;
 import cn.qj.core.util.DataSourceUtil;
+import cn.qj.core.util.ResultUtil;
 
 /**
  * 登录日志服务实现
@@ -85,7 +86,7 @@ public class IpLogServiceImpl implements IpLogService {
 			}
 		}, new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize(), Direction.DESC, "loginTime"));
 		if (page.getTotalElements() < 1) {
-			return PageResult.empty(qo.getPageSize());
+			return ResultUtil.empty(qo.getPageSize());
 		}
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}

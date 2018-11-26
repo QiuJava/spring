@@ -32,6 +32,7 @@ import cn.qj.core.service.CompanyBankInfoService;
 import cn.qj.core.service.LoginInfoService;
 import cn.qj.core.service.RechargeService;
 import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.ResultUtil;
 
 /**
  * 充值服务实现
@@ -97,7 +98,7 @@ public class RechargeServiceImpl implements RechargeService {
 			}
 		}, new PageRequest(qo.getCurrentPage() - 1, qo.getPageSize(), Direction.DESC, "applyTime"));
 		if (page.getTotalElements() < 1) {
-			return PageResult.empty(qo.getPageSize());
+			return ResultUtil.empty(qo.getPageSize());
 		}
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage(), qo.getPageSize());
 	}
