@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 import cn.qj.core.consts.RedisKeyConst;
 
 /**
- * 权限配置属性缓存服务
+ * 
+ * 权限配置缓存服务
  * 
  * @author Qiujian
- * @date 2018/11/01
+ * @date 2018/11/26
  */
 @Service
 public class ConfigAttributeRedisService extends AbstractRedisService<Collection<ConfigAttribute>> {

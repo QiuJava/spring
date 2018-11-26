@@ -19,7 +19,7 @@ import freemarker.ext.jsp.TaglibFactory;
  */
 @Configuration
 public class FreemarkerSecurityConfig {
-
+	
 	@Autowired
 	private FreeMarkerConfigurer configurer;
 

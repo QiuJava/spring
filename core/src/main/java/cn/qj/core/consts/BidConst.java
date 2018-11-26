@@ -3,7 +3,7 @@ package cn.qj.core.consts;
 import java.math.BigDecimal;
 
 /**
- * 业务常量
+ * 投标常量
  * 
  * @author Qiujian
  * @date 2018/11/01

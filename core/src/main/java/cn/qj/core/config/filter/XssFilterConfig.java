@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import cn.qj.core.common.XssFilter;
 
 /**
- * 防Xss攻击过滤配置
+ * Xss攻击过滤配置
  * 
  * @author Qiujian
  * @date 2018/11/19
