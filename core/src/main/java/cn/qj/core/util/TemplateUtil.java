@@ -30,9 +30,9 @@ public class TemplateUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(TemplateUtil.class);
 
-	private static final String templatePath = "C:/Users/Administrator/git/spring/core/src/main/resources/java_template/";
-	private static final String daoPath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/repository/";
-	private static final String servicePath = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/service/";
+	private static final String TEMPLATE_PATH = "C:/Users/Administrator/git/spring/core/src/main/resources/java_template/";
+	private static final String DAO_PATH = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/repository/";
+	private static final String SERVICE_PATH = "C:/Users/Administrator/git/spring/core/src/main/java/cn/qj/core/service/";
 
 	public static void createJavaFile(Class<?> clz) throws TemplateNotFoundException, MalformedTemplateNameException,
 			ParseException, IOException, TemplateException {
@@ -42,20 +42,20 @@ public class TemplateUtil {
 		@SuppressWarnings("deprecation")
 		Configuration configuration = new Configuration();
 		// 读取模板目录
-		configuration.setDirectoryForTemplateLoading(new File(templatePath));
+		configuration.setDirectoryForTemplateLoading(new File(TEMPLATE_PATH));
 		// 生成dao文件
-		Writer daoWiter = new OutputStreamWriter(new FileOutputStream(daoPath + simpleName + "Repository.java"),
+		Writer daoWiter = new OutputStreamWriter(new FileOutputStream(DAO_PATH + simpleName + "Repository.java"),
 				"utf-8");
 		Template daoTemplate = configuration.getTemplate("dao.ftl");
 		daoTemplate.process(map, daoWiter);
 
 		// 生成service文件
-		Writer serviceWiter = new OutputStreamWriter(new FileOutputStream(servicePath + simpleName + "Service.java"),
+		Writer serviceWiter = new OutputStreamWriter(new FileOutputStream(SERVICE_PATH + simpleName + "Service.java"),
 				"utf-8");
 		Template serviceTemplate = configuration.getTemplate("service.ftl");
 		serviceTemplate.process(map, serviceWiter);
 		Writer serviceImplWiter = new OutputStreamWriter(
-				new FileOutputStream(servicePath + "impl/" + simpleName + "ServiceImpl.java"), "utf-8");
+				new FileOutputStream(SERVICE_PATH + "impl/" + simpleName + "ServiceImpl.java"), "utf-8");
 		Template serviceImplTemplate = configuration.getTemplate("serviceImpl.ftl");
 		serviceImplTemplate.process(map, serviceImplWiter);
 	}
