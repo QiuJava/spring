@@ -1,5 +1,6 @@
 package cn.qj.core.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -70,5 +71,13 @@ public interface IpLogService {
 	 * @return
 	 */
 	IpLogCountVo count();
+
+	/**
+	 * 查询所有登录日志页面展示数据
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	List<HashMap> listAllMap();
 
 }

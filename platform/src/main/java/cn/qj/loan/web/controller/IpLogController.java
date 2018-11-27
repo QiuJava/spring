@@ -63,4 +63,11 @@ public class IpLogController {
 		return result;
 	}
 
+	@RequestMapping("/listAllMap")
+	@ResponseBody
+	public BaseResult listAllMap() {
+		BaseResult result = new BaseResult(true, "查询成功", 200, service.listAllMap());
+		return result;
+	}
+
 }
