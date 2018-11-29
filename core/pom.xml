@@ -11,4 +11,41 @@
 	<artifactId>core</artifactId>
 	<name>core</name>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>${mybatis-generator.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId> mysql</groupId>
+						<artifactId> mysql-connector-java</artifactId>
+					</dependency>
+					<dependency>
+						<groupId>org.mybatis.generator</groupId>
+						<artifactId>mybatis-generator-core</artifactId>
+						<version>${mybatis-generator.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>Generate MyBatis Artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!--允许移动生成的文件 -->
+					<verbose>true</verbose>
+					<!-- 是否覆盖 -->
+					<overwrite>false</overwrite>
+					<!-- 自动生成的配置 -->
+					<configurationFile>src/main/resources/mybatis-generator.xml</configurationFile>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -25,6 +25,7 @@ import org.springframework.util.StringUtils;
 import cn.qj.core.common.DataSourceKey;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.IpLog;
+import cn.qj.core.mapper.IpLogMapper;
 import cn.qj.core.pojo.qo.IpLogQo;
 import cn.qj.core.pojo.vo.IpLogCountVo;
 import cn.qj.core.pojo.vo.IpLogVo;
@@ -48,6 +49,9 @@ public class IpLogServiceImpl implements IpLogService {
 
 	@Autowired
 	private EntityManager entityManager;
+	
+	@Autowired
+	private IpLogMapper ipLogMapper;
 
 	@Override
 	@Cacheable("pageQueryIpLog")
@@ -139,5 +143,10 @@ public class IpLogServiceImpl implements IpLogService {
 		List<Object> params = new ArrayList<>();
 		params.add("独孤求败");
 		return QueryUtil.findListResult(entityManager, sql, HashMap.class, params);
+	}
+
+	@Override
+	public IpLog getById(long id) {
+		return ipLogMapper.selectByPrimaryKey(id);
 	}
 }

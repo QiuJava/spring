@@ -80,4 +80,12 @@ public interface IpLogService {
 	@SuppressWarnings("rawtypes")
 	List<HashMap> listAllMap();
 
+	/**
+	 * 根据ID获取登录日志
+	 * 
+	 * @param id
+	 * @return
+	 */
+	IpLog getById(long id);
+
 }
