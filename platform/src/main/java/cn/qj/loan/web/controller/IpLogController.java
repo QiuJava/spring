@@ -33,16 +33,6 @@ public class IpLogController {
 		return "ipLog_list";
 	}
 
-	@RequestMapping("/listAllVo")
-	@ResponseBody
-	public BaseResult listAllVo() {
-		BaseResult result = new BaseResult();
-		result.setMsg("查询成功");
-		result.setStatusCode(200);
-		result.setData(service.listAllVo());
-		return result;
-	}
-
 	@RequestMapping("/page")
 	@ResponseBody
 	public BaseResult page() {
@@ -50,23 +40,6 @@ public class IpLogController {
 		result.setMsg("查询成功");
 		result.setStatusCode(200);
 		result.setData(service.page());
-		return result;
-	}
-
-	@RequestMapping("/count")
-	@ResponseBody
-	public BaseResult count() {
-		BaseResult result = new BaseResult();
-		result.setMsg("统计成功");
-		result.setStatusCode(200);
-		result.setData(service.count());
-		return result;
-	}
-
-	@RequestMapping("/listAllMap")
-	@ResponseBody
-	public BaseResult listAllMap() {
-		BaseResult result = new BaseResult(true, "查询成功", 200, service.listAllMap());
 		return result;
 	}
 

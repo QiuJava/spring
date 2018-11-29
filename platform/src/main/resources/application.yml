@@ -21,3 +21,18 @@ spring:
       max-file-size: 1MB
       max-request-size: 10MB
       enabled: true
+      
+mybatis:
+  mapper-locations:
+  - classpath:mapper/*.xml
+  configuration:
+    # 缓存
+    cache-enabled: false
+    # 懒加载
+    lazy-loading-enabled: true
+    # 获取属性懒加载
+    aggressive-lazy-loading: false
+    # 对象触发完整加载的方法
+    lazy-load-trigger-methods: 
+    # sql执行日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!--数据库链接地址账号密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://192.168.3.31:3306/loan?characterEncoding=utf8" userId="root"
+			password="123456">
+		</jdbcConnection>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!--生成Model类存放位置 -->
+		<javaModelGenerator
+			targetPackage="cn.qj.core.entity" targetProject="core/src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<!-- <property name="trimStrings" value="true" /> -->
+		</javaModelGenerator>
+		
+		<!--生成映射文件存放位置 -->
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject="core/src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!--生成Dao类存放位置 -->
+		<!--  type="ANNOTATEDMAPPER" model mapper  provider都是java
+			  type="MIXEDMAPPER"model是java mapper  provider是java xml混合
+			  type="XMLMAPPER" model是java mapper  provider都是xml
+		 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="cn.qj.core.mapper" targetProject="core/src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!--生成对应表及类名 -->
+		<table tableName="ip_log" domainObjectName="IpLog"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+	</context>
+</generatorConfiguration>

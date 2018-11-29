@@ -1,15 +1,10 @@
 package cn.qj.core.service;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.pojo.qo.IpLogQo;
-import cn.qj.core.pojo.vo.IpLogCountVo;
-import cn.qj.core.pojo.vo.IpLogVo;
 
 /**
  * Ip登录服务
@@ -52,33 +47,11 @@ public interface IpLogService {
 	IpLog updateIpLog(IpLog ipLog);
 
 	/**
-	 * 查询所有登录日志页面展示数据
-	 * 
-	 * @return
-	 */
-	List<IpLogVo> listAllVo();
-
-	/**
 	 * 原生分页
 	 * 
 	 * @return
 	 */
 	Page<IpLog> page();
-
-	/**
-	 * 统计登录日志
-	 * 
-	 * @return
-	 */
-	IpLogCountVo count();
-
-	/**
-	 * 查询所有登录日志页面展示数据
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings("rawtypes")
-	List<HashMap> listAllMap();
 
 	/**
 	 * 根据ID获取登录日志
