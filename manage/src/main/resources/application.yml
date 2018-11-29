@@ -16,8 +16,28 @@ spring:
     time-zone: GMT+8
     # 格式化
     date-format: yyyy-MM-dd HH:mm:ss
-
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    
 # 关闭Spring安全基本认证    
 security:
   basic:
     enabled: false
+    
+mybatis:
+  mapper-locations:
+  - classpath:mapper/*.xml
+  configuration:
+    # 缓存
+    cache-enabled: false
+    # 懒加载
+    lazy-loading-enabled: true
+    # 获取属性懒加载
+    aggressive-lazy-loading: false
+    # 对象触发完整加载的方法
+    lazy-load-trigger-methods: 
+    # sql执行日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

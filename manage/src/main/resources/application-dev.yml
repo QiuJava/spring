@@ -12,12 +12,6 @@ spring:
       username: root
       password: 123456
       
-  resources:
-    static-locations:
-    - classpath:/META-INF/resources/
-    - classpath:/static/
-    - classpath:/public/
-
   redis:
     database: 1
     host: 127.0.0.1
@@ -30,25 +24,10 @@ spring:
       max-wait: 1
     timeout: 5000
     
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-mybatis:
-  mapper-locations:
-  - classpath:mapper/*.xml
-  configuration:
-    # 缓存
-    cache-enabled: false
-    # 懒加载
-    lazy-loading-enabled: true
-    # 获取属性懒加载
-    aggressive-lazy-loading: false
-    # 对象触发完整加载的方法
-    lazy-load-trigger-methods: 
-    # sql执行日志
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  resources:
+    static-locations:
+    - classpath:/static/
+    - classpath:/public/
     
 datasource:
   write:
@@ -57,7 +36,6 @@ datasource:
       url: jdbc:mysql://192.168.3.31:3306/loan?characterEncoding=utf8&useSSL=false
       username: root
       password: 123456
-      
   read:
     druid:
       driverClassName: com.mysql.jdbc.Driver
@@ -79,3 +57,4 @@ logging:
   file: E:/logs/manage/logback_spring.log
   level:
     root: info
+
