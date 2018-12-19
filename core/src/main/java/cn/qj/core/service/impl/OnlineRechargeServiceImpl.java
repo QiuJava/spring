@@ -93,7 +93,7 @@ public class OnlineRechargeServiceImpl implements OnlineRechargeService {
 		param.put("body", payDesc);
 		param.put("out_trade_no", id.toString());
 		param.put("total_fee", amount.toString());
-		param.put("spbill_create_ip", "192.168.3.31");
+		param.put("spbill_create_ip", "localhost");
 		param.put("notify_url", notifyUrl);
 		param.put("trade_type", "MWEB");
 		param.put("sign", StringUtil.signStr(param, mchKey));
