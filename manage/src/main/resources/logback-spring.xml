@@ -67,4 +67,9 @@
 			<appender-ref ref="rollingfile_size" />
 		</root>
 	</springProfile>
+
+	<!-- <logger name="org.hibernate.SQL" level="DEBUG" /> <logger name="org.hibernate.engine.QueryParameters" 
+		level="DEBUG" /> <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" 
+		/> <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" 
+		/> -->
 </configuration>

@@ -41,3 +41,7 @@ mybatis:
     lazy-load-trigger-methods: 
     # sql执行日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    
+#logging:
+  #level:
+    #cn.qj.core.mapper: debug

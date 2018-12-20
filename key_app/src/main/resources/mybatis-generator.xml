@@ -10,7 +10,7 @@
 		</commentGenerator>
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/loan?characterEncoding=utf8" userId="root"
+			connectionURL="jdbc:mysql://localhost:3306/key?characterEncoding=utf8" userId="root"
 			password="123456">
 		</jdbcConnection>
 		<javaTypeResolver>
@@ -18,14 +18,14 @@
 		</javaTypeResolver>
 		<!--生成Model类存放位置 -->
 		<javaModelGenerator
-			targetPackage="cn.qj.core.entity" targetProject="core/src/main/java">
+			targetPackage="cn.qj.key.entity" targetProject="key_app/src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<!-- <property name="trimStrings" value="true" /> -->
 		</javaModelGenerator>
 		
 		<!--生成映射文件存放位置 -->
 		<sqlMapGenerator targetPackage="mapper"
-			targetProject="core/src/main/resources">
+			targetProject="key_app/src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!--生成Dao类存放位置 -->
@@ -34,11 +34,11 @@
 			  type="XMLMAPPER" model是java mapper  provider都是xml
 		 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="cn.qj.core.mapper" targetProject="core/src/main/java">
+			targetPackage="cn.qj.key.mapper" targetProject="key_app/src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!--生成对应表及类名 -->
-		<table tableName="ip_log" domainObjectName="IpLog"
+		<table tableName="sys_user" domainObjectName="SysUser"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
