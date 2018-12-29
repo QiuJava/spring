@@ -119,4 +119,10 @@ public class WechatService {
 				WechatUtil.MENU_JSON, String.class).getBody();
 	}
 
+	public void sendTemplateMsg(String data) {
+		String result = restTemplate.postForObject(WechatUtil.SEND_TEMPLATE_MSG_URL + WechatUtil.getAccessToken(), data,
+				String.class);
+		System.out.println(result);
+	}
+
 }
