@@ -8,13 +8,13 @@ spring:
   #jackson:
     # 返回数据中的日期对象转换为指定日期格式字符串
     # date-format: yyyy-MM-dd HH:mm:ss
-  session:
-    store-type: redis
+  #session:
+  #  store-type: redis
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
+  
 #mybatis 配置
 #mybatis:
   #mapper-locations:
@@ -43,5 +43,5 @@ datasource:
     url: jdbc:mysql://localhost:3307/key?characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
-    
+
     

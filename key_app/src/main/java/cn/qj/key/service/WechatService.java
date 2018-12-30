@@ -35,7 +35,8 @@ public class WechatService {
 	public String verify(WechatVerify wechatVerify) {
 		// 1）将token、timestamp、nonce三个参数进行字典序排序 2）将三个参数字符串拼接成一个字符串进行sha1加密
 		// 3）开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
-		String[] strArr = new String[] { WechatUtil.TOKEN, wechatVerify.getTimestamp(), wechatVerify.getNonce() };
+		String[] strArr = new String[] { WechatUtil.WECHAT_TOKEN, wechatVerify.getTimestamp(),
+				wechatVerify.getNonce() };
 		Arrays.sort(strArr);
 		StringBuilder sb = new StringBuilder();
 		for (String str : strArr) {
@@ -111,7 +112,7 @@ public class WechatService {
 			Integer expires = (Integer) json.get("expires_in");
 			WechatUtil.setExpiresTime(System.currentTimeMillis() + (expires - 3600) * 1000);
 		}
-		System.out.println(WechatUtil.getAccessToken());
+		System.out.println("accessToken:" + WechatUtil.getAccessToken());
 	}
 
 	public String createMenu() {
@@ -123,6 +124,52 @@ public class WechatService {
 		String result = restTemplate.postForObject(WechatUtil.SEND_TEMPLATE_MSG_URL + WechatUtil.getAccessToken(), data,
 				String.class);
 		System.out.println(result);
+	}
+
+	public void getWebAccessToken(String code) {
+		if (WechatUtil.getWebAccessToken() == null || System.currentTimeMillis() > WechatUtil.getWebExpiresTime()) {
+			String url = WechatUtil.GET_WEB_ACCESSTOKEN_URL.replace("APPID", WechatUtil.appID);
+			url = url.replace("SECRET", WechatUtil.appsecret);
+			url = url.replace("CODE", code);
+			String body = restTemplate.getForEntity(url, String.class).getBody();
+			log.info("获取微信web_access_token返回:{}", body);
+			JSONObject json = JSON.parseObject(body);
+			WechatUtil.setWebAccessToken((String) json.get("access_token"));
+			Integer expires = (Integer) json.get("expires_in");
+			WechatUtil.setWebExpiresTime(System.currentTimeMillis() + (expires - 3600) * 1000);
+			WechatUtil.setWebRefreshToken((String) json.get("refresh_token"));
+			WechatUtil.setWebOpenid((String) json.get("openid"));
+		}
+		System.out.println("webAccessToken:" + WechatUtil.getWebAccessToken());
+	}
+
+	public JSONObject getWechatUserInfo() {
+		String url = WechatUtil.GET_WECHAT_USERINFO_URL.replace("ACCESS_TOKEN", WechatUtil.getWebAccessToken());
+		url = url.replace("OPENID", WechatUtil.getWebOpenid());
+		String result = restTemplate.getForEntity(url, String.class).getBody();
+		return JSON.parseObject(result);
+	}
+	
+	/**
+	 * 获取调用微信js的临时票据
+	 */
+	public void getTicket() {
+		if (WechatUtil.getTicket() == null || System.currentTimeMillis() > WechatUtil.getTicketExpiresTime()) {
+			String url = WechatUtil.GET_TICHET_URL;
+			url = url.replace("ACCESS_TOKEN", WechatUtil.getAccessToken());
+			String body = restTemplate.getForEntity(url, String.class).getBody();
+			log.info("获取微信ticket:{}", body);
+			JSONObject json = JSON.parseObject(body);
+			WechatUtil.setTicket((String) json.get("ticket"));
+			Integer expires = (Integer) json.get("expires_in");
+			WechatUtil.setTicketExpiresTime(System.currentTimeMillis() + (expires - 3600) * 1000);
+		}
+		System.out.println("ticket:" + WechatUtil.getTicket());
+
+	}
+	
+	public void getJssdkSignature() {
+		
 	}
 
 }

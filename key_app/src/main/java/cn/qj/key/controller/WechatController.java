@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
+
 import cn.qj.key.bean.WechatVerify;
 import cn.qj.key.entity.WechatAcceptMsg;
 import cn.qj.key.entity.WechatReplyMsg;
@@ -26,23 +28,13 @@ public class WechatController {
 	private WechatService wechatService;
 
 	/**
-	 * 获取调用微信接口的凭证
-	 * 
-	 * @return
-	 */
-	@PostMapping("/wechat/getAccessToken")
-	public String getAccessToken() {
-		wechatService.getAccessToken();
-		return "获取成功";
-	}
-
-	/**
 	 * 创建公众号菜单
 	 * 
 	 * @return
 	 */
 	@PostMapping("/wechat/createMenu")
 	public String createMenu() {
+		wechatService.getAccessToken();
 		return wechatService.createMenu();
 	}
 
@@ -75,6 +67,7 @@ public class WechatController {
 	 */
 	@PostMapping("/wechat/sendTemplateMsg")
 	public String sendTemplateMsg(String data) {
+		wechatService.getAccessToken();
 		data = WechatUtil.SEND_TEMPLATE_MSG_DATA;
 		wechatService.sendTemplateMsg(data);
 		return "发送成功";
@@ -85,12 +78,30 @@ public class WechatController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/wechat/getWechatUserInfo")
-	public BaseResult getWechatUserInfo(String code, String state) {
+	@GetMapping("/wechat/wechatUserInfo")
+	public BaseResult wechatUserInfo(String code, String state) {
 		System.out.println("code:" + code);
-		System.out.println("state:" + state);
+		// 根据code获取webaccess_token
+		wechatService.getWebAccessToken(code);
+
+		// 获取用户信息
 		BaseResult result = new BaseResult();
+		JSONObject json = wechatService.getWechatUserInfo();
+		result.setData(json);
+		result.setSuccess(true);
 		return result;
+	}
+
+	/**
+	 * 获取JS SDK 签名
+	 * 
+	 * @return
+	 */
+	@GetMapping("/wechat/jssdkSignature")
+	public void jssdkSignature() {
+		wechatService.getAccessToken();
+		wechatService.getTicket();
+		wechatService.getJssdkSignature();
 	}
 
 }
