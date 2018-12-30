@@ -26,7 +26,12 @@ public class WechatController {
 
 	@Autowired
 	private WechatService wechatService;
-
+	
+	@GetMapping("/json/format")
+	public String getJsonFormat() {
+		return WechatUtil.MENU_JSON;
+	}
+	
 	/**
 	 * 创建公众号菜单
 	 * 
