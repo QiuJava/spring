@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   session:
     timeout: 1800
 
@@ -8,24 +8,28 @@ spring:
   #jackson:
     # 返回数据中的日期对象转换为指定日期格式字符串
     # date-format: yyyy-MM-dd HH:mm:ss
-  session:
-    store-type: redis
-
+  #session:
+  #  store-type: redis
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  
 #mybatis 配置
-mybatis:
-  mapper-locations:
-  - classpath:mapper/*.xml
-  configuration:
+#mybatis:
+  #mapper-locations:
+  #- classpath:mapper/*.xml
+  #configuration:
     # 缓存
-    cache-enabled: false
+    #cache-enabled: false
     # 懒加载
-    lazy-loading-enabled: true
+    #lazy-loading-enabled: true
     # 获取属性懒加载
-    aggressive-lazy-loading: false
+    #aggressive-lazy-loading: false
     # 对象触发完整加载的方法
-    lazy-load-trigger-methods: toString
+    #lazy-load-trigger-methods: toString
     # sql执行日志
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #数据源配置    
 datasource:
@@ -39,5 +43,5 @@ datasource:
     url: jdbc:mysql://localhost:3307/key?characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
-    
+
     

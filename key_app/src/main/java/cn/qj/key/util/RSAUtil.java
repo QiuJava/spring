@@ -308,12 +308,12 @@ public class RSAUtil {
 	 * java端公钥加密
 	 * 
 	 * @param data
-	 * @param PUBLICKEY
+	 * @param publicKey
 	 * @return
 	 */
-	public static String encryptedDataOnJava(String data, String PUBLICKEY) {
+	public static String encryptedDataOnJava(String data, String publicKey) {
 		try {
-			data = Base64.encodeBase64String(encryptByPublicKey(data.getBytes(), PUBLICKEY));
+			data = Base64.encodeBase64String(encryptByPublicKey(data.getBytes(), publicKey));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -324,14 +324,14 @@ public class RSAUtil {
 	 * java端私钥解密
 	 * 
 	 * @param data
-	 * @param PRIVATEKEY
+	 * @param privateKey
 	 * @return
 	 */
-	public static String decryptDataOnJava(String data, String PRIVATEKEY) {
+	public static String decryptDataOnJava(String data, String privateKey) {
 		String temp = "";
 		try {
 			byte[] rs = Base64.decodeBase64(data);
-			temp = new String(RSAUtil.decryptByPrivateKey(rs, PRIVATEKEY), "UTF-8");
+			temp = new String(RSAUtil.decryptByPrivateKey(rs, privateKey), "UTF-8");
 
 		} catch (Exception e) {
 			e.printStackTrace();
