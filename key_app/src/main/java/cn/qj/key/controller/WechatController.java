@@ -63,7 +63,7 @@ public class WechatController {
 	@PostMapping("/wechat")
 	public String accept(@RequestBody WechatAcceptMsg msg) {
 		WechatReplyMsg replyMsg = wechatService.replyMsg(msg);
-		return XmlUtil.toXml(replyMsg);
+		return XmlUtil.toXml(replyMsg); 
 
 	}
 
