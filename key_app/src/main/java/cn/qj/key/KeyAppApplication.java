@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/**
+ * 应用配置
+ * 
+ * @author Qiujian
+ * @date 2019/01/17
+ */
 @SpringBootApplication
 public class KeyAppApplication extends WebMvcConfigurerAdapter {
 

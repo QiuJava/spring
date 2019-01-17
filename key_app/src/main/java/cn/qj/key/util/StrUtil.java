@@ -39,7 +39,7 @@ public class StrUtil {
 		for (int i = 0; i < badStrs.length; i++) {
 			for (int j = 0; j < strs.length; j++) {
 				if (strs[j].equalsIgnoreCase(badStrs[i])) {
-					strs[j] = "forbid";
+					strs[j] = "";
 				}
 			}
 		}

@@ -4,6 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 微信校验属性
+ * 
+ * @author Qiujian
+ * @date 2019/01/17
+ */
 @Setter
 @Getter
 @ToString

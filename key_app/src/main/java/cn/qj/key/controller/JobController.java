@@ -34,7 +34,7 @@ public class JobController {
 	/**
 	 * 停用定时任务
 	 */
-	@PutMapping("/pause")
+	@PutMapping("/job/pause")
 	public String pause() throws Exception {
 		scheduler.pauseJob(JobKey.jobKey(jobName, groupName));
 		return null;
@@ -43,13 +43,13 @@ public class JobController {
 	/**
 	 * 重新开始定时任务
 	 */
-	@PutMapping("/resume")
+	@PutMapping("/job/resume")
 	public String resume() throws Exception {
 		scheduler.resumeJob(JobKey.jobKey(jobName, groupName));
 		return null;
 	}
 
-	@DeleteMapping("/delete")
+	@DeleteMapping("/job/delete")
 	public String delete() throws Exception {
 		scheduler.pauseTrigger(TriggerKey.triggerKey(jobName, groupName));
 		scheduler.unscheduleJob(TriggerKey.triggerKey(jobName, groupName));
@@ -57,7 +57,7 @@ public class JobController {
 		return null;
 	}
 
-	@PutMapping("/update")
+	@PutMapping("/job/update")
 	public String update() throws Exception {
 		// 执行计划构建
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
@@ -70,7 +70,7 @@ public class JobController {
 		return null;
 	}
 
-	@PostMapping("/save")
+	@PostMapping("/job/save")
 	public String save() throws Exception {
 		// 执行计划构建
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);

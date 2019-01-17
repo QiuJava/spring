@@ -111,7 +111,7 @@ public class WechatUtil {
 			+ "                    \"url\": \"http://www.wolfcode.cn/zt/python/index.html\"" + "                }"
 			+ "            ]" + "        }" + "    ]" + "";
 
-	public static final String SEND_TEMPLATE_MSG_DATA = "{" + "    \"touser\": \"oj1sP08P3mSnZ0qsyCkaq7nVQZ6M\","
+	public static final String SEND_TEMPLATE_MSG_DATA = "{" + "    \"touser\": \"oj1sP03WKuKxKq4Q10LkKwNNVCMI\","
 			+ "    \"template_id\": \"Bp72jjth0hjtXI5zw0zdOAWHMt42oTiY9cldVMyRiKI\","
 			+ "    \"url\": \"http://www.baidu.com\"," + "    \"data\": {" + "        \"first\": {"
 			+ "            \"value\": \"恭喜你购买成功！\"," + "            \"color\": \"#173177\"" + "        },"

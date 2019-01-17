@@ -14,6 +14,7 @@ import cn.qj.key.entity.WechatReplyMsg;
 import cn.qj.key.service.WechatService;
 import cn.qj.key.util.BaseResult;
 import cn.qj.key.util.WechatUtil;
+import cn.qj.key.util.XmlUtil;
 
 /**
  * 微信接入控制器
@@ -26,12 +27,12 @@ public class WechatController {
 
 	@Autowired
 	private WechatService wechatService;
-	
+
 	@GetMapping("/json/format")
 	public String getJsonFormat() {
 		return WechatUtil.MENU_JSON;
 	}
-	
+
 	/**
 	 * 创建公众号菜单
 	 * 
@@ -59,9 +60,11 @@ public class WechatController {
 	 * 
 	 * @return
 	 */
-	@PostMapping(name = "/wechat", produces = { "application/xml;charset=UTF-8" })
-	public WechatReplyMsg accept(@RequestBody WechatAcceptMsg msg) {
-		return wechatService.replyMsg(msg);
+	@PostMapping("/wechat")
+	public String accept(@RequestBody WechatAcceptMsg msg) {
+		WechatReplyMsg replyMsg = wechatService.replyMsg(msg);
+		return XmlUtil.toXml(replyMsg);
+
 	}
 
 	/**
