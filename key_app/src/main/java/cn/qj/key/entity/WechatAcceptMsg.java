@@ -32,9 +32,7 @@ public class WechatAcceptMsg {
 	private String MediaId;// 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
 
 	private String Event;// 事件类型，subscribe(订阅)、unsubscribe(取消订阅)
-	
+
 	private String EventKey;//
-	
-	
 
 }

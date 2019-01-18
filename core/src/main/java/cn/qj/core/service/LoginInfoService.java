@@ -28,15 +28,7 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @param isAdmin
 	 * @return
 	 */
-	Boolean isExistAdmin(boolean isAdmin);
-
-	/**
-	 * 根据用户名判断用户名是否已存在
-	 * 
-	 * @param username
-	 * @return
-	 */
-	Boolean isNotExistByUsername(String username);
+	boolean isExistAdmin(int userType);
 
 	/**
 	 * 获取用户id获取登录信息
@@ -76,5 +68,13 @@ public interface LoginInfoService extends UserDetailsService {
 	 * @return
 	 */
 	LoginInfo saveLoginInfo(LoginInfo loginInfo);
+
+	/**
+	 * 判断用户名是否存在
+	 * 
+	 * @param username
+	 * @return
+	 */
+	boolean isExistByUsername(String username);
 
 }

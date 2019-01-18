@@ -56,7 +56,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void save(RealAuth realAuth) {
 		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
-		if (!userInfo.getIsRealAuth() && userInfo.getRealAuthId() == null) {
+		if (!userInfo.getIsRealAuth() && userInfo.getRealAuthId() == 0) {
 			realAuth.setState(StatusConst.AUTH_NORMAL);
 			realAuth.setApplier(HttpServletContext.getCurrentLoginInfo());
 			realAuth.setApplyTime(new Date());
@@ -111,7 +111,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 					applierInfo.setRealAuthId(id);
 				}
 			} else {
-				applierInfo.setRealAuthId(null);
+				applierInfo.setRealAuthId(0);
 			}
 			userInfoService.update(applierInfo);
 			repository.saveAndFlush(realAuth);

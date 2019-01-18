@@ -1,6 +1,9 @@
 package cn.qj.key.service;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -149,7 +152,7 @@ public class WechatService {
 		String result = restTemplate.getForEntity(url, String.class).getBody();
 		return JSON.parseObject(result);
 	}
-	
+
 	/**
 	 * 获取调用微信js的临时票据
 	 */
@@ -167,9 +170,34 @@ public class WechatService {
 		System.out.println("ticket:" + WechatUtil.getTicket());
 
 	}
-	
-	public void getJssdkSignature() {
-		
+
+	/**
+	 * 计算jssdk-config的签名
+	 * 
+	 * @param jsapi_ticket
+	 * @param timestamp
+	 * @param noncestr
+	 * @param url
+	 * @return
+	 */
+	public String getSignature(String jsapi_ticket, Long timestamp, String noncestr, String url) {
+		// 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）
+		Map<String, Object> map = new TreeMap<>();
+		map.put("jsapi_ticket", jsapi_ticket);
+		map.put("timestamp", timestamp);
+		map.put("noncestr", noncestr);
+		map.put("url", url);
+		// 使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1
+		StringBuilder sb = new StringBuilder();
+		Set<String> set = map.keySet();
+		for (String key : set) {
+			sb.append(key + "=" + map.get(key)).append("&");
+		}
+		// 去掉最后一个&符号
+		String temp = sb.substring(0, sb.length() - 1);
+		// 使用sha1加密
+		String sha1Hex = DigestUtils.sha1Hex(temp);
+		return sha1Hex;
 	}
 
 }

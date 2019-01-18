@@ -115,7 +115,7 @@
 								<label class="col-sm-4 control-label">
 									月收入
 								</label>
-								<div class="col-sm-8">
+								<div class="col-sm-8">.
 									<select class="form-control" name="incomeGrade.id" style="width: 180px" autocomplate="off" >
 									<#list incomeGrades as vo>
 										<option value="${vo.id}">${vo.title}</option>

@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 import cn.qj.core.consts.RequestConst;
-import cn.qj.core.consts.StatusConst;
 import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.entity.LoginInfo;
@@ -48,7 +47,7 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			Date currentDate = new Date();
 			// 达到次数进行锁定
 			if (loserCount >= SysConst.LOSER_MAX_COUNT) {
-				loginInfo.setStatus(StatusConst.LOCK);
+				loginInfo.setStatus(LoginInfo.LOCK);
 				loginInfo.setLockTime(currentDate);
 				loginInfo.setGmtModified(currentDate);
 			}
@@ -56,9 +55,9 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			IpLog ipLog = new IpLog();
 			ipLog.setIp(request.getRemoteAddr());
 			ipLog.setUsername(username);
-			ipLog.setUserType(StatusConst.MANAGER);
+			ipLog.setUserType(loginInfo.getUserType());
 			ipLog.setLoginTime(currentDate);
-			ipLog.setLoginState(StatusConst.LOGIN_FAIL);
+			ipLog.setLoginState(IpLog.LOGIN_FAIL);
 			ipLog.setGmtCreate(currentDate);
 			ipLog.setGmtModified(currentDate);
 

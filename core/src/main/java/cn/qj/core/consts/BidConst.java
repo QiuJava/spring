@@ -20,6 +20,7 @@ public class BidConst {
 	public static final Integer CAL_SCALE = 8;
 
 	public static final BigDecimal ZERO = new BigDecimal("0.00");
+	
 	public static final BigDecimal INIT_BORROW_LIMIT = new BigDecimal("50000");
 
 	/** 借款需要的信用分 */

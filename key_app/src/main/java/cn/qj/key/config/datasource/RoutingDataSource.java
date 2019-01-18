@@ -19,7 +19,7 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
 	@Override
 	protected Object determineCurrentLookupKey() {
 		String dataSourceKey = DataSourceUtil.getDataSourceKey();
-		logger.info("业务方法用的数据库:{}", StringUtils.hasLength(dataSourceKey) ? dataSourceKey : DataSourceUtil.WRITE_KEY);
+		logger.info("业务方法用的数据库======================={}", StringUtils.hasLength(dataSourceKey) ? dataSourceKey : DataSourceUtil.WRITE_KEY);
 		return dataSourceKey;
 	}
 

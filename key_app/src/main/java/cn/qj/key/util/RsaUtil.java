@@ -20,10 +20,12 @@ import java.util.Map;
 import javax.crypto.Cipher;
 
 /**
- * RSA公钥/私钥/签名工具包
+ * RSA公钥/私钥/签名工具
  * 
+ * @author Qiujian
+ * @date 2019/01/17
  */
-public class RSAUtil {
+public class RsaUtil {
 
 	/**
 	 * 加密算法RSA
@@ -81,10 +83,8 @@ public class RSAUtil {
 	/**
 	 * 用私钥对信息生成数字签名
 	 * 
-	 * @param data
-	 *            已加密数据
-	 * @param privateKey
-	 *            私钥(BASE64编码)
+	 * @param data       已加密数据
+	 * @param privateKey 私钥(BASE64编码)
 	 * 
 	 * @return
 	 * @throws Exception
@@ -103,12 +103,9 @@ public class RSAUtil {
 	/**
 	 * 校验数字签名
 	 * 
-	 * @param data
-	 *            已加密数据
-	 * @param publicKey
-	 *            公钥(BASE64编码)
-	 * @param sign
-	 *            数字签名
+	 * @param data      已加密数据
+	 * @param publicKey 公钥(BASE64编码)
+	 * @param sign      数字签名
 	 * 
 	 * @return
 	 * @throws Exception
@@ -128,10 +125,8 @@ public class RSAUtil {
 	/**
 	 * 私钥解密
 	 * 
-	 * @param encryptedData
-	 *            已加密数据
-	 * @param privateKey
-	 *            私钥(BASE64编码)
+	 * @param encryptedData 已加密数据
+	 * @param privateKey    私钥(BASE64编码)
 	 * @return
 	 * @throws Exception
 	 */
@@ -166,10 +161,8 @@ public class RSAUtil {
 	/**
 	 * 公钥解密
 	 * 
-	 * @param encryptedData
-	 *            已加密数据
-	 * @param publicKey
-	 *            公钥(BASE64编码)
+	 * @param encryptedData 已加密数据
+	 * @param publicKey     公钥(BASE64编码)
 	 * @return
 	 * @throws Exception
 	 */
@@ -204,10 +197,8 @@ public class RSAUtil {
 	/**
 	 * 公钥加密
 	 * 
-	 * @param data
-	 *            源数据
-	 * @param publicKey
-	 *            公钥(BASE64编码)
+	 * @param data      源数据
+	 * @param publicKey 公钥(BASE64编码)
 	 * @return
 	 * @throws Exception
 	 */
@@ -243,10 +234,8 @@ public class RSAUtil {
 	/**
 	 * 私钥加密
 	 * 
-	 * @param data
-	 *            源数据
-	 * @param privateKey
-	 *            私钥(BASE64编码)
+	 * @param data       源数据
+	 * @param privateKey 私钥(BASE64编码)
 	 * @return
 	 * @throws Exception
 	 */
@@ -281,8 +270,7 @@ public class RSAUtil {
 	/**
 	 * 获取私钥
 	 * 
-	 * @param keyMap
-	 *            密钥对
+	 * @param keyMap 密钥对
 	 * @return
 	 * @throws Exception
 	 */
@@ -294,8 +282,7 @@ public class RSAUtil {
 	/**
 	 * 获取公钥
 	 * 
-	 * @param keyMap
-	 *            密钥对
+	 * @param keyMap 密钥对
 	 * @return
 	 * @throws Exception
 	 */
@@ -331,7 +318,7 @@ public class RSAUtil {
 		String temp = "";
 		try {
 			byte[] rs = Base64.decodeBase64(data);
-			temp = new String(RSAUtil.decryptByPrivateKey(rs, privateKey), "UTF-8");
+			temp = new String(RsaUtil.decryptByPrivateKey(rs, privateKey), "UTF-8");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -345,7 +332,7 @@ public class RSAUtil {
 	 * @return
 	 */
 	public static Map<String, String> getPublicPrivatekeyMap() {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(2);
 		try {
 			Map<String, Object> keyPair = genKeyPair();
 			String privateKey = getPrivateKey(keyPair);

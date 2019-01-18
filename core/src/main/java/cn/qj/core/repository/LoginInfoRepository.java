@@ -13,12 +13,12 @@ import cn.qj.core.entity.LoginInfo;
 public interface LoginInfoRepository extends JpaRepository<LoginInfo, Long> {
 
 	/**
-	 * 统计管理员的个数
+	 * 根据用户类型统计用户数
 	 * 
-	 * @param isAdmin
+	 * @param userType
 	 * @return
 	 */
-	int countByIsAdmin(boolean isAdmin);
+	int countByUserType(int userType);
 
 	/**
 	 * 根据用户名精确查找用户

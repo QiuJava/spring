@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>蓝源Eloan-P2P平台</title> <#include "common/links-tpl.ftl" />
+<title>蓝源Eloan-P2P平台</title>
+<#include "common/links-tpl.ftl" />
 <script type="text/javascript" src="/js/plugins/jquery.form.js"></script>
 <link type="text/css" rel="stylesheet" href="/css/account.css" />
 
@@ -65,38 +66,37 @@
 			$("#bindEmailModal").modal("show");// 打开模式窗口
 		})
 		// 绑定邮箱
-		$("#bindEmail").click(function() {
-			var em = $("#email").val();
-			if (em) {
-				$.ajax({
-					dataType : "json",
-					type : "POST",
-					url : "/email/send",
-					data : {
-						email : em
-					},
-					success : function(data) {
-						if (data.success) {
-							$.messager.confirm("提示", "已发送验证邮件,请尽快激活!", function() {
-								window.location.reload();
-							});
-						} else {
-							$.messager.alert("发送验证邮件失败");
-						}
+		$("#bindEmail").click(
+				function() {
+					var em = $("#email").val();
+					if (em) {
+						$.ajax({
+							dataType : "json",
+							type : "POST",
+							url : "/email/send",
+							data : {
+								email : em
+							},
+							success : function(data) {
+								if (data.success) {
+									$.messager.confirm("提示", "已发送验证邮件,请尽快激活!",
+											function() {
+												window.location.reload();
+											});
+								} else {
+									$.messager.alert("发送验证邮件失败");
+								}
+							}
+						})
 					}
-				})
-			}
-		});
+				});
 	});
 </script>
 </head>
 <body>
 	<!-- assign指令 在freemarker的上下文中添加一个变量-->
-	<#assign currentNav="personal">
-	<!-- 网页顶部导航 -->
-	<#include "common/head-tpl.ftl" />
-	<!-- 网页导航 -->
-	<#include "common/navbar-tpl.ftl" />
+	<#assign currentNav="personal"> <!-- 网页顶部导航 --> <#include "common/head-tpl.ftl" />
+	<!-- 网页导航 --> <#include "common/navbar-tpl.ftl" />
 
 	<div class="container">
 		<div class="row">
@@ -117,9 +117,10 @@
 								<p>用户名： ${loginInfo.username}</p>
 								<p>最后登录时间：${ipLog.loginTime?datetime}</p>
 							</div>
-							<div class="pull-left" style="text-align: center; width: 400px; margin: 30px auto 0px auto;">
-								<a class="btn btn-primary btn-lg" href="/recharge">账户充值</a> <a class="btn btn-danger btn-lg"
-									href="/withdraw">账户提现</a>
+							<div class="pull-left"
+								style="text-align: center; width: 400px; margin: 30px auto 0px auto;">
+								<a class="btn btn-primary btn-lg" href="/recharge">账户充值</a> <a
+									class="btn btn-danger btn-lg" href="/withdraw">账户提现</a>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -164,8 +165,7 @@
 											<#else>
 											<p>
 												未认证 <a href="/realAuth">马上认证</a>
-											</p>
-											</#if>
+											</p></#if>
 										</div>
 										<div class="clearfix"></div>
 										<p class="info">实名认证之后才能在平台投资</p>
@@ -185,8 +185,7 @@
 											<#else>
 											<p>
 												未认证 <a id="goto_bindphone" href="javascript:;">立刻绑定</a>
-											</p>
-											</#if>
+											</p></#if>
 										</div>
 										<div class="clearfix"></div>
 										<p class="info">可以收到系统操作信息,并增加使用安全性</p>
@@ -201,13 +200,12 @@
 											<h5>邮箱认证</h5>
 											<#if userInfo.isBindEmail>
 											<p>
-												已认证 <a  href="#">修改绑定</a>
+												已认证 <a href="#">修改绑定</a>
 											</p>
 											<#else>
 											<p>
 												未认证 <a id="goto_bindemail" href="javascript:;">立刻绑定</a>
-											</p>
-											</#if>
+											</p></#if>
 										</div>
 										<div class="clearfix"></div>
 										<p class="info">您可以设置邮箱来接收重要信息</p>
@@ -238,28 +236,34 @@
 		</div>
 	</div>
 	<#if !userInfo.isBindPhone>
-	<div class="modal fade" id="bindPhoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+	<div class="modal fade" id="bindPhoneModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="exampleModalLabel">绑定手机</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" id="bindForm" method="post" action="/userInfo/bindPhone">
+					<form class="form-horizontal" id="bindForm" method="post"
+						action="/userInfo/bindPhone">
 						<div class="form-group">
 							<label for="phoneNumber" class="col-sm-2 control-label">手机号:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" />
-								<button id="sendVerifyCode" class="btn btn-primary" type="button">发送验证码</button>
+								<input type="text" class="form-control" id="phoneNumber"
+									name="phoneNumber" />
+								<button id="sendVerifyCode" class="btn btn-primary"
+									type="button">发送验证码</button>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="verifyCode" class="col-sm-2 control-label">验证码:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="verifyCode" name="verifyCode" />
+								<input type="text" class="form-control" id="verifyCode"
+									name="verifyCode" />
 							</div>
 						</div>
 					</form>
@@ -272,17 +276,20 @@
 		</div>
 	</div>
 	</#if> <#if !userInfo.isBindEmail>
-	<div class="modal fade" id="bindEmailModal" tabindex="-1" role="dialog" aria-labelledby="bindEmailModalLabel">
+	<div class="modal fade" id="bindEmailModal" tabindex="-1" role="dialog"
+		aria-labelledby="bindEmailModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="bindEmailModalLabel">绑定邮箱</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" id="bindEmailForm" method="post" action="/email/send">
+					<form class="form-horizontal" id="bindEmailForm" method="post"
+						action="/email/send">
 						<div class="form-group">
 							<label for="email" class="col-sm-2 control-label">邮箱地址:</label>
 							<div class="col-sm-6">

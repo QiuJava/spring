@@ -32,21 +32,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// auth.userDetailsService(userDetailsService).passwordEncoder(new
-		// BCryptPasswordEncoder());
 		auth.authenticationProvider(authenticationProvider);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();// 禁用csrf防护
-		// http.headers().httpStrictTransportSecurity();
 		http.authorizeRequests()
 				// 静态资源可以完全访问
 				.antMatchers("/borrow.html", "/index.html", "/register.html").permitAll()
 				// 登录登录url可以完全访问
 				.antMatchers(RequestConst.LOGIN_INFO_AJAX, "/home", "/borrow/home", "/sms/send", "/email/verify",
-						"/borrow_info", "/invest/list", "/loginInfo/register", "/loginInfo/isNotExist")
+						"/borrow_info", "/invest/list", "/loginInfo/register", "/loginInfo/isExist")
 				.permitAll()
 				// .antMatchers("/index").access("hasRole('后台首页')")
 				// 所有以 结尾的请求需要登录之后才能访问

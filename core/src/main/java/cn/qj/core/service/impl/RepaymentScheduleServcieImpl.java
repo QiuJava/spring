@@ -112,8 +112,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 		// 1.判断当前用户是否处于还款中
 		// 2.判断当前用户是否是还款用户
 		// 3.判断用户的钱是否足够
-		if (rs != null && rs.getState().equals(StatusConst.NORMAL)
-				&& rs.getBorrowUserId().equals(currentAccount.getId())
+		if (rs != null && rs.getState() == RepaymentSchedule.NORMAL && rs.getBorrowUserId() == currentAccount.getId()
 				&& usableAmount.compareTo(returnTotalAmount) >= 0) {
 			// 1.还款计划改变状态
 			// 修改成已还
@@ -154,7 +153,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 			// 8.如果当前还款是最后一期 改变借款人状态
 			// 得到借款对象
 			Borrow borrow = borrowService.get(rs.getBorrowId());
-			if (rs.getMonthIndex().equals(borrow.getMonthReturn())) {
+			if (rs.getMonthIndex() == borrow.getMonthReturn()) {
 				// 已还清状态
 				borrow.setState(BidConst.BORROW_STATE_COMPLETE_PAY_BACK);
 				borrowService.update(borrow);
@@ -193,7 +192,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 			@Override
 			public Predicate toPredicate(Root<RepaymentSchedule> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> list = new ArrayList<>();
-				list.add(cb.equal(root.get("state").as(Integer.class), StatusConst.NORMAL));
+				list.add(cb.equal(root.get("state").as(Integer.class), RepaymentSchedule.NORMAL));
 				try {
 					list.add(cb.between(root.get("deadline").as(Date.class), format.parse(dateStr),
 							format.parse(endOfDayStr)));

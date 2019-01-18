@@ -14,7 +14,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import cn.qj.core.consts.RequestConst;
-import cn.qj.core.consts.StatusConst;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.service.IpLogService;
@@ -41,9 +40,9 @@ public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {
 		Date currentDate = new Date();
 		ipLog.setIp(request.getRemoteAddr());
 		ipLog.setUsername(loginInfo.getUsername());
-		ipLog.setUserType(StatusConst.MANAGER);
+		ipLog.setUserType(loginInfo.getUserType());
 		ipLog.setLoginTime(currentDate);
-		ipLog.setLoginState(StatusConst.LOGIN_SUCCESS);
+		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
 		ipLog.setGmtCreate(currentDate);
 		ipLog.setGmtModified(currentDate);
 		ipLogService.saveIpLog(ipLog);

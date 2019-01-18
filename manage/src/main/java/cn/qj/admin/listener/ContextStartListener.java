@@ -1,6 +1,5 @@
 package cn.qj.admin.listener;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.commons.lang.time.DateUtils;
@@ -10,7 +9,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import cn.qj.core.consts.StatusConst;
 import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.entity.SystemAccount;
@@ -34,14 +32,13 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// 检查是否有admin
-		Boolean isAdmin = loginInfoService.isExistAdmin(true);
+		boolean admin = loginInfoService.isExistAdmin(LoginInfo.ADMIN);
 		// 没有创建
-		if (!isAdmin) {
+		if (!admin) {
 			LoginInfo info = new LoginInfo();
-			info.setIsAdmin(true);
 			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.INIT_PASSWORD));
 			info.setUsername(SysConst.ADMIN_NAME);
-			info.setUserType(StatusConst.MANAGER);
+			info.setUserType(LoginInfo.ADMIN);
 			Date currentDate = new Date();
 			info.setGmtCreate(currentDate);
 			info.setGmtModified(currentDate);
@@ -54,8 +51,7 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 			SystemAccount sysAcc = new SystemAccount();
 			Date currentDate = new Date();
 			sysAcc.setCreateDate(currentDate);
-			sysAcc.setTotalBalance(BigDecimal.ZERO);
-			sysAcc.setFreezedAmount(BigDecimal.ZERO);
+			// 默认生效时间为一年
 			sysAcc.setBeginDate(currentDate);
 			sysAcc.setEndDate(DateUtils.addYears(currentDate, 1));
 			systemAccountService.save(sysAcc);
