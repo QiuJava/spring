@@ -23,7 +23,6 @@ import org.springframework.util.StringUtils;
 import cn.qj.core.common.DataSourceKey;
 import cn.qj.core.common.PageResult;
 import cn.qj.core.entity.IpLog;
-import cn.qj.core.mapper.IpLogMapper;
 import cn.qj.core.pojo.qo.IpLogQo;
 import cn.qj.core.repository.IpLogRepository;
 import cn.qj.core.service.IpLogService;
@@ -41,9 +40,6 @@ public class IpLogServiceImpl implements IpLogService {
 
 	@Autowired
 	private IpLogRepository repository;
-
-	@Autowired
-	private IpLogMapper ipLogMapper;
 
 	@Override
 	@Cacheable("pageQueryIpLog")
@@ -111,8 +107,4 @@ public class IpLogServiceImpl implements IpLogService {
 		return repository.findAll(new PageRequest(1, 10, Direction.DESC, "loginTime"));
 	}
 
-	@Override
-	public IpLog getById(long id) {
-		return ipLogMapper.selectByPrimaryKey(id);
-	}
 }

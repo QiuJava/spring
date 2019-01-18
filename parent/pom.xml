@@ -27,8 +27,6 @@
 		<commons-io.version>2.2</commons-io.version>
 		<xstream.version>1.4.10</xstream.version>
 		<jsp-api.version>2.2.1-b03</jsp-api.version>
-		<mybatis-spring-boot-starter.version>1.3.1</mybatis-spring-boot-starter.version>
-		<mybatis-generator.version>1.3.5</mybatis-generator.version>
 	</properties>
 
 	<dependencies>
@@ -63,10 +61,6 @@
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 
-		<!-- 热启动 -->
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-devtools</artifactId> 
-			<optional>true</optional> </dependency> -->
-
 		<!-- freemarker模板使用Spring Security进行权限控制依赖 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -94,13 +88,6 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-		<!-- Servlet规范API -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -124,26 +111,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
-		</dependency>
-
-		<!-- junit测试 -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Xml操作 -->
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>${xstream.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>${mybatis-spring-boot-starter.version}</version>
 		</dependency>
 
 	</dependencies>

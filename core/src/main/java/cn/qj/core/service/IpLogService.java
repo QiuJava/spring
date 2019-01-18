@@ -53,12 +53,4 @@ public interface IpLogService {
 	 */
 	Page<IpLog> page();
 
-	/**
-	 * 根据ID获取登录日志
-	 * 
-	 * @param id
-	 * @return
-	 */
-	IpLog getById(long id);
-
 }
