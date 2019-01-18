@@ -1,6 +1,7 @@
 package cn.qj.core.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import cn.qj.core.common.LogicException;
-import cn.qj.core.consts.BidConst;
-import cn.qj.core.consts.StatusConst;
-import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.Account;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.entity.Role;
@@ -49,25 +46,18 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 		if (repository.countByUsername(username) > 0) {
 			throw new LogicException("用户名已存在");
 		} else {
-			if (!StringUtils.hasLength(username)) {
-				throw new LogicException("请输入用户名");
-			}
-			if (!StringUtils.hasLength(password)) {
-				throw new LogicException("请输入密码");
-			}
-
 			LoginInfo loginInfo = new LoginInfo();
+			Date date = new Date();
 			loginInfo.setUsername(username);
 			loginInfo.setPassword(new BCryptPasswordEncoder().encode(password));
-			loginInfo.setStatus(StatusConst.NORMAL);
+			loginInfo.setGmtCreate(date);
+			loginInfo.setGmtModified(date);
 			LoginInfo info = repository.saveAndFlush(loginInfo);
 
 			// 注册账号时创建额外的对象 账户 和 用户信息
 			Account account = new Account();
 			account.setId(info.getId());
-			account.setBorrowLimit(BidConst.INIT_BORROW_LIMIT);
-			account.setRemainBorrowLimit(BidConst.INIT_BORROW_LIMIT);
-			account.setTradePassword(SysConst.INIT_PASSWORD);
+			account.setVerifyKey(account.getVerifyKey());
 			accountService.save(account);
 
 			UserInfo userInfo = new UserInfo();
@@ -75,11 +65,6 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 			userInfoService.save(userInfo);
 		}
 
-	}
-
-	@Override
-	public Boolean isNotExistByUsername(String username) {
-		return repository.countByUsername(username) == 0;
 	}
 
 	@Override
@@ -128,7 +113,12 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 	}
 
 	@Override
-	public Boolean isExistAdmin(boolean isAdmin) {
-		return repository.countByIsAdmin(isAdmin) > 0;
+	public boolean isExistAdmin(int userType) {
+		return repository.countByUserType(userType) > 0;
+	}
+
+	@Override
+	public boolean isExistByUsername(String username) {
+		return repository.countByUsername(username) > 0;
 	}
 }

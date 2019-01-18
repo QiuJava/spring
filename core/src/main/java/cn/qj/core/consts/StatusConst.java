@@ -27,15 +27,6 @@ public class StatusConst {
 	/** 满标二审 */
 	public static final int FULL_AUDIT2 = 2;
 
-	public static final int LOGIN_SUCCESS = 0;
-	public static final int LOGIN_FAIL = 1;
-
-	public static final int NORMAL = 0;
-	public static final int LOCK = 1;
-	public static final int DEL = 2;
-	public static final int USER_PLATFORM = 0;
-	public static final int MANAGER = 1;
-
 	public static final int TRANS_IN = 0;
 	public static final int TRANS_SUCCESS = 1;
 	public static final int TRANS_FAILURE = 2;
@@ -50,6 +41,4 @@ public class StatusConst {
 	/** 逾期 */
 	public static final int OVERDUE = 2;
 
-	public static final int PAUSE = 1;
-	// public static final int NORMAL = 0;
 }

@@ -14,8 +14,9 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cn.qj.core.consts.StatusConst;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 登录信息
@@ -23,20 +24,31 @@ import lombok.Data;
  * @author Qiujian
  * @date 2018/11/01
  */
-@Data
+@Setter
+@Getter
+@ToString
 @Entity
 public class LoginInfo implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
+	public static final int NORMAL = 0;
+	public static final int LOCK = 1;
+	public static final int DEL = 2;
+	public static final int USER_PLATFORM = 0;
+	public static final int MANAGER = 1;
+	public static final int ADMIN = 2;
+	
+	public static final int LOSER_MAX_COUNT = 5;
+	public static final long LOCK_TIME = 1000 * 60;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 	private String username;
 	private String password;
-	private Integer userType;
-	private Boolean isAdmin;
-	private Integer status =StatusConst.NORMAL;
-	private Integer loserCount = 0;
+	private int userType;
+	private int status;
+	private int loserCount;
 	private Date lockTime;
 	/** 创建时间 */
 	private Date gmtCreate;
@@ -66,7 +78,7 @@ public class LoginInfo implements UserDetails {
 	 */
 	@Override
 	public boolean isAccountNonLocked() {
-		return status != StatusConst.LOCK;
+		return status != LOCK;
 	}
 
 	/**
@@ -82,7 +94,7 @@ public class LoginInfo implements UserDetails {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return status == StatusConst.DEL;
+		return status == DEL;
 	}
 
 	@Override

@@ -15,7 +15,6 @@ public class DateUtil {
 	private DateUtil() {
 	}
 
-	public static final long LOCK_TIME = 1000 * 60;
 	public static final long ONE_HOUR = 1000 * 60 * 60;
 
 	public static final String DATE_TIME_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";

@@ -1,7 +1,9 @@
 package cn.qj.core.common;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 基础请求返回
@@ -9,23 +11,25 @@ import lombok.NoArgsConstructor;
  * @author Qiujian
  * @date 2018/10/30
  */
-@Data
+@Setter
+@Getter
+@ToString
 @NoArgsConstructor
 public class BaseResult {
 
 	private boolean success;
 	private String msg;
-	private Integer statusCode;
+	private int statusCode;
 	private Object data;
 
-	public BaseResult(boolean success, String msg, Integer statusCode) {
+	public BaseResult(boolean success, String msg, int statusCode) {
 		super();
 		this.success = success;
 		this.msg = msg;
 		this.statusCode = statusCode;
 	}
 
-	public BaseResult(boolean success, String msg, Integer statusCode, Object data) {
+	public BaseResult(boolean success, String msg, int statusCode, Object data) {
 		super();
 		this.success = success;
 		this.msg = msg;
@@ -33,4 +37,15 @@ public class BaseResult {
 		this.data = data;
 	}
 
+	public static BaseResult err500() {
+		return new BaseResult(false, "系统异常", 500);
+	}
+
+	public static BaseResult err400(String msg) {
+		return new BaseResult(false, msg, 400);
+	}
+
+	public static BaseResult ok(String msg) {
+		return new BaseResult(true, msg, 200);
+	}
 }

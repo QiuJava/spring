@@ -30,7 +30,7 @@ public class AdminAccessDecisionManager implements AccessDecisionManager {
 		if (authentication instanceof UsernamePasswordAuthenticationToken) {
 			LoginInfo info = (LoginInfo) authentication.getPrincipal();
 			// 超级管理员拥有所有权限
-			if (info.getIsAdmin()) {
+			if (info.getUserType() == LoginInfo.ADMIN) {
 				return;
 			}
 		} else {

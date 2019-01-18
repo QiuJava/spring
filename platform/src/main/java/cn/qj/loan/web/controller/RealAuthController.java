@@ -50,7 +50,7 @@ public class RealAuthController {
 			model.addAttribute("realAuth", realAuth);
 			return "realAuth_result";
 		} else {
-			if (userInfo.getRealAuthId() != null) {
+			if (userInfo.getRealAuthId() > 0) {
 				model.addAttribute("auditing", true);
 				return "realAuth_result";
 			}

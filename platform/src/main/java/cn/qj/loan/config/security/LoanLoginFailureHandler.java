@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 import cn.qj.core.consts.RequestConst;
-import cn.qj.core.consts.StatusConst;
 import cn.qj.core.consts.SysConst;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.entity.LoginInfo;
@@ -40,29 +39,31 @@ public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		if (exception instanceof BadCredentialsException) {
-			String username = request.getParameter(SysConst.USERNAME_PARAM);
+			String username = request.getParameter("username");
 			LoginInfo loginInfo = loginInfoService.getLoginInfoByUsername(username);
 			loginInfo.setLoserCount(loginInfo.getLoserCount() + 1);
 
 			Date currentDate = new Date();
-			if (loginInfo.getLoserCount().equals(SysConst.LOSER_MAX_COUNT)) {
+			if (loginInfo.getLoserCount() == LoginInfo.LOSER_MAX_COUNT) {
 				// 达到次数进行锁定
-				loginInfo.setStatus(StatusConst.LOCK);
+				loginInfo.setStatus(LoginInfo.LOCK);
 				loginInfo.setLockTime(currentDate);
 			}
+			loginInfo.setGmtModified(currentDate);
+			loginInfoService.saveLoginInfo(loginInfo);
+			
 			// 登录日志记录
 			IpLog ipLog = new IpLog();
 			ipLog.setIp(request.getRemoteAddr());
 			ipLog.setUsername(username);
-			ipLog.setUserType(StatusConst.MANAGER);
+			ipLog.setUserType(loginInfo.getUserType());
 			ipLog.setLoginTime(currentDate);
-			ipLog.setLoginState(StatusConst.LOGIN_FAIL);
+			ipLog.setLoginState(IpLog.LOGIN_FAIL);
 			ipLog.setGmtCreate(currentDate);
 			ipLog.setGmtModified(currentDate);
-			loginInfoService.saveLoginInfo(loginInfo);
 			ipLogService.saveIpLog(ipLog);
 		}
-		request.setAttribute("msg", exception.getMessage());
+		request.setAttribute(SysConst.LOGIN_ERR_MSG, exception.getMessage());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(RequestConst.LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}

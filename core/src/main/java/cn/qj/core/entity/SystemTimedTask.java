@@ -12,7 +12,6 @@ import javax.persistence.Id;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.qj.core.consts.StatusConst;
 import lombok.Data;
 
 /**
@@ -26,9 +25,12 @@ import lombok.Data;
 public class SystemTimedTask implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final int PAUSE = 1;
+	public static final int NORMAL = 0;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 	private String jobName;
 	/** 定时任务的组 */
 	private String groupName;
@@ -37,14 +39,14 @@ public class SystemTimedTask implements Serializable {
 	/** 描述 */
 	private String description;
 	/** 状态 */
-	private Integer status;
+	private int status;
 	/** 创建时间 */
 	private Date gmtCreate;
 	/** 修改时间 */
 	private Date gmtModified;
 
 	public String getStatusDisplay() {
-		return status == StatusConst.PAUSE ? "暂停" : "开启";
+		return status == PAUSE ? "暂停" : "开启";
 	}
 
 	public String getJsonString() {

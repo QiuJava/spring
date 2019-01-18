@@ -9,7 +9,9 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import cn.qj.core.util.BidStateUtil;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 用户信息
@@ -17,65 +19,39 @@ import lombok.Data;
  * @author Qiujian
  * @date 2018/11/01
  */
-@Data
+@Setter
+@Getter
+@ToString
 @Entity
 public class UserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private Integer version;
-	private Long bitState = 0L;
+	@Id
+	private long id;
+	@Version
+	private int version;
+	private long bitState;
 	private String realName;
 	private String idNumber;
 	private String phoneNumber;
 	private String email;
-	private Integer authScore = 0;
+	private int authScore;
 	/** 月收入 */
+	@OneToOne
 	private SystemDictionaryItem incomeGrade;
 	/** 婚姻情况 */
+	@OneToOne
 	private SystemDictionaryItem marriage;
 	/** 小孩数量 */
+	@OneToOne
 	private SystemDictionaryItem kidCount;
 	/** 学历 */
+	@OneToOne
 	private SystemDictionaryItem educationBackground;
 	/** 住房条件 */
+	@OneToOne
 	private SystemDictionaryItem houseCondition;
-	private Long realAuthId;
-
-	@Id
-	public Long getId() {
-		return id;
-	}
-
-	@Version
-	public Integer getVersion() {
-		return version;
-	}
-
-	@OneToOne
-	public SystemDictionaryItem getIncomeGrade() {
-		return incomeGrade;
-	}
-
-	@OneToOne
-	public SystemDictionaryItem getMarriage() {
-		return marriage;
-	}
-
-	@OneToOne
-	public SystemDictionaryItem getKidCount() {
-		return kidCount;
-	}
-
-	@OneToOne
-	public SystemDictionaryItem getEducationBackground() {
-		return educationBackground;
-	}
-
-	@OneToOne
-	public SystemDictionaryItem getHouseCondition() {
-		return houseCondition;
-	}
+	private long realAuthId;
 
 	public void addState(Long state) {
 		bitState = BidStateUtil.addState(bitState, state);
@@ -88,7 +64,6 @@ public class UserInfo implements Serializable {
 	/**
 	 * 判断当前用户是否已经绑定手机
 	 */
-	@Transient
 	public boolean getIsBindPhone() {
 		return BidStateUtil.hasState(bitState, BidStateUtil.OP_BIND_PHONE);
 	}
@@ -96,7 +71,6 @@ public class UserInfo implements Serializable {
 	/**
 	 * 判断当前用户是否已经绑定邮箱
 	 */
-	@Transient
 	public boolean getIsBindEmail() {
 		return BidStateUtil.hasState(bitState, BidStateUtil.OP_BIND_EMAIL);
 	}
@@ -104,7 +78,6 @@ public class UserInfo implements Serializable {
 	/**
 	 * 判断当前用户是否填写了基本资料
 	 */
-	@Transient
 	public boolean getIsBasicInfo() {
 		return BidStateUtil.hasState(bitState, BidStateUtil.OP_BASIC_INFO);
 	}
@@ -112,7 +85,6 @@ public class UserInfo implements Serializable {
 	/**
 	 * 判断当前用户是否通过了实名认证
 	 */
-	@Transient
 	public boolean getIsRealAuth() {
 		return BidStateUtil.hasState(bitState, BidStateUtil.OP_REAL_AUTH);
 	}
@@ -144,7 +116,6 @@ public class UserInfo implements Serializable {
 	/**
 	 * 判断当前用户是否有提现申请在审核中
 	 */
-	@Transient
 	public boolean getIsWithdraw() {
 		return BidStateUtil.hasState(bitState, BidStateUtil.OP_WITHDRAW_PROCESS);
 	}

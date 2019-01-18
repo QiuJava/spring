@@ -420,7 +420,7 @@ public class BorrowServiceImpl implements BorrowService {
 			rs.setMonthIndex(i);
 			// 设置每一期的还款时间
 			rs.setDeadline(DateUtils.addMonths(nowDate, i));
-			rs.setState(StatusConst.NORMAL);
+			rs.setState(RepaymentSchedule.NORMAL);
 			rs.setReturnType(borrow.getReturnType());
 			if (i < borrow.getMonthReturn()) {
 				// 这一期的利息
