@@ -168,10 +168,6 @@ public class WechatService {
 			WechatUtil.setTicketExpiresTime(System.currentTimeMillis() + (expires - 3600) * 1000);
 		}
 		System.out.println("ticket:" + WechatUtil.getTicket());
-
-	}
-	
-	public void getJssdkSignature() {
 		
 	}
 	

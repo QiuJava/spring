@@ -72,54 +72,89 @@ public class WechatUtil {
 	@Setter
 	private static long ticketExpiresTime;
 
-	public static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?" + "access_token=";
+	public static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?"
+			+ "access_token=";
 	public static final String SEND_TEMPLATE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?"
 			+ "access_token=";
 
 	public static final String GET_ACCESSTOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?"
-			+ "grant_type=client_credential" + "&appid=" + appID + "&secret=" + appsecret;
+			+ "grant_type=client_credential&appid=" + appID + "&secret=" + appsecret;
 
 	/**
 	 * 微信用户授权页面
 	 */
-	public static final String WECHAT_AUTH_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?" + "appid="
-			+ appID + "&redirect_uri=http%3A%2F%2Fqjwxkf.nat300.top%2Fwechat%2FwechatUserInfo"
-			+ "&response_type=code&scope=snsapi_userinfo#wechat_redirect";
+	public static final String WECHAT_AUTH_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?"
+			+"appid="+ appID + "&redirect_uri=http%3A%2F%2Fqjwxkf.nat300.top%2Fwechat%2FwechatUserInfo&response_type=code&scope=snsapi_userinfo#wechat_redirect";
 	public static final String GET_WEB_ACCESSTOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?"
-			+ "appid=APPID" + "&secret=SECRET" + "&code=CODE" + "&grant_type=authorization_code";
+			+ "appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 
 	public static final String GET_WECHAT_USERINFO_CALLBACK_URL = "http://mdpd2k.natappfree.cc/wechat/getWechatUserInfo";
 
 	public static final String GET_WECHAT_USERINFO_URL = "https://api.weixin.qq.com/sns/userinfo?"
-			+ "access_token=ACCESS_TOKEN" + "&openid=OPENID" + "&lang=zh_CN";
+			+ "access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
 
 	/**
 	 * 获取页面使用JS SDK的凭据地址
 	 */
 	public static final String GET_TICHET_URL = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?"
-			+ "access_token=ACCESS_TOKEN" + "&type=jsapi";
+			+ "access_token=ACCESS_TOKEN&type=jsapi";
 
-	public static final String MENU_JSON = "{" + "    \"button\": [" + "        {" + "            \"type\": \"click\","
-			+ "            \"name\": \"开班信息\"," + "            \"key\": \"classinfo\"" + "        }," + "        {"
-			+ "            \"type\": \"click\"," + "            \"name\": \"校区地址\","
-			+ "            \"key\": \"address\"" + "        }," + "        {" + "            \"name\": \"学科介绍\","
-			+ "            \"sub_button\": [" + "                {" + "                    \"type\": \"view\","
-			+ "                    \"name\": \"Java课程\","
-			+ "                    \"url\": \"http://www.wolfcode.cn/zt/java/index.html\"" + "                },"
-			+ "                {" + "                    \"type\": \"view\","
-			+ "                    \"name\": \"Python课程\","
-			+ "                    \"url\": \"http://www.wolfcode.cn/zt/python/index.html\"" + "                }"
-			+ "            ]" + "        }" + "    ]" + "";
+	public static final String MENU_JSON = 
+			"[\r\n" + 
+			"    {\r\n" + 
+			"        \"type\": \"click\",\r\n" + 
+			"        \"name\": \"开班信息\",\r\n" + 
+			"        \"key\": \"classinfo\"\r\n" + 
+			"    },\r\n" + 
+			"    {\r\n" + 
+			"        \"type\": \"click\",\r\n" + 
+			"        \"name\": \"校区地址\",\r\n" + 
+			"        \"key\": \"address\"\r\n" + 
+			"    },\r\n" + 
+			"    {\r\n" + 
+			"        \"name\": \"学科介绍\",\r\n" + 
+			"        \"sub_button\": [\r\n" + 
+			"            {\r\n" + 
+			"                \"type\": \"view\",\r\n" + 
+			"                \"name\": \"Java课程\",\r\n" + 
+			"                \"url\": \"http://www.wolfcode.cn/zt/java/index.html\"\r\n" + 
+			"            },\r\n" + 
+			"            {\r\n" + 
+			"                \"type\": \"view\",\r\n" + 
+			"                \"name\": \"Python课程\",\r\n" + 
+			"                \"url\": \"http://www.wolfcode.cn/zt/python/index.html\"\r\n" + 
+			"            }\r\n" + 
+			"        ]\r\n" + 
+			"    }\r\n" + 
+			"]";
 
-	public static final String SEND_TEMPLATE_MSG_DATA = "{" + "    \"touser\": \"oj1sP03WKuKxKq4Q10LkKwNNVCMI\","
-			+ "    \"template_id\": \"Bp72jjth0hjtXI5zw0zdOAWHMt42oTiY9cldVMyRiKI\","
-			+ "    \"url\": \"http://www.baidu.com\"," + "    \"data\": {" + "        \"first\": {"
-			+ "            \"value\": \"恭喜你购买成功！\"," + "            \"color\": \"#173177\"" + "        },"
-			+ "        \"goodsName\": {" + "            \"value\": \"巧克力\"," + "            \"color\": \"#173177\""
-			+ "        }," + "        \"payAmount\": {" + "            \"value\": \"39.8元\","
-			+ "            \"color\": \"#173177\"" + "        }," + "        \"orderTime\": {"
-			+ "            \"value\": \"2014年9月22日\"," + "            \"color\": \"#173177\"" + "        },"
-			+ "        \"remark\": {" + "            \"value\": \"欢迎再次购买！\"," + "            \"color\": \"#173177\""
-			+ "        }" + "    }" + "}";
+	public static final String SEND_TEMPLATE_MSG_DATA = 
+			"{\r\n" + 
+			"    \"touser\": \"oj1sP03WKuKxKq4Q10LkKwNNVCMI\",\r\n" + 
+			"    \"template_id\": \"Bp72jjth0hjtXI5zw0zdOAWHMt42oTiY9cldVMyRiKI\",\r\n" + 
+			"    \"url\": \"http://www.baidu.com\",\r\n" + 
+			"    \"data\": {\r\n" + 
+			"        \"first\": {\r\n" + 
+			"            \"value\": \"恭喜你购买成功！\",\r\n" + 
+			"            \"color\": \"#173177\"\r\n" + 
+			"        },\r\n" + 
+			"        \"goodsName\": {\r\n" + 
+			"            \"value\": \"巧克力\",\r\n" + 
+			"            \"color\": \"#173177\"\r\n" + 
+			"        },\r\n" + 
+			"        \"payAmount\": {\r\n" + 
+			"            \"value\": \"39.8元\",\r\n" + 
+			"            \"color\": \"#173177\"\r\n" + 
+			"        },\r\n" + 
+			"        \"orderTime\": {\r\n" + 
+			"            \"value\": \"2014年9月22日\",\r\n" + 
+			"            \"color\": \"#173177\"\r\n" + 
+			"        },\r\n" + 
+			"        \"remark\": {\r\n" + 
+			"            \"value\": \"欢迎再次购买！\",\r\n" + 
+			"            \"color\": \"#173177\"\r\n" + 
+			"        }\r\n" + 
+			"    }\r\n" + 
+			"}";
 
 }

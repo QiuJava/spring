@@ -30,7 +30,7 @@ public class WechatController {
 
 	@GetMapping("/json/format")
 	public String getJsonFormat() {
-		return WechatUtil.MENU_JSON;
+		return WechatUtil.SEND_TEMPLATE_MSG_DATA;
 	}
 
 	/**
@@ -109,7 +109,6 @@ public class WechatController {
 	public void jssdkSignature() {
 		wechatService.getAccessToken();
 		wechatService.getTicket();
-		wechatService.getJssdkSignature();
 	}
 
 }
