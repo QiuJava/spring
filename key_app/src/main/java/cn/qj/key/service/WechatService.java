@@ -152,7 +152,7 @@ public class WechatService {
 		String result = restTemplate.getForEntity(url, String.class).getBody();
 		return JSON.parseObject(result);
 	}
-	
+
 	/**
 	 * 获取调用微信js的临时票据
 	 */
@@ -168,9 +168,9 @@ public class WechatService {
 			WechatUtil.setTicketExpiresTime(System.currentTimeMillis() + (expires - 3600) * 1000);
 		}
 		System.out.println("ticket:" + WechatUtil.getTicket());
-		
+
 	}
-	
+
 	/**
 	 * 计算jssdk-config的签名
 	 * 
