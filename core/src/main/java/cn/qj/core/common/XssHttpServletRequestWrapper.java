@@ -24,7 +24,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		int len = values.length;
 		String[] newValues = new String[len];
 		for (int i = 0; i < len; i++) {
-			String newValue = newValues[i].trim();
+			String newValue = values[i].trim();
 			newValue = cleanXSS(newValue);
 			newValue = cleanSQL(newValue);
 			newValues[i] = newValue;
