@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Qiujian
  * @date 2018/12/18
  */
+@WebFilter(filterName = "RequestFilter", urlPatterns = "/*")
 public class RequestFilter implements Filter {
 
 	@Override

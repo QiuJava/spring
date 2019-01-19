@@ -2,6 +2,7 @@ package cn.qj.key;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @date 2019/01/17
  */
 @SpringBootApplication
+@ServletComponentScan
 public class KeyAppApplication extends WebMvcConfigurerAdapter {
 
 	@Override

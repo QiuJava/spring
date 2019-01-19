@@ -10,8 +10,16 @@ public class StrUtil {
 	private StrUtil() {
 	}
 
-	public static boolean notEmpty(String str) {
+	public static boolean isNotEmpty(String str) {
 		return str != null && str.length() > 0;
+	}
+
+	public static boolean isEmpty(String str) {
+		return str == null || str.trim().equals("");
+	}
+
+	public static boolean lenValidator(String str, int start, int end) {
+		return str.length() >= start && str.length() <= end;
 	}
 
 	public static String cleanXSS(String str) {
