@@ -26,7 +26,7 @@ public class XmlUtil {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaller.marshal(obj, writer);
 		} catch (JAXBException e) {
-			throw new LogicException("xml 序列化异常");
+			throw new LogicException("对象转xml异常");
 		}
 		return writer.toString();
 	}
@@ -39,7 +39,7 @@ public class XmlUtil {
 			StringReader reader = new StringReader(xml);
 			xmlObject = unmarshaller.unmarshal(reader);
 		} catch (JAXBException e) {
-			throw new LogicException("xml 序列化异常");
+			throw new LogicException("xml转对象异常");
 		}
 		return xmlObject;
 	}

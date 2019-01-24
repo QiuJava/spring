@@ -28,5 +28,9 @@ datasource:
     url: jdbc:mysql://localhost:3307/key?characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
+    
+wechat:
+  appId: wx9d44774f8d0c066f
+  appsecret: d091cea7572b2c7e75218d3139bfee45
 
     

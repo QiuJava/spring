@@ -1,6 +1,5 @@
 package cn.qj.key.service;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -15,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import cn.qj.key.bean.WechatVerify;
 import cn.qj.key.entity.ArticlesItem;
 import cn.qj.key.entity.WechatAcceptMsg;
 import cn.qj.key.entity.WechatReplyMsg;
@@ -34,26 +32,6 @@ public class WechatService {
 
 	@Autowired
 	private RestTemplate restTemplate;
-
-	public String verify(WechatVerify wechatVerify) {
-		// 1）将token、timestamp、nonce三个参数进行字典序排序 2）将三个参数字符串拼接成一个字符串进行sha1加密
-		// 3）开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
-		String[] strArr = new String[] { WechatUtil.WECHAT_TOKEN, wechatVerify.getTimestamp(),
-				wechatVerify.getNonce() };
-		Arrays.sort(strArr);
-		StringBuilder sb = new StringBuilder();
-		for (String str : strArr) {
-			sb.append(str);
-		}
-		// sha1 加密
-		String signature = DigestUtils.sha1Hex(sb.toString());
-		if (signature.equals(wechatVerify.getSignature())) {
-			log.info("微信接入成功");
-			return wechatVerify.getEchostr();
-		}
-		log.info("微信接入失败");
-		return null;
-	}
 
 	public WechatReplyMsg replyMsg(WechatAcceptMsg msg) {
 		// 根据MsgId进行消息排重

@@ -15,7 +15,7 @@ public class StrUtil {
 	}
 
 	public static boolean isEmpty(String str) {
-		return str == null || str.trim().equals("");
+		return str == null || str.equals("");
 	}
 
 	public static boolean lenValidator(String str, int start, int end) {
@@ -42,7 +42,7 @@ public class StrUtil {
 		String badStr = "drop|select|declare|information_schema.columns|use|insert|"
 				+ "update|mid|delete|like'|truncate|and|by|sitename|create|from|where|"
 				+ "xp_cmdshell|table|order|--|//|or|#|%|like|'|count|column_name|+|union|"
-				+ "chr|net user|,|execute|-|master|/|group_concat|char|table_schema|;|grant|exec\r\n";
+				+ "chr|net user|,|execute|-|master|/|group_concat|char|table_schema|;|grant|exec";
 		String[] badStrs = badStr.split("\\|");
 		for (int i = 0; i < badStrs.length; i++) {
 			for (int j = 0; j < strs.length; j++) {

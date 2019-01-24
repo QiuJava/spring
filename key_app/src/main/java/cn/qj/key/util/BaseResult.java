@@ -1,8 +1,8 @@
 package cn.qj.key.util;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 基本结果返回
@@ -12,24 +12,43 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 public class BaseResult {
 
 	private boolean success;
 	private String msg;
+	private int statusCode;
 	private Object data;
 
-	public BaseResult(boolean success, String msg, Object data) {
+	public BaseResult(boolean success, String msg, int statusCode) {
 		super();
 		this.success = success;
 		this.msg = msg;
+		this.statusCode = statusCode;
+	}
+
+	public BaseResult(boolean success, String msg, int statusCode, Object data) {
+		super();
+		this.success = success;
+		this.msg = msg;
+		this.statusCode = statusCode;
 		this.data = data;
 	}
 
-	public BaseResult(boolean success, String msg) {
-		super();
-		this.success = success;
-		this.msg = msg;
+	public static BaseResult err500() {
+		return new BaseResult(false, "系统异常", 500);
+	}
+
+	public static BaseResult err400(String msg) {
+		return new BaseResult(false, msg, 400);
+	}
+
+	public static BaseResult ok(String msg) {
+		return new BaseResult(true, msg, 200);
+	}
+
+	public static BaseResult ok(String msg, Object data) {
+		return new BaseResult(true, msg, 200, data);
 	}
 
 }
