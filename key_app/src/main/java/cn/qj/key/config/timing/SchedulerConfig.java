@@ -21,13 +21,13 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 public class SchedulerConfig {
 
 	@Autowired
-	private SpringJobFactory springJobFactory;
+	private JobFactoryImpl jobFactory;
 
 	@Bean
 	public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
 		SchedulerFactoryBean factory = new SchedulerFactoryBean();
 		factory.setQuartzProperties(quartzProperties());
-		factory.setJobFactory(springJobFactory);
+		factory.setJobFactory(jobFactory);
 		return factory;
 	}
 

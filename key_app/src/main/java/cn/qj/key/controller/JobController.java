@@ -29,7 +29,7 @@ import cn.qj.key.util.BaseResult;
 @RestController
 public class JobController {
 
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private static final Logger log = LoggerFactory.getLogger(JobController.class);
 
 	@Autowired
 	private Scheduler scheduler;

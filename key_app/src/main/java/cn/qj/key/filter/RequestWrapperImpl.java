@@ -11,9 +11,9 @@ import cn.qj.key.util.StrUtil;
  * @author Qiujian
  * @date 2018/12/18
  */
-public class MyHttpServletRequestWrapper extends HttpServletRequestWrapper {
+public class RequestWrapperImpl extends HttpServletRequestWrapper {
 
-	public MyHttpServletRequestWrapper(HttpServletRequest request) {
+	public RequestWrapperImpl(HttpServletRequest request) {
 		super(request);
 	}
 

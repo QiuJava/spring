@@ -13,6 +13,12 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 微信工具
+ * 
+ * @author Qiujian
+ * @date 2019/01/28
+ */
 @Component
 @Getter
 @Setter

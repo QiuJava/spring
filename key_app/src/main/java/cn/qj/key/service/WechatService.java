@@ -28,7 +28,7 @@ import cn.qj.key.util.WechatUtil;
 @Service
 public class WechatService {
 
-	private static Logger log = LoggerFactory.getLogger(WechatService.class);
+	private static final Logger log = LoggerFactory.getLogger(WechatService.class);
 
 	@Autowired
 	private RestTemplate restTemplate;

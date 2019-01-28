@@ -29,7 +29,7 @@ public class RequestFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		chain.doFilter(new MyHttpServletRequestWrapper(req), response);
+		chain.doFilter(new RequestWrapperImpl(req), response);
 	}
 
 	@Override

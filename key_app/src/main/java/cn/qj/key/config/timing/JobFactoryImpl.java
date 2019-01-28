@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @date 2018/10/30
  */
 @Component
-public class SpringJobFactory extends AdaptableJobFactory {
+public class JobFactoryImpl extends AdaptableJobFactory {
 
 	@Autowired
 	private AutowireCapableBeanFactory capableBeanFactory;
@@ -22,7 +22,7 @@ public class SpringJobFactory extends AdaptableJobFactory {
 	protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
 		// 调用父类的方法 quartzJob工厂中Job
 		Object jobInstance = super.createJobInstance(bundle);
-		// 进行注入到spring容器
+		// 装配到spring容器
 		capableBeanFactory.autowireBean(jobInstance);
 		return jobInstance;
 	}
