@@ -1,5 +1,7 @@
 package cn.qj.key.service;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -8,15 +10,24 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import cn.qj.key.entity.ArticlesItem;
 import cn.qj.key.entity.WechatAcceptMsg;
+import cn.qj.key.entity.WechatArticle;
 import cn.qj.key.entity.WechatReplyMsg;
+import cn.qj.key.entity.WechatUser;
+import cn.qj.key.util.DateTimeUtil;
+import cn.qj.key.util.FileUtil;
+import cn.qj.key.util.LogicException;
+import cn.qj.key.util.StrUtil;
+import cn.qj.key.util.WechatResult;
 import cn.qj.key.util.WechatUtil;
 
 /**
@@ -31,86 +42,127 @@ public class WechatService {
 	private static final Logger log = LoggerFactory.getLogger(WechatService.class);
 
 	@Autowired
+	private WechatUserService wechantUserService;
+
+	@Autowired
+	private DictService dictService;
+
+	@Autowired
+	private WechatArticleService wechatArticleService;
+
+	@Autowired
+	private WechatAcceptMsgService wechatAcceptMsgService;
+
+	@Autowired
 	private RestTemplate restTemplate;
 
+	@Autowired
+	private ValueOperations<String, Object> valueOperations;
+
+	@Value("classpath:wechat_menu.json")
+	private Resource wecahtMenu;
+
 	public WechatReplyMsg replyMsg(WechatAcceptMsg msg) {
+		msg.setCreateDateTime(DateTimeUtil.getDate(msg.getCreateTime() * 1000));
+
 		// 根据MsgId进行消息排重
+		if (WechatUtil.EVENT.equals(msg.getMsgType())) {
+			msg.setMsgId(msg.getFromUserName() + msg.getCreateTime());
+		}
+		long count = wechatAcceptMsgService.countByMsgId(msg.getMsgId());
+		if (count > 0) {
+			return new WechatReplyMsg();
+		}
+
+		wechatAcceptMsgService.save(msg);
 		WechatReplyMsg replyMsg = new WechatReplyMsg();
+
 		replyMsg.setToUserName(msg.getFromUserName());
 		replyMsg.setFromUserName(msg.getToUserName());
 		replyMsg.setCreateTime(System.currentTimeMillis());
 
-		if (WechatUtil.WECHAT_MSG_TYPE_TEXT.equals(msg.getMsgType())) {
-			replyMsg.setMsgType(WechatUtil.WECHAT_MSG_TYPE_TEXT);
-
+		if (WechatUtil.TEXT.equals(msg.getMsgType())) {
+			replyMsg.setMsgType(WechatUtil.TEXT);
 			// 模拟关键字回复
-			String content = null;
-			if (msg.getContent().contains("吃")) {
-				content = "早餐喝粥\n中餐吃饭\n晚餐吃饭";
-			} else if (msg.getContent().contains("喝")) {
-				content = "早上喝牛奶\n中午喝益力多\n晚上喝水";
-			} else {
+			String content = dictService.getByDictName(msg.getContent());
+			if (StrUtil.isEmpty(content)) {
 				content = msg.getContent();
 			}
 			replyMsg.setContent(content);
-		} else if (WechatUtil.WECHAT_MSG_TYPE_IMAGE.equals(msg.getMsgType())) {
-			replyMsg.setMsgType(WechatUtil.WECHAT_MSG_TYPE_IMAGE);
-			replyMsg.setMediaId(new String[] { msg.getMediaId() });
-		} else if (WechatUtil.WECHAT_MSG_TYPE_EVENT.equals(msg.getMsgType())) {
-			if (WechatUtil.WECHAT_EVENT_TYPE_SUBSCRIBE.equals(msg.getEvent())) {
-				// replyMsg.setMsgType(WechatUtil.WECHAT_MSG_TYPE_TEXT);
-				// replyMsg.setContent("感谢关注！[爱心]");
-				replyMsg.setMsgType(WechatUtil.WECHAT_MSG_TYPE_NEWS);
-				replyMsg.setArticleCount(1);
+		} else if (WechatUtil.IMAGE.equals(msg.getMsgType())) {
+			replyMsg.setMsgType(WechatUtil.TEXT);
+			replyMsg.setContent("[上传成功]");
+		} else if (WechatUtil.EVENT.equals(msg.getMsgType())) {
 
-				ArticlesItem item = new ArticlesItem();
-				item.setPicUrl("http://www.wolfcode.cn/data/upload/20181122/5bf666c6b9b61.jpg");
-				item.setTitle("学习资料");
-				item.setDescription("学习资料");
-				item.setUrl("http://www.baidu.com");
-				replyMsg.setItem(new ArticlesItem[] { item });
-			} else if (WechatUtil.WECHAT_EVENT_TYPE_UNSUBSCRIBE.equals(msg.getEvent())) {
-				log.info("已取消关注！");
-			} else if (WechatUtil.WECHAT_EVENT_TYPE_CLICK.equalsIgnoreCase(msg.getEvent())) {
-				if ("classinfo".equals(msg.getEventKey())) {
-					replyMsg.setMsgType(WechatUtil.WECHAT_MSG_TYPE_TEXT);
-					replyMsg.setContent("北京java一期\n上海java二期 \n深圳java三期");
-				} else if ("address".equals(msg.getEventKey())) {
-					replyMsg.setMsgType(WechatUtil.WECHAT_MSG_TYPE_TEXT);
-					replyMsg.setContent("北京\n上海\n深圳");
+			if (WechatUtil.SUBSCRIBE.equals(msg.getEvent())) {
+				List<WechatArticle> articles = wechatArticleService.getByStatus(WechatArticle.VALID);
+				replyMsg.setMsgType(WechatUtil.NEWS);
+				replyMsg.setArticleCount(articles.size());
+				replyMsg.setItem(articles.toArray(new WechatArticle[articles.size()]));
+
+				// 保存关注用户
+				String wechatUserOpenId = msg.getFromUserName();
+				WechatUser wechatUser = wechantUserService.getByOpenId(wechatUserOpenId);
+				if (wechatUser == null) {
+					wechatUser = new WechatUser();
+					wechatUser.setOpenId(wechatUserOpenId);
+					wechatUser.setCreateTime(DateTimeUtil.getDate());
+				}
+				wechatUser.setSubscribeType(WechatUser.SUBSCRIBE);
+				wechatUser.setUpdateTime(DateTimeUtil.getDate());
+				wechantUserService.save(wechatUser);
+
+			} else if (WechatUtil.UNSUBSCRIBE.equals(msg.getEvent())) {
+				String wechatUserOpenId = msg.getFromUserName();
+				WechatUser wechatUser = wechantUserService.getByOpenId(wechatUserOpenId);
+				wechatUser.setSubscribeType(WechatUser.UN_SUBSCRIBE);
+				wechatUser.setUpdateTime(DateTimeUtil.getDate());
+				wechantUserService.save(wechatUser);
+
+			} else if (WechatUtil.CLICK.equalsIgnoreCase(msg.getEvent())) {
+				String eventKey = msg.getEventKey();
+				String byDictName = dictService.getByDictName(eventKey);
+				replyMsg.setMsgType(WechatUtil.TEXT);
+				if (StrUtil.isEmpty(byDictName)) {
+					replyMsg.setContent("没有");
+				} else {
+					replyMsg.setContent(byDictName);
 				}
 			}
 		}
+
 		return replyMsg;
 	}
 
-	public void getAccessToken() {
-		if (WechatUtil.getAccessToken() == null || System.currentTimeMillis() > WechatUtil.getExpiresTime()) {
-			String body = restTemplate.getForEntity(WechatUtil.GET_ACCESSTOKEN_URL, String.class).getBody();
-			log.info("获取微信access_token返回:{}", body);
-			JSONObject json = JSON.parseObject(body);
-			WechatUtil.setAccessToken((String) json.get("access_token"));
-			Integer expires = (Integer) json.get("expires_in");
-			WechatUtil.setExpiresTime(System.currentTimeMillis() + (expires - 3600) * 1000);
+	public void createMenu() {
+		String jsonRead = "";
+		try {
+			jsonRead = FileUtil.jsonRead(wecahtMenu.getFile());
+		} catch (IOException e) {
+			throw new LogicException("Io 异常");
 		}
-		System.out.println("accessToken:" + WechatUtil.getAccessToken());
-	}
 
-	public String createMenu() {
-		return restTemplate.postForEntity(WechatUtil.CREATE_MENU_URL + WechatUtil.getAccessToken(),
-				WechatUtil.MENU_JSON, String.class).getBody();
+		String token = (String) valueOperations.get(WechatUtil.ACCESS_TOKEN);
+		String body = restTemplate
+				.postForEntity(WechatUtil.POST_CREATE_MENU.replace("ACCESS_TOKEN", token), jsonRead, String.class)
+				.getBody();
+		WechatResult wechatResult = JSON.parseObject(body, WechatResult.class);
+		if (!WechatResult.OK.equals(wechatResult.getErrcode())) {
+			throw new LogicException(wechatResult.getErrmsg());
+		}
 	}
 
 	public void sendTemplateMsg(String data) {
-		String result = restTemplate.postForObject(WechatUtil.SEND_TEMPLATE_MSG_URL + WechatUtil.getAccessToken(), data,
-				String.class);
-		System.out.println(result);
+		String token = (String) valueOperations.get(WechatUtil.ACCESS_TOKEN);
+		String postForObject = restTemplate.postForObject(WechatUtil.POST_TEMPLATE_MSG.replace("ACCESS_TOKEN", token),
+				data, String.class);
+		System.out.println(postForObject);
 	}
 
 	public void getWebAccessToken(String code) {
 		if (WechatUtil.getWebAccessToken() == null || System.currentTimeMillis() > WechatUtil.getWebExpiresTime()) {
-			String url = WechatUtil.GET_WEB_ACCESSTOKEN_URL.replace("APPID", WechatUtil.appID);
-			url = url.replace("SECRET", WechatUtil.appsecret);
+			String url = WechatUtil.GET_WEB_ACCESSTOKEN_URL.replace("APPID", WechatUtil.APPID);
+			url = url.replace("SECRET", WechatUtil.APPSECRET);
 			url = url.replace("CODE", code);
 			String body = restTemplate.getForEntity(url, String.class).getBody();
 			log.info("获取微信web_access_token返回:{}", body);
@@ -135,9 +187,10 @@ public class WechatService {
 	 * 获取调用微信js的临时票据
 	 */
 	public void getTicket() {
+		String token = (String) valueOperations.get(WechatUtil.ACCESS_TOKEN);
 		if (WechatUtil.getTicket() == null || System.currentTimeMillis() > WechatUtil.getTicketExpiresTime()) {
 			String url = WechatUtil.GET_TICHET_URL;
-			url = url.replace("ACCESS_TOKEN", WechatUtil.getAccessToken());
+			url = url.replace("ACCESS_TOKEN", token);
 			String body = restTemplate.getForEntity(url, String.class).getBody();
 			log.info("获取微信ticket:{}", body);
 			JSONObject json = JSON.parseObject(body);
@@ -158,10 +211,10 @@ public class WechatService {
 	 * @param url
 	 * @return
 	 */
-	public String getSignature(String jsapi_ticket, Long timestamp, String noncestr, String url) {
+	public String getSignature(String jsapiTicket, Long timestamp, String noncestr, String url) {
 		// 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）
 		Map<String, Object> map = new TreeMap<>();
-		map.put("jsapi_ticket", jsapi_ticket);
+		map.put("jsapi_ticket", jsapiTicket);
 		map.put("timestamp", timestamp);
 		map.put("noncestr", noncestr);
 		map.put("url", url);

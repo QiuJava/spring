@@ -15,6 +15,18 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password: null
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: 1
+    timeout: 5000    
   
 #数据源配置    
 datasource:
@@ -30,7 +42,7 @@ datasource:
     password: 123456
     
 wechat:
-  appId: wx9d44774f8d0c066f
-  appsecret: d091cea7572b2c7e75218d3139bfee45
+  APPID: wx9d44774f8d0c066f
+  APPSECRET: d091cea7572b2c7e75218d3139bfee45
 
     

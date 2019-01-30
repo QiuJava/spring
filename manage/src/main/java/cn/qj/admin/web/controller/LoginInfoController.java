@@ -19,7 +19,7 @@ import cn.qj.core.util.StringUtil;
  */
 @Controller
 public class LoginInfoController {
-
+	
 	/**
 	 * 登录时信息返回给页面 不需要权限控制
 	 * 

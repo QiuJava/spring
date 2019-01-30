@@ -41,9 +41,8 @@ public class WechatController {
 	 * @return
 	 */
 	@PostMapping("/wechat/createMenu")
-	public String createMenu() {
-		wechatService.getAccessToken();
-		return wechatService.createMenu();
+	public void createMenu() {
+		wechatService.createMenu();
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class WechatController {
 				|| StrUtil.isEmpty(echostr)) {
 			return "";
 		}
-		String[] strArr = new String[] { WechatUtil.WECHAT_TOKEN, timestamp, nonce };
+		String[] strArr = new String[] { WechatUtil.TOKEN, timestamp, nonce };
 		Arrays.sort(strArr);
 		StringBuilder sb = new StringBuilder();
 		for (String str : strArr) {
@@ -93,7 +92,6 @@ public class WechatController {
 	 */
 	@PostMapping("/wechat/sendTemplateMsg")
 	public String sendTemplateMsg(String data) {
-		wechatService.getAccessToken();
 		data = WechatUtil.SEND_TEMPLATE_MSG_DATA;
 		wechatService.sendTemplateMsg(data);
 		return "发送成功";
@@ -112,7 +110,7 @@ public class WechatController {
 
 		// 获取用户信息
 		JSONObject json = wechatService.getWechatUserInfo();
-		return BaseResult.ok("获取用户成功",json);
+		return BaseResult.ok("获取用户成功", json);
 	}
 
 	/**
@@ -122,7 +120,6 @@ public class WechatController {
 	 */
 	@GetMapping("/wechat/jssdkSignature")
 	public void jssdkSignature() {
-		wechatService.getAccessToken();
 		wechatService.getTicket();
 	}
 

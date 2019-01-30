@@ -2,8 +2,10 @@ package cn.qj.key.entity;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,21 +20,38 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@XmlRootElement(name = "xml") // 指定传过来的xml文件根元素
-@XmlAccessorType(XmlAccessType.FIELD) // 根据字段进行解析
+@XmlRootElement(name = "xml")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class WechatReplyMsg {
+	
+	@XmlTransient
+	private Long id;
 
-	private String ToUserName;// 用户的openId
-	private String FromUserName;// 测试号
-	private Long CreateTime;// 消息创建时间 （整型）
-	private String MsgType;//
-	private String Content; // 文本消息内容;
+	// 接收方帐号（收到的OpenID）
+	@XmlElement(name = "ToUserName")
+	private String toUserName;
+	// 开发者微信号
+	@XmlElement(name = "FromUserName")
+	private String fromUserName;
+	// 消息创建时间 （整型）
+	@XmlElement(name = "CreateTime")
+	private long createTime;
+	// 消息类型
+	@XmlElement(name = "MsgType")
+	private String msgType;
+	// 文本消息内容;
+	@XmlElement(name = "Content")
+	private String content;
 
+	// 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
 	@XmlElementWrapper(name = "Image")
-	private String[] MediaId;// 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
-
-	private Integer ArticleCount;// 图文消息个数；当用户发送文本、图片、视频、图文、地理位置这五种消息时，开发者只能回复1条图文消息；其余场景最多可回复8条图文消息
+	@XmlElement(name = "MediaId")
+	private String[] mediaId;
+	
+	// 图文消息个数
+	@XmlElement(name = "ArticleCount")
+	private int articleCount;
 	@XmlElementWrapper(name = "Articles")
-	private ArticlesItem[] item;
+	private WechatArticle[] item;
 
 }

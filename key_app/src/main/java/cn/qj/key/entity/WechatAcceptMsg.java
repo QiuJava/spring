@@ -1,7 +1,12 @@
 package cn.qj.key.entity;
 
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.Getter;
@@ -9,7 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 微信接收消息
+ * 接收消息
  * 
  * @author Qiujian
  * @date 2018/12/20
@@ -17,22 +22,51 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@XmlRootElement(name = "xml") // 指定传过来的xml文件根元素
-@XmlAccessorType(XmlAccessType.FIELD) // 根据字段进行解析
+@XmlRootElement(name = "xml")
+@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class WechatAcceptMsg {
 
-	private String ToUserName;// 开发者微信号
-	private String FromUserName;// 发送方帐号（一个OpenID）
-	private Long CreateTime;// 消息创建时间 （整型）
-	private String MsgType;//
-	private Long MsgId;// 消息id，64位整型
+	// 消息id，64位整型
+	@Id
+	@XmlElement(name = "MsgId")
+	private String msgId;
+	// 开发者微信号
+	@XmlElement(name = "ToUserName")
+	private String toUserName;
+	// 发送方帐号（一个OpenID）
+	@XmlElement(name = "FromUserName")
+	private String fromUserName;
+	// 消息创建时间 （整型）
+	@XmlElement(name = "CreateTime")
+	private Long createTime;
+	private Date createDateTime;
+	// 消息类型 
+	@XmlElement(name = "MsgType")
+	private String msgType;
+	
+	/**
+	 * 文本消息
+	 */
+	// 文本消息内容;
+	@XmlElement(name = "Content")
+	private String content; 
 
-	private String Content; // 文本消息内容;
-	private String PicUrl;// 图片链接（由系统生成）
-	private String MediaId;// 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
-
-	private String Event;// 事件类型，subscribe(订阅)、unsubscribe(取消订阅)
-
-	private String EventKey;//
+	/**
+	 * 图片消息
+	 */
+	// 图片链接（由系统生成）
+	@XmlElement(name = "PicUrl")
+	private String picUrl;
+	// 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
+	@XmlElement(name = "MediaId")
+	private String mediaId;
+	
+	
+	// 事件类型，subscribe(订阅)、unsubscribe(取消订阅)
+	@XmlElement(name = "Event")
+	private String event;
+	@XmlElement(name = "EventKey")
+	private String eventKey;
 
 }
