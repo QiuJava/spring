@@ -31,7 +31,7 @@ public class KeyAppApplication extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(wechatAccessTokenInterceptor).addPathPatterns("/wechat/*");
-		
+
 	}
 
 	public static void main(String[] args) {

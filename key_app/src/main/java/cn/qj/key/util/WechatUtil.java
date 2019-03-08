@@ -27,7 +27,7 @@ public class WechatUtil {
 	public static final String NEWS = "news";
 
 	/**
-	 * 微信时间类型类型
+	 * 微信事件类型
 	 */
 	public static final String SUBSCRIBE = "subscribe";
 	public static final String UNSUBSCRIBE = "unsubscribe";
@@ -39,6 +39,9 @@ public class WechatUtil {
 	public static final String APPID = "wx9d44774f8d0c066f";
 	public static final String APPSECRET = "d091cea7572b2c7e75218d3139bfee45";
 
+	/**
+	 * 微信常量
+	 */
 	public static final String ACCESS_TOKEN = "access_token";
 
 	@Getter
@@ -61,7 +64,11 @@ public class WechatUtil {
 	@Setter
 	private static long ticketExpiresTime;
 
+	/**
+	 * 获取access_token
+	 */
 	public static final String GET_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&APPID=APPID&secret=APPSECRET";
+	
 	public static final String POST_CREATE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 	public static final String GET_DELETE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 

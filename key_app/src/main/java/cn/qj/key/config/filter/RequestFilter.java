@@ -1,4 +1,4 @@
-package cn.qj.key.filter;
+package cn.qj.key.config.filter;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Qiujian
  * @date 2018/12/18
  */
-@WebFilter(filterName = "RequestFilter", urlPatterns = "/*")
+@WebFilter(filterName = "requestFilter", urlPatterns = "/*")
 public class RequestFilter implements Filter {
 
 	@Override

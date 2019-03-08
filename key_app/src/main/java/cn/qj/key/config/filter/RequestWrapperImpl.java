@@ -1,4 +1,4 @@
-package cn.qj.key.filter;
+package cn.qj.key.config.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;

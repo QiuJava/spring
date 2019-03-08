@@ -34,14 +34,18 @@ public class WechatAccessTokenInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String token = (String) valueOperations.get(WechatUtil.ACCESS_TOKEN);
+		String getAccessTokenUrl = null;
 		if (token == null) {
-			String body = restTemplate.getForEntity(WechatUtil.GET_ACCESS_TOKEN.replace("APPID", WechatUtil.APPID)
-					.replace("APPSECRET", WechatUtil.APPSECRET), String.class).getBody();
+			getAccessTokenUrl = WechatUtil.GET_ACCESS_TOKEN.replace("APPID", WechatUtil.APPID);
+			getAccessTokenUrl = getAccessTokenUrl.replace("APPSECRET", WechatUtil.APPSECRET);
+			String body = restTemplate.getForEntity(getAccessTokenUrl, String.class).getBody();
 			JSONObject json = JSON.parseObject(body);
+
+			// 设置access_token到redis
 			valueOperations.set(WechatUtil.ACCESS_TOKEN, json.get(WechatUtil.ACCESS_TOKEN),
 					(Integer) json.get("expires_in"), TimeUnit.SECONDS);
 		}
 		return true;
 	}
-	
+
 }
