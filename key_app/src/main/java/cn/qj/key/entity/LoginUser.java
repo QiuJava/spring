@@ -35,7 +35,7 @@ public class LoginUser implements Serializable {
 	public static final int WEB_SOURCE = 1;
 	public static final int APP_SOURCE = 2;
 	public static final int WX_SOURCE = 3;
-
+	
 	/**
 	 * 1：普通用户 2：员工 3：管理者
 	 */

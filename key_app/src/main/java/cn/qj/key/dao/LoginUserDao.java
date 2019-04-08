@@ -17,4 +17,6 @@ public interface LoginUserDao extends JpaRepository<LoginUser, Long> {
 
 	long countByUsernameNotNull();
 
+	long countByPhoneNum(String phoneNum);
+
 }
