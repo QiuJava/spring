@@ -16,6 +16,13 @@ import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
 
+/**
+ * 安全拦截器
+ * 
+ * @author Qiujian
+ * @date 2019年4月8日
+ *
+ */
 @Component
 public class SecurityInterceptorImpl extends AbstractSecurityInterceptor implements Filter {
 

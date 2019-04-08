@@ -8,7 +8,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import cn.qj.core.config.exception.LogicException;
+import cn.qj.core.common.LogicException;
 
 /**
  * xml工具

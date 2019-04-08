@@ -1,4 +1,4 @@
-package cn.qj.core.config.exception;
+package cn.qj.core.common;
 
 import lombok.Getter;
 import lombok.Setter;

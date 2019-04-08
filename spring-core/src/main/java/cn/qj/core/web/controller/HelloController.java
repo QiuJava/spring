@@ -13,16 +13,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class HelloController {
-
+	
 	@GetMapping("/hello")
 	@ResponseBody
 	public String hello() {
 		return "hello";
+	}
+
+	@GetMapping("/home")
+	public String home() {
+		return "home";
 	}
 	
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
+
 
 }

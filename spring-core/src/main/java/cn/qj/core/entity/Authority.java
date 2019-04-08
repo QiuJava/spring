@@ -26,6 +26,7 @@ public class Authority implements GrantedAuthority {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String url;
 	private String authority;
 
 	@Override

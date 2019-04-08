@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 /**
  * 安全配置
@@ -14,6 +15,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	/** Spring Security 放到session中的认证相关信息 */
+	public static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
+
+	public static final String DEFAULT_CSRF_TOKEN_ATTR_NAME = HttpSessionCsrfTokenRepository.class.getName()
+			.concat(".CSRF_TOKEN");
 
 	@Autowired
 	private AuthenticationProviderImpl authenticationProviderImpl;
@@ -36,6 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 配置登出
 		http.logout().logoutUrl("/logout").logoutSuccessUrl("/login");
 
+		// 配置crsf
+		// http.csrf().csrfTokenRepository(csrfTokenRepository);
+		 http.csrf().disable();
 	}
 
 }

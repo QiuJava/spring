@@ -14,5 +14,5 @@ public class DictUtil {
 
 	public static final String USERNAME_PASSWORD_ERR_MSG = "username_password_err_msg";
 	public static final String LOGIN_MAX_LOSE_NUM = "login_max_lose_num";
-	public static final String NO_RIGHTS_MSG = "NO_RIGHTS_MSG";
+	public static final String NO_RIGHTS_MSG = "no_rights_msg";
 }

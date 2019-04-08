@@ -34,7 +34,7 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 		List<Authority> authorities = authorityService.getAll();
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
 		for (Authority anth : authorities) {
-			AntPathRequestMatcher matcher = new AntPathRequestMatcher(anth.getAuthority().replace("ROLE_", ""));
+			AntPathRequestMatcher matcher = new AntPathRequestMatcher(anth.getUrl());
 			if (matcher.matches(request)) {
 				List<ConfigAttribute> configList = new ArrayList<>();
 				configList.add(new SecurityConfig(anth.getAuthority()));
@@ -46,13 +46,8 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		List<Authority> authorities = authorityService.getAll();
 		List<ConfigAttribute> configList = new ArrayList<>();
-		for (Authority anth : authorities) {
-			configList.add(new SecurityConfig(anth.getAuthority()));
-		}
 		return configList;
-
 	}
 
 	@Override

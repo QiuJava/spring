@@ -18,28 +18,25 @@ spring:
       max-idle: 8
       min-idle: 2
       
+  freemarker:
+    suffix: .html
+    expose-session-attributes: true
+      
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    
-  freemarker:
-    expose-session-attributes: true
-    suffix: .ftl
-    settings:
-      number_format: 0.##
-      date_format: yyyy-MM-dd
-      datetime_format: yyyy-MM-dd HH:mm:ss
       
   jackson:
     # 中国时区
     time-zone: GMT+8
     # 统一时间格式
     date-format: yyyy-MM-dd HH:mm:ss
+
     
 # 
 server:
-  port: 8080
+  port: 8088
   session:
-    timeout: 1800
+    timeout: 1800 
     
