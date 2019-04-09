@@ -3,6 +3,7 @@ package cn.qj.core.config.security;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -12,7 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import cn.qj.core.service.DataDictService;
+import cn.qj.core.config.listener.ContextStartListener;
+import cn.qj.core.entity.DataDict;
 import cn.qj.core.util.DictUtil;
 
 /**
@@ -26,12 +28,13 @@ import cn.qj.core.util.DictUtil;
 public class AccessDecisionManagerImpl implements AccessDecisionManager {
 
 	@Autowired
-	private DataDictService dataDictService;
+	private HashOperations<String, String, Object> hashOperations;
 
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		String msg = dataDictService.getDictValueByDictkey(DictUtil.NO_RIGHTS_MSG);
+		DataDict dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.NO_RIGHTS_MSG);
+		String msg = dict.getDictValue();
 		if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
 			throw new InsufficientAuthenticationException(msg);
 		}

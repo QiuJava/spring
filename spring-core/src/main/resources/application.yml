@@ -17,10 +17,9 @@ spring:
       max-wait: 2
       max-idle: 8
       min-idle: 2
-      
-  freemarker:
-    suffix: .html
-    expose-session-attributes: true
+    
+  thymeleaf:
+    cache: false
       
   jpa:
     hibernate:

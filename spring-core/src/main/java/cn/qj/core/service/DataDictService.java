@@ -1,5 +1,7 @@
 package cn.qj.core.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,10 @@ public class DataDictService {
 	public String getDictValueByDictkey(String dictKey) {
 		DataDict dict = dataDictRepository.findByDictKey(dictKey);
 		return dict.getDictValue();
+	}
+
+	public List<DataDict> getAll() {
+		return dataDictRepository.findAll();
 	}
 
 }

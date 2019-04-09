@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 /**
  * 安全配置
@@ -19,11 +18,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	/** Spring Security 放到session中的认证相关信息 */
 	public static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
 
-	public static final String DEFAULT_CSRF_TOKEN_ATTR_NAME = HttpSessionCsrfTokenRepository.class.getName()
-			.concat(".CSRF_TOKEN");
-
 	@Autowired
 	private AuthenticationProviderImpl authenticationProviderImpl;
+
+	@Autowired
+	private AccessDeniedHandlerImpl accessDeniedHandlerImpl;
 
 	/**
 	 * 自定义系统安全配置
@@ -34,18 +33,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authenticationProvider(authenticationProviderImpl);
 
 		// 授权请求
-		http.authorizeRequests().antMatchers("/login", "/loginProcessing", "/home").permitAll();
+		http.authorizeRequests().antMatchers("/", "/home", "/about").permitAll()
+				//
+				.antMatchers("/admin/**").hasAnyRole("ADMIN")
+				//
+				.antMatchers("/user/**").hasAnyRole("USER");
+
 		http.authorizeRequests().anyRequest().authenticated();
 
 		// 配置登录
-		http.formLogin().loginPage("/login").loginProcessingUrl("/loginProcessing").defaultSuccessUrl("/home");
-
+		http.formLogin().loginPage("/login").permitAll();
 		// 配置登出
-		http.logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+		http.logout().permitAll();
 
+		http.exceptionHandling().accessDeniedHandler(accessDeniedHandlerImpl);
 		// 配置crsf
-		// http.csrf().csrfTokenRepository(csrfTokenRepository);
-		 http.csrf().disable();
 	}
 
 }

@@ -1,6 +1,7 @@
 package cn.qj.core.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,7 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.qj.core.service.DataDictService;
+import cn.qj.core.config.listener.ContextStartListener;
+import cn.qj.core.entity.DataDict;
 import cn.qj.core.service.LoginUserServiceImpl;
 import cn.qj.core.util.DictUtil;
 
@@ -36,14 +38,16 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 	private LoginUserServiceImpl loginUserServiceImpl;
 
 	@Autowired
-	private DataDictService dataDictService;
+	private HashOperations<String, String, Object> hashOperations;
 
 	@Override
 	@Transactional(rollbackFor = RuntimeException.class)
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String principal = authentication.getPrincipal().toString();
 		// 拿到密码错误提示语
-		String errMag = dataDictService.getDictValueByDictkey(DictUtil.USERNAME_PASSWORD_ERR_MSG);
+		DataDict dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT,
+				DictUtil.USERNAME_PASSWORD_ERR_MSG);
+		String errMag = dict.getDictValue();
 		UserDetails userDetails = loginUserServiceImpl.loadUserByUsername(principal);
 		if (userDetails == null) {
 			throw new UsernameNotFoundException(errMag);

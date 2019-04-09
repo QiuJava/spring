@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -14,8 +15,8 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
+import cn.qj.core.config.listener.ContextStartListener;
 import cn.qj.core.entity.Authority;
-import cn.qj.core.service.AuthorityService;
 
 /**
  * 初始化权限
@@ -24,14 +25,15 @@ import cn.qj.core.service.AuthorityService;
  * @date 2018/8/13
  */
 @Component
+@SuppressWarnings("unchecked")
 public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocationSecurityMetadataSource {
 
 	@Autowired
-	private AuthorityService authorityService;
+	private ValueOperations<String, Object> valueOperations;
 
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-		List<Authority> authorities = authorityService.getAll();
+		List<Authority> authorities = (List<Authority>) valueOperations.get(ContextStartListener.AUTHORITY);
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
 		for (Authority anth : authorities) {
 			AntPathRequestMatcher matcher = new AntPathRequestMatcher(anth.getUrl());
