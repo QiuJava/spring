@@ -2,6 +2,7 @@ package cn.qj.core.util;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -19,6 +20,10 @@ public class HttpSessionUtil {
 				.getRequestAttributes();
 		HttpSession session = requestAttributes.getRequest().getSession();
 		return session;
+	}
+
+	public String getUsername() {
+		return SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 }

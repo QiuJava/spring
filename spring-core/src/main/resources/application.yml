@@ -20,6 +20,10 @@ spring:
     
   thymeleaf:
     cache: false
+    
+  security:
+    property:
+      remember-me-seconds: 3600  
       
   jpa:
     hibernate:

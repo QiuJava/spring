@@ -45,8 +45,8 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 		for (DataDict dataDict : dicts) {
 			hashOperations.put(DATA_DICT, dataDict.getDictKey(), dataDict);
 		}
-		List<Authority> Authorities = authorityService.getAll();
-		valueOperations.set(AUTHORITY, Authorities);
+		List<Authority> authorities = authorityService.getAll();
+		valueOperations.set(AUTHORITY, authorities);
 
 	}
 

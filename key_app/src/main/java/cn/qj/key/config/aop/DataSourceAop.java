@@ -19,18 +19,12 @@ import cn.qj.key.config.datasource.DataSourceUtil;
 public class DataSourceAop {
 
 	@Around("@annotation(dataSourceKey)")
-	public Object around(ProceedingJoinPoint joinPoint, DataSourceKey dataSourceKey) {
+	public Object around(ProceedingJoinPoint joinPoint, DataSourceKey dataSourceKey) throws Throwable {
 		Object proceed = null;
-		try {
-			DataSourceUtil.setDataSourceKey(dataSourceKey.value());
-			proceed = joinPoint.proceed();
-			return proceed;
-		} catch (Throwable e) {
-			e.printStackTrace();
-			return proceed;
-		} finally {
-			DataSourceUtil.removeThreadLocal();
-		}
+		DataSourceUtil.setDataSourceKey(dataSourceKey.value());
+		proceed = joinPoint.proceed();
+		DataSourceUtil.removeThreadLocal();
+		return proceed;
 	}
 
 }

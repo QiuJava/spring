@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class LoginUser implements UserDetails {
 	 * 密码过期时间为半年
 	 */
 	private Date passwordExpiration;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Authority> authorities;
 
 	@Override

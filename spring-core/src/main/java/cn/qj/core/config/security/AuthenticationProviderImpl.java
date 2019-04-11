@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import cn.qj.core.config.listener.ContextStartListener;
 import cn.qj.core.entity.DataDict;
@@ -41,7 +40,6 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 	private HashOperations<String, String, Object> hashOperations;
 
 	@Override
-	@Transactional(rollbackFor = RuntimeException.class)
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String principal = authentication.getPrincipal().toString();
 		// 拿到密码错误提示语

@@ -3,8 +3,15 @@ package cn.qj.core.web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * 首页控制器
+ * 
+ * @author Qiujian
+ * @date 2019年4月11日
+ *
+ */
 @Controller
-public class DefaultController {
+public class HomeController {
 
 	@GetMapping("/")
 	public String index() {
@@ -14,21 +21,6 @@ public class DefaultController {
 	@GetMapping("/home")
 	public String home() {
 		return "/home";
-	}
-
-	@GetMapping("/admin")
-	public String admin() {
-		return "/admin";
-	}
-
-	@GetMapping("/user")
-	public String user() {
-		return "/user";
-	}
-
-	@GetMapping("/about")
-	public String about() {
-		return "/about";
 	}
 
 	@GetMapping("/login")
