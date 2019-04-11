@@ -14,7 +14,7 @@ spring:
   jackson:
     # 中国时区
     time-zone: GMT+8
-    # 格式化
+    # 统一时间格式
     date-format: yyyy-MM-dd HH:mm:ss
     
   jpa:

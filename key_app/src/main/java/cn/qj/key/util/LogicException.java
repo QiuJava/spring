@@ -1,7 +1,6 @@
 package cn.qj.key.util;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -10,7 +9,6 @@ import lombok.Setter;
  * @author Qiujian
  * @date 2018/12/18
  */
-@NoArgsConstructor
 public class LogicException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
@@ -26,4 +24,9 @@ public class LogicException extends RuntimeException {
 	public LogicException(String errMsg) {
 		super(errMsg);
 	}
+	
+	public LogicException() {
+		super();
+	}
+	
 }

@@ -16,41 +16,33 @@ public class WechatUtil {
 	/**
 	 * 微信接入时的凭据
 	 */
-	public static final String WECHAT_TOKEN = "123456";
+	public static final String TOKEN = "123456";
 
 	/**
 	 * 微信消息类型
 	 */
-	public static final String WECHAT_MSG_TYPE_TEXT = "text";
-	public static final String WECHAT_MSG_TYPE_IMAGE = "image";
-	public static final String WECHAT_MSG_TYPE_EVENT = "event";
-	public static final String WECHAT_MSG_TYPE_NEWS = "news";
+	public static final String TEXT = "text";
+	public static final String IMAGE = "image";
+	public static final String EVENT = "event";
+	public static final String NEWS = "news";
 
 	/**
-	 * 微信时间类型
+	 * 微信事件类型
 	 */
-	public static final String WECHAT_EVENT_TYPE_SUBSCRIBE = "subscribe";
-	public static final String WECHAT_EVENT_TYPE_UNSUBSCRIBE = "unsubscribe";
-	public static final String WECHAT_EVENT_TYPE_CLICK = "click";
+	public static final String SUBSCRIBE = "subscribe";
+	public static final String UNSUBSCRIBE = "unsubscribe";
+	public static final String CLICK = "click";
 
 	/**
 	 * 测试号信息
 	 */
-	public static String appID = "wx9d44774f8d0c066f";
-	public static String appsecret = "d091cea7572b2c7e75218d3139bfee45";
+	public static final String APPID = "wx9d44774f8d0c066f";
+	public static final String APPSECRET = "d091cea7572b2c7e75218d3139bfee45";
 
 	/**
-	 * 缓存 基本 access_token
+	 * 微信常量
 	 */
-	@Getter
-	@Setter
-	private static String accessToken;
-	/**
-	 * 缓存基本access_token的失效时间
-	 */
-	@Getter
-	@Setter
-	private static long expiresTime;
+	public static final String ACCESS_TOKEN = "access_token";
 
 	@Getter
 	@Setter
@@ -72,21 +64,37 @@ public class WechatUtil {
 	@Setter
 	private static long ticketExpiresTime;
 
-	public static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?"
-			+ "access_token=";
-	public static final String SEND_TEMPLATE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?"
-			+ "access_token=";
+	/**
+	 * 获取access_token
+	 */
+	public static final String GET_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&APPID=APPID&secret=APPSECRET";
+	
+	public static final String POST_CREATE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+	public static final String GET_DELETE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 
-	public static final String GET_ACCESSTOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?"
-			+ "grant_type=client_credential&appid=" + appID + "&secret=" + appsecret;
+	public static final String POST_TEMPLATE_MSG = "https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token=ACCESS_TOKEN";
+
+	public static final String SEND_TEMPLATE_MSG_DATA = "{\r\n"
+			+ "    \"touser\": \"oj1sP03WKuKxKq4Q10LkKwNNVCMI\",\r\n"
+			+ "    \"template_id\": \"Bp72jjth0hjtXI5zw0zdOAWHMt42oTiY9cldVMyRiKI\",\r\n"
+			+ "    \"url\": \"http://www.baidu.com\",\r\n" + "    \"data\": {\r\n" + "        \"first\": {\r\n"
+			+ "            \"value\": \"恭喜你购买成功！\",\r\n" + "            \"color\": \"#173177\"\r\n" + "        },\r\n"
+			+ "        \"goodsName\": {\r\n" + "            \"value\": \"巧克力\",\r\n"
+			+ "            \"color\": \"#173177\"\r\n" + "        },\r\n" + "        \"payAmount\": {\r\n"
+			+ "            \"value\": \"39.8元\",\r\n" + "            \"color\": \"#173177\"\r\n" + "        },\r\n"
+			+ "        \"orderTime\": {\r\n" + "            \"value\": \"2014年9月22日\",\r\n"
+			+ "            \"color\": \"#173177\"\r\n" + "        },\r\n" + "        \"remark\": {\r\n"
+			+ "            \"value\": \"欢迎再次购买！\",\r\n" + "            \"color\": \"#173177\"\r\n" + "        }\r\n"
+			+ "    }\r\n" + "}";
 
 	/**
 	 * 微信用户授权页面
 	 */
-	public static final String WECHAT_AUTH_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?"
-			+"appid="+ appID + "&redirect_uri=http%3A%2F%2Fqjwxkf.nat300.top%2Fwechat%2FwechatUserInfo&response_type=code&scope=snsapi_userinfo#wechat_redirect";
+	public static final String WECHAT_AUTH_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?" + "APPID="
+			+ APPID
+			+ "&redirect_uri=http%3A%2F%2Fqjwxkf.nat300.top%2Fwechat%2FwechatUserInfo&response_type=code&scope=snsapi_userinfo#wechat_redirect";
 	public static final String GET_WEB_ACCESSTOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?"
-			+ "appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
+			+ "APPID=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 
 	public static final String GET_WECHAT_USERINFO_CALLBACK_URL = "http://mdpd2k.natappfree.cc/wechat/getWechatUserInfo";
 
@@ -98,63 +106,5 @@ public class WechatUtil {
 	 */
 	public static final String GET_TICHET_URL = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?"
 			+ "access_token=ACCESS_TOKEN&type=jsapi";
-
-	public static final String MENU_JSON = 
-			"[\r\n" + 
-			"    {\r\n" + 
-			"        \"type\": \"click\",\r\n" + 
-			"        \"name\": \"开班信息\",\r\n" + 
-			"        \"key\": \"classinfo\"\r\n" + 
-			"    },\r\n" + 
-			"    {\r\n" + 
-			"        \"type\": \"click\",\r\n" + 
-			"        \"name\": \"校区地址\",\r\n" + 
-			"        \"key\": \"address\"\r\n" + 
-			"    },\r\n" + 
-			"    {\r\n" + 
-			"        \"name\": \"学科介绍\",\r\n" + 
-			"        \"sub_button\": [\r\n" + 
-			"            {\r\n" + 
-			"                \"type\": \"view\",\r\n" + 
-			"                \"name\": \"Java课程\",\r\n" + 
-			"                \"url\": \"http://www.wolfcode.cn/zt/java/index.html\"\r\n" + 
-			"            },\r\n" + 
-			"            {\r\n" + 
-			"                \"type\": \"view\",\r\n" + 
-			"                \"name\": \"Python课程\",\r\n" + 
-			"                \"url\": \"http://www.wolfcode.cn/zt/python/index.html\"\r\n" + 
-			"            }\r\n" + 
-			"        ]\r\n" + 
-			"    }\r\n" + 
-			"]";
-
-	public static final String SEND_TEMPLATE_MSG_DATA = 
-			"{\r\n" + 
-			"    \"touser\": \"oj1sP03WKuKxKq4Q10LkKwNNVCMI\",\r\n" + 
-			"    \"template_id\": \"Bp72jjth0hjtXI5zw0zdOAWHMt42oTiY9cldVMyRiKI\",\r\n" + 
-			"    \"url\": \"http://www.baidu.com\",\r\n" + 
-			"    \"data\": {\r\n" + 
-			"        \"first\": {\r\n" + 
-			"            \"value\": \"恭喜你购买成功！\",\r\n" + 
-			"            \"color\": \"#173177\"\r\n" + 
-			"        },\r\n" + 
-			"        \"goodsName\": {\r\n" + 
-			"            \"value\": \"巧克力\",\r\n" + 
-			"            \"color\": \"#173177\"\r\n" + 
-			"        },\r\n" + 
-			"        \"payAmount\": {\r\n" + 
-			"            \"value\": \"39.8元\",\r\n" + 
-			"            \"color\": \"#173177\"\r\n" + 
-			"        },\r\n" + 
-			"        \"orderTime\": {\r\n" + 
-			"            \"value\": \"2014年9月22日\",\r\n" + 
-			"            \"color\": \"#173177\"\r\n" + 
-			"        },\r\n" + 
-			"        \"remark\": {\r\n" + 
-			"            \"value\": \"欢迎再次购买！\",\r\n" + 
-			"            \"color\": \"#173177\"\r\n" + 
-			"        }\r\n" + 
-			"    }\r\n" + 
-			"}";
 
 }

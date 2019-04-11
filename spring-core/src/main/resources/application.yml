@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/core?useSSL=false
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 5000
+    pool: 
+      max-active: 16
+      max-wait: 2
+      max-idle: 8
+      min-idle: 2
+    
+  thymeleaf:
+    cache: false
+    
+  security:
+    property:
+      remember-me-seconds: 3600  
+      
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+      
+  jackson:
+    # 中国时区
+    time-zone: GMT+8
+    # 统一时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
+
+    
+# 
+server:
+  port: 8088
+  session:
+    timeout: 1800 
+    

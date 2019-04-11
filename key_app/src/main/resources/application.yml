@@ -2,19 +2,24 @@ server:
   port: 8080
   session:
     timeout: 1800
-
+    
 spring:
-  freemarker:
-    expose-session-attributes: true
-    suffix: .html
-    settings:
-      number_format: 0.##
-      date_format: yyyy-MM-dd
-      datetime_format: yyyy-MM-dd HH:mm:ss
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password: null
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: 1
+    timeout: 5000    
   
 #数据源配置    
 datasource:
@@ -28,5 +33,6 @@ datasource:
     url: jdbc:mysql://localhost:3307/key?characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
+
 
     

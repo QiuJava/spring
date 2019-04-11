@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
-
 /**
  * 数据源配置
  * 
@@ -26,7 +25,7 @@ public class DataSourceConfig {
 	@Autowired
 	private ReadDataSourceConfig readDataSourceConfig;
 
-	public DataSource writeDataSource() {
+	private DataSource writeDataSource() {
 		DruidDataSource dataSource = new DruidDataSource();
 		dataSource.setUrl(writeDataSourceConfig.getUrl());
 		dataSource.setDriverClassName(writeDataSourceConfig.getDriverClassName());
@@ -35,7 +34,7 @@ public class DataSourceConfig {
 		return dataSource;
 	}
 
-	public DataSource readDataSource() {
+	private DataSource readDataSource() {
 		DruidDataSource dataSource = new DruidDataSource();
 		dataSource.setUrl(readDataSourceConfig.getUrl());
 		dataSource.setDriverClassName(readDataSourceConfig.getDriverClassName());

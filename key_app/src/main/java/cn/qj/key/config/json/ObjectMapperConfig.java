@@ -25,8 +25,8 @@ import cn.qj.key.util.DateTimeUtil;
 @Configuration
 public class ObjectMapperConfig {
 
-	@Bean
 	@Primary
+	@Bean
 	public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
 		ObjectMapper objectMapper = builder.createXmlMapper(false).build();
 		objectMapper.setDateFormat(new SimpleDateFormat(DateTimeUtil.DATATIME_PATTERN));

@@ -5,7 +5,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * 测试定时任务
@@ -13,11 +12,10 @@ import org.springframework.stereotype.Component;
  * @author Qiujian
  * @date 2018/12/17
  */
-@Component
 public class TestJob implements Job {
 
-	private static Logger log = LoggerFactory.getLogger(TestJob.class);
-
+	private static final Logger log = LoggerFactory.getLogger(TestJob.class);
+	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		log.info("============================测试Job===================================");

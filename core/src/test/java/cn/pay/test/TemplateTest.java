@@ -12,6 +12,9 @@ public class TemplateTest {
 
 	@Test
 	public void test() throws Exception {
-		System.out.println();
+		String str = null;
+		if(!"-1".equals(str)){
+			System.out.println("11111111111111111111111111111111");
+		}
 	}
 }

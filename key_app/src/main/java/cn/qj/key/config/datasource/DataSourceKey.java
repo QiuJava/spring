@@ -15,6 +15,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DataSourceKey {
 
-	String value();
+	String value() default DataSourceUtil.WRITE_KEY;
 
 }

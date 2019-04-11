@@ -20,11 +20,12 @@ public class QueryUtil {
 
 	public static String handelPageSql(String sql, int page, int size) {
 		StringBuilder sb = new StringBuilder(sql);
+		sb.append(" LIMIT ");
 		int record = (page - 1) * size;
 		if (record == 0) {
-			sb.append(" LIMIT ").append(size);
+			sb.append(size);
 		} else {
-			sb.append(" LIMIT ").append(record).append(",").append(size);
+			sb.append(record).append(",").append(size);
 		}
 		return sb.toString();
 	}
