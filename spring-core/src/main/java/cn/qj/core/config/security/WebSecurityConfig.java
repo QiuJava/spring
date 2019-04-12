@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		tokenRepository.setDataSource(dataSource);
 		if (valueOperations.get(CREATE_TABLEON_START_UP) == null) {
 			tokenRepository.setCreateTableOnStartup(true);
-			valueOperations.set(CREATE_TABLEON_START_UP, "false");
+			valueOperations.set(CREATE_TABLEON_START_UP, CREATE_TABLEON_START_UP);
 		}
 		return tokenRepository;
 	}

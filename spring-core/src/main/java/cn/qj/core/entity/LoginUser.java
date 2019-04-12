@@ -45,6 +45,10 @@ public class LoginUser implements UserDetails {
 	 * 密码过期时间为半年
 	 */
 	private Date passwordExpiration;
+	/**
+	 * 密码有效期为1年
+	 */
+	private Date accountExpiration;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Authority> authorities;
 
@@ -68,7 +72,7 @@ public class LoginUser implements UserDetails {
 	 */
 	@Override
 	public boolean isAccountNonExpired() {
-		return true;
+		return accountExpiration.getTime() > System.currentTimeMillis();
 	}
 
 	/**

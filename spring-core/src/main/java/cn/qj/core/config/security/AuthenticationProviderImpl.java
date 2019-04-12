@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -43,30 +42,29 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String principal = authentication.getPrincipal().toString();
 		// 拿到密码错误提示语
-		DataDict dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT,
-				DictUtil.USERNAME_PASSWORD_ERR_MSG);
-		String errMag = dict.getDictValue();
 		UserDetails userDetails = loginUserServiceImpl.loadUserByUsername(principal);
-		if (userDetails == null) {
-			throw new UsernameNotFoundException(errMag);
-		} else {
-			if (!userDetails.isEnabled()) {
-				throw new DisabledException(errMag);
-			}
-			if (!userDetails.isAccountNonLocked()) {
-				throw new LockedException(errMag);
-			}
-			if (!userDetails.isCredentialsNonExpired()) {
-				throw new CredentialsExpiredException(errMag);
-			}
-			if (!userDetails.isAccountNonExpired()) {
-				throw new AccountExpiredException(errMag);
-			}
+		DataDict dict = null;
+		if (!userDetails.isEnabled()) {
+			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.DISABLED_ERR_MSG);
+			throw new DisabledException(dict.getDictValue());
+		}
+		if (!userDetails.isAccountNonLocked()) {
+			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.LOCKED_ERR_MSG);
+			throw new LockedException(dict.getDictValue());
+		}
+		if (!userDetails.isCredentialsNonExpired()) {
+			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.CREDENTIALS_EXPIRED_ERR_MSG);
+			throw new CredentialsExpiredException(dict.getDictValue());
+		}
+		if (!userDetails.isAccountNonExpired()) {
+			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.ACCOUNT_EXPIRED_ERR_MSG);
+			throw new AccountExpiredException(dict.getDictValue());
 		}
 
 		// 密码检查
 		if (!B_CRYPT.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
-			throw new BadCredentialsException(errMag);
+			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.USERNAME_PASSWORD_ERR_MSG);
+			throw new BadCredentialsException(dict.getDictValue());
 		}
 		return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(),
 				userDetails.getAuthorities());

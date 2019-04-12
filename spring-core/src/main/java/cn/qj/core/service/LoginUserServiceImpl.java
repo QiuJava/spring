@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.qj.core.config.listener.ContextStartListener;
 import cn.qj.core.entity.DataDict;
@@ -40,6 +41,7 @@ public class LoginUserServiceImpl implements UserDetailsService {
 		return user;
 	}
 
+	@Transactional(rollbackFor = RuntimeException.class)
 	public void save(LoginUser loginUser) {
 		loginUserRepository.save(loginUser);
 	}
