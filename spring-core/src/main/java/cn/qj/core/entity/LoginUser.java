@@ -46,7 +46,7 @@ public class LoginUser implements UserDetails {
 	 */
 	private Date passwordExpiration;
 	/**
-	 * 密码有效期为1年
+	 * 账户有效期为1年
 	 */
 	private Date accountExpiration;
 	@ManyToMany(fetch = FetchType.EAGER)

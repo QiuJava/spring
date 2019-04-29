@@ -59,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 授权请求
 		http.authorizeRequests().antMatchers("/").permitAll();
 		http.authorizeRequests().antMatchers("/api/*").hasRole("USER");
+		http.authorizeRequests().antMatchers("/redis/*").permitAll();
 
 		http.authorizeRequests().anyRequest().authenticated();
 

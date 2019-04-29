@@ -22,6 +22,9 @@
 				<div sec:authorize="isAuthenticated()">
 					<p sec:authentication="name"></p>
 				</div>
+				<div sec:authorize="!isAuthenticated()">
+					<a href="/login">登录</a>
+				</div>
 				<form class="form-horizontal" th:action="@{/logout}" method="post">
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
