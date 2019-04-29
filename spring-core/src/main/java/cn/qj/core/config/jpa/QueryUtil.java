@@ -25,7 +25,12 @@ public class QueryUtil {
 	private EntityManager entityManager;
 
 	public <T> T findOneResult(String sql, Class<T> clz, List<Object> params) {
-		return findListResult(sql, clz, params).get(0);
+		Query nativeQuery = entityManager.createNativeQuery(sql);
+		for (int i = 0; i < params.size(); i++) {
+			nativeQuery.setParameter(i + 1, params.get(i));
+		}
+		SQLQuery sqlQuery = nativeQuery.unwrap(SQLQuery.class);
+		return (T) sqlQuery.setResultTransformer(Transformers.aliasToBean(clz)).uniqueResult();
 	}
 
 	public <T> List<T> findListResult(String sql, Class<T> clz, List<Object> params) {
@@ -34,7 +39,6 @@ public class QueryUtil {
 			nativeQuery.setParameter(i + 1, params.get(i));
 		}
 		SQLQuery sqlQuery = nativeQuery.unwrap(SQLQuery.class);
-		org.hibernate.Query query = sqlQuery.setResultTransformer(Transformers.aliasToBean(clz));
-		return query.list();
+		return sqlQuery.setResultTransformer(Transformers.aliasToBean(clz)).list();
 	}
 }

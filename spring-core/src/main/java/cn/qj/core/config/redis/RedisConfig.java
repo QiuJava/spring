@@ -56,7 +56,14 @@ public class RedisConfig extends CachingConfigurerSupport {
 			public Object generate(Object target, Method method, Object... params) {
 				StringBuilder sb = new StringBuilder();
 				sb.append(target.getClass().getName());
-				sb.append(":" + method.getName() + ":");
+				sb.append(":").append(method.getName()).append(":");
+				sb.append("[");
+				for (Object object : params) {
+					sb.append(object.toString()).append(",");
+				}
+				sb.deleteCharAt(sb.length() - 1);
+				sb.append("]");
+
 				return sb.toString();
 			}
 		};
