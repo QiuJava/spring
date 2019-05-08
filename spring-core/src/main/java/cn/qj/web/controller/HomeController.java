@@ -32,4 +32,9 @@ public class HomeController {
 	public String error403() {
 		return "/error/403";
 	}
+
+	@GetMapping("/homePage")
+	public String homePage() {
+		return "/homePage";
+	}
 }

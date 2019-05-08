@@ -28,6 +28,8 @@ public class Authority implements GrantedAuthority {
 	private Long id;
 	private String url;
 	private String authority;
+	private String name;
+	private String description;
 
 	@Override
 	public String getAuthority() {

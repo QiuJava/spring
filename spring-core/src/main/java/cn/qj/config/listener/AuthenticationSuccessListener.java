@@ -1,5 +1,7 @@
 package cn.qj.config.listener;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +37,12 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
 	@Override
 	public void onApplicationEvent(AuthenticationSuccessEvent event) {
 		LoginLog log = new LoginLog();
-		log.setLoginIp(request.getRemoteAddr());
-		log.setLoginStatus(LoginLog.SUCCESS);
+		log.setIp(request.getRemoteAddr());
+		log.setStatus(LoginLog.SUCCESS);
 		log.setUsername(event.getAuthentication().getName());
 		DataDict dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.LOGIN_SUCCESS_MSG);
-		log.setLoginMsg(dict.getDictValue());
+		log.setMsg(dict.getDictValue());
+		log.setCreateTime(new Date());
 		loginLogService.save(log);
 	}
 

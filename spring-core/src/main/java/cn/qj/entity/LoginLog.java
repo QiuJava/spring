@@ -1,6 +1,7 @@
 package cn.qj.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,8 +36,9 @@ public class LoginLog implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
-	private Integer loginStatus;
-	private String loginIp;
-	private String loginMsg;
+	private Integer status;
+	private String ip;
+	private String msg;
+	private Date createTime;
 
 }

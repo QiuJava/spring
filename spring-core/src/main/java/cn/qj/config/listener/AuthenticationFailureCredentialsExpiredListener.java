@@ -1,5 +1,7 @@
 package cn.qj.config.listener;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +32,11 @@ public class AuthenticationFailureCredentialsExpiredListener
 	@Override
 	public void onApplicationEvent(AuthenticationFailureCredentialsExpiredEvent event) {
 		LoginLog log = new LoginLog();
-		log.setLoginIp(request.getRemoteAddr());
-		log.setLoginStatus(LoginLog.CREDENTIALS_EXPIRED);
+		log.setIp(request.getRemoteAddr());
+		log.setStatus(LoginLog.CREDENTIALS_EXPIRED);
 		log.setUsername(event.getAuthentication().getName());
-		log.setLoginMsg(event.getException().getMessage());
+		log.setMsg(event.getException().getMessage());
+		log.setCreateTime(new Date());
 		loginLogService.save(log);
 	}
 

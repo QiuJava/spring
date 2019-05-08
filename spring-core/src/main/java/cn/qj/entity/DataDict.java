@@ -30,5 +30,5 @@ public class DataDict implements Serializable {
 	private String dictName;
 	private String dictKey;
 	private String dictValue;
-	
+	private String description;
 }

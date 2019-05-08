@@ -1,5 +1,7 @@
 package cn.qj.config.listener;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,11 @@ public class AuthenticationFailureExpiredListener implements ApplicationListener
 	@Override
 	public void onApplicationEvent(AuthenticationFailureExpiredEvent event) {
 		LoginLog log = new LoginLog();
-		log.setLoginIp(request.getRemoteAddr());
-		log.setLoginMsg(event.getException().getMessage());
-		log.setLoginStatus(LoginLog.ACCOUNT_EXPIRED);
+		log.setIp(request.getRemoteAddr());
+		log.setMsg(event.getException().getMessage());
+		log.setStatus(LoginLog.ACCOUNT_EXPIRED);
 		log.setUsername(event.getAuthentication().getName());
+		log.setCreateTime(new Date());
 		loginLogService.save(log);
 	}
 

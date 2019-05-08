@@ -1,5 +1,7 @@
 package cn.qj.config.listener;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +37,11 @@ public class AuthenticationFailureBadCredentialsListener
 			return;
 		}
 		LoginLog log = new LoginLog();
-		log.setLoginIp(request.getRemoteAddr());
-		log.setLoginStatus(LoginLog.BAD_CREDENTIALS);
+		log.setIp(request.getRemoteAddr());
+		log.setStatus(LoginLog.BAD_CREDENTIALS);
 		log.setUsername(event.getAuthentication().getName());
-		log.setLoginMsg(event.getException().getMessage());
+		log.setMsg(event.getException().getMessage());
+		log.setCreateTime(new Date());
 		loginLogService.save(log);
 	}
 

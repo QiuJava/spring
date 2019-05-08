@@ -42,8 +42,12 @@ public class LoginUserServiceImpl implements UserDetailsService {
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public void save(LoginUser loginUser) {
-		loginUserRepository.save(loginUser);
+	public LoginUser save(LoginUser loginUser) {
+		return loginUserRepository.save(loginUser);
+	}
+
+	public LoginUser getByUsername(String username) {
+		return loginUserRepository.findByUsername(username);
 	}
 
 }

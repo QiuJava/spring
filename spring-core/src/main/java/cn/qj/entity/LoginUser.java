@@ -1,5 +1,6 @@
 package cn.qj.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +43,7 @@ public class LoginUser implements UserDetails {
 	private String username;
 	private String password;
 	private Integer userStatus;
+	private Date createTime;
 	/**
 	 * 密码过期时间为半年
 	 */
@@ -50,10 +53,16 @@ public class LoginUser implements UserDetails {
 	 */
 	private Date accountExpiration;
 	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Authority> authorities;
+	private List<Role> roles;
+
+	@Transient
+	private List<Authority> authorities = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		for (Role role : roles) {
+			authorities.addAll(role.getAuthorities());
+		}
 		return authorities;
 	}
 

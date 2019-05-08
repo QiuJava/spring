@@ -1,5 +1,7 @@
 package cn.qj.config.listener;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,11 @@ public class AuthenticationFailureDisabledListener implements ApplicationListene
 	@Override
 	public void onApplicationEvent(AuthenticationFailureDisabledEvent event) {
 		LoginLog log = new LoginLog();
-		log.setLoginIp(request.getRemoteAddr());
-		log.setLoginStatus(LoginLog.DISABLED);
+		log.setIp(request.getRemoteAddr());
+		log.setStatus(LoginLog.DISABLED);
 		log.setUsername(event.getAuthentication().getName());
-		log.setLoginMsg(event.getException().getMessage());
+		log.setMsg(event.getException().getMessage());
+		log.setCreateTime(new Date());
 		loginLogService.save(log);
 	}
 

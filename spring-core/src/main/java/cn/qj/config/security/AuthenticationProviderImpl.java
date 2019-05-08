@@ -66,7 +66,10 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.USERNAME_PASSWORD_ERR_MSG);
 			throw new BadCredentialsException(dict.getDictValue());
 		}
-		return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(),
+		// 获取用户菜单
+		
+		
+		return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), userDetails,
 				userDetails.getAuthorities());
 	}
 
