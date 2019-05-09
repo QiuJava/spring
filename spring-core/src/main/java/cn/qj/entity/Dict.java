@@ -1,5 +1,7 @@
 package cn.qj.entity;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,27 +15,28 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 菜单
+ * 字典
  * 
  * @author Qiujian
- * @date 2019年5月8日
+ * @date 2019年3月26日
  *
  */
-@Getter
-@Setter
 @Entity
-public class Menu {
+@Setter
+@Getter
+public class Dict implements Serializable {
 
-	public static final String CLOSED = "closed";
-	public static final String OPEN = "open";
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String text;
-	private String state;
+	private String name;
 	private String code;
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<Menu> children;
-
+	private String value;
+	private String description;
+	private Date createTime;
+	private Date updateTime;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "dict")
+	private List<DictItem> items;
 }

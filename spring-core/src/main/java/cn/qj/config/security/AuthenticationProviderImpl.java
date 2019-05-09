@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import cn.qj.config.listener.ContextStartListener;
-import cn.qj.entity.DataDict;
+import cn.qj.entity.Dict;
 import cn.qj.service.LoginUserServiceImpl;
 import cn.qj.util.DictUtil;
 
@@ -43,28 +43,28 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		String principal = authentication.getPrincipal().toString();
 		// 拿到密码错误提示语
 		UserDetails userDetails = loginUserServiceImpl.loadUserByUsername(principal);
-		DataDict dict = null;
+		Dict dict = null;
 		if (!userDetails.isEnabled()) {
-			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.DISABLED_ERR_MSG);
-			throw new DisabledException(dict.getDictValue());
+			dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.DISABLED_ERR_MSG);
+			throw new DisabledException(dict.getValue());
 		}
 		if (!userDetails.isAccountNonLocked()) {
-			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.LOCKED_ERR_MSG);
-			throw new LockedException(dict.getDictValue());
+			dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.LOCKED_ERR_MSG);
+			throw new LockedException(dict.getValue());
 		}
 		if (!userDetails.isCredentialsNonExpired()) {
-			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.CREDENTIALS_EXPIRED_ERR_MSG);
-			throw new CredentialsExpiredException(dict.getDictValue());
+			dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.CREDENTIALS_EXPIRED_ERR_MSG);
+			throw new CredentialsExpiredException(dict.getValue());
 		}
 		if (!userDetails.isAccountNonExpired()) {
-			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.ACCOUNT_EXPIRED_ERR_MSG);
-			throw new AccountExpiredException(dict.getDictValue());
+			dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.ACCOUNT_EXPIRED_ERR_MSG);
+			throw new AccountExpiredException(dict.getValue());
 		}
 
 		// 密码检查
 		if (!B_CRYPT.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
-			dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.USERNAME_PASSWORD_ERR_MSG);
-			throw new BadCredentialsException(dict.getDictValue());
+			dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.USERNAME_PASSWORD_ERR_MSG);
+			throw new BadCredentialsException(dict.getValue());
 		}
 		// 获取用户菜单
 		

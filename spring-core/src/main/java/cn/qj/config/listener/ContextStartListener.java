@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 
 import cn.qj.config.security.AuthenticationProviderImpl;
 import cn.qj.entity.Authority;
-import cn.qj.entity.DataDict;
+import cn.qj.entity.Dict;
 import cn.qj.entity.LoginUser;
 import cn.qj.service.AuthorityService;
-import cn.qj.service.DataDictService;
+import cn.qj.service.DictService;
 import cn.qj.service.LoginUserServiceImpl;
 
 /**
@@ -29,7 +29,7 @@ import cn.qj.service.LoginUserServiceImpl;
 @Component
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
 
-	public static final String DATA_DICT = "DATA_DICT";
+	public static final String DICT = "DICT";
 	public static final String AUTHORITY = "AUTHORITY";
 	public static final String ADMIN = "admin";
 
@@ -40,7 +40,7 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	private HashOperations<String, String, Object> hashOperations;
 
 	@Autowired
-	private DataDictService dataDictService;
+	private DictService dictService;
 
 	@Autowired
 	private AuthorityService authorityService;
@@ -50,9 +50,9 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		List<DataDict> dicts = dataDictService.getAll();
-		for (DataDict dataDict : dicts) {
-			hashOperations.put(DATA_DICT, dataDict.getDictKey(), dataDict);
+		List<Dict> dicts = dictService.getAll();
+		for (Dict dict : dicts) {
+			hashOperations.put(DICT, dict.getCode(), dict);
 		}
 		List<Authority> authorities = authorityService.getAll();
 		valueOperations.set(AUTHORITY, authorities);
@@ -65,10 +65,11 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 			loginUser.setPassword(AuthenticationProviderImpl.B_CRYPT.encode("123"));
 			loginUser.setUserStatus(LoginUser.NORMAL);
 			loginUser.setPasswordExpiration(DateUtils.addMonths(new Date(), 6));
+			loginUser.setAccountExpiration(DateUtils.addMonths(new Date(), 6));
 			loginUser.setCreateTime(new Date());
+			loginUser.setUpdateTime(new Date());
 			loginUserService.save(loginUser);
 		}
-		// 创建基础菜单
 	}
 
 }

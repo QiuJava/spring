@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
 
-import cn.qj.entity.DataDict;
+import cn.qj.entity.Dict;
 import cn.qj.entity.LoginLog;
 import cn.qj.service.LoginLogService;
 import cn.qj.util.DictUtil;
@@ -40,8 +40,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
 		log.setIp(request.getRemoteAddr());
 		log.setStatus(LoginLog.SUCCESS);
 		log.setUsername(event.getAuthentication().getName());
-		DataDict dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.LOGIN_SUCCESS_MSG);
-		log.setMsg(dict.getDictValue());
+		Dict dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.LOGIN_SUCCESS_MSG);
+		log.setMsg(dict.getValue());
 		log.setCreateTime(new Date());
 		loginLogService.save(log);
 	}

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.qj.config.listener.ContextStartListener;
-import cn.qj.entity.DataDict;
+import cn.qj.entity.Dict;
 import cn.qj.entity.LoginUser;
 import cn.qj.repository.LoginUserRepository;
 import cn.qj.util.DictUtil;
@@ -34,9 +34,8 @@ public class LoginUserServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LoginUser user = loginUserRepository.findByUsername(username);
 		if (user == null) {
-			DataDict dataDict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT,
-					DictUtil.USERNAME_PASSWORD_ERR_MSG);
-			throw new UsernameNotFoundException(dataDict.getDictValue());
+			Dict dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.USERNAME_PASSWORD_ERR_MSG);
+			throw new UsernameNotFoundException(dict.getValue());
 		}
 		return user;
 	}

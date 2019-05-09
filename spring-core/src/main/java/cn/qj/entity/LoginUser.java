@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import cn.qj.entity.vo.MenuVo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,6 +45,7 @@ public class LoginUser implements UserDetails {
 	private String password;
 	private Integer userStatus;
 	private Date createTime;
+	private Date updateTime;
 	/**
 	 * 密码过期时间为半年
 	 */
@@ -57,6 +59,9 @@ public class LoginUser implements UserDetails {
 
 	@Transient
 	private List<Authority> authorities = new ArrayList<>();
+
+	@Transient
+	private List<MenuVo> menus;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

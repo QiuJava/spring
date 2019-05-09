@@ -14,7 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import cn.qj.config.listener.ContextStartListener;
-import cn.qj.entity.DataDict;
+import cn.qj.entity.Dict;
 import cn.qj.util.DictUtil;
 
 /**
@@ -33,8 +33,8 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		DataDict dict = (DataDict) hashOperations.get(ContextStartListener.DATA_DICT, DictUtil.NO_RIGHTS_MSG);
-		String msg = dict.getDictValue();
+		Dict dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.NO_RIGHTS_MSG);
+		String msg = dict.getValue();
 		if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
 			throw new InsufficientAuthenticationException(msg);
 		}

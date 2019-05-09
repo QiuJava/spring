@@ -3,29 +3,37 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8" />
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/icon.css" />
-<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js">
-	
-</script>
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/jquery.easyui.min.js">
-	
-</script>
+<title>后台管理系统</title>
+<div th:replace="common/headerPage::header_page"></div>
 
 <script type="text/javascript" th:inline="javascript">
 	$(function() {
 		var token = [[${_csrf.token}]];
 		$('#menu_tree').tree({
-			url:'/tree/menuTree?_csrf='+token,
+			url:'/menu?_csrf='+token,
 			loadFilter: function(data){
 				if (data.success){
 					return data.data;
-				} 
-		    }
+				}else {
+					$.messager.alert('提示',data.msg,'warning');
+				}
+		    },
+			onClick: function(node){
+				if(node.attributes.url != '#'){
+					$('#center_tabs').tabs('add',{
+					    title:node.text,
+					    href:'/home',
+					    closable:true,
+					    selected:true,
+					    tools:[{
+							iconCls:'icon-mini-refresh',
+							handler:function(){
+								alert('refresh');
+							}
+					    }]
+					});
+				}
+			}
 		});
 	});
 </script>
@@ -41,6 +49,8 @@
 	</div>
 	<div data-options="region:'center',title:'center title'"
 		style="padding: 5px; background: #eee;">
+		<div id="center_tabs" class="easyui-tabs" data-options="fit:true">
+		</div>
 	</div>
 </body>
 </html>
