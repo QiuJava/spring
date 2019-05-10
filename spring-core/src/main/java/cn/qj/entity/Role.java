@@ -36,4 +36,6 @@ public class Role implements Serializable {
 	private Date updateTime;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Authority> authorities;
+	@ManyToMany(mappedBy = "roles")
+	private List<LoginUser> loginUsers;
 }

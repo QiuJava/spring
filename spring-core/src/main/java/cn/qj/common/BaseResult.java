@@ -2,7 +2,6 @@ package cn.qj.common;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 基本结果返回
@@ -12,9 +11,7 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
-public class BaseResult {
-
+public class BaseResult  {
 	private boolean success;
 	private String msg;
 	private int statusCode;

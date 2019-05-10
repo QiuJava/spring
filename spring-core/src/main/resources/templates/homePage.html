@@ -19,11 +19,15 @@
 				}
 		    },
 			onClick: function(node){
+				var exists = $('#center_tabs').tabs('exists',node.text);
 				if(node.attributes.url != '#'){
-					$('#center_tabs').tabs('add',{
-					    title:node.text,
-					    href:node.attributes.url
-					});
+					if(!exists){
+						$('#center_tabs').tabs('add',{
+						    title:node.text,
+						    closable:true,
+						    href:node.attributes.url
+						});
+					}
 				}
 			}
 		});

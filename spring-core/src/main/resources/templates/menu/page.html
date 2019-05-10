@@ -3,8 +3,10 @@
 		var token = [[${_csrf.token}]];
 		$('#menu_list').treegrid({
 			url : 'menu/query?_csrf='+token,
+			title : "菜单列表",
 			idField : 'id',
 			treeField : 'name',
+			fitColumns : true,
 			loadFilter : function(data, parent) {
 				if (data.success) {
 					return data.data;
@@ -12,30 +14,41 @@
 					$.messager.alert('提示', data.msg, 'warning');
 				}
 			},
-			columns : [ [ {
+			columns : [ [{
+				title : '记录ID',
+				field : 'id',
+				align : 'center'
+			},{
+				title : '菜单名称',
+				field : 'name',
+				align : 'center',
+				editor : 'text'
+			}, {
 				title : '权限',
 				field : 'authority',
-				width : 180
+				align : 'center',
+				editor : 'text'
 			}, {
 				title : '接口地址',
 				field : 'url',
-				width : 60,
-				align : 'right'
+				align : 'center',
+				editor : 'text'
 			}, {
 				title : '描述',
 				field : 'description',
-				width : 60,
-				align : 'right'
+				align : 'center',
+				editor : 'text'
 			}, {
 				title : '创建时间',
 				field : 'createTime',
-				width : 80
+				align : 'center'
 			}, {
 				title : '更新时间',
 				field : 'updateTime',
-				width : 80
+				align : 'center'
 			} ] ]
 		});
+		
 	});
 </script>
-<table id="menu_list" style="width: 600px; height: 400px"></table>
+<table id="menu_list"></table>

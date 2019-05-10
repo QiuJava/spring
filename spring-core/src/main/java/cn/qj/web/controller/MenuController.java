@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.qj.common.BaseResult;
 import cn.qj.entity.Authority;
+import cn.qj.entity.vo.MenuListVo;
 import cn.qj.entity.vo.MenuVo;
 import cn.qj.service.AuthorityService;
 
@@ -52,7 +53,13 @@ public class MenuController {
 	public BaseResult menuQuery() {
 		try {
 			List<Authority> authorities = authorityService.getAll();
-			return BaseResult.ok("查询成功", authorities);
+			for (Authority authority : authorities) {
+				authority.setRoles(null);
+			}
+			MenuListVo menuListVo = new MenuListVo();
+			menuListVo.setTotal(authorities.size());
+			menuListVo.setRows(authorities);
+			return BaseResult.ok("查询成功", menuListVo);
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return BaseResult.err500();

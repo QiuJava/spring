@@ -22,8 +22,8 @@ import lombok.Setter;
  *
  */
 @Entity
-@Setter
 @Getter
+@Setter
 public class Authority implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
@@ -37,12 +37,17 @@ public class Authority implements GrantedAuthority {
 	private String description;
 	private Date createTime;
 	private Date updateTime;
-	@ManyToMany
+
+	@ManyToMany(mappedBy = "authorities")
 	private List<Role> roles;
 
 	@Override
 	public String getAuthority() {
 		return authority;
+	}
+
+	public Long get_parentId() {
+		return parentId;
 	}
 
 }
