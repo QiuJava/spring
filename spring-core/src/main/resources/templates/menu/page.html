@@ -1,0 +1,41 @@
+<script type="text/javascript" th:inline="javascript">
+	$(function() {
+		var token = [[${_csrf.token}]];
+		$('#menu_list').treegrid({
+			url : 'menu/query?_csrf='+token,
+			idField : 'id',
+			treeField : 'name',
+			loadFilter : function(data, parent) {
+				if (data.success) {
+					return data.data;
+				} else {
+					$.messager.alert('提示', data.msg, 'warning');
+				}
+			},
+			columns : [ [ {
+				title : '权限',
+				field : 'authority',
+				width : 180
+			}, {
+				title : '接口地址',
+				field : 'url',
+				width : 60,
+				align : 'right'
+			}, {
+				title : '描述',
+				field : 'description',
+				width : 60,
+				align : 'right'
+			}, {
+				title : '创建时间',
+				field : 'createTime',
+				width : 80
+			}, {
+				title : '更新时间',
+				field : 'updateTime',
+				width : 80
+			} ] ]
+		});
+	});
+</script>
+<table id="menu_list" style="width: 600px; height: 400px"></table>

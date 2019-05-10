@@ -10,7 +10,7 @@
 	$(function() {
 		var token = [[${_csrf.token}]];
 		$('#menu_tree').tree({
-			url:'/menu?_csrf='+token,
+			url:'/menu/tree?_csrf='+token,
 			loadFilter: function(data){
 				if (data.success){
 					return data.data;
@@ -22,15 +22,7 @@
 				if(node.attributes.url != '#'){
 					$('#center_tabs').tabs('add',{
 					    title:node.text,
-					    href:'/home',
-					    closable:true,
-					    selected:true,
-					    tools:[{
-							iconCls:'icon-mini-refresh',
-							handler:function(){
-								alert('refresh');
-							}
-					    }]
+					    href:node.attributes.url
 					});
 				}
 			}

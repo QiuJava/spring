@@ -6,10 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.qj.common.BaseResult;
+import cn.qj.entity.Authority;
 import cn.qj.entity.vo.MenuVo;
 import cn.qj.service.AuthorityService;
 
@@ -28,12 +30,29 @@ public class MenuController {
 	@Autowired
 	private AuthorityService authorityService;
 
-	@PostMapping("/menu")
+	@PostMapping("/menu/tree")
 	@ResponseBody
 	public BaseResult menu(Long id) {
 		try {
 			List<MenuVo> menuList = authorityService.getchildrenMenu(id);
 			return BaseResult.ok("获取成功", menuList);
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return BaseResult.err500();
+		}
+	}
+
+	@GetMapping("/menu")
+	public String menuPage() {
+		return "menu/page";
+	}
+
+	@PostMapping("/menu/query")
+	@ResponseBody
+	public BaseResult menuQuery() {
+		try {
+			List<Authority> authorities = authorityService.getAll();
+			return BaseResult.ok("查询成功", authorities);
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return BaseResult.err500();

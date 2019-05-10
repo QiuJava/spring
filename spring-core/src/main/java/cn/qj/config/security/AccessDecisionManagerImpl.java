@@ -33,6 +33,9 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
+		if (authentication != null) {
+			return;
+		}
 		Dict dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.NO_RIGHTS_MSG);
 		String msg = dict.getValue();
 		if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
