@@ -5,12 +5,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.qj.common.BaseResult;
+import cn.qj.config.listener.ContextStartListener;
 import cn.qj.entity.Authority;
 import cn.qj.entity.vo.MenuListVo;
 import cn.qj.entity.vo.MenuVo;
@@ -30,6 +32,9 @@ public class MenuController {
 
 	@Autowired
 	private AuthorityService authorityService;
+	
+	@Autowired
+	private ValueOperations< String , Object> valueOperations;
 
 	@PostMapping("/menu/tree")
 	@ResponseBody
@@ -48,14 +53,13 @@ public class MenuController {
 		return "menu/page";
 	}
 
-	@PostMapping("/menu/query")
+	@PostMapping("/menu")
 	@ResponseBody
 	public BaseResult menuQuery() {
 		try {
-			List<Authority> authorities = authorityService.getAll();
-			for (Authority authority : authorities) {
-				authority.setRoles(null);
-			}
+			@SuppressWarnings("unchecked")
+			List<Authority> authorities = (List<Authority>)valueOperations.get(ContextStartListener.AUTHORITY);
+			
 			MenuListVo menuListVo = new MenuListVo();
 			menuListVo.setTotal(authorities.size());
 			menuListVo.setRows(authorities);

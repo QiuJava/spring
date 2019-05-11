@@ -1,13 +1,11 @@
 package cn.qj.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -37,9 +35,6 @@ public class Authority implements GrantedAuthority {
 	private String description;
 	private Date createTime;
 	private Date updateTime;
-
-	@ManyToMany(mappedBy = "authorities")
-	private List<Role> roles;
 
 	@Override
 	public String getAuthority() {

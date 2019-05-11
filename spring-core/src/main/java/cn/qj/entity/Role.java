@@ -9,7 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,8 +34,6 @@ public class Role implements Serializable {
 	private String description;
 	private Date createTime;
 	private Date updateTime;
-	@ManyToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Authority> authorities;
-	@ManyToMany(mappedBy = "roles")
-	private List<LoginUser> loginUsers;
 }

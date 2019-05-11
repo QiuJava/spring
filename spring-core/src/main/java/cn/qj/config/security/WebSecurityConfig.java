@@ -57,12 +57,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		// 授权请求
-		http.authorizeRequests().antMatchers("/").permitAll();
+		http.authorizeRequests().antMatchers("/", "/homePage", "/menu/tree").permitAll();
 		http.authorizeRequests().antMatchers("/jquery-easyui-1.7.0/**").permitAll();
-		http.authorizeRequests().antMatchers("/api/*").hasRole("USER");
-		http.authorizeRequests().antMatchers("/**").permitAll();
 
-		// http.authorizeRequests().anyRequest().authenticated();
+		http.authorizeRequests().anyRequest().authenticated();
 
 		// 配置登录
 		http.formLogin().loginPage("/login").permitAll();

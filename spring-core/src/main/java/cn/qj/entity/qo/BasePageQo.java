@@ -18,7 +18,7 @@ public class BasePageQo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int page = 1;
-	private int size = 10;
+	private int rows = 10;
 
 	public int getPage() {
 		return page - 1;

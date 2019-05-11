@@ -47,9 +47,9 @@ public class AuthorityService {
 			}
 		}
 		List<MenuVo> menuVos = new ArrayList<>();
-		MenuVo menuVo = new MenuVo();
-		MenuAttributeVo menuAttributeVo = new MenuAttributeVo();
 		for (Authority authority : curMenu) {
+			MenuVo menuVo = new MenuVo();
+			MenuAttributeVo menuAttributeVo = new MenuAttributeVo();
 			menuVo.setId(authority.getId());
 			menuVo.setText(authority.getName());
 			// 如果该权限下面没有权限 state 为 open

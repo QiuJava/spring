@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class BaseResult  {
+public class BaseResult {
 	private boolean success;
 	private String msg;
 	private int statusCode;
@@ -38,6 +38,10 @@ public class BaseResult  {
 
 	public static BaseResult err400(String msg) {
 		return new BaseResult(false, msg, 400);
+	}
+
+	public static BaseResult err403(String msg) {
+		return new BaseResult(false, msg, 403);
 	}
 
 	public static BaseResult ok(String msg) {

@@ -25,8 +25,32 @@
 						$('#center_tabs').tabs('add',{
 						    title:node.text,
 						    closable:true,
-						    href:node.attributes.url
+						    href:node.attributes.url,
+						    tools:[{
+								iconCls:'icon-mini-refresh',
+								handler:function(){
+									var tab = $('#center_tabs').tabs('getSelected');
+									tab.panel('refresh');
+								}
+						    }]
 						});
+					}else {
+						// 先关闭原来的 再添加一个
+						$('#center_tabs').tabs('close',node.text);
+						$('#center_tabs').tabs('add',{
+						    title:node.text,
+						    closable:true,
+						    href:node.attributes.url,
+						    tools:[{
+								iconCls:'icon-mini-refresh',
+								handler:function(){
+									var tab = $('#center_tabs').tabs('getSelected');
+									tab.panel('refresh');
+								}
+						    }]
+						});
+						
+						
 					}
 				}
 			}

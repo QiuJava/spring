@@ -2,18 +2,21 @@
 	$(function() {
 		var token = [[${_csrf.token}]];
 		$('#menu_list').treegrid({
-			url : 'menu/query?_csrf='+token,
+			url : '/menu?_csrf='+token,
 			title : "菜单列表",
 			idField : 'id',
 			treeField : 'name',
 			fitColumns : true,
+			singleSelect:true,
 			loadFilter : function(data, parent) {
+				console.debug(data);
 				if (data.success) {
 					return data.data;
 				} else {
 					$.messager.alert('提示', data.msg, 'warning');
 				}
 			},
+			pagination:true,
 			columns : [ [{
 				title : '记录ID',
 				field : 'id',
@@ -48,7 +51,33 @@
 				align : 'center'
 			} ] ]
 		});
-		
+		// 定义工具栏
+		$('#menu_list').datagrid({
+			toolbar: [{
+				iconCls: 'icon-add',
+				text:'新增',
+				handler: function(){alert('add')}
+			},'-',{
+				iconCls: 'icon-edit',
+				text : '编辑',
+				handler: function(){alert('edit')}
+			},'-',{
+				iconCls: 'icon-remove',
+				text:'删除',
+				handler: function(){alert('remove')}
+			},'-',{
+				iconCls: 'icon-save',
+				text:'保存',
+				handler: function(){alert('save')}
+			},'-',{
+				iconCls: 'icon-cancel',
+				text:'取消',
+				handler: function(){alert('cancel')}
+			}]
+		});
 	});
+	
 </script>
+
 <table id="menu_list"></table>
+

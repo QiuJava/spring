@@ -10,7 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -54,7 +54,7 @@ public class LoginUser implements UserDetails {
 	 * 账户有效期为1年
 	 */
 	private Date accountExpiration;
-	@ManyToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Role> roles;
 
 	@Transient
