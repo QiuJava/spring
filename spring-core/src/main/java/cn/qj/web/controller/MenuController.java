@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.qj.common.BaseResult;
 import cn.qj.config.listener.ContextStartListener;
-import cn.qj.entity.Authority;
+import cn.qj.entity.Permission;
 import cn.qj.entity.vo.MenuListVo;
 import cn.qj.entity.vo.MenuVo;
-import cn.qj.service.AuthorityService;
+import cn.qj.service.PermissionService;
 
 /**
  * 菜单控制器
@@ -31,16 +33,16 @@ public class MenuController {
 	private static final Logger log = LoggerFactory.getLogger(MenuController.class);
 
 	@Autowired
-	private AuthorityService authorityService;
-	
+	private PermissionService permissionService;
+
 	@Autowired
-	private ValueOperations< String , Object> valueOperations;
+	private ValueOperations<String, Object> valueOperations;
 
 	@PostMapping("/menu/tree")
 	@ResponseBody
 	public BaseResult menu(Long id) {
 		try {
-			List<MenuVo> menuList = authorityService.getchildrenMenu(id);
+			List<MenuVo> menuList = permissionService.getchildrenMenu(id);
 			return BaseResult.ok("获取成功", menuList);
 		} catch (Exception e) {
 			log.error("系统异常", e);
@@ -58,15 +60,40 @@ public class MenuController {
 	public BaseResult menuQuery() {
 		try {
 			@SuppressWarnings("unchecked")
-			List<Authority> authorities = (List<Authority>)valueOperations.get(ContextStartListener.AUTHORITY);
-			
+			List<Permission> permissions = (List<Permission>) valueOperations.get(ContextStartListener.PERMISSION);
+
 			MenuListVo menuListVo = new MenuListVo();
-			menuListVo.setTotal(authorities.size());
-			menuListVo.setRows(authorities);
+			menuListVo.setTotal(permissions.size());
+			menuListVo.setRows(permissions);
 			return BaseResult.ok("查询成功", menuListVo);
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return BaseResult.err500();
+		}
+	}
+
+	@PostMapping("/menu/save")
+	@ResponseBody
+	public String saveMenu(Permission permission) {
+		try {
+			System.out.println(permission);
+			permissionService.save(permission);
+			return JSON.toJSONString(BaseResult.ok("保存成功", ""));
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return JSON.toJSONString(BaseResult.err500());
+		}
+	}
+
+	@PostMapping("/menu/delete")
+	@ResponseBody
+	public String deleteMenu(Permission permission) {
+		try {
+			permissionService.delete(permission);
+			return JSON.toJSONString(BaseResult.ok("删除成功", ""));
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return JSON.toJSONString(BaseResult.err500());
 		}
 	}
 

@@ -7,10 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 
+import cn.qj.util.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 权限
@@ -22,7 +25,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Authority implements GrantedAuthority {
+@ToString
+public class Permission implements GrantedAuthority {
+
+	public static final Integer MENU = 1;
+	public static final Integer FUNCATION = 2;
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -33,8 +40,10 @@ public class Authority implements GrantedAuthority {
 	private String authority;
 	private String name;
 	private String description;
+	@DateTimeFormat(pattern = DateUtil.DATATIME_PATTERN)
 	private Date createTime;
 	private Date updateTime;
+	private Integer type;
 
 	@Override
 	public String getAuthority() {

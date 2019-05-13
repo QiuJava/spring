@@ -70,6 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.logout().permitAll();
 
 		http.exceptionHandling().accessDeniedHandler(accessDeniedHandlerImpl);
+
+		// X-Frame-Options 设置可以在frame 中展示
+		http.headers().frameOptions().disable();
 	}
 
 }

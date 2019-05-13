@@ -2,7 +2,7 @@ package cn.qj.entity.vo;
 
 import java.util.List;
 
-import cn.qj.entity.Authority;
+import cn.qj.entity.Permission;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +17,6 @@ import lombok.Setter;
 @Setter
 public class MenuListVo {
 	private long total;
-	private List<Authority> rows;
+	private List<Permission> rows;
 
 }

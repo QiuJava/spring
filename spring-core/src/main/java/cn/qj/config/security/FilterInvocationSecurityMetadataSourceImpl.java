@@ -16,7 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
 import cn.qj.config.listener.ContextStartListener;
-import cn.qj.entity.Authority;
+import cn.qj.entity.Permission;
 
 /**
  * 初始化权限
@@ -33,13 +33,13 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-		List<Authority> authorities = (List<Authority>) valueOperations.get(ContextStartListener.AUTHORITY);
+		List<Permission> permissions = (List<Permission>) valueOperations.get(ContextStartListener.PERMISSION);
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
-		for (Authority anth : authorities) {
-			AntPathRequestMatcher matcher = new AntPathRequestMatcher(anth.getUrl());
+		for (Permission permission : permissions) {
+			AntPathRequestMatcher matcher = new AntPathRequestMatcher(permission.getUrl());
 			if (matcher.matches(request)) {
 				List<ConfigAttribute> configList = new ArrayList<>();
-				configList.add(new SecurityConfig(anth.getAuthority()));
+				configList.add(new SecurityConfig(permission.getAuthority()));
 				return configList;
 			}
 		}

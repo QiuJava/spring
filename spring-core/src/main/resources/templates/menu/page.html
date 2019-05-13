@@ -1,83 +1,184 @@
 <script type="text/javascript" th:inline="javascript">
+	var token = [[${_csrf.token}]];
 	$(function() {
-		var token = [[${_csrf.token}]];
 		$('#menu_list').treegrid({
 			url : '/menu?_csrf='+token,
-			title : "菜单列表",
 			idField : 'id',
 			treeField : 'name',
 			fitColumns : true,
+			rownumbers : true,
 			singleSelect:true,
 			loadFilter : function(data, parent) {
-				console.debug(data);
 				if (data.success) {
 					return data.data;
 				} else {
 					$.messager.alert('提示', data.msg, 'warning');
 				}
 			},
-			pagination:true,
-			columns : [ [{
-				title : '记录ID',
-				field : 'id',
-				align : 'center'
-			},{
-				title : '菜单名称',
-				field : 'name',
-				align : 'center',
-				editor : 'text'
-			}, {
-				title : '权限',
-				field : 'authority',
-				align : 'center',
-				editor : 'text'
-			}, {
-				title : '接口地址',
-				field : 'url',
-				align : 'center',
-				editor : 'text'
-			}, {
-				title : '描述',
-				field : 'description',
-				align : 'center',
-				editor : 'text'
-			}, {
-				title : '创建时间',
-				field : 'createTime',
-				align : 'center'
-			}, {
-				title : '更新时间',
-				field : 'updateTime',
-				align : 'center'
-			} ] ]
+			toolbar: '#menu_toolbar'
+			
+		}); 
+		
+	});
+	var url;
+	function addMenu(){
+		//判断是否有选中一行
+		var row  = $('#menu_list').treegrid('getSelected');
+		if(row){
+			$('#menu_dialog').dialog('open').dialog('center').dialog('setTitle','添加子菜单');
+		}else {
+			$('#menu_dialog').dialog('open').dialog('center').dialog('setTitle','添加根菜单');
+		}
+		$('#menu_form').form('clear');
+		$('#menu_form').form('load',{
+			type:1
 		});
-		// 定义工具栏
-		$('#menu_list').datagrid({
-			toolbar: [{
-				iconCls: 'icon-add',
-				text:'新增',
-				handler: function(){alert('add')}
-			},'-',{
-				iconCls: 'icon-edit',
-				text : '编辑',
-				handler: function(){alert('edit')}
-			},'-',{
-				iconCls: 'icon-remove',
-				text:'删除',
-				handler: function(){alert('remove')}
-			},'-',{
-				iconCls: 'icon-save',
-				text:'保存',
-				handler: function(){alert('save')}
-			},'-',{
-				iconCls: 'icon-cancel',
-				text:'取消',
-				handler: function(){alert('cancel')}
-			}]
+		url = '/menu/save';
+	}
+	
+	function editMenu(){
+		var row = $('#menu_list').treegrid('getSelected');
+		if (row){
+			$('#menu_dialog').dialog('open').dialog('center').dialog('setTitle','编辑菜单');
+			$('#menu_form').form('load',row);
+			url = '/menu/save';
+		} else {
+			$.messager.alert('提示', '请选择要编辑的数据', 'info');
+		}
+	}
+	
+	function saveMenu(){
+		$('#menu_form').form('submit',{
+			url: url,
+			onSubmit: function(param){
+				param._csrf=token;
+				// 获取菜单ID
+				var id = $("#menu_id").val();
+				var row = $('#menu_list').treegrid('getSelected');
+				if(id == ''){
+					if(row){
+						param.parentId=row.id;
+					}
+				}else {
+					param.parentId=row.parentId;
+					param.createTime=row.createTime;
+				}
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var data = strToJsonObject(result);
+				if (data.success){
+					$('#menu_dialog').dialog('close');		
+					$('#menu_list').treegrid('reload');	
+				} else {
+					$.messager.show({
+						title: '错误',
+						msg: result.msg
+					});
+				}
+			}
 		});
+	}
+	
+	$('#menu_type').combobox({
+		data:[{
+		    "id":1,
+		    "text":"菜单"
+		},{
+		    "id":2,
+		    "text":"功能"
+		}],
+	    valueField:'id',
+	    textField:'text'
 	});
 	
+	function removeMenu(){
+		var row = row = $('#menu_list').treegrid('getSelected');
+		if (row){
+			$.messager.confirm('确认','确定删除吗?',function(r){
+				if (r){
+					$.post('/menu/delete',{id:row.id,_csrf:token},function(result){
+						if (result.success){
+							$('#menu_list').treegrid('reload');
+						} else {
+							$.messager.show({	
+								title: '错误',
+								msg: result.msg
+							});
+						}
+					},'json');
+				}
+			});
+		}else {
+			$.messager.alert('提示', '请选择要删除的数据', 'info');
+		}
+	}
+	
+	function formatMenuType(val,row){
+		if (row.type == 1){
+			return '菜单';
+		} else {
+			return '功能';
+		}
+	}
 </script>
+<div id='menu_toolbar'>
+	<a href="javascript:void(0)" class="easyui-linkbutton"
+		iconCls="icon-add" plain="true" onclick="addMenu()" sec:authorize="hasRole('SAVE_MENU')">添加</a> <a
+		href="javascript:void(0)" class="easyui-linkbutton"
+		iconCls="icon-edit" plain="true" onclick="editMenu()" sec:authorize="hasRole('SAVE_MENU')">编辑</a> <a
+		href="javascript:void(0)" class="easyui-linkbutton"
+		iconCls="icon-remove" plain="true" onclick="removeMenu()" >删除 </a>
 
-<table id="menu_list"></table>
+</div>
+<table id="menu_list">
+	<thead>
+		<tr>
+			<th data-options="field:'name',align:'center'">菜单名称</th>
+			<th data-options="field:'authority',align:'center'">权限</th>
+			<th data-options="field:'url',align:'center'">接口地址</th>
+			<th data-options="field:'type',align:'center'"
+				formatter="formatMenuType">菜单类型</th>
+			<th data-options="field:'description',align:'center'">描述</th>
+			<th data-options="field:'createTime',align:'center'">创建时间</th>
+			<th data-options="field:'updateTime',align:'center'">更新时间</th>
+		</tr>
+	</thead>
+</table>
+<div id="menu_dialog" class="easyui-dialog" style="width: 400px"
+	data-options="closed:true,modal:true,border:'thin',buttons:'#menu_dialog_buttons'">
+	<form id="menu_form" method="post" novalidate="novalidate"
+		style="margin: 0; padding: 20px 50px">
+		<h3>菜单信息</h3>
+		<input type="hidden" id="menu_id" name="id" />
+		<div style="margin-bottom: 10px">
+			<input name="name" class="easyui-textbox" required="true"
+				label="菜单名称:" style="width: 100%" />
+		</div>
+		<div style="margin-bottom: 10px">
+			<input name="authority" class="easyui-textbox" required="true"
+				label="权限:" style="width: 100%" />
+		</div>
+		<div style="margin-bottom: 10px">
+			<input name="url" class="easyui-textbox" required="true"
+				label="接口地址:" style="width: 100%" />
+		</div>
+		<div style="margin-bottom: 10px">
+			<input id="menu_type" name="type" label='菜单类型:' style="width: 100%" />
+		</div>
+		<div style="margin-bottom: 10px">
+			<input name="description" class="easyui-textbox" label="描述:"
+				style="width: 100%" />
+		</div>
+	</form>
+</div>
+<div id="menu_dialog_buttons">
+	<a href="javascript:void(0)" class="easyui-linkbutton c6"
+		iconCls="icon-ok" onclick="saveMenu()" style="width: 90px">保存</a> <a
+		href="javascript:void(0)" class="easyui-linkbutton"
+		iconCls="icon-cancel"
+		onclick="javascript:$('#menu_dialog').dialog('close')"
+		style="width: 90px">取消</a>
+</div>
+
 

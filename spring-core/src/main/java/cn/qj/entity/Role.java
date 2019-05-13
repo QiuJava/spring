@@ -35,5 +35,5 @@ public class Role implements Serializable {
 	private Date createTime;
 	private Date updateTime;
 	@OneToMany(fetch = FetchType.EAGER)
-	private List<Authority> authorities;
+	private List<Permission> permissions;
 }

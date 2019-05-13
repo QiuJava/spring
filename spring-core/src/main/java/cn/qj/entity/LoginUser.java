@@ -16,7 +16,6 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cn.qj.entity.vo.MenuVo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,15 +57,12 @@ public class LoginUser implements UserDetails {
 	private List<Role> roles;
 
 	@Transient
-	private List<Authority> authorities = new ArrayList<>();
-
-	@Transient
-	private List<MenuVo> menus;
+	private List<GrantedAuthority> authorities = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		for (Role role : roles) {
-			authorities.addAll(role.getAuthorities());
+			authorities.addAll(role.getPermissions());
 		}
 		return authorities;
 	}

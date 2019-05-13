@@ -12,10 +12,10 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import cn.qj.config.security.AuthenticationProviderImpl;
-import cn.qj.entity.Authority;
+import cn.qj.entity.Permission;
 import cn.qj.entity.Dict;
 import cn.qj.entity.LoginUser;
-import cn.qj.service.AuthorityService;
+import cn.qj.service.PermissionService;
 import cn.qj.service.DictService;
 import cn.qj.service.LoginUserServiceImpl;
 
@@ -30,7 +30,7 @@ import cn.qj.service.LoginUserServiceImpl;
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
 
 	public static final String DICT = "DICT";
-	public static final String AUTHORITY = "AUTHORITY";
+	public static final String PERMISSION = "PERMISSION";
 	public static final String ADMIN = "admin";
 
 	@Autowired
@@ -43,7 +43,7 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	private DictService dictService;
 
 	@Autowired
-	private AuthorityService authorityService;
+	private PermissionService permissionService;
 
 	@Autowired
 	private LoginUserServiceImpl loginUserService;
@@ -54,8 +54,8 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 		for (Dict dict : dicts) {
 			hashOperations.put(DICT, dict.getCode(), dict);
 		}
-		List<Authority> authorities = authorityService.getAll();
-		valueOperations.set(AUTHORITY, authorities);
+		List<Permission> permissions = permissionService.getAll();
+		valueOperations.set(PERMISSION, permissions);
 
 		// 创建超级管理员
 		LoginUser loginUser = loginUserService.getByUsername(ADMIN);

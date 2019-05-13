@@ -56,6 +56,13 @@
 			}
 		});
 	});
+	function p(data){
+		console.debug(data);
+	}
+	
+	function strToJsonObject(str){
+		return eval('(' + str + ')');
+	}
 </script>
 </head>
 <body class="easyui-layout">
@@ -63,13 +70,14 @@
 		style="height: 10%;"></div>
 	<div data-options="region:'south',title:'South Title'"
 		style="height: 20%;"></div>
-	<div data-options="region:'west',title:'West'" style="width: 20%;">
+	<div data-options="region:'west',title:'菜单'" style="width: 20%;">
 		<!-- 创建菜单树 -->
 		<ul id="menu_tree"></ul>
 	</div>
-	<div data-options="region:'center',title:'center title'"
+	<div data-options="region:'center'"
 		style="padding: 5px; background: #eee;">
 		<div id="center_tabs" class="easyui-tabs" data-options="fit:true">
+		
 		</div>
 	</div>
 </body>

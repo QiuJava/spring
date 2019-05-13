@@ -15,10 +15,10 @@ import cn.qj.common.BaseResult;
  *
  */
 @RestController
-public class AuthorityController {
+public class PermissionController {
 
-	@RequestMapping("/authority/noAuthority")
-	public BaseResult noAuthority(HttpServletRequest request) {
+	@RequestMapping("/noPermission")
+	public BaseResult noPermission(HttpServletRequest request) {
 		return BaseResult.err403(request.getAttribute("msg").toString());
 	}
 }

@@ -28,7 +28,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 			response.sendRedirect(request.getContextPath() + "/403");
 		} else {
 			request.setAttribute("msg", accessDeniedException.getMessage());
-			request.getRequestDispatcher("/authority/noAuthority").forward(request, response);
+			request.getRequestDispatcher("/noPermission").forward(request, response);
 		}
 	}
 
