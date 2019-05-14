@@ -25,11 +25,11 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		String method = request.getMethod();
-		if (RequestMethod.GET.name().endsWith(method)) {
-			response.sendRedirect(request.getContextPath() + "/403");
-		} else {
+		if (RequestMethod.POST.name().endsWith(method)) {
 			request.setAttribute("msg", accessDeniedException.getMessage());
 			request.getRequestDispatcher("/noPermission").forward(request, response);
+		} else {
+			response.sendRedirect(request.getContextPath() + "/403");
 		}
 	}
 

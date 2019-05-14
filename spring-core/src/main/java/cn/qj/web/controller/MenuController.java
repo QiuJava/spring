@@ -76,7 +76,6 @@ public class MenuController {
 	@ResponseBody
 	public String saveMenu(Permission permission) {
 		try {
-			System.out.println(permission);
 			permissionService.save(permission);
 			return JSON.toJSONString(BaseResult.ok("保存成功", ""));
 		} catch (Exception e) {

@@ -21,50 +21,19 @@
 		    },
 			onClick: function(node){
 				var exists = $('#center_tabs').tabs('exists',node.text);
-				if(node.attributes.url != '#'){
-					if(!exists){
-						$('#center_tabs').tabs('add',{
-						    title:node.text,
-						    closable:true,
-						    href:node.attributes.url,
-						    tools:[{
-								iconCls:'icon-mini-refresh',
-								handler:function(){
-									var tab = $('#center_tabs').tabs('getTab',node.text);
-									tab.panel('refresh');
-								}
-						    }]
-						});
-					}else {
-						// 先关闭原来的 再添加一个
-						$('#center_tabs').tabs('close',node.text);
-						$('#center_tabs').tabs('add',{
-						    title:node.text,
-						    closable:true,
-						    href:node.attributes.url,
-						    tools:[{
-								iconCls:'icon-mini-refresh',
-								handler:function(){
-									var tab = $('#center_tabs').tabs('getTab',node.text);
-									tab.panel('refresh');
-								}
-						    }]
-						});
-						
-						
-					}
+				if(exists){
+					$('#center_tabs').tabs('select',node.text);
+				}else {
+					$('#center_tabs').tabs('add',{
+					    title:node.text,
+					    closable:true,
+					    content:'<iframe name="indextab" scrolling="auto" src="'+node.attributes.url+'" frameborder="0" style="width:100%;height:100%;"></iframe>'
+					});
 				}
 			}
 		});
 	});
 	
-	function p(data){
-		console.debug(data);
-	}
-	
-	function strToJsonObject(str){
-		return eval('(' + str + ')');
-	}
 </script>
 </head>
 <body class="easyui-layout">
