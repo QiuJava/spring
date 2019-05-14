@@ -70,7 +70,7 @@
 			success: function(result){
 				var data = strToJsonObject(result);
 				if (data.success){
-					$('#menu_dialog').dialog('close');		
+					$('#menu_dialog').dialog('close');
 					var tab = $('#center_tabs').tabs('getSelected');
 					tab.panel('refresh');
 				} else {

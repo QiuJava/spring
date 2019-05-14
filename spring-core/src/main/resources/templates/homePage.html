@@ -30,7 +30,7 @@
 						    tools:[{
 								iconCls:'icon-mini-refresh',
 								handler:function(){
-									var tab = $('#center_tabs').tabs('getSelected');
+									var tab = $('#center_tabs').tabs('getTab',node.text);
 									tab.panel('refresh');
 								}
 						    }]
@@ -45,7 +45,7 @@
 						    tools:[{
 								iconCls:'icon-mini-refresh',
 								handler:function(){
-									var tab = $('#center_tabs').tabs('getSelected');
+									var tab = $('#center_tabs').tabs('getTab',node.text);
 									tab.panel('refresh');
 								}
 						    }]

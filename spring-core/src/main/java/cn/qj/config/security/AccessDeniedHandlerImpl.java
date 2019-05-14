@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 没权限处理
@@ -24,7 +25,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		String method = request.getMethod();
-		if ("GET".endsWith(method)) {
+		if (RequestMethod.GET.name().endsWith(method)) {
 			response.sendRedirect(request.getContextPath() + "/403");
 		} else {
 			request.setAttribute("msg", accessDeniedException.getMessage());

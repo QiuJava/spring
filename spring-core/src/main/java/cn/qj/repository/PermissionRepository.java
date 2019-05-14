@@ -19,6 +19,7 @@ public interface PermissionRepository extends JpaRepository<Permission, Long> {
 	 * 根据上级权限id和类型获取下级菜单
 	 * 
 	 * @param parentId
+	 * @param type
 	 * @return
 	 */
 	List<Permission> findByParentIdAndType(Long parentId, Integer type);
@@ -27,6 +28,7 @@ public interface PermissionRepository extends JpaRepository<Permission, Long> {
 	 * 根据上级权限id和类型统计下级权限个数
 	 * 
 	 * @param id
+	 * @param type
 	 * @return
 	 */
 	long countByParentIdAndType(Long id, Integer type);

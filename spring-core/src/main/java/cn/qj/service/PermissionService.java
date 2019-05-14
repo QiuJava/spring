@@ -78,7 +78,7 @@ public class PermissionService {
 		return menuVos;
 	}
 
-	@Transactional(noRollbackFor = RuntimeException.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public Permission save(Permission permission) {
 		Date date = new Date();
 		Long id = null;
@@ -103,7 +103,7 @@ public class PermissionService {
 		return p;
 	}
 
-	@Transactional(noRollbackFor = RuntimeException.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public void delete(Permission permission) {
 		// 删除当前菜单和下级菜单
 		List<Permission> deleteList = new ArrayList<>();
