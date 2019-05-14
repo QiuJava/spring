@@ -11,6 +11,7 @@
 		var token = [[${_csrf.token}]];
 		$('#menu_tree').tree({
 			url:'/menu/tree?_csrf='+token,
+			lines:true,
 			loadFilter: function(data){
 				if (data.success){
 					return data.data;
@@ -56,6 +57,7 @@
 			}
 		});
 	});
+	
 	function p(data){
 		console.debug(data);
 	}

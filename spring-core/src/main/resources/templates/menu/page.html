@@ -1,3 +1,5 @@
+
+
 <script type="text/javascript" th:inline="javascript">
 	var token = [[${_csrf.token}]];
 	$(function() {
@@ -69,7 +71,8 @@
 				var data = strToJsonObject(result);
 				if (data.success){
 					$('#menu_dialog').dialog('close');		
-					$('#menu_list').treegrid('reload');	
+					var tab = $('#center_tabs').tabs('getSelected');
+					tab.panel('refresh');
 				} else {
 					$.messager.show({
 						title: '错误',
@@ -99,7 +102,8 @@
 				if (r){
 					$.post('/menu/delete',{id:row.id,_csrf:token},function(result){
 						if (result.success){
-							$('#menu_list').treegrid('reload');
+							var tab = $('#center_tabs').tabs('getSelected');
+							tab.panel('refresh');
 						} else {
 							$.messager.show({	
 								title: '错误',
@@ -124,11 +128,13 @@
 </script>
 <div id='menu_toolbar'>
 	<a href="javascript:void(0)" class="easyui-linkbutton"
-		iconCls="icon-add" plain="true" onclick="addMenu()" sec:authorize="hasRole('SAVE_MENU')">添加</a> <a
+		iconCls="icon-add" plain="true" onclick="addMenu()"
+		sec:authorize="hasRole('SAVE_MENU')">添加</a> <a
 		href="javascript:void(0)" class="easyui-linkbutton"
-		iconCls="icon-edit" plain="true" onclick="editMenu()" sec:authorize="hasRole('SAVE_MENU')">编辑</a> <a
+		iconCls="icon-edit" plain="true" onclick="editMenu()"
+		sec:authorize="hasRole('SAVE_MENU')">编辑</a> <a
 		href="javascript:void(0)" class="easyui-linkbutton"
-		iconCls="icon-remove" plain="true" onclick="removeMenu()" >删除 </a>
+		iconCls="icon-remove" plain="true" onclick="removeMenu()">删除 </a>
 
 </div>
 <table id="menu_list">
@@ -180,5 +186,3 @@
 		onclick="javascript:$('#menu_dialog').dialog('close')"
 		style="width: 90px">取消</a>
 </div>
-
-

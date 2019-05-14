@@ -35,6 +35,8 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		List<Permission> permissions = (List<Permission>) valueOperations.get(ContextStartListener.PERMISSION);
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
+		String requestURI = request.getRequestURI();
+		System.out.println(requestURI);
 		for (Permission permission : permissions) {
 			AntPathRequestMatcher matcher = new AntPathRequestMatcher(permission.getUrl());
 			if (matcher.matches(request)) {
