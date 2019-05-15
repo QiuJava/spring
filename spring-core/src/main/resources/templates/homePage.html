@@ -37,11 +37,16 @@
 </script>
 </head>
 <body class="easyui-layout">
-	<div data-options="region:'north',title:'North Title'"
-		style="height: 10%;"></div>
-	<div data-options="region:'south',title:'South Title'"
-		style="height: 20%;"></div>
-	<div data-options="region:'west',title:'菜单'" style="width: 20%;">
+	<div data-options="region:'north',title:'后台管理系统'"
+		style="height: 20%;">	
+		<div>
+		欢迎 :<span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.name}"></span>
+			<form th:action="@{/logout}" method="post">
+				<button type="submit" class="btn btn-default">登出</button>
+			</form>
+		</div>
+	</div>
+	<div data-options="region:'west',title:'菜单导航'" style="width: 20%;">
 		<!-- 创建菜单树 -->
 		<ul id="menu_tree"></ul>
 	</div>
@@ -51,5 +56,7 @@
 		
 		</div>
 	</div>
+	<div data-options="region:'south'"
+		style="height: 10%;"></div>
 </body>
 </html>

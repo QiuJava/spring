@@ -15,12 +15,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String index() {
-		return "/home";
-	}
-
-	@GetMapping("/home")
-	public String home() {
-		return "/home";
+		return "/homePage";
 	}
 
 	@GetMapping("/login")

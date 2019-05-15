@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().anyRequest().authenticated();
 
 		// 配置登录
-		http.formLogin().loginPage("/login").permitAll();
+		http.formLogin().loginPage("/login").defaultSuccessUrl("/homePage").permitAll();
 		// 记住我配置
 		http.rememberMe().tokenRepository(persistentTokenRepository())
 				.tokenValiditySeconds(securityProperty.getRememberMeSeconds()).userDetailsService(loginUserServiceImpl);
