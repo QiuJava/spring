@@ -40,5 +40,5 @@ public interface PermissionRepository extends JpaRepository<Permission, Long> {
 	 * @return
 	 */
 	List<Permission> findByParentId(Long parentId);
-
+	
 }

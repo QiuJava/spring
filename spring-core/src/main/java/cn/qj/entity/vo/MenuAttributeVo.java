@@ -15,6 +15,5 @@ import lombok.Setter;
 public class MenuAttributeVo {
 
 	private String url;
-	private String authority;
-
+	private boolean load;
 }

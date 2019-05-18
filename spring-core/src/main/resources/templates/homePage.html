@@ -24,11 +24,13 @@
 				if(exists){
 					$('#center_tabs').tabs('select',node.text);
 				}else {
-					$('#center_tabs').tabs('add',{
-					    title:node.text,
-					    closable:true,
-					    content:'<iframe name="indextab" scrolling="auto" src="'+node.attributes.url+'" frameborder="0" style="width:100%;height:100%;"></iframe>'
-					});
+					if(node.attributes.load){
+						$('#center_tabs').tabs('add',{
+						    title:node.text,
+						    closable:true,
+						    content:'<iframe name="indextab" scrolling="auto" src="'+node.attributes.url+'" frameborder="0" style="width:100%;height:100%;"></iframe>'
+						});
+					}
 				}
 			}
 		});
@@ -38,7 +40,7 @@
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'north',title:'后台管理系统'"
-		style="height: 20%;">	
+		style="height: 10%;">	
 		<div>
 		欢迎 :<span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.name}"></span>
 			<form th:action="@{/logout}" method="post">

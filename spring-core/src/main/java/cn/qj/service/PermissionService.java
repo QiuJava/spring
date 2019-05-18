@@ -1,10 +1,12 @@
 package cn.qj.service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
@@ -15,9 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.qj.config.listener.ContextStartListener;
 import cn.qj.entity.Permission;
+import cn.qj.entity.dto.IdCount;
 import cn.qj.entity.vo.MenuAttributeVo;
 import cn.qj.entity.vo.MenuVo;
 import cn.qj.repository.PermissionRepository;
+import cn.qj.util.QueryUtil;
 
 /**
  * 权限服务
@@ -26,9 +30,11 @@ import cn.qj.repository.PermissionRepository;
  * @date 2019年3月26日
  *
  */
-@SuppressWarnings("unchecked")
 @Service
 public class PermissionService {
+
+	@Autowired
+	private EntityManager entityManager;
 
 	@Autowired
 	private PermissionRepository permissionRepository;
@@ -47,6 +53,8 @@ public class PermissionService {
 		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
 				.getAuthorities();
 		List<Permission> curMenu = new ArrayList<>();
+		List<Long> ids = new ArrayList<>();
+
 		for (Permission permission : permissions) {
 			for (GrantedAuthority grantedAuthority : authorities) {
 				// 有权限才继续获取
@@ -54,7 +62,28 @@ public class PermissionService {
 					curMenu.add(permission);
 				}
 			}
+			ids.add(permission.getId());
 		}
+		StringBuilder sqlSb = new StringBuilder();
+		sqlSb.append("SELECT ");
+		sqlSb.append("	count( * ) AS count, ");
+		sqlSb.append("	parent_id AS id  ");
+		sqlSb.append("FROM ");
+		sqlSb.append("	permission  ");
+		sqlSb.append("GROUP BY ");
+		sqlSb.append("	parent_id  ");
+		if (ids.size() > 0) {
+			sqlSb.append("HAVING ");
+			sqlSb.append("	parent_id IN ( ");
+			for (Long id : ids) {
+				sqlSb.append(id).append(",");
+			}
+			sqlSb.deleteCharAt(sqlSb.length() - 1);
+			sqlSb.append(")");
+		}
+		List<IdCount> idCounts = QueryUtil.findListResult(entityManager, sqlSb.toString(), IdCount.class,
+				new ArrayList<>());
+
 		List<MenuVo> menuVos = new ArrayList<>();
 		for (Permission permission : curMenu) {
 			MenuVo menuVo = new MenuVo();
@@ -63,14 +92,25 @@ public class PermissionService {
 			menuVo.setText(permission.getName());
 			// 如果该权限下面没有权限 state 为 open
 			Long id = permission.getId();
-			long count = permissionRepository.countByParentIdAndType(id, Permission.MENU);
-			if (count > 0) {
+			BigInteger count = null;
+			for (IdCount idCount : idCounts) {
+				if (new BigInteger(id.toString()).compareTo(idCount.getId()) == 0) {
+					count = idCount.getCount();
+				}
+			}
+			// 如果该权限下没有菜单类型的权限 就为可加载否则为不能加载
+			if (count != null && count.compareTo(new BigInteger("0")) == -1) {
+				menuAttributeVo.setLoad(false);
 				menuVo.setState(MenuVo.CLOSED);
 			} else {
+				if (permission.getParentId() == null) {
+					menuAttributeVo.setLoad(false);
+				} else {
+					menuAttributeVo.setLoad(true);
+				}
 				menuVo.setState(MenuVo.OPEN);
 			}
 			menuAttributeVo.setUrl(permission.getUrl());
-			menuAttributeVo.setAuthority(permission.getAuthority());
 			menuVo.setAttributes(menuAttributeVo);
 			menuVos.add(menuVo);
 		}
@@ -81,24 +121,9 @@ public class PermissionService {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public Permission save(Permission permission) {
 		Date date = new Date();
-		Long id = null;
-		if (permission.getId() == null) {
-			permission.setCreateTime(date);
-		} else {
-			id = permission.getId();
-		}
 		permission.setUpdateTime(date);
 		Permission p = permissionRepository.save(permission);
-		List<Permission> permissions = (List<Permission>) valueOperations.get(ContextStartListener.PERMISSION);
-		if (id != null) {
-			for (Iterator<Permission> iterator = permissions.iterator(); iterator.hasNext();) {
-				Permission per = (Permission) iterator.next();
-				if (permission.getId().equals(per.getId())) {
-					iterator.remove();
-				}
-			}
-		}
-		permissions.add(p);
+		List<Permission> permissions = this.getAll();
 		valueOperations.set(ContextStartListener.PERMISSION, permissions);
 		return p;
 	}
@@ -112,15 +137,7 @@ public class PermissionService {
 		permissionRepository.deleteInBatch(deleteList);
 
 		// 删除缓存中的菜单
-		List<Permission> permissions = (List<Permission>) valueOperations.get(ContextStartListener.PERMISSION);
-		for (Iterator<Permission> iterator = permissions.iterator(); iterator.hasNext();) {
-			Permission p = (Permission) iterator.next();
-			for (Permission deleteP : deleteList) {
-				if (p.getId().equals(deleteP.getId())) {
-					iterator.remove();
-				}
-			}
-		}
+		List<Permission> permissions = this.getAll();
 		valueOperations.set(ContextStartListener.PERMISSION, permissions);
 	}
 
