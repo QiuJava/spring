@@ -48,13 +48,13 @@ public class PermissionService {
 
 	public List<MenuVo> getchildrenMenu(Long parentId) {
 		List<Permission> permissions = permissionRepository.findByParentIdAndType(parentId, Permission.MENU);
-
 		// 根据用户所拥有的权限进行过滤
 		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
 				.getAuthorities();
-		List<Permission> curMenu = new ArrayList<>();
-		List<Long> ids = new ArrayList<>();
 
+		List<Object> ids = new ArrayList<>();
+
+		List<Permission> curMenu = new ArrayList<>();
 		for (Permission permission : permissions) {
 			for (GrantedAuthority grantedAuthority : authorities) {
 				// 有权限才继续获取
@@ -64,25 +64,26 @@ public class PermissionService {
 			}
 			ids.add(permission.getId());
 		}
+
 		StringBuilder sqlSb = new StringBuilder();
 		sqlSb.append("SELECT ");
 		sqlSb.append("	count( * ) AS count, ");
 		sqlSb.append("	parent_id AS id  ");
 		sqlSb.append("FROM ");
 		sqlSb.append("	permission  ");
-		sqlSb.append("GROUP BY ");
-		sqlSb.append("	parent_id  ");
+		sqlSb.append("WHERE  ");
 		if (ids.size() > 0) {
-			sqlSb.append("HAVING ");
 			sqlSb.append("	parent_id IN ( ");
-			for (Long id : ids) {
-				sqlSb.append(id).append(",");
+			for (int i = 0; i < ids.size(); i++) {
+				sqlSb.append("?").append(i + 1).append(",");
 			}
 			sqlSb.deleteCharAt(sqlSb.length() - 1);
 			sqlSb.append(")");
 		}
-		List<IdCount> idCounts = QueryUtil.findListResult(entityManager, sqlSb.toString(), IdCount.class,
-				new ArrayList<>());
+		sqlSb.append("AND type = 1  ");
+		sqlSb.append("GROUP BY ");
+		sqlSb.append("	parent_id  ");
+		List<IdCount> idCounts = QueryUtil.findListResult(entityManager, sqlSb.toString(), IdCount.class, ids);
 
 		List<MenuVo> menuVos = new ArrayList<>();
 		for (Permission permission : curMenu) {
@@ -92,14 +93,14 @@ public class PermissionService {
 			menuVo.setText(permission.getName());
 			// 如果该权限下面没有权限 state 为 open
 			Long id = permission.getId();
-			BigInteger count = null;
+			BigInteger count = BigInteger.ZERO;
 			for (IdCount idCount : idCounts) {
 				if (new BigInteger(id.toString()).compareTo(idCount.getId()) == 0) {
 					count = idCount.getCount();
 				}
 			}
-			// 如果该权限下没有菜单类型的权限 就为可加载否则为不能加载
-			if (count != null && count.compareTo(new BigInteger("0")) == -1) {
+			// 如果该权限下有菜单类型的权限 就为不可加载 菜单状态为关闭
+			if (count.compareTo(BigInteger.ZERO) == 1) {
 				menuAttributeVo.setLoad(false);
 				menuVo.setState(MenuVo.CLOSED);
 			} else {
@@ -123,8 +124,7 @@ public class PermissionService {
 		Date date = new Date();
 		permission.setUpdateTime(date);
 		Permission p = permissionRepository.save(permission);
-		List<Permission> permissions = this.getAll();
-		valueOperations.set(ContextStartListener.PERMISSION, permissions);
+		valueOperations.set(ContextStartListener.PERMISSION, this.getAll());
 		return p;
 	}
 
@@ -136,9 +136,7 @@ public class PermissionService {
 		getChildrenMenu(deleteList, permission.getId());
 		permissionRepository.deleteInBatch(deleteList);
 
-		// 删除缓存中的菜单
-		List<Permission> permissions = this.getAll();
-		valueOperations.set(ContextStartListener.PERMISSION, permissions);
+		valueOperations.set(ContextStartListener.PERMISSION, this.getAll());
 	}
 
 	public void getChildrenMenu(List<Permission> deleteList, Long parentId) {

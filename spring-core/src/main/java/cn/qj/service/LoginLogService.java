@@ -21,8 +21,8 @@ public class LoginLogService {
 	private LoginLogRepository loginLogRepository;
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public void save(LoginLog log) {
-		loginLogRepository.save(log);
+	public LoginLog save(LoginLog log) {
+		return loginLogRepository.save(log);
 	}
 
 }
