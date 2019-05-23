@@ -21,25 +21,44 @@ spring:
   thymeleaf:
     cache: false
     
-  security:
-    property:
-      remember-me-seconds: 3600  
-      
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    
       
   jackson:
-    # 中国时区
+               # 中国时区
     time-zone: GMT+8
-    # 统一时间格式
+               # 统一时间格式
     date-format: yyyy-MM-dd HH:mm:ss
 
-    
-# 
+# tomcat服务配置
 server:
   port: 8088
   session:
-    timeout: 1800 
+    timeout: 1800
     
+config:  
+  security:
+    property:
+      remember-me-seconds: 3600
+      
+const:
+  admin: admin
+  password: 123
+  dict-hash: dict_hash
+  permission-hash: permission_hash
+  persistent-logins-table: persistent_logins_table
+  
+dict:
+  username-password-err-msg: username_password_err_msg
+  credentials-expired-err-msg: credentials_expired_err_msg
+  account-expired-err-msg: account_expired_err_msg
+  locked-err-msg: locked_err_msg
+  disabled-err-msg: disabled_err_msg
+  login-success-msg: login_success_msg
+  login-max-lose-num: login_max_lose_num
+  no-rights-msg: no_rights_msg
+  remember-me-seconds: remember_me_seconds
+  

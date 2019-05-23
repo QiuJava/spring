@@ -5,7 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 import cn.qj.common.BaseResult;
-import cn.qj.config.listener.ContextStartListener;
+import cn.qj.config.properties.ConstProperties;
 import cn.qj.entity.Permission;
 import cn.qj.entity.vo.MenuListVo;
 import cn.qj.entity.vo.MenuVo;
@@ -36,7 +36,10 @@ public class MenuController {
 	private PermissionService permissionService;
 
 	@Autowired
-	private ValueOperations<String, Object> valueOperations;
+	private HashOperations<String,String, Object> hashOperations;
+	
+	@Autowired
+	private ConstProperties constProperties;
 
 	@PostMapping("/menu/tree")
 	@ResponseBody
@@ -51,17 +54,15 @@ public class MenuController {
 	}
 
 	@GetMapping("/menu")
-	public String menuPage() {
-		return "menu/page";
+	public String menuList() {
+		return "menu/list";
 	}
 
 	@PostMapping("/menu")
 	@ResponseBody
 	public BaseResult menuQuery() {
 		try {
-			@SuppressWarnings("unchecked")
-			List<Permission> permissions = (List<Permission>) valueOperations.get(ContextStartListener.PERMISSION);
-
+			List<Object> permissions = hashOperations.values(constProperties.getPermissionHash());
 			MenuListVo menuListVo = new MenuListVo();
 			menuListVo.setTotal(permissions.size());
 			menuListVo.setRows(permissions);

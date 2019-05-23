@@ -10,10 +10,11 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
 
+import cn.qj.config.properties.ConstProperties;
+import cn.qj.config.properties.DictProperties;
 import cn.qj.entity.Dict;
 import cn.qj.entity.LoginLog;
 import cn.qj.service.LoginLogService;
-import cn.qj.util.DictUtil;
 
 /**
  * 认证成功监听
@@ -34,13 +35,19 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
 	@Autowired
 	private HashOperations<String, String, Object> hashOperations;
 
+	@Autowired
+	private ConstProperties constProperties;
+
+	@Autowired
+	private DictProperties dictProperties;
+
 	@Override
 	public void onApplicationEvent(AuthenticationSuccessEvent event) {
 		LoginLog log = new LoginLog();
 		log.setIp(request.getRemoteAddr());
 		log.setStatus(LoginLog.SUCCESS);
 		log.setUsername(event.getAuthentication().getName());
-		Dict dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.LOGIN_SUCCESS_MSG);
+		Dict dict = (Dict) hashOperations.get(constProperties.getDictHash(), dictProperties.getLoginSuccessMsg());
 		log.setMsg(dict.getValue());
 		log.setCreateTime(new Date());
 		loginLogService.save(log);

@@ -9,18 +9,19 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.qj.config.listener.ContextStartListener;
+import cn.qj.config.properties.ConstProperties;
 import cn.qj.entity.Permission;
 import cn.qj.entity.dto.IdCount;
 import cn.qj.entity.vo.MenuAttributeVo;
 import cn.qj.entity.vo.MenuVo;
 import cn.qj.repository.PermissionRepository;
+import cn.qj.util.DateUtil;
 import cn.qj.util.QueryUtil;
 
 /**
@@ -40,7 +41,10 @@ public class PermissionService {
 	private PermissionRepository permissionRepository;
 
 	@Autowired
-	private ValueOperations<String, Object> valueOperations;
+	private HashOperations<String, String, Object> hashOperations;
+
+	@Autowired
+	private ConstProperties constProperties;
 
 	public List<Permission> getAll() {
 		return permissionRepository.findAll();
@@ -121,10 +125,17 @@ public class PermissionService {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public Permission save(Permission permission) {
-		Date date = new Date();
-		permission.setUpdateTime(date);
+		Date newDate = DateUtil.getNewDate();
+		if (permission.getId() == null) {
+			permission.setCreateTime(newDate);
+		}
+		permission.setUpdateTime(newDate);
 		Permission p = permissionRepository.save(permission);
-		valueOperations.set(ContextStartListener.PERMISSION, this.getAll());
+		String permissionHash = constProperties.getPermissionHash();
+		hashOperations.delete(permissionHash, hashOperations.keys(permissionHash).toArray());
+		for (Permission per : this.getAll()) {
+			hashOperations.put(permissionHash, per.getUrl(), per);
+		}
 		return p;
 	}
 
@@ -136,7 +147,11 @@ public class PermissionService {
 		getChildrenMenu(deleteList, permission.getId());
 		permissionRepository.deleteInBatch(deleteList);
 
-		valueOperations.set(ContextStartListener.PERMISSION, this.getAll());
+		String permissionHash = constProperties.getPermissionHash();
+		hashOperations.delete(permissionHash, hashOperations.keys(permissionHash).toArray());
+		for (Permission p : this.getAll()) {
+			hashOperations.put(permissionHash, p.getUrl(), p);
+		}
 	}
 
 	public void getChildrenMenu(List<Permission> deleteList, Long parentId) {

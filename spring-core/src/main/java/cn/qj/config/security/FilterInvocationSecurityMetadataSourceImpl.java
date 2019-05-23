@@ -7,15 +7,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
-import cn.qj.config.listener.ContextStartListener;
+import cn.qj.config.properties.ConstProperties;
 import cn.qj.entity.Permission;
 
 /**
@@ -25,31 +24,30 @@ import cn.qj.entity.Permission;
  * @date 2018/8/13
  */
 @Component
-@SuppressWarnings("unchecked")
 public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocationSecurityMetadataSource {
 
 	@Autowired
-	private ValueOperations<String, Object> valueOperations;
+	private HashOperations<String, String, Object> hashOperations;
+
+	@Autowired
+	private ConstProperties constProperties;
 
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-		List<Permission> permissions = (List<Permission>) valueOperations.get(ContextStartListener.PERMISSION);
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
-		List<ConfigAttribute> configList = new ArrayList<>();
-		for (Permission permission : permissions) {
-			AntPathRequestMatcher matcher = new AntPathRequestMatcher(permission.getUrl());
-			if (matcher.matches(request)) {
-				configList.add(new SecurityConfig(permission.getAuthority()));
-				return configList;
-			}
+		String contextPath = request.getContextPath();
+		Permission permission = (Permission) hashOperations.get(constProperties.getPermissionHash(), contextPath);
+		if (permission != null) {
+			List<ConfigAttribute> configList = new ArrayList<>();
+			configList.add(new SecurityConfig(permission.getAuthority()));
+			return configList;
 		}
-		return configList;
+		return null;
 	}
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		List<ConfigAttribute> configList = new ArrayList<>();
-		return configList;
+		return null;
 	}
 
 	@Override

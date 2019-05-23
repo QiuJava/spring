@@ -8,16 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
+import cn.qj.config.properties.ConstProperties;
 import cn.qj.config.security.AuthenticationProviderImpl;
-import cn.qj.entity.Permission;
 import cn.qj.entity.Dict;
 import cn.qj.entity.LoginUser;
-import cn.qj.service.PermissionService;
+import cn.qj.entity.Permission;
 import cn.qj.service.DictService;
 import cn.qj.service.LoginUserServiceImpl;
+import cn.qj.service.PermissionService;
+import cn.qj.util.DateUtil;
 
 /**
  * 应用启动监听
@@ -28,13 +29,6 @@ import cn.qj.service.LoginUserServiceImpl;
  */
 @Component
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
-
-	public static final String DICT = "DICT";
-	public static final String PERMISSION = "PERMISSION";
-	public static final String ADMIN = "admin";
-
-	@Autowired
-	private ValueOperations<String, Object> valueOperations;
 
 	@Autowired
 	private HashOperations<String, String, Object> hashOperations;
@@ -48,26 +42,39 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Autowired
 	private LoginUserServiceImpl loginUserService;
 
+	@Autowired
+	private ConstProperties constProperties;
+
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		String dictHash = constProperties.getDictHash();
+		String permissionHash = constProperties.getPermissionHash();
+		hashOperations.delete(dictHash, hashOperations.keys(dictHash).toArray());
+		hashOperations.delete(permissionHash, hashOperations.keys(permissionHash).toArray());
+		
 		List<Dict> dicts = dictService.getAll();
 		for (Dict dict : dicts) {
-			hashOperations.put(DICT, dict.getCode(), dict);
+			hashOperations.put(constProperties.getDictHash(), dict.getCode(), dict);
 		}
 		List<Permission> permissions = permissionService.getAll();
-		valueOperations.set(PERMISSION, permissions);
+		for (Permission permission : permissions) {
+			hashOperations.put(constProperties.getPermissionHash(), permission.getUrl(), permission);
+		}
 
 		// 创建超级管理员
-		LoginUser loginUser = loginUserService.getByUsername(ADMIN);
+		String admin = constProperties.getAdmin();
+		LoginUser loginUser = loginUserService.getByUsername(admin);
 		if (loginUser == null) {
+			Date newDate = DateUtil.getNewDate();
 			loginUser = new LoginUser();
-			loginUser.setUsername(ADMIN);
-			loginUser.setPassword(AuthenticationProviderImpl.B_CRYPT.encode("123"));
+			String password = constProperties.getPassword();
+			loginUser.setUsername(admin);
+			loginUser.setPassword(AuthenticationProviderImpl.B_CRYPT.encode(password));
 			loginUser.setUserStatus(LoginUser.NORMAL);
-			loginUser.setPasswordExpiration(DateUtils.addMonths(new Date(), 6));
-			loginUser.setAccountExpiration(DateUtils.addMonths(new Date(), 6));
-			loginUser.setCreateTime(new Date());
-			loginUser.setUpdateTime(new Date());
+			loginUser.setPasswordExpiration(DateUtils.addMonths(newDate, 6));
+			loginUser.setAccountExpiration(DateUtils.addMonths(newDate, 6));
+			loginUser.setCreateTime(newDate);
+			loginUser.setUpdateTime(newDate);
 			loginUserService.save(loginUser);
 		}
 	}

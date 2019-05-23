@@ -15,7 +15,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String index() {
-		return "/homePage";
+		return "/home";
 	}
 
 	@GetMapping("/login")
@@ -28,8 +28,8 @@ public class HomeController {
 		return "/error/403";
 	}
 
-	@GetMapping("/homePage")
-	public String homePage() {
-		return "/homePage";
+	@GetMapping("/home")
+	public String home() {
+		return "/home";
 	}
 }

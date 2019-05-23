@@ -14,7 +14,7 @@ import lombok.Setter;
  *
  */
 @Component
-@ConfigurationProperties("spring.security.property")
+@ConfigurationProperties("config.security.property")
 @Getter
 @Setter
 public class SecurityProperty {

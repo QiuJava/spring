@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import cn.qj.config.properties.ConstProperties;
 import cn.qj.service.LoginUserServiceImpl;
 
 /**
@@ -22,8 +23,6 @@ import cn.qj.service.LoginUserServiceImpl;
  */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	public static final String CREATE_TABLEON_START_UP = "CREATE_TABLEON_START_UP";
 
 	@Autowired
 	private AccessDeniedHandlerImpl accessDeniedHandlerImpl;
@@ -40,13 +39,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private SecurityProperty securityProperty;
 
+	@Autowired
+	private ConstProperties constProperties;
+
 	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
 		tokenRepository.setDataSource(dataSource);
-		if (valueOperations.get(CREATE_TABLEON_START_UP) == null) {
+		String persistentLoginsTable = constProperties.getPersistentLoginsTable();
+		if (valueOperations.get(persistentLoginsTable) == null) {
 			tokenRepository.setCreateTableOnStartup(true);
-			valueOperations.set(CREATE_TABLEON_START_UP, CREATE_TABLEON_START_UP);
+			valueOperations.set(persistentLoginsTable, persistentLoginsTable);
 		}
 		return tokenRepository;
 	}
@@ -57,17 +60,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		// 授权请求
-		http.authorizeRequests().antMatchers("/", "/homePage", "/menu/tree").permitAll();
 		http.authorizeRequests().antMatchers("/jquery-easyui-1.7.0/**").permitAll();
-
 		http.authorizeRequests().anyRequest().authenticated();
 
 		// 配置登录
-		http.formLogin().loginPage("/login").defaultSuccessUrl("/homePage").permitAll();
+		http.formLogin().loginPage("/login").permitAll();
 		// 记住我配置
 		http.rememberMe().tokenRepository(persistentTokenRepository())
 				.tokenValiditySeconds(securityProperty.getRememberMeSeconds()).userDetailsService(loginUserServiceImpl);
-		http.logout().permitAll();
 
 		http.exceptionHandling().accessDeniedHandler(accessDeniedHandlerImpl);
 

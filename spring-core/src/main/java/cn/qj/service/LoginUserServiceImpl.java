@@ -8,11 +8,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.qj.config.listener.ContextStartListener;
+import cn.qj.config.properties.ConstProperties;
+import cn.qj.config.properties.DictProperties;
 import cn.qj.entity.Dict;
 import cn.qj.entity.LoginUser;
 import cn.qj.repository.LoginUserRepository;
-import cn.qj.util.DictUtil;
 
 /**
  * 登录用户服务
@@ -30,11 +30,17 @@ public class LoginUserServiceImpl implements UserDetailsService {
 	@Autowired
 	private HashOperations<String, String, Object> hashOperations;
 
+	@Autowired
+	private ConstProperties constProperties;
+	@Autowired
+	private DictProperties dictProperties;
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LoginUser user = loginUserRepository.findByUsername(username);
 		if (user == null) {
-			Dict dict = (Dict) hashOperations.get(ContextStartListener.DICT, DictUtil.USERNAME_PASSWORD_ERR_MSG);
+			Dict dict = (Dict) hashOperations.get(constProperties.getDictHash(),
+					dictProperties.getUsernamePasswordErrMsg());
 			throw new UsernameNotFoundException(dict.getValue());
 		}
 		return user;

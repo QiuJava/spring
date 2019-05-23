@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>后台管理系统</title>
-<div th:replace="common/headerPage::header_page"></div>
+<div th:replace="common/header::header_page"></div>
 <script type="text/javascript" th:inline="javascript">
 	var token = [[${_csrf.token}]];
 	$(function() {
@@ -108,6 +108,7 @@
 				var data = strToJsonObject(result);
 				if (data.success){
 					$('#menu_dialog').dialog('close');
+					$('#menu_list').treegrid('unselectAll');
 					$('#menu_list').treegrid('reload');
 				} else {
 					$.messager.show({
@@ -126,6 +127,7 @@
 				if (r){
 					$.post('/menu/delete',{id:row.id,_csrf:token},function(result){
 						if (result.success){
+							$('#menu_list').treegrid('unselectAll');
 							$('#menu_list').treegrid('reload');
 						} else {
 							$.messager.show({	
