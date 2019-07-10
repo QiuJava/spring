@@ -85,7 +85,7 @@ public class UserFile extends AuthComponent {
 		Map<String, Object> json = new HashMap<String, Object>(5);
 		json.put("id", getId());
 		json.put("file", file);
-		json.put("fileType", fileType.getTitle());
+		json.put("fileType", fileType.getItemName());
 		json.put("name", applier.getUsername());
 		return JSONObject.toJSONString(json);
 	}

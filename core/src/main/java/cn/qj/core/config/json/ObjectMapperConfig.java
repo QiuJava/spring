@@ -31,7 +31,7 @@ public class ObjectMapperConfig {
 	@ConditionalOnMissingBean(ObjectMapper.class)
 	public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
 		ObjectMapper objectMapper = builder.createXmlMapper(false).build();
-		objectMapper.setDateFormat(new SimpleDateFormat(DateUtil.DATE_TIME_FORMAT_PATTERN));
+		objectMapper.setDateFormat(new SimpleDateFormat(DateUtil.DATATIME_PATTERN));
 		// null 替换成""
 		objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
 			@Override

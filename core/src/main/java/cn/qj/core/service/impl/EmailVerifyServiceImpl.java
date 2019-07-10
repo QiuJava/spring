@@ -16,7 +16,7 @@ import cn.qj.core.repository.EmailVerifyRepository;
 import cn.qj.core.service.EmailVerifyService;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.BidStateUtil;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 邮箱校验服务实现
@@ -53,7 +53,7 @@ public class EmailVerifyServiceImpl implements EmailVerifyService {
 
 	@Override
 	public void send(String email) {
-		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = userInfoService.get(HttpSessionUtil.getCurrentLoginInfo().getId());
 		// 如果用户已经绑定邮箱,直接略过
 		if (!userInfo.getIsBindEmail()) {
 			// 创建一个绑定用户的验证对象

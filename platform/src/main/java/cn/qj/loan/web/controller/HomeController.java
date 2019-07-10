@@ -21,7 +21,7 @@ import cn.qj.core.service.IndexService;
 import cn.qj.core.service.RealAuthService;
 import cn.qj.core.service.UserFileService;
 import cn.qj.core.service.UserInfoService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 首页控制器
@@ -86,7 +86,7 @@ public class HomeController {
 
 		model.addAttribute("userFiles", userFileService.page(qo).getContent());
 
-		LoginInfo loginInfo = HttpServletContext.getCurrentLoginInfo();
+		LoginInfo loginInfo = HttpSessionUtil.getCurrentLoginInfo();
 		if (loginInfo != null) {
 			Long currentId = loginInfo.getId();
 			if (currentId.equals(borrow.getCreateUser().getId())) {

@@ -36,9 +36,7 @@ public class RechargeController {
 	@RequestMapping("/recharge/audit")
 	@ResponseBody
 	public BaseResult rechargeAudit(Long id, String remark, int state) {
-		BaseResult result = new BaseResult();
 		service.audit(id, remark, state);
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("线下充值审核成功", null);
 	}
 }

@@ -5,12 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -28,6 +33,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class LoginInfo implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +43,7 @@ public class LoginInfo implements UserDetails {
 	public static final int USER_PLATFORM = 0;
 	public static final int MANAGER = 1;
 	public static final int ADMIN = 2;
-	
+
 	public static final int LOSER_MAX_COUNT = 5;
 	public static final long LOCK_TIME = 1000 * 60;
 
@@ -50,10 +56,14 @@ public class LoginInfo implements UserDetails {
 	private int status;
 	private int loserCount;
 	private Date lockTime;
-	/** 创建时间 */
-	private Date gmtCreate;
-	/** 修改时间 */
-	private Date gmtModified;
+	@CreatedDate
+	private Date createTime;
+	@LastModifiedDate
+	private Date updateTime;
+	@CreatedBy
+	private String createUser;
+	@LastModifiedDate
+	private String updateUser;
 	@ManyToMany
 	private List<Role> roles;
 
@@ -62,7 +72,7 @@ public class LoginInfo implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
+		return roles == null ? authorities : roles;
 	}
 
 	/**

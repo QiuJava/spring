@@ -11,7 +11,7 @@ import cn.qj.core.common.BaseResult;
 import cn.qj.core.pojo.qo.RepaymentScheduleQo;
 import cn.qj.core.service.AccountService;
 import cn.qj.core.service.RepaymentScheduleService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 还款计划控制器
@@ -35,7 +35,7 @@ public class RepaymentScheduleController {
 	 */
 	@RequestMapping("/repaymentSchedule")
 	public String list(@ModelAttribute("qo") RepaymentScheduleQo qo, Model model) {
-		Long id = HttpServletContext.getCurrentLoginInfo().getId();
+		Long id = HttpSessionUtil.getCurrentLoginInfo().getId();
 		qo.setUserId(id);
 		model.addAttribute("pageResult", service.list(qo));
 		model.addAttribute("account", accountService.get(id));

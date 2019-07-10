@@ -1,6 +1,5 @@
 package cn.qj.admin.web.service;
 
-import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,12 +59,9 @@ public class LogicService {
 					break;
 				}
 				Role role = new Role();
-				Date currentDate = new Date();
 				role.setUrl(url);
 				role.setName("ROLE_" + url);
 				role.setDescritpion("角色");
-				role.setGmtCreate(currentDate);
-				role.setGmtModified(currentDate);
 				// 保存权限
 				roleService.saveRole(role);
 			}

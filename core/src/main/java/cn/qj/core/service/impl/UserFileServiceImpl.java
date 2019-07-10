@@ -29,7 +29,7 @@ import cn.qj.core.service.LoginInfoService;
 import cn.qj.core.service.SystemDictionaryItemService;
 import cn.qj.core.service.UserFileService;
 import cn.qj.core.service.UserInfoService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 用户材料服务实现
@@ -72,7 +72,7 @@ public class UserFileServiceImpl implements UserFileService {
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void apply(String fileName) {
 		UserFile userFile = new UserFile();
-		userFile.setApplier(HttpServletContext.getCurrentLoginInfo());
+		userFile.setApplier(HttpSessionUtil.getCurrentLoginInfo());
 		userFile.setApplyTime(new Date());
 		userFile.setFile(fileName);
 		userFile.setState(StatusConst.AUTH_NORMAL);
@@ -127,7 +127,7 @@ public class UserFileServiceImpl implements UserFileService {
 	public void audit(Long id, Integer state, Integer score, String remark) {
 		UserFile userFile = repository.findOne(id);
 		if (userFile.getState() == StatusConst.AUTH_NORMAL) {
-			userFile.setAuditor(HttpServletContext.getCurrentLoginInfo());
+			userFile.setAuditor(HttpSessionUtil.getCurrentLoginInfo());
 			userFile.setAuditTime(new Date());
 			userFile.setRemark(remark);
 			userFile.setState(state);

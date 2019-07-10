@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.qj.common.BaseResult;
+import cn.qj.util.StringUtil;
 
 /**
  * 权限控制器
@@ -19,6 +20,6 @@ public class PermissionController {
 
 	@RequestMapping("/noPermission")
 	public BaseResult noPermission(HttpServletRequest request) {
-		return BaseResult.err403(request.getAttribute("msg").toString());
+		return BaseResult.err(request.getAttribute("msg").toString(), StringUtil.EMPTY);
 	}
 }

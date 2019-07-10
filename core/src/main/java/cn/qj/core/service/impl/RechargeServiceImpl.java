@@ -32,7 +32,7 @@ import cn.qj.core.service.AccountService;
 import cn.qj.core.service.CompanyBankInfoService;
 import cn.qj.core.service.LoginInfoService;
 import cn.qj.core.service.RechargeService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 import cn.qj.core.util.ResultUtil;
 
 /**
@@ -62,7 +62,7 @@ public class RechargeServiceImpl implements RechargeService {
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void apply(Recharge recharge) {
-		recharge.setApplier(HttpServletContext.getCurrentLoginInfo());
+		recharge.setApplier(HttpSessionUtil.getCurrentLoginInfo());
 		recharge.setApplyTime(new Date());
 		recharge.setState(StatusConst.AUTH_NORMAL);
 		repository.saveAndFlush(recharge);
@@ -109,7 +109,7 @@ public class RechargeServiceImpl implements RechargeService {
 	public void audit(Long id, String remark, Integer state) {
 		Recharge recharge = repository.findOne(id);
 		if (recharge != null && recharge.getState() == StatusConst.AUTH_NORMAL) {
-			recharge.setAuditor(HttpServletContext.getCurrentLoginInfo());
+			recharge.setAuditor(HttpSessionUtil.getCurrentLoginInfo());
 			recharge.setAuditTime(new Date());
 			recharge.setState(state);
 			recharge.setRemark(remark);

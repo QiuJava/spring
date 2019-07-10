@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -40,7 +40,7 @@ public class EmailVerify implements Serializable {
 
 	public EmailVerify(String email) {
 		this.email = email;
-		this.userId = HttpServletContext.getCurrentLoginInfo().getId();
+		this.userId = HttpSessionUtil.getCurrentLoginInfo().getId();
 		this.verify = UUID.randomUUID().toString();
 		this.verifyDate = new Date();
 	}

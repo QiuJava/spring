@@ -27,7 +27,7 @@ import cn.qj.core.repository.RealAuthRepository;
 import cn.qj.core.service.RealAuthService;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.BidStateUtil;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 实名认证服务实现
@@ -55,10 +55,10 @@ public class RealAuthServiceImpl implements RealAuthService {
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void save(RealAuth realAuth) {
-		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = userInfoService.get(HttpSessionUtil.getCurrentLoginInfo().getId());
 		if (!userInfo.getIsRealAuth() && userInfo.getRealAuthId() == 0) {
 			realAuth.setState(StatusConst.AUTH_NORMAL);
-			realAuth.setApplier(HttpServletContext.getCurrentLoginInfo());
+			realAuth.setApplier(HttpSessionUtil.getCurrentLoginInfo());
 			realAuth.setApplyTime(new Date());
 			userInfo.setRealAuthId(realAuth.getId());
 			RealAuth auth = repository.saveAndFlush(realAuth);
@@ -96,7 +96,7 @@ public class RealAuthServiceImpl implements RealAuthService {
 		RealAuth realAuth = repository.findOne(id);
 		if (realAuth.getState() == StatusConst.AUTH_NORMAL) {
 			// 设置审核人审核时间
-			realAuth.setAuditor(HttpServletContext.getCurrentLoginInfo());
+			realAuth.setAuditor(HttpSessionUtil.getCurrentLoginInfo());
 			realAuth.setAuditTime(new Date());
 			realAuth.setRemark(remark);
 			realAuth.setState(state);

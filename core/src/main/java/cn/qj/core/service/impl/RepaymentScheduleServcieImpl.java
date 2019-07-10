@@ -40,7 +40,7 @@ import cn.qj.core.service.PaymentPlanService;
 import cn.qj.core.service.RepaymentScheduleService;
 import cn.qj.core.service.SendSmsService;
 import cn.qj.core.util.DateUtil;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 import cn.qj.core.util.ResultUtil;
 
 /**
@@ -106,7 +106,7 @@ public class RepaymentScheduleServcieImpl implements RepaymentScheduleService {
 		// 这一期还款的总金额
 		BigDecimal returnTotalAmount = rs.getTotalAmount();
 		// 得到借款人账户信息
-		Account currentAccount = accountService.get(HttpServletContext.getCurrentLoginInfo().getId());
+		Account currentAccount = accountService.get(HttpSessionUtil.getCurrentLoginInfo().getId());
 		// 借款人账户可用余额
 		BigDecimal usableAmount = currentAccount.getUsableAmount();
 		// 1.判断当前用户是否处于还款中

@@ -17,7 +17,6 @@ import cn.qj.core.consts.RequestConst;
 import cn.qj.core.entity.IpLog;
 import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.service.IpLogService;
-import cn.qj.core.util.HttpServletContext;
 
 /**
  * 登录成功处理
@@ -43,11 +42,7 @@ public class AdminLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ipLog.setUserType(loginInfo.getUserType());
 		ipLog.setLoginTime(currentDate);
 		ipLog.setLoginState(IpLog.LOGIN_SUCCESS);
-		ipLog.setGmtCreate(currentDate);
-		ipLog.setGmtModified(currentDate);
 		ipLogService.saveIpLog(ipLog);
-		// 登录成功把用户登录信息存储到session
-		HttpServletContext.setCurrentLoginInfo(loginInfo);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(RequestConst.LOGIN_INFO_AJAX);
 		requestDispatcher.forward(request, response);
 	}

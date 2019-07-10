@@ -1,0 +1,117 @@
+package cn.loan.core.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import cn.loan.core.common.LogicException;
+import cn.loan.core.common.PageResult;
+import cn.loan.core.config.cache.SystemDictionaryHashService;
+import cn.loan.core.entity.SystemDictionary;
+import cn.loan.core.entity.SystemDictionaryItem;
+import cn.loan.core.entity.qo.SystemDictionaryItemQo;
+import cn.loan.core.repository.SystemDictionaryItemDao;
+import cn.loan.core.util.StringUtil;
+import cn.loan.core.util.SystemDictionaryUtil;
+
+/**
+ * 字典明细服务
+ * 
+ * @author qiujian
+ *
+ */
+@Service
+public class SystemDictionaryItemService {
+
+	@Autowired
+	private SystemDictionaryItemDao systemDictionaryItemDao;
+
+	@Autowired
+	private SystemDictionaryService systemDictionaryService;
+
+	@Autowired
+	private SystemDictionaryHashService systemDictionaryHashService;
+
+	public PageResult pageQuery(SystemDictionaryItemQo qo) {
+		Page<SystemDictionaryItem> page = systemDictionaryItemDao.findAll(new Specification<SystemDictionaryItem>() {
+			@Override
+			public Predicate toPredicate(Root<SystemDictionaryItem> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> list = new ArrayList<>();
+				String keyword = qo.getKeyword();
+				if (StringUtil.hasLength(keyword)) {
+					Predicate likeItemName = cb.like(root.get(StringUtil.ITEM_NAME), keyword + StringUtil.PER_CENT);
+					Predicate likeItemKey = cb.like(root.get(StringUtil.ITEM_KEY), keyword + StringUtil.PER_CENT);
+					Predicate or = cb.or(likeItemName, likeItemKey);
+					list.add(or);
+				}
+				Long systemDictionaryId = qo.getSystemDictionaryId();
+				if (systemDictionaryId != null) {
+					SystemDictionary systemDictionary = new SystemDictionary();
+					systemDictionary.setId(systemDictionaryId);
+					Predicate equalSystemDictionaryId = cb.equal(root.get(StringUtil.SYSTEM_DICTIONARY),
+							systemDictionary);
+					list.add(equalSystemDictionaryId);
+				}
+				Predicate[] ps = new Predicate[list.size()];
+				return cb.and(list.toArray(ps));
+			}
+		}, new PageRequest(qo.getPage(), qo.getSize(), Direction.ASC, StringUtil.SEQUENCE));
+		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage());
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public void save(SystemDictionaryItem item) {
+		String itemKey = item.getItemKey();
+		Long id = item.getId();
+		if (id != null) {
+			SystemDictionaryItem dictionaryItem = systemDictionaryItemDao.findOne(id);
+			dictionaryItem.setItemKey(itemKey);
+			dictionaryItem.setItemName(item.getItemName());
+			dictionaryItem.setItemValue(item.getItemValue());
+			dictionaryItem.setSequence(item.getSequence());
+			if (!dictionaryItem.getItemKey().equals(itemKey)) {
+				this.itemKeyUniquenessCheck(itemKey, item.getSystemDictionary());
+			}
+			systemDictionaryItemDao.save(dictionaryItem);
+		} else {
+			this.itemKeyUniquenessCheck(itemKey, item.getSystemDictionary());
+			systemDictionaryItemDao.save(item);
+		}
+		systemDictionaryService.updateHash();
+	}
+
+	private void itemKeyUniquenessCheck(String itemKey, SystemDictionary dict) {
+		Long count = systemDictionaryItemDao.countByItemKeyAndSystemDictionary(itemKey, dict);
+		// 保证Key的唯一性
+		if (count > 0) {
+			throw new LogicException("条目键:" + itemKey + "已存在");
+		}
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public void delete(Long id) {
+		systemDictionaryItemDao.delete(id);
+		systemDictionaryService.updateHash();
+	}
+
+	public List<SystemDictionaryItem> list(String dictKey) {
+		return SystemDictionaryUtil.getItems(dictKey, systemDictionaryHashService);
+	}
+
+	public SystemDictionaryItem get(Long id) {
+		return systemDictionaryItemDao.getOne(id);
+	}
+
+}

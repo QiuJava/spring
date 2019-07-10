@@ -11,7 +11,7 @@ import cn.qj.core.entity.LoginInfo;
 import cn.qj.core.service.AccountService;
 import cn.qj.core.service.IpLogService;
 import cn.qj.core.service.UserInfoService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 个人中心控制器
@@ -37,7 +37,7 @@ public class PersonalCenterController {
 	@RequestMapping("/personalCenter")
 	public String personal(Model model) {
 		// 拿到当前登录对象
-		LoginInfo info = HttpServletContext.getCurrentLoginInfo();
+		LoginInfo info = HttpSessionUtil.getCurrentLoginInfo();
 		Account account = accountService.get(info.getId());
 		IpLog ipLog = ipLogService.getNewestIpLogByUsername(info.getUsername());
 		// 把对象信息放到model中

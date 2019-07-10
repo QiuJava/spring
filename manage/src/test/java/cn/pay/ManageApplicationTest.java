@@ -1,6 +1,5 @@
 package cn.pay;
 
-import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -56,12 +55,9 @@ public class ManageApplicationTest {
 					break;
 				}
 				Role role = new Role();
-				Date currentDate = new Date();
 				role.setUrl(url);
 				role.setName("ROLE_" + url);
 				role.setDescritpion("角色");
-				role.setGmtCreate(currentDate);
-				role.setGmtModified(currentDate);
 				// 保存权限
 				roleService.saveRole(role);
 			}

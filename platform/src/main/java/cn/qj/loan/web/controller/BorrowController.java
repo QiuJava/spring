@@ -21,7 +21,7 @@ import cn.qj.core.pojo.dto.BidDto;
 import cn.qj.core.service.AccountService;
 import cn.qj.core.service.BorrowService;
 import cn.qj.core.service.UserInfoService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 借款控制器
@@ -52,7 +52,7 @@ public class BorrowController {
 	 */
 	@RequestMapping("/borrow/home")
 	public String borrow(Model model) {
-		LoginInfo current = HttpServletContext.getCurrentLoginInfo();
+		LoginInfo current = HttpSessionUtil.getCurrentLoginInfo();
 		// 如果当前用户没有登录应该直接导向到静态页面
 		if (current == null) {
 			return "redirect:/borrow.html";
@@ -67,7 +67,7 @@ public class BorrowController {
 	public String info(Model model) {
 		if (service.isApplyBorrow()) {
 			// 查询用户账户信息
-			model.addAttribute("account", accountService.get(HttpServletContext.getCurrentLoginInfo().getId()));
+			model.addAttribute("account", accountService.get(HttpSessionUtil.getCurrentLoginInfo().getId()));
 			model.addAttribute("minBorrowAmount", BidConst.MIN_BORROW_AMOUNT);
 			model.addAttribute("minBidAmount", BidConst.MIN_BID_AMOUNT);
 			return "borrow_apply";
@@ -85,16 +85,14 @@ public class BorrowController {
 	@RequestMapping("/borrow/bid")
 	@ResponseBody
 	public BaseResult bid(Long borrowId, BigDecimal amount) {
-		BaseResult result = new BaseResult();
 		// service.bid(borrowId, amount);
 		BidDto dto = new BidDto();
 		dto.setBorrowId(borrowId);
 		dto.setAmount(amount);
-		dto.setLoginInfoId(HttpServletContext.getCurrentLoginInfo().getId());
+		dto.setLoginInfoId(HttpSessionUtil.getCurrentLoginInfo().getId());
 		// 发送消息服
 		jmsMessagingTemplate.convertAndSend(bidQueue, JSON.toJSONString(dto));
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("投标成功", null);
 	}
 	
 }

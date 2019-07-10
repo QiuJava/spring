@@ -22,7 +22,14 @@
 			onClick: function(node){
 				var exists = $('#center_tabs').tabs('exists',node.text);
 				if(exists){
-					$('#center_tabs').tabs('select',node.text);
+					$('#center_tabs').tabs('close',node.text);
+					if(node.attributes.load){
+						$('#center_tabs').tabs('add',{
+						    title:node.text,
+						    closable:true,
+						    content:'<iframe name="indextab" scrolling="auto" src="'+node.attributes.url+'" frameborder="0" style="width:100%;height:100%;"></iframe>'
+						});
+					}
 				}else {
 					if(node.attributes.load){
 						$('#center_tabs').tabs('add',{

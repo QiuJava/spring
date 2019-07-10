@@ -35,7 +35,7 @@ import cn.qj.core.service.UserBankInfoService;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.service.WithdrawServcie;
 import cn.qj.core.util.BidStateUtil;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 import cn.qj.core.util.ResultUtil;
 
 /**
@@ -65,7 +65,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void apply(BigDecimal moneyAmount) {
-		Long id = HttpServletContext.getCurrentLoginInfo().getId();
+		Long id = HttpSessionUtil.getCurrentLoginInfo().getId();
 		UserInfo userInfo = userInfoService.get(id);
 		Account account = accountService.get(id);
 		// 拿到当前银行账户对象
@@ -82,7 +82,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 			withdraw.setMoneyAmount(moneyAmount);
 			withdraw.setApplyTime(new Date());
 			withdraw.setState(StatusConst.AUTH_NORMAL);
-			withdraw.setApplier(HttpServletContext.getCurrentLoginInfo());
+			withdraw.setApplier(HttpSessionUtil.getCurrentLoginInfo());
 			// 保存对象
 			repository.saveAndFlush(withdraw);
 			// 修改用户状态
@@ -107,7 +107,7 @@ public class WithdrawServcieImpl implements WithdrawServcie {
 			// 拿到当前申请人的账户对象
 			Account currentAccount = accountService.get(withdraw.getApplier().getId());
 			// 设置提相关状态
-			withdraw.setAuditor((HttpServletContext.getCurrentLoginInfo()));
+			withdraw.setAuditor((HttpSessionUtil.getCurrentLoginInfo()));
 			withdraw.setRemark(remark);
 			withdraw.setAuditTime(new Date());
 			withdraw.setState(state);

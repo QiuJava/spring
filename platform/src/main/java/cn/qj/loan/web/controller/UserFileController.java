@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.qj.core.entity.UserFile;
 import cn.qj.core.service.SystemDictionaryItemService;
 import cn.qj.core.service.UserFileService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 import cn.qj.core.util.UploadUtil;
 import lombok.Setter;
 
@@ -40,7 +40,7 @@ public class UserFileController {
 	@RequestMapping("/userFile")
 	public String userFile(Model model, HttpSession session) {
 		// 判断没有选择类型的userFile对象
-		Long id = HttpServletContext.getCurrentLoginInfo().getId();
+		Long id = HttpSessionUtil.getCurrentLoginInfo().getId();
 		List<UserFile> files = service.listByUser(id, false);
 		if (files.size() == 0) {
 			// 放到model中 跳转到提交材料对象界面

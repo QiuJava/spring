@@ -49,7 +49,6 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			if (loserCount >= SysConst.LOSER_MAX_COUNT) {
 				loginInfo.setStatus(LoginInfo.LOCK);
 				loginInfo.setLockTime(currentDate);
-				loginInfo.setGmtModified(currentDate);
 			}
 			// 登录日志记录
 			IpLog ipLog = new IpLog();
@@ -58,8 +57,6 @@ public class AdminLoginFailureHandler implements AuthenticationFailureHandler {
 			ipLog.setUserType(loginInfo.getUserType());
 			ipLog.setLoginTime(currentDate);
 			ipLog.setLoginState(IpLog.LOGIN_FAIL);
-			ipLog.setGmtCreate(currentDate);
-			ipLog.setGmtModified(currentDate);
 
 			loginInfoService.saveLoginInfo(loginInfo);
 			ipLogService.saveIpLog(ipLog);

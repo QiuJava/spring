@@ -13,7 +13,7 @@ import cn.qj.core.service.AccountService;
 import cn.qj.core.service.UserBankInfoService;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.service.WithdrawServcie;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 提现控制器
@@ -36,7 +36,7 @@ public class WithdrawController {
 	@RequestMapping("/withdraw")
 	public String withdraw(Model model) {
 		// 获取当前登录用户
-		Long id = HttpServletContext.getCurrentLoginInfo().getId();
+		Long id = HttpSessionUtil.getCurrentLoginInfo().getId();
 		model.addAttribute("bankInfo", userBankInfoService.getByLoginInfoId(id));
 		model.addAttribute("userInfo", userInfoService.get(id));
 		model.addAttribute("account", accountService.get(id));

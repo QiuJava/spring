@@ -4,52 +4,31 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 基本结果返回
+ * 基础返回
  * 
- * @author Qiujian
- * @date 2018/12/17
+ * @author qiujian@eeepay.cn
+ *
  */
 @Getter
 @Setter
 public class BaseResult {
 	private boolean success;
 	private String msg;
-	private int statusCode;
 	private Object data;
 
-	public BaseResult(boolean success, String msg, int statusCode) {
+	public BaseResult(boolean success, String msg, Object data) {
 		super();
 		this.success = success;
 		this.msg = msg;
-		this.statusCode = statusCode;
-	}
-
-	public BaseResult(boolean success, String msg, int statusCode, Object data) {
-		super();
-		this.success = success;
-		this.msg = msg;
-		this.statusCode = statusCode;
 		this.data = data;
 	}
 
-	public static BaseResult err500() {
-		return new BaseResult(false, "系统异常", 500);
-	}
-
-	public static BaseResult err400(String msg) {
-		return new BaseResult(false, msg, 400);
-	}
-
-	public static BaseResult err403(String msg) {
-		return new BaseResult(false, msg, 403);
-	}
-
-	public static BaseResult ok(String msg) {
-		return new BaseResult(true, msg, 200);
-	}
-
 	public static BaseResult ok(String msg, Object data) {
-		return new BaseResult(true, msg, 200, data);
+		return new BaseResult(Boolean.TRUE, msg, data);
+	}
+
+	public static BaseResult err(String msg, Object data) {
+		return new BaseResult(Boolean.FALSE, msg, data);
 	}
 
 }

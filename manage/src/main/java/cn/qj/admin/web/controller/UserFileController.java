@@ -38,9 +38,7 @@ public class UserFileController {
 	@RequestMapping("/userFile/audit")
 	@ResponseBody
 	public BaseResult audit(Long id, int state, int score, String remark) {
-		BaseResult result = new BaseResult();
 		service.audit(id, state, score, remark);
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("用户材料审核成功", null);
 	}
 }

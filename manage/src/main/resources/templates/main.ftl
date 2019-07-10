@@ -12,8 +12,7 @@
 			<div class="col-sm-3">
 				<#include "common/menu.ftl" />
 			</div>
-			<div class="col-sm-9">
-			</div>
+			<div class="col-sm-9"></div>
 		</div>
 	</div>
 </body>

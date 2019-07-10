@@ -39,9 +39,6 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 			info.setPassword(new BCryptPasswordEncoder().encode(SysConst.INIT_PASSWORD));
 			info.setUsername(SysConst.ADMIN_NAME);
 			info.setUserType(LoginInfo.ADMIN);
-			Date currentDate = new Date();
-			info.setGmtCreate(currentDate);
-			info.setGmtModified(currentDate);
 			loginInfoService.saveLoginInfo(info);
 		}
 

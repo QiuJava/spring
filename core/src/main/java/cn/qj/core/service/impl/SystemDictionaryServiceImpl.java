@@ -1,7 +1,6 @@
 package cn.qj.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -77,21 +76,14 @@ public class SystemDictionaryServiceImpl implements SystemDictionaryService {
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public SystemDictionary updateSystemDictionary(SystemDictionary systemDictionary) {
-		Date currentDate = new Date();
 		SystemDictionary formerSysDict = repository.findOne(systemDictionary.getId());
-		formerSysDict.setGmtModified(currentDate);
-		formerSysDict.setSn(systemDictionary.getSn());
 		formerSysDict.setIntro(systemDictionary.getIntro());
-		formerSysDict.setTitle(systemDictionary.getTitle());
 		return repository.saveAndFlush(formerSysDict);
 	}
 
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public SystemDictionary saveSystemDictionary(SystemDictionary systemDictionary) {
-		Date currentDate = new Date();
-		systemDictionary.setGmtCreate(currentDate);
-		systemDictionary.setGmtModified(currentDate);
 		return repository.saveAndFlush(systemDictionary);
 	}
 

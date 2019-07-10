@@ -9,7 +9,7 @@ import cn.qj.core.entity.UserBankInfo;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.service.UserBankInfoService;
 import cn.qj.core.service.UserInfoService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 用户银行卡控制器
@@ -27,7 +27,7 @@ public class UserBankInfoController {
 
 	@RequestMapping("/bankInfo")
 	public String bankInfo(Model model) {
-		Long id = HttpServletContext.getCurrentLoginInfo().getId();
+		Long id = HttpSessionUtil.getCurrentLoginInfo().getId();
 		UserInfo userInfo = userInfoService.get(id);
 		if (userInfo.getIsBankBind()) {
 			model.addAttribute("userInfo", userInfo);

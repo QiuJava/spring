@@ -31,9 +31,7 @@ public class WithdrawAuthController {
 	@RequestMapping("/withdraw/audit")
 	@ResponseBody
 	public BaseResult withdrawAudit(Long id, String remark, int state) {
-		BaseResult result = new BaseResult();
 		service.audit(id, remark, state);
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("提现审核成功", null);
 	}
 }

@@ -49,7 +49,6 @@ public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
 				loginInfo.setStatus(LoginInfo.LOCK);
 				loginInfo.setLockTime(currentDate);
 			}
-			loginInfo.setGmtModified(currentDate);
 			loginInfoService.saveLoginInfo(loginInfo);
 			
 			// 登录日志记录
@@ -59,8 +58,6 @@ public class LoanLoginFailureHandler implements AuthenticationFailureHandler {
 			ipLog.setUserType(loginInfo.getUserType());
 			ipLog.setLoginTime(currentDate);
 			ipLog.setLoginState(IpLog.LOGIN_FAIL);
-			ipLog.setGmtCreate(currentDate);
-			ipLog.setGmtModified(currentDate);
 			ipLogService.saveIpLog(ipLog);
 		}
 		request.setAttribute(SysConst.LOGIN_ERR_MSG, exception.getMessage());

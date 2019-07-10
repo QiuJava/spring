@@ -1,7 +1,5 @@
 package cn.qj.admin.config.security;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -61,7 +59,6 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
 		// 登录失败次数清0
 		loginInfo.setLoserCount(0);
 		loginInfo.setLockTime(null);
-		loginInfo.setGmtModified(new Date());
 		loginInfoService.saveLoginInfo(loginInfo);
 
 		return new UsernamePasswordAuthenticationToken(loginInfo, password, loginInfo.getAuthorities());

@@ -4,7 +4,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>蓝源Eloan-P2P平台</title>
 		<#include "common/links-tpl.ftl" />
-		<#include "common/loadSystemDictionary-macro.ftl" />
 		<link type="text/css" rel="stylesheet" href="/css/account.css" />
 		<script type="text/javascript" src="/js/plugins/uploadify/jquery.uploadify.min.js"></script>
 		
@@ -53,7 +52,7 @@
 			<div class="row">
 				<!--导航菜单-->
 				<div class="col-sm-3">
-					<#assign currentMenu="userFile"/>
+					<#assign currentMenu=creditFile/>
 					<#include "common/leftmenu-tpl.ftl" />
 				</div>
 				<!-- 功能页面 -->
@@ -67,10 +66,10 @@
 					  <#list userFiles as file>
 					  <div class="col-sm-6 col-md-4">
 					    <div class="thumbnail">
-					      <img src="${file.file}" />
+					      <img src="${file.fileName}" />
 					      <div class="caption">
-					        <h4>${file.fileType.title}</h4>
-					        <p>得分：${file.score} &nbsp;&nbsp;状态：${file.stateDisplay}</p>
+					        <h4>${file.fileType.itemName}</h4>
+					        <p>得分：${file.score} &nbsp;&nbsp;状态：${file.auditStatusDisplay}</p>
 					      </div>
 					    </div>
 					  </div>
@@ -82,6 +81,5 @@
 				</div>
 			</div>
 		</div>		
-		<#include "common/footer-tpl.ftl" />		
 	</body>
 </html>

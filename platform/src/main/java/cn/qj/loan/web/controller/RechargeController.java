@@ -12,7 +12,7 @@ import cn.qj.core.entity.Recharge;
 import cn.qj.core.pojo.qo.RechargeQo;
 import cn.qj.core.service.CompanyBankInfoService;
 import cn.qj.core.service.RechargeService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 充值控制器
@@ -55,7 +55,7 @@ public class RechargeController {
 	 */
 	@RequestMapping("/recharge/list")
 	public String list(@ModelAttribute("qo") RechargeQo qo, Model model) {
-		qo.setApplierId(HttpServletContext.getCurrentLoginInfo().getId());
+		qo.setApplierId(HttpSessionUtil.getCurrentLoginInfo().getId());
 		model.addAttribute("pageResult", service.list(qo));
 		return "recharge_list";
 	}

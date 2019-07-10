@@ -17,7 +17,7 @@ public class BidConst {
 	/** 保存到数据库精度为4位 */
 	public static final Integer STORE_SCALE = 4;
 	/** 计算精度为8位 */
-	public static final Integer CAL_SCALE = 8;
+	public static final Integer CALC_SCALE = 8;
 
 	public static final BigDecimal ZERO = new BigDecimal("0.00");
 	

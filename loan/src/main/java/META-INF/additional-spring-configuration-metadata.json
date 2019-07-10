@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "mysql",
+    "type": "java.util.map",
+    "description": "A description for 'mysql'"
+  },
+  {
+    "name": "upload",
+    "type": "java.util.map",
+    "description": "A description for 'upload'"
+  }
+]}

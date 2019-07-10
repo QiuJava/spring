@@ -19,8 +19,9 @@ spring:
     
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
+    
     
 # 关闭Spring安全基本认证    
 security:

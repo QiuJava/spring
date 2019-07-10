@@ -13,7 +13,7 @@ import cn.qj.core.repository.UserInfoRepository;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.BidStateUtil;
 import cn.qj.core.util.DateUtil;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 用户信息服务实现
@@ -36,7 +36,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void saveBasicInfo(UserInfo userInfo) {
 		// 拿到当前用户基本资料
-		UserInfo info = repository.findOne(HttpServletContext.getCurrentLoginInfo().getId());
+		UserInfo info = repository.findOne(HttpSessionUtil.getCurrentLoginInfo().getId());
 		// 设置只需要修改的内容 明细信息
 		info.setEducationBackground(userInfo.getEducationBackground());
 		info.setHouseCondition(userInfo.getHouseCondition());
@@ -57,7 +57,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Transactional(rollbackFor = { LogicException.class })
 	public void bind(String phoneNumber, String verifyCode) {
 		// 如果当前用户已经绑定手机,直接略过
-		UserInfo userInfo = get(HttpServletContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = get(HttpSessionUtil.getCurrentLoginInfo().getId());
 		if (!userInfo.getIsBindPhone()) {
 			// 检查验证码手机号，验证有效期
 			boolean ret = checkVerifyCode(phoneNumber, verifyCode);
@@ -73,9 +73,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	private boolean checkVerifyCode(String phoneNumber, String verifyCode) {
-		VerifyCode vc = HttpServletContext.getVerifyCode();
+		VerifyCode vc = HttpSessionUtil.getVerifyCode();
 		if (vc != null && vc.getPhoneNumber().equals(phoneNumber) && verifyCode.equals(verifyCode)
-				&& DateUtil.setBetweenDate(new Date(), vc.getDate()) < 180) {
+				&& DateUtil.calcBetweenSecond(new Date(), vc.getDate()) < 180) {
 			return true;
 		}
 		return false;

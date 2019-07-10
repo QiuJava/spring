@@ -57,7 +57,7 @@ public class LoginUser implements UserDetails {
 	private List<Role> roles;
 
 	@Transient
-	private List<GrantedAuthority> authorities = new ArrayList<>();
+	private Collection<GrantedAuthority> authorities = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,7 +1,6 @@
 package cn.qj.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +46,8 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 			throw new LogicException("用户名已存在");
 		} else {
 			LoginInfo loginInfo = new LoginInfo();
-			Date date = new Date();
 			loginInfo.setUsername(username);
 			loginInfo.setPassword(new BCryptPasswordEncoder().encode(password));
-			loginInfo.setGmtCreate(date);
-			loginInfo.setGmtModified(date);
 			LoginInfo info = repository.saveAndFlush(loginInfo);
 
 			// 注册账号时创建额外的对象 账户 和 用户信息

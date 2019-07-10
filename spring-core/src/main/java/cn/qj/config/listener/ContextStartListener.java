@@ -49,9 +49,15 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		String dictHash = constProperties.getDictHash();
 		String permissionHash = constProperties.getPermissionHash();
-		hashOperations.delete(dictHash, hashOperations.keys(dictHash).toArray());
-		hashOperations.delete(permissionHash, hashOperations.keys(permissionHash).toArray());
-		
+		List<Object> dictHashs = hashOperations.values(dictHash);
+		if (dictHashs.size() > 0) {
+			hashOperations.delete(dictHash, hashOperations.keys(dictHash).toArray());
+		}
+		List<Object> permissionHashs = hashOperations.values(dictHash);
+		if (permissionHashs.size() > 0) {
+			hashOperations.delete(permissionHash, hashOperations.keys(permissionHash).toArray());
+		}
+
 		List<Dict> dicts = dictService.getAll();
 		for (Dict dict : dicts) {
 			hashOperations.put(constProperties.getDictHash(), dict.getCode(), dict);

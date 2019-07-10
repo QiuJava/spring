@@ -10,7 +10,7 @@ import cn.qj.core.repository.UserBankInfoRepository;
 import cn.qj.core.service.UserBankInfoService;
 import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.BidStateUtil;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 用户银行卡信息服务实现
@@ -35,7 +35,7 @@ public class UserBankInfoServiceImpl implements UserBankInfoService {
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void save(UserBankInfo userBankInfo) {
 		// 得到用户信息对象
-		UserInfo info = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
+		UserInfo info = userInfoService.get(HttpSessionUtil.getCurrentLoginInfo().getId());
 		if (!info.getIsBankBind() && info.getIsRealAuth()) {
 			// 没绑定 进行绑定 保存用户银行卡信息 修改状态
 			userBankInfo.setAccountName(info.getRealName());

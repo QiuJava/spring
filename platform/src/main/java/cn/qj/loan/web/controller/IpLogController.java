@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.qj.core.common.BaseResult;
 import cn.qj.core.pojo.qo.IpLogQo;
 import cn.qj.core.service.IpLogService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * IP日志控制器
@@ -27,7 +27,7 @@ public class IpLogController {
 	@RequestMapping("/pageQuery")
 	public String pageQueryList(IpLogQo ipLogQo, Model model) {
 		ipLogQo.setIsLike(false);
-		ipLogQo.setUsername(HttpServletContext.getCurrentLoginInfo().getUsername());
+		ipLogQo.setUsername(HttpSessionUtil.getCurrentLoginInfo().getUsername());
 		model.addAttribute("pageResult", service.pageQueryIpLog(ipLogQo));
 		model.addAttribute("ipLogQo", ipLogQo);
 		return "ipLog_list";
@@ -36,11 +36,7 @@ public class IpLogController {
 	@RequestMapping("/page")
 	@ResponseBody
 	public BaseResult page() {
-		BaseResult result = new BaseResult();
-		result.setMsg("查询成功");
-		result.setStatusCode(200);
-		result.setData(service.page());
-		return result;
+		return BaseResult.ok("查询成功", service.page());
 	}
 
 }

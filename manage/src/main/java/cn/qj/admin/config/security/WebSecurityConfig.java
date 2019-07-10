@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登出成功的URL
 				.logoutSuccessUrl(RequestConst.LOGIN_HTML)
 				// 登出时让HttpSession无效
-				.invalidateHttpSession(true);
+				.invalidateHttpSession(Boolean.TRUE);
 	}
 
 }

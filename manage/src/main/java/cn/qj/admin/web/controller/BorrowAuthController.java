@@ -58,10 +58,8 @@ public class BorrowAuthController {
 	@RequestMapping("/publish/audit")
 	@ResponseBody
 	public BaseResult publishAudit(Long id, int state, String remark) {
-		BaseResult result = new BaseResult();
 		service.publishAudit(id, state, remark);
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("发标前审核成功", null);
 	}
 
 	@RequestMapping("/audit1")
@@ -74,10 +72,8 @@ public class BorrowAuthController {
 	@RequestMapping("/audit1/audit")
 	@ResponseBody
 	public BaseResult audit1Audit(Long id, String remark, int state) {
-		BaseResult result = new BaseResult();
 		service.audit1Audit(id, remark, state);
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("满标一审成功", null);
 	}
 
 	@RequestMapping("/audit2")
@@ -91,10 +87,8 @@ public class BorrowAuthController {
 	@RequestMapping("/audit2/audit")
 	@ResponseBody
 	public BaseResult audit2Audit(Long id, String remark, int state) {
-		BaseResult result = new BaseResult();
 		service.audit2Audit(id, remark, state);
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("满标二审成功", null);
 	}
 
 	@RequestMapping("/info")

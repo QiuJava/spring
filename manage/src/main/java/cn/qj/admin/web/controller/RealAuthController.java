@@ -40,8 +40,6 @@ public class RealAuthController {
 	@ResponseBody
 	public BaseResult audit(Long id, int state, String remark) {
 		service.autid(id, state, remark);
-		BaseResult result = new BaseResult();
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("实名认证审核成功", null);
 	}
 }

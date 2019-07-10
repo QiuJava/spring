@@ -29,8 +29,7 @@ public class XmlUtil {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaller.marshal(obj, writer);
 		} catch (JAXBException e) {
-			e.printStackTrace();
-			throw new LogicException();
+			throw new LogicException(e.getMessage());
 		}
 		return writer.toString();
 	}
@@ -43,8 +42,7 @@ public class XmlUtil {
 			StringReader reader = new StringReader(xml);
 			xmlObject = unmarshaller.unmarshal(reader);
 		} catch (JAXBException e) {
-			e.printStackTrace();
-			throw new LogicException();
+			throw new LogicException(e.getMessage());
 		}
 		return xmlObject;
 	}

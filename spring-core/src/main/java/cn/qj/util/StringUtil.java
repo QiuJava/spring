@@ -4,14 +4,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 字符串工具
+ * 字符串工具类
  * 
- * @author Qiujian
- * @date 2018/12/17
+ * @author qiujian@eeepay.cn
+ *
  */
 public class StringUtil {
 	private StringUtil() {
 	}
+
+	/**
+	 * 空字符串
+	 */
+	public static final String EMPTY = "";
 
 	/**
 	 * 手机号码正则
@@ -29,7 +34,7 @@ public class StringUtil {
 	 * 字母正则
 	 */
 	public static final String ZM_PATTERN = "^[A-Za-z]+$";
-	
+
 	public static boolean isPattern(String str, String pattern) {
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(str);

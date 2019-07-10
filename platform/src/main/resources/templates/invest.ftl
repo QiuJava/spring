@@ -46,7 +46,7 @@
 				    <input type="radio" name="borrowState" value="1" autocomplete="off" />&emsp;招标中&emsp;
 				  </label>
 				  <label class="btn btn-default">
-				    <input type="radio" name="borrowState" value="8" autocomplete="off" />&emsp;已完成&emsp;
+				    <input type="radio" name="borrowState" value="7" autocomplete="off" />&emsp;已完成&emsp;
 				  </label>
 				</div>
 			</div>
@@ -72,7 +72,5 @@
 		</div>
 	</div>
 
-	<!-- 网页版权 -->
-	<#include "common/footer-tpl.ftl" />
 </body>
 </html>

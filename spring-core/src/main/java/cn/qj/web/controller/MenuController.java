@@ -19,6 +19,7 @@ import cn.qj.entity.Permission;
 import cn.qj.entity.vo.MenuListVo;
 import cn.qj.entity.vo.MenuVo;
 import cn.qj.service.PermissionService;
+import cn.qj.util.StringUtil;
 
 /**
  * 菜单控制器
@@ -36,8 +37,8 @@ public class MenuController {
 	private PermissionService permissionService;
 
 	@Autowired
-	private HashOperations<String,String, Object> hashOperations;
-	
+	private HashOperations<String, String, Object> hashOperations;
+
 	@Autowired
 	private ConstProperties constProperties;
 
@@ -49,7 +50,7 @@ public class MenuController {
 			return BaseResult.ok("获取成功", menuList);
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return BaseResult.err500();
+			return BaseResult.err(e.getMessage(), StringUtil.EMPTY);
 		}
 	}
 
@@ -69,7 +70,7 @@ public class MenuController {
 			return BaseResult.ok("查询成功", menuListVo);
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return BaseResult.err500();
+			return BaseResult.err(e.getMessage(), StringUtil.EMPTY);
 		}
 	}
 
@@ -81,7 +82,7 @@ public class MenuController {
 			return JSON.toJSONString(BaseResult.ok("保存成功", ""));
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return JSON.toJSONString(BaseResult.err500());
+			return JSON.toJSONString(BaseResult.err(e.getMessage(), StringUtil.EMPTY));
 		}
 	}
 
@@ -93,7 +94,7 @@ public class MenuController {
 			return JSON.toJSONString(BaseResult.ok("删除成功", ""));
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return JSON.toJSONString(BaseResult.err500());
+			return JSON.toJSONString(BaseResult.err(e.getMessage(), StringUtil.EMPTY));
 		}
 	}
 

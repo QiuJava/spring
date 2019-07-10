@@ -56,7 +56,7 @@ import cn.qj.core.service.UserInfoService;
 import cn.qj.core.util.BidStateUtil;
 import cn.qj.core.util.CalculatetUtil;
 import cn.qj.core.util.DecimalFormatUtil;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 import cn.qj.core.util.ResultUtil;
 import cn.qj.core.util.StringUtil;
 
@@ -100,7 +100,7 @@ public class BorrowServiceImpl implements BorrowService {
 	@Override
 	public boolean isApplyBorrow() {
 		// 拿到当前用户信息
-		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = userInfoService.get(HttpSessionUtil.getCurrentLoginInfo().getId());
 		return userInfo.getIsBasicInfo()
 				// 满足条件认证分
 				&& userInfo.getAuthScore() >= BidConst.BORROW_CREDIT_SCORE
@@ -113,7 +113,7 @@ public class BorrowServiceImpl implements BorrowService {
 	@Override
 	@Transactional(rollbackFor = { RuntimeException.class })
 	public void apply(Borrow borrow) {
-		LoginInfo currentLoginInfo = HttpServletContext.getCurrentLoginInfo();
+		LoginInfo currentLoginInfo = HttpSessionUtil.getCurrentLoginInfo();
 		Account account = accountService.get(currentLoginInfo.getId());
 		if (isApplyBorrow()
 				// 借款金额<=剩余信用额度
@@ -246,7 +246,7 @@ public class BorrowServiceImpl implements BorrowService {
 		BorrowAuditHistroy histroy = new BorrowAuditHistroy();
 		histroy.setApplier(borrow.getCreateUser());
 		histroy.setApplyTime(borrow.getApplyTime());
-		histroy.setAuditor(HttpServletContext.getCurrentLoginInfo());
+		histroy.setAuditor(HttpSessionUtil.getCurrentLoginInfo());
 		histroy.setAuditTime(new Date());
 		histroy.setBorrowId(borrow.getId());
 		histroy.setRemark(remark);
@@ -475,7 +475,7 @@ public class BorrowServiceImpl implements BorrowService {
 				pp.setTotalAmount(pp.getPrincipal().add(pp.getInterest()));
 			} else {
 				// 计算投标占总借款的比率
-				BigDecimal rate = bid.getAmount().divide(borrow.getAmount(), BidConst.CAL_SCALE, RoundingMode.HALF_UP);
+				BigDecimal rate = bid.getAmount().divide(borrow.getAmount(), BidConst.CALC_SCALE, RoundingMode.HALF_UP);
 				pp.setPrincipal(rs.getPrincipal().multiply(rate).setScale(BidConst.STORE_SCALE, RoundingMode.HALF_UP));
 				pp.setInterest(rs.getInterest().multiply(rate).setScale(BidConst.STORE_SCALE, RoundingMode.HALF_UP));
 				pp.setTotalAmount(pp.getPrincipal().add(pp.getInterest()));

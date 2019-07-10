@@ -22,8 +22,8 @@ import lombok.Data;
 public class AccountFlow implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private long id;
-	private long accountId;
+	private Long id;
+	private Long accountId;
 	private BigDecimal amount;
 	/** 发生变化的时间 */
 	private Date actionTime;

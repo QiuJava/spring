@@ -11,7 +11,7 @@ import cn.qj.core.entity.UserInfo;
 import cn.qj.core.service.SendSmsService;
 import cn.qj.core.service.SystemDictionaryItemService;
 import cn.qj.core.service.UserInfoService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 
 /**
  * 用户信息控制器
@@ -37,7 +37,7 @@ public class UserInfoController {
 	 */
 	@RequestMapping("/basic")
 	public String basicInfo(Model model) {
-		Long id = HttpServletContext.getCurrentLoginInfo().getId();
+		Long id = HttpSessionUtil.getCurrentLoginInfo().getId();
 		// 1.拿到用户基本资料
 		model.addAttribute("userInfo", service.get(id));
 		// 2.拿到字典对应的明细

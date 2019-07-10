@@ -15,7 +15,7 @@ import cn.qj.core.entity.RealAuth;
 import cn.qj.core.entity.UserInfo;
 import cn.qj.core.service.RealAuthService;
 import cn.qj.core.service.UserInfoService;
-import cn.qj.core.util.HttpServletContext;
+import cn.qj.core.util.HttpSessionUtil;
 import cn.qj.core.util.UploadUtil;
 import lombok.Setter;
 
@@ -42,7 +42,7 @@ public class RealAuthController {
 	@RequestMapping("/realAuth")
 	public String realAuth(Model model) {
 		// 得到当前用户信息
-		UserInfo userInfo = userInfoService.get(HttpServletContext.getCurrentLoginInfo().getId());
+		UserInfo userInfo = userInfoService.get(HttpSessionUtil.getCurrentLoginInfo().getId());
 		// 如果用户已经实名认证直接跳到结果
 		if (userInfo.getIsRealAuth()) {
 			// 查询出实名认证的信息并放到Model中
@@ -81,8 +81,6 @@ public class RealAuthController {
 	@ResponseBody
 	public BaseResult save(RealAuth realAuth) {
 		service.save(realAuth);
-		BaseResult result = new BaseResult();
-		result.setSuccess(true);
-		return result;
+		return BaseResult.ok("实名认证信息保存成功");
 	}
 }
