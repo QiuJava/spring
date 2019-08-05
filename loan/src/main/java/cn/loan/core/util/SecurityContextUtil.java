@@ -17,6 +17,9 @@ public class SecurityContextUtil {
 
 	public static LoginUser getCurrentUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return authentication == null ? null : (LoginUser) authentication.getPrincipal();
+		if (authentication == null || !authentication.isAuthenticated()) {
+			return null;
+		}
+		return (LoginUser) authentication.getPrincipal();
 	}
 }

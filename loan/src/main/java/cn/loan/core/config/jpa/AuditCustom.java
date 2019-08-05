@@ -2,7 +2,6 @@ package cn.loan.core.config.jpa;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import cn.loan.core.entity.LoginUser;
 import cn.loan.core.util.SecurityContextUtil;
@@ -14,7 +13,6 @@ import cn.loan.core.util.SecurityContextUtil;
  *
  */
 @Configuration
-@EnableJpaAuditing
 public class AuditCustom implements AuditorAware<Long> {
 
 	@Override
