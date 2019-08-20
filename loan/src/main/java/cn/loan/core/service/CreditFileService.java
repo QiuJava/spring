@@ -1,7 +1,6 @@
 package cn.loan.core.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -14,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +24,7 @@ import cn.loan.core.entity.SystemDictionaryItem;
 import cn.loan.core.entity.UserInfo;
 import cn.loan.core.entity.qo.CreditFileQo;
 import cn.loan.core.repository.CreditFileDao;
+import cn.loan.core.repository.specification.CreditFileSpecification;
 import cn.loan.core.util.DateUtil;
 import cn.loan.core.util.SecurityContextUtil;
 import cn.loan.core.util.StringUtil;
@@ -104,26 +105,11 @@ public class CreditFileService {
 	}
 
 	public PageResult pageQuery(CreditFileQo qo) {
-		Page<CreditFile> page = creditFileDao.findAll(new Specification<CreditFile>() {
-			@Override
-			public Predicate toPredicate(Root<CreditFile> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> list = new ArrayList<>();
-				Integer auditStatus = qo.getAuditStatus();
-				if (auditStatus != null && auditStatus != -1) {
-					list.add(cb.equal(root.get(StringUtil.AUDIT_STATUS), auditStatus));
-				}
-				Date beginTime = qo.getBeginTime();
-				if (beginTime != null) {
-					list.add(cb.greaterThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), beginTime));
-				}
-				Date endTime = qo.getEndTime();
-				if (endTime != null) {
-					list.add(cb.lessThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), endTime));
-				}
-				Predicate[] ps = new Predicate[list.size()];
-				return cb.and(list.toArray(ps));
-			}
-		}, new PageRequest(qo.getPage(), qo.getSize(), Direction.DESC, StringUtil.SUBMISSION_TIME));
+		Page<CreditFile> page = creditFileDao.findAll(
+				Specifications.where(CreditFileSpecification.equalAuditStatus(qo.getAuditStatus()))
+						.and(CreditFileSpecification.greaterThanOrEqualToSubmissionTime(qo.getBeginTime()))
+						.and(CreditFileSpecification.lessThanOrEqualToSubmissionTime(qo.getEndTime())),
+				new PageRequest(qo.getPage(), qo.getSize(), Direction.DESC, StringUtil.SUBMISSION_TIME));
 		List<CreditFile> list = page.getContent();
 		List<SystemDictionaryItem> audits = SystemDictionaryUtil.getItems(SystemDictionaryUtil.AUDIT,
 				systemDictionaryHashService);

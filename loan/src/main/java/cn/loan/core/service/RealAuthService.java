@@ -1,19 +1,12 @@
 package cn.loan.core.service;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +17,7 @@ import cn.loan.core.entity.SystemDictionaryItem;
 import cn.loan.core.entity.UserInfo;
 import cn.loan.core.entity.qo.RealAuthQo;
 import cn.loan.core.repository.RealAuthDao;
+import cn.loan.core.repository.specification.RealAuthSpecification;
 import cn.loan.core.util.DateUtil;
 import cn.loan.core.util.SecurityContextUtil;
 import cn.loan.core.util.StringUtil;
@@ -77,30 +71,11 @@ public class RealAuthService {
 	}
 
 	public PageResult pageQuery(RealAuthQo qo) {
-		Page<RealAuth> page = realAuthDao.findAll(new Specification<RealAuth>() {
-			@Override
-			public Predicate toPredicate(Root<RealAuth> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicateList = new ArrayList<>();
-				Integer auditStatus = qo.getAuditStatus();
-				if (auditStatus != null && auditStatus != -1) {
-					Predicate auditStatusPredicate = cb.equal(root.get(StringUtil.AUDIT_STATUS), auditStatus);
-					predicateList.add(auditStatusPredicate);
-				}
-				Date beginTime = qo.getBeginTime();
-				if (beginTime != null) {
-					Predicate beginTimePredicate = cb.greaterThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME),
-							beginTime);
-					predicateList.add(beginTimePredicate);
-				}
-				Date endTime = qo.getEndTime();
-				if (endTime != null) {
-					Predicate endTimePredicate = cb.lessThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), endTime);
-					predicateList.add(endTimePredicate);
-				}
-				Predicate[] predicateArray = new Predicate[predicateList.size()];
-				return cb.and(predicateList.toArray(predicateArray));
-			}
-		}, new PageRequest(qo.getPage(), qo.getSize(), Direction.DESC, StringUtil.SUBMISSION_TIME));
+		Page<RealAuth> page = realAuthDao.findAll(
+				Specifications.where(RealAuthSpecification.equalAuditStatus(qo.getAuditStatus()))
+						.and(RealAuthSpecification.greaterThanOrEqualToSubmissionTime(qo.getBeginTime()))
+						.and(RealAuthSpecification.lessThanOrEqualToSubmissionTime(qo.getEndTime())),
+				new PageRequest(qo.getPage(), qo.getSize(), Direction.DESC, StringUtil.SUBMISSION_TIME));
 		List<RealAuth> content = page.getContent();
 		List<SystemDictionaryItem> audits = SystemDictionaryUtil.getItems(SystemDictionaryUtil.AUDIT,
 				systemDictionaryHashService);

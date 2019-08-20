@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Profile;
  */
 @SpringBootApplication
 @ServletComponentScan
-@Profile("dev")
+@Profile("test")
 public class LoanApplication {
 
 	public static void main(String[] args) {

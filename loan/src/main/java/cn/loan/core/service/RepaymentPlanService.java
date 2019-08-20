@@ -1,20 +1,13 @@
 package cn.loan.core.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +19,7 @@ import cn.loan.core.entity.ReceiptPlan;
 import cn.loan.core.entity.RepaymentPlan;
 import cn.loan.core.entity.qo.RepaymentPlanQo;
 import cn.loan.core.repository.RepaymentPlanDao;
+import cn.loan.core.repository.specification.RepaymentPlanSpecification;
 import cn.loan.core.util.DateUtil;
 import cn.loan.core.util.StringUtil;
 import cn.loan.core.util.SystemDictionaryUtil;
@@ -57,26 +51,11 @@ public class RepaymentPlanService {
 	}
 
 	public PageResult pageQuery(RepaymentPlanQo qo) {
-		Page<RepaymentPlan> page = repaymentPlanDao.findAll(new Specification<RepaymentPlan>() {
-			@Override
-			public Predicate toPredicate(Root<RepaymentPlan> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> list = new ArrayList<>();
-				Date beginTime = qo.getBeginTime();
-				if (beginTime != null) {
-					list.add(cb.greaterThanOrEqualTo(root.get(StringUtil.RETURN_TIME), beginTime));
-				}
-				Date endTime = qo.getEndTime();
-				if (endTime != null) {
-					list.add(cb.lessThanOrEqualTo(root.get(StringUtil.RETURN_TIME), endTime));
-				}
-				Long borrowerId = qo.getBorrowerId();
-				if (borrowerId != -1) {
-					list.add(cb.equal(root.get(StringUtil.BORROWER_ID), borrowerId));
-				}
-				Predicate[] rs = new Predicate[list.size()];
-				return cb.and(list.toArray(rs));
-			}
-		}, new PageRequest(qo.getPage(), qo.getSize(), Direction.ASC, StringUtil.RETURN_TIME));
+		Page<RepaymentPlan> page = repaymentPlanDao.findAll(
+				Specifications.where(RepaymentPlanSpecification.equalBorrowerId(qo.getBorrowerId()))
+						.and(RepaymentPlanSpecification.greaterThanOrEqualToReturnTime(qo.getBeginTime()))
+						.and(RepaymentPlanSpecification.lessThanOrEqualToReturnTime(qo.getEndTime())),
+				new PageRequest(qo.getPage(), qo.getSize(), Direction.ASC, StringUtil.RETURN_TIME));
 		List<RepaymentPlan> content = page.getContent();
 		return new PageResult(content, page.getTotalPages(), qo.getCurrentPage());
 	}

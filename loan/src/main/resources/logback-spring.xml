@@ -15,19 +15,17 @@
 	<property name="test_log_path" value="E:/logs/loan/" />
 	<property name="prod_log_path" value="E:/logs/loan/" />
 
-	<springProfile name="dev">
-		<appender name="console"
-			class="ch.qos.logback.core.ConsoleAppender">
-			<encoder>
-				<pattern>${CONSOLE_LOG_PATTERN}</pattern>
-			</encoder>
-			<target>System.out</target>
-		</appender>
+	<appender name="console"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+		<target>System.out</target>
+	</appender>
 
-		<root level="info">
-			<appender-ref ref="console" />
-		</root>
-	</springProfile>
+	<root level="info">
+		<appender-ref ref="console" />
+	</root>
 
 	<springProfile name="test">
 		<appender name="rollingfile"
