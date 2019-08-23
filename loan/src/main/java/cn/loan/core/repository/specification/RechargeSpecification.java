@@ -14,10 +14,17 @@ import cn.loan.core.entity.LoginUser;
 import cn.loan.core.entity.Recharge;
 import cn.loan.core.util.StringUtil;
 
+/**
+ * 充值规格
+ * 
+ * @author Qiujian
+ *
+ */
 public class RechargeSpecification {
 
 	public static Specification<Recharge> equalAuditStatus(Integer auditStatus) {
 		return new Specification<Recharge>() {
+			@Override
 			public Predicate toPredicate(Root<Recharge> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (auditStatus != null && auditStatus != -1) {
 					return cb.equal(root.get(StringUtil.AUDIT_STATUS), auditStatus);
@@ -29,6 +36,7 @@ public class RechargeSpecification {
 
 	public static Specification<Recharge> greaterThanOrEqualToSubmissionTime(Date beginTime) {
 		return new Specification<Recharge>() {
+			@Override
 			public Predicate toPredicate(Root<Recharge> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (beginTime != null) {
 					cb.greaterThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), beginTime);
@@ -40,6 +48,7 @@ public class RechargeSpecification {
 
 	public static Specification<Recharge> lessThanOrEqualToSubmissionTime(Date endTime) {
 		return new Specification<Recharge>() {
+			@Override
 			public Predicate toPredicate(Root<Recharge> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (endTime != null) {
 					cb.lessThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), endTime);
@@ -51,6 +60,7 @@ public class RechargeSpecification {
 
 	public static Specification<Recharge> equalSubmitter(LoginUser submitter) {
 		return new Specification<Recharge>() {
+			@Override
 			public Predicate toPredicate(Root<Recharge> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (submitter != null) {
 					return cb.equal(root.get(StringUtil.SUBMITTER), submitter);
@@ -62,6 +72,7 @@ public class RechargeSpecification {
 
 	public static Specification<Recharge> likeSerialNumber(String serialNumber) {
 		return new Specification<Recharge>() {
+			@Override
 			public Predicate toPredicate(Root<Recharge> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (serialNumber != null) {
 					return cb.like(root.get(StringUtil.SERIAL_NUMBER), serialNumber + StringUtil.PER_CENT);
@@ -73,6 +84,7 @@ public class RechargeSpecification {
 
 	public static Specification<Recharge> equalCompanyBankCard(CompanyBankCard bankCard) {
 		return new Specification<Recharge>() {
+			@Override
 			public Predicate toPredicate(Root<Recharge> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (bankCard != null && bankCard.getId() != -1) {
 					return cb.equal(root.get(StringUtil.COMPANY_BANK_CARD), bankCard);

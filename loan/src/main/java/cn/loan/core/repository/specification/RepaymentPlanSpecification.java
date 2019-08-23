@@ -12,6 +12,12 @@ import org.springframework.data.jpa.domain.Specification;
 import cn.loan.core.entity.RepaymentPlan;
 import cn.loan.core.util.StringUtil;
 
+/**
+ * 还款计划规格
+ * 
+ * @author Qiujian
+ *
+ */
 public class RepaymentPlanSpecification {
 
 	public static Specification<RepaymentPlan> greaterThanOrEqualToReturnTime(Date beginTime) {

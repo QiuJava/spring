@@ -42,7 +42,7 @@ public class AccountFlowService {
 		return accountFlow;
 	}
 
-	public void bidFLow(Bid bid, Account bidAccount) {
+	public void bidFlow(Bid bid, Account bidAccount) {
 		AccountFlow accountFlow = this.createBaseFolw(bidAccount);
 		accountFlow.setAccountId(bidAccount.getId());
 		accountFlow.setActionAmount(bid.getBidAmount());

@@ -12,10 +12,17 @@ import org.springframework.data.jpa.domain.Specification;
 import cn.loan.core.entity.RealAuth;
 import cn.loan.core.util.StringUtil;
 
+/**
+ * 实名认证规约
+ * 
+ * @author Qiujian
+ *
+ */
 public class RealAuthSpecification {
 
 	public static Specification<RealAuth> equalAuditStatus(Integer auditStatus) {
 		return new Specification<RealAuth>() {
+			@Override
 			public Predicate toPredicate(Root<RealAuth> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (auditStatus != null && auditStatus != -1) {
 					return cb.equal(root.get(StringUtil.AUDIT_STATUS), auditStatus);
@@ -27,6 +34,7 @@ public class RealAuthSpecification {
 
 	public static Specification<RealAuth> greaterThanOrEqualToSubmissionTime(Date beginTime) {
 		return new Specification<RealAuth>() {
+			@Override
 			public Predicate toPredicate(Root<RealAuth> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (beginTime != null) {
 					cb.greaterThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), beginTime);
@@ -38,6 +46,7 @@ public class RealAuthSpecification {
 
 	public static Specification<RealAuth> lessThanOrEqualToSubmissionTime(Date endTime) {
 		return new Specification<RealAuth>() {
+			@Override
 			public Predicate toPredicate(Root<RealAuth> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (endTime != null) {
 					cb.lessThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), endTime);

@@ -12,10 +12,17 @@ import org.springframework.data.jpa.domain.Specification;
 import cn.loan.core.entity.LoginLog;
 import cn.loan.core.util.StringUtil;
 
+/**
+ * 登录日志规格
+ * 
+ * @author Qiujian
+ *
+ */
 public class LoginLogSpecification {
 
 	public static Specification<LoginLog> equalLoginStatus(Integer loginStatus) {
 		return new Specification<LoginLog>() {
+			@Override
 			public Predicate toPredicate(Root<LoginLog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (loginStatus != null && loginStatus != -1) {
 					return cb.equal(root.get(StringUtil.LOGIN_STATUS), loginStatus);
@@ -27,6 +34,7 @@ public class LoginLogSpecification {
 
 	public static Specification<LoginLog> greaterThanOrEqualToLoginTime(Date beginTime) {
 		return new Specification<LoginLog>() {
+			@Override
 			public Predicate toPredicate(Root<LoginLog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (beginTime != null) {
 					return cb.greaterThanOrEqualTo(root.get(StringUtil.LOGIN_TIME), beginTime);
@@ -38,6 +46,7 @@ public class LoginLogSpecification {
 
 	public static Specification<LoginLog> lessThanOrEqualToLoginTime(Date endTime) {
 		return new Specification<LoginLog>() {
+			@Override
 			public Predicate toPredicate(Root<LoginLog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (endTime != null) {
 					return cb.lessThanOrEqualTo(root.get(StringUtil.LOGIN_TIME), endTime);
@@ -49,6 +58,7 @@ public class LoginLogSpecification {
 
 	public static Specification<LoginLog> likeUsername(String username) {
 		return new Specification<LoginLog>() {
+			@Override
 			public Predicate toPredicate(Root<LoginLog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (StringUtil.hasLength(username)) {
 					return cb.like(root.get(StringUtil.USERNAME), username + StringUtil.PER_CENT);

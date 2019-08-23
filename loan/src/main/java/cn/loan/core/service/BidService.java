@@ -72,7 +72,7 @@ public class BidService {
 				bid.setInvestor(currentUser);
 				bidDao.save(bid);
 				// 生成投标流水
-				accountFlowService.bidFLow(bid, bidAccount);
+				accountFlowService.bidFlow(bid, bidAccount);
 
 				// 5.修改借款相关属性
 				borrow.setBidNum(borrow.getBidNum() + 1);

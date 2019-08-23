@@ -21,6 +21,7 @@ import cn.loan.core.util.StringUtil;
 public class CreditFileSpecification {
 	public static Specification<CreditFile> equalAuditStatus(Integer auditStatus) {
 		return new Specification<CreditFile>() {
+			@Override
 			public Predicate toPredicate(Root<CreditFile> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (auditStatus != null && auditStatus != -1) {
 					return cb.equal(root.get(StringUtil.AUDIT_STATUS), auditStatus);
@@ -32,6 +33,7 @@ public class CreditFileSpecification {
 
 	public static Specification<CreditFile> greaterThanOrEqualToSubmissionTime(Date beginTime) {
 		return new Specification<CreditFile>() {
+			@Override
 			public Predicate toPredicate(Root<CreditFile> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (beginTime != null) {
 					cb.greaterThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), beginTime);
@@ -43,6 +45,7 @@ public class CreditFileSpecification {
 
 	public static Specification<CreditFile> lessThanOrEqualToSubmissionTime(Date endTime) {
 		return new Specification<CreditFile>() {
+			@Override
 			public Predicate toPredicate(Root<CreditFile> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				if (endTime != null) {
 					cb.lessThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), endTime);
