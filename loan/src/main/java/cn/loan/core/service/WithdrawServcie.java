@@ -1,20 +1,13 @@
 package cn.loan.core.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +21,7 @@ import cn.loan.core.entity.UserInfo;
 import cn.loan.core.entity.Withdraw;
 import cn.loan.core.entity.qo.WithdrawQo;
 import cn.loan.core.repository.WithdrawDao;
+import cn.loan.core.repository.specification.WithdrawSpecification;
 import cn.loan.core.util.DateUtil;
 import cn.loan.core.util.SecurityContextUtil;
 import cn.loan.core.util.StringUtil;
@@ -140,29 +134,11 @@ public class WithdrawServcie {
 	}
 
 	public PageResult pageQuery(WithdrawQo qo) {
-		Page<Withdraw> page = withdrawDao.findAll(new Specification<Withdraw>() {
-			@Override
-			public Predicate toPredicate(Root<Withdraw> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> list = new ArrayList<>();
-				Integer auditStatus = qo.getAuditStatus();
-				if (auditStatus != null && auditStatus != -1) {
-					list.add(cb.equal(root.get(StringUtil.AUDIT_STATUS), auditStatus));
-				}
-				Date beginTime = qo.getBeginTime();
-				if (beginTime != null) {
-					Predicate beginTimePredicate = cb.greaterThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME),
-							beginTime);
-					list.add(beginTimePredicate);
-				}
-				Date endTime = qo.getEndTime();
-				if (endTime != null) {
-					Predicate endTimePredicate = cb.lessThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), endTime);
-					list.add(endTimePredicate);
-				}
-				Predicate[] ps = new Predicate[list.size()];
-				return cb.and(list.toArray(ps));
-			}
-		}, new PageRequest(qo.getPage(), qo.getSize(), Direction.DESC, StringUtil.SUBMISSION_TIME));
+		Page<Withdraw> page = withdrawDao.findAll(
+				Specifications.where(WithdrawSpecification.equalAuditStatus(qo.getAuditStatus()))
+						.and(WithdrawSpecification.greaterThanOrEqualToSubmissionTime(qo.getBeginTime()))
+						.and(WithdrawSpecification.lessThanOrEqualToSubmissionTime(qo.getEndTime())),
+				new PageRequest(qo.getPage(), qo.getSize(), Direction.DESC, StringUtil.SUBMISSION_TIME));
 		List<Withdraw> content = page.getContent();
 		List<SystemDictionaryItem> audits = SystemDictionaryUtil.getItems(SystemDictionaryUtil.AUDIT,
 				systemDictionaryHashService);
@@ -175,6 +151,5 @@ public class WithdrawServcie {
 		}
 		return new PageResult(content, page.getTotalPages(), qo.getCurrentPage());
 	}
-
 
 }

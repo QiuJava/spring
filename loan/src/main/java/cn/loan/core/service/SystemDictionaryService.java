@@ -1,18 +1,12 @@
 package cn.loan.core.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +19,7 @@ import cn.loan.core.entity.SystemDictionary;
 import cn.loan.core.entity.SystemDictionaryItem;
 import cn.loan.core.entity.qo.SystemDictionaryQo;
 import cn.loan.core.repository.SystemDictionaryDao;
+import cn.loan.core.repository.specification.SystemDictionarySpecification;
 import cn.loan.core.util.StringUtil;
 
 /**
@@ -43,24 +38,10 @@ public class SystemDictionaryService {
 	private SystemDictionaryHashService systemDictionaryHashService;
 
 	public PageResult pageQuery(SystemDictionaryQo qo) {
-		Page<SystemDictionary> page = systemDictionaryDao.findAll(new Specification<SystemDictionary>() {
-			@Override
-			public Predicate toPredicate(Root<SystemDictionary> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicateList = new ArrayList<>();
-				String dictKey = qo.getDictKey();
-				if (StringUtil.hasLength(dictKey)) {
-					Predicate dictKeyLike = cb.like(root.get(StringUtil.DICT_KEY), dictKey + StringUtil.PER_CENT);
-					predicateList.add(dictKeyLike);
-				}
-				String dictName = qo.getDictName();
-				if (StringUtil.hasLength(dictName)) {
-					Predicate dictNameLike = cb.like(root.get(StringUtil.DICT_NAME), dictName + StringUtil.PER_CENT);
-					predicateList.add(dictNameLike);
-				}
-				Predicate[] ps = new Predicate[predicateList.size()];
-				return cb.and(predicateList.toArray(ps));
-			}
-		}, new PageRequest(qo.getPage(), qo.getSize(), Direction.ASC, StringUtil.SEQUENCE));
+		Page<SystemDictionary> page = systemDictionaryDao.findAll(
+				Specifications.where(SystemDictionarySpecification.likeDictKey(qo.getDictKey()))
+						.and(SystemDictionarySpecification.likeDictName(qo.getDictName())),
+				new PageRequest(qo.getPage(), qo.getSize(), Direction.ASC, StringUtil.SEQUENCE));
 
 		return new PageResult(page.getContent(), page.getTotalPages(), qo.getCurrentPage());
 	}
@@ -104,7 +85,6 @@ public class SystemDictionaryService {
 	public List<SystemDictionary> getAll() {
 		return systemDictionaryDao.findByOrderBySequence();
 	}
-	
 
 	public void updateHash() {
 		// 获取缓存中所有的数据字典条目
