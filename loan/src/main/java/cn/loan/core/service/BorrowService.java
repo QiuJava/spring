@@ -172,11 +172,11 @@ public class BorrowService {
 		// 填充还款方式显示
 		List<SystemDictionaryItem> items = SystemDictionaryUtil.getItems(SystemDictionaryUtil.REPAYMENT_METHOD,
 				systemDictionaryHashService);
-		for (SystemDictionaryItem item : items) {
+		items.stream().forEach(item -> {
 			if (Integer.valueOf(item.getItemValue()).equals(borrow.getRepaymentMethod())) {
 				borrow.setRepaymentMethodDisplay(item.getItemName());
 			}
-		}
+		});
 		return borrow;
 	}
 
@@ -304,7 +304,7 @@ public class BorrowService {
 		accountService.save(borrowAccount);
 		// 退钱
 		List<Account> bidAccounts = new ArrayList<>();
-		for (Bid bid : borrow.getBidList()) {
+		borrow.getBidList().stream().forEach(bid -> {
 			// 获取投标用户的账户
 			Account bidAccount = accountService.get(bid.getInvestor().getId());
 			// 余额增加 冻结金额减少
@@ -313,8 +313,7 @@ public class BorrowService {
 			bidAccounts.add(bidAccount);
 			// 生成一条取消投标金额流水
 			accountFlowService.cancelBidFlow(bid, bidAccount);
-		}
-
+		});
 		// 统一更改投资人的账户
 		accountService.save(bidAccounts);
 	}
@@ -348,9 +347,7 @@ public class BorrowService {
 		// 更新所有的投资人账户
 		Collection<Account> values = bidAccountMap.values();
 		List<Account> list = new ArrayList<>();
-		for (Account account : values) {
-			list.add(account);
-		}
+		values.stream().forEach(account -> list.add(account));
 		accountService.save(list);
 	}
 

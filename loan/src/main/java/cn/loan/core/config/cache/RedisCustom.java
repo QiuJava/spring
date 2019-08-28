@@ -1,6 +1,7 @@
 package cn.loan.core.config.cache;
 
-import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -52,17 +53,13 @@ public class RedisCustom extends CachingConfigurerSupport {
 	@Bean
 	@Override
 	public KeyGenerator keyGenerator() {
-		return new KeyGenerator() {
-			@Override
-			public Object generate(Object target, Method method, Object... params) {
-				StringBuilder sb = new StringBuilder();
-				sb.append(target.getClass().getName());
-				sb.append(StringUtil.COLON).append(method.getName()).append(StringUtil.COLON);
-				for (Object obj : params) {
-					sb.append(obj.toString().replaceAll(StringUtil.COLON, StringUtil.DOT));
-				}
-				return sb.toString();
-			}
+		return (target, method, params) -> {
+			StringBuilder sb = new StringBuilder();
+			sb.append(target.getClass().getName());
+			sb.append(StringUtil.COLON).append(method.getName()).append(StringUtil.COLON);
+			List<Object> asList = Arrays.asList(params);
+			asList.stream().forEach(obj -> sb.append(obj.toString().replaceAll(StringUtil.COLON, StringUtil.DOT)));
+			return sb.toString();
 		};
 	}
 

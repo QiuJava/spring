@@ -29,13 +29,13 @@ public class BorrowAuditHistroyService {
 		List<BorrowAuditHistroy> list = borrowAuditHistroyDao.findByBorrowId(id);
 		List<SystemDictionaryItem> auditTypeList = SystemDictionaryUtil.getItems(SystemDictionaryUtil.AUDIT_TYPE,
 				systemDictionaryHashService);
-		for (BorrowAuditHistroy borrowAuditHistroy : list) {
-			for (SystemDictionaryItem item : auditTypeList) {
+		list.stream().forEach(borrowAuditHistroy -> {
+			auditTypeList.stream().forEach(item -> {
 				if (Integer.valueOf(item.getItemValue()).equals(borrowAuditHistroy.getAuditType())) {
 					borrowAuditHistroy.setAuditTypeDisplay(item.getItemName());
 				}
-			}
-		}
+			});
+		});
 		return list;
 	}
 

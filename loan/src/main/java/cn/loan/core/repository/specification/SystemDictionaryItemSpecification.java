@@ -1,9 +1,6 @@
 package cn.loan.core.repository.specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -19,33 +16,26 @@ import cn.loan.core.util.StringUtil;
  */
 public class SystemDictionaryItemSpecification {
 	public static Specification<SystemDictionaryItem> orKeyword(String keyword) {
-		return new Specification<SystemDictionaryItem>() {
-			@Override
-			public Predicate toPredicate(Root<SystemDictionaryItem> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				if (StringUtil.hasLength(keyword)) {
-					Predicate likeItemName = cb.like(root.get(StringUtil.ITEM_NAME), keyword + StringUtil.PER_CENT);
-					Predicate likeItemKey = cb.like(root.get(StringUtil.ITEM_KEY), keyword + StringUtil.PER_CENT);
-					Predicate or = cb.or(likeItemName, likeItemKey);
-					return or;
-				}
-				return null;
+		return (root, query, cb) -> {
+			if (StringUtil.hasLength(keyword)) {
+				Predicate likeItemName = cb.like(root.get(StringUtil.ITEM_NAME), keyword.concat(StringUtil.PER_CENT));
+				Predicate likeItemKey = cb.like(root.get(StringUtil.ITEM_KEY), keyword.concat(StringUtil.PER_CENT));
+				Predicate or = cb.or(likeItemName, likeItemKey);
+				return or;
 			}
+			return null;
 		};
 	}
 
 	public static Specification<SystemDictionaryItem> equalSystemDictionaryId(Long systemDictionaryId) {
-		return new Specification<SystemDictionaryItem>() {
-			@Override
-			public Predicate toPredicate(Root<SystemDictionaryItem> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				if (systemDictionaryId != null) {
-					SystemDictionary systemDictionary = new SystemDictionary();
-					systemDictionary.setId(systemDictionaryId);
-					Predicate equalSystemDictionaryId = cb.equal(root.get(StringUtil.SYSTEM_DICTIONARY),
-							systemDictionary);
-					return equalSystemDictionaryId;
-				}
-				return null;
+		return (root, query, cb) -> {
+			if (systemDictionaryId != null) {
+				SystemDictionary systemDictionary = new SystemDictionary();
+				systemDictionary.setId(systemDictionaryId);
+				Predicate equalSystemDictionaryId = cb.equal(root.get(StringUtil.SYSTEM_DICTIONARY), systemDictionary);
+				return equalSystemDictionaryId;
 			}
+			return null;
 		};
 	}
 
