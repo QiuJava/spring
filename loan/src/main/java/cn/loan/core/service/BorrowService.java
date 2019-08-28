@@ -8,18 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaBuilder.In;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +32,7 @@ import cn.loan.core.entity.UserInfo;
 import cn.loan.core.entity.bo.PerMonth;
 import cn.loan.core.entity.qo.BorrowQo;
 import cn.loan.core.repository.BorrowDao;
+import cn.loan.core.repository.specification.BorrowSpecification;
 import cn.loan.core.util.BigDecimalUtil;
 import cn.loan.core.util.DateUtil;
 import cn.loan.core.util.SecurityContextUtil;
@@ -145,26 +140,11 @@ public class BorrowService {
 	}
 
 	public PageResult pageQuery(BorrowQo qo) {
-		Page<Borrow> page = borrowDao.findAll(new Specification<Borrow>() {
-			@Override
-			public Predicate toPredicate(Root<Borrow> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> list = new ArrayList<>();
-				Integer borrowStatus = qo.getBorrowStatus();
-				if (borrowStatus != null && borrowStatus != -1) {
-					list.add(cb.equal(root.get(StringUtil.BORROW_STATUS), borrowStatus));
-				}
-				Integer[] borrowStatusList = qo.getBorrowStatusList();
-				if (borrowStatusList != null && borrowStatusList.length > 0) {
-					In<Integer> in = cb.in(root.get(StringUtil.BORROW_STATUS));
-					for (Integer status : borrowStatusList) {
-						in.value(status);
-					}
-					list.add(in);
-				}
-				Predicate[] rs = new Predicate[list.size()];
-				return cb.and(list.toArray(rs));
-			}
-		}, new PageRequest(qo.getPage(), qo.getSize(), Direction.DESC, StringUtil.APPLY_TIME, StringUtil.PUBLISH_TIME));
+		Page<Borrow> page = borrowDao.findAll(
+				Specifications.where(BorrowSpecification.equalBorrowStatus(qo.getBorrowStatus()))
+						.and(BorrowSpecification.inBorrowStatusList(qo.getBorrowStatusList())),
+				new PageRequest(qo.getPage(), qo.getSize(), Direction.DESC, StringUtil.APPLY_TIME,
+						StringUtil.PUBLISH_TIME));
 		List<SystemDictionaryItem> items = SystemDictionaryUtil.getItems(SystemDictionaryUtil.REPAYMENT_METHOD,
 				systemDictionaryHashService);
 		List<SystemDictionaryItem> borrowStatusList = SystemDictionaryUtil.getItems(SystemDictionaryUtil.BORROW_STATUS,

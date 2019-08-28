@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import cn.loan.core.entity.CreditFile;
+import cn.loan.core.entity.LoginUser;
 import cn.loan.core.util.StringUtil;
 
 /**
@@ -51,6 +52,15 @@ public class CreditFileSpecification {
 					cb.lessThanOrEqualTo(root.get(StringUtil.SUBMISSION_TIME), endTime);
 				}
 				return null;
+			}
+		};
+	}
+
+	public static Specification<CreditFile> equalSubmitter(LoginUser submitter) {
+		return new Specification<CreditFile>() {
+			@Override
+			public Predicate toPredicate(Root<CreditFile> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				return cb.equal(root.get(StringUtil.SUBMITTER), submitter);
 			}
 		};
 	}

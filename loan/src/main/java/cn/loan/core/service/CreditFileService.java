@@ -1,18 +1,11 @@
 package cn.loan.core.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,19 +131,9 @@ public class CreditFileService {
 	}
 
 	public List<CreditFile> query(CreditFileQo qo) {
-		return creditFileDao.findAll(new Specification<CreditFile>() {
-			@Override
-			public Predicate toPredicate(Root<CreditFile> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> list = new ArrayList<>();
-				Integer auditStatus = qo.getAuditStatus();
-				if (auditStatus != null && auditStatus != -1) {
-					list.add(cb.equal(root.get(StringUtil.AUDIT_STATUS), auditStatus));
-				}
-				list.add(cb.equal(root.get(StringUtil.SUBMITTER), qo.getSubmitter()));
-				Predicate[] ps = new Predicate[list.size()];
-				return cb.and(list.toArray(ps));
-			}
-		});
+		return creditFileDao.findAll(Specifications.where(CreditFileSpecification.equalAuditStatus(qo.getAuditStatus()))
+				.and(CreditFileSpecification.greaterThanOrEqualToSubmissionTime(qo.getBeginTime()))
+				.and(CreditFileSpecification.equalSubmitter(qo.getSubmitter())));
 	}
 
 }
