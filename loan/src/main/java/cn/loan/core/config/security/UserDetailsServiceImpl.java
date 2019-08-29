@@ -74,7 +74,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// 设置权限
 		Set<Permission> permissions = user.getPermissions();
 		List<Permission> authorities = user.getAuthorities();
-		permissions.stream().forEach(permission -> authorities.add(permission));
+		permissions.forEach(permission -> authorities.add(permission));
 		return user;
 	}
 

@@ -29,8 +29,8 @@ public class BorrowAuditHistroyService {
 		List<BorrowAuditHistroy> list = borrowAuditHistroyDao.findByBorrowId(id);
 		List<SystemDictionaryItem> auditTypeList = SystemDictionaryUtil.getItems(SystemDictionaryUtil.AUDIT_TYPE,
 				systemDictionaryHashService);
-		list.stream().forEach(borrowAuditHistroy -> {
-			auditTypeList.stream().forEach(item -> {
+		list.forEach(borrowAuditHistroy -> {
+			auditTypeList.forEach(item -> {
 				if (Integer.valueOf(item.getItemValue()).equals(borrowAuditHistroy.getAuditType())) {
 					borrowAuditHistroy.setAuditTypeDisplay(item.getItemName());
 				}

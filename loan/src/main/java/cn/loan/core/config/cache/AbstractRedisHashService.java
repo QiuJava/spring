@@ -79,7 +79,7 @@ public abstract class AbstractRedisHashService<T> {
 
 	public void empty() {
 		Set<String> set = hashOperations.keys(getRedisHashKey());
-		set.stream().forEach(key -> hashOperations.delete(getRedisHashKey(), key));
+		set.forEach(key -> hashOperations.delete(getRedisHashKey(), key));
 	}
 
 }

@@ -58,7 +58,7 @@ public class RedisCustom extends CachingConfigurerSupport {
 			sb.append(target.getClass().getName());
 			sb.append(StringUtil.COLON).append(method.getName()).append(StringUtil.COLON);
 			List<Object> asList = Arrays.asList(params);
-			asList.stream().forEach(obj -> sb.append(obj.toString().replaceAll(StringUtil.COLON, StringUtil.DOT)));
+			asList.forEach(obj -> sb.append(obj.toString().replaceAll(StringUtil.COLON, StringUtil.DOT)));
 			return sb.toString();
 		};
 	}

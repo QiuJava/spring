@@ -172,7 +172,7 @@ public class BorrowService {
 		// 填充还款方式显示
 		List<SystemDictionaryItem> items = SystemDictionaryUtil.getItems(SystemDictionaryUtil.REPAYMENT_METHOD,
 				systemDictionaryHashService);
-		items.stream().forEach(item -> {
+		items.forEach(item -> {
 			if (Integer.valueOf(item.getItemValue()).equals(borrow.getRepaymentMethod())) {
 				borrow.setRepaymentMethodDisplay(item.getItemName());
 			}
@@ -304,7 +304,7 @@ public class BorrowService {
 		accountService.save(borrowAccount);
 		// 退钱
 		List<Account> bidAccounts = new ArrayList<>();
-		borrow.getBidList().stream().forEach(bid -> {
+		borrow.getBidList().forEach(bid -> {
 			// 获取投标用户的账户
 			Account bidAccount = accountService.get(bid.getInvestor().getId());
 			// 余额增加 冻结金额减少
@@ -347,7 +347,7 @@ public class BorrowService {
 		// 更新所有的投资人账户
 		Collection<Account> values = bidAccountMap.values();
 		List<Account> list = new ArrayList<>();
-		values.stream().forEach(account -> list.add(account));
+		values.forEach(account -> list.add(account));
 		accountService.save(list);
 	}
 

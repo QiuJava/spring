@@ -26,7 +26,7 @@ public class BorrowSpecification {
 			if (borrowStatusList != null && borrowStatusList.length > 0) {
 				In<Integer> in = cb.in(root.get(StringUtil.BORROW_STATUS));
 				List<Integer> asList = Arrays.asList(borrowStatusList);
-				asList.stream().forEach(status -> in.value(status));
+				asList.forEach(status -> in.value(status));
 				return in;
 			}
 			return null;
