@@ -1,14 +1,57 @@
+server:
+    port: 1234
+   
 spring:
-   profiles:
-      active:
-      - dev
-   freemarker:
-      expose-session-attributes: true
-      suffix: .ftl
-      settings:
-         number_format: 0.##
-         date_format: yyyy-MM-dd ##
-         datetime_format: yyyy-MM-dd HH:mm:ss
-   jackson:
-      time-zone: GMT+8 # 中国时区
-      date-format: yyyy-MM-dd HH:mm:ss
+    freemarker:
+        expose-session-attributes: true
+        suffix: .ftl
+        settings:
+            number_format: 0.##
+            date_format: yyyy-MM-dd ##
+            datetime_format: yyyy-MM-dd HH:mm:ss
+    jackson:
+        time-zone: GMT+8 # 中国时区
+        date-format: yyyy-MM-dd HH:mm:ss
+    redis:
+        database: 1
+        host: localhost
+        port: 6379
+        password: null
+        pool:
+            max-idle: 8
+            min-idle: 0
+            max-active: 8
+            max-wait: 1
+        timeout: 5000 #单位毫秒
+    jpa:
+        #show-sql: true
+        hibernate:
+            ddl-auto: update
+        #properties:
+            #hibernate:
+                #format_sql: true #格式化sql
+    resources:
+        static-locations:
+        - http://localhost:8082 #图片服务器
+        - classpath:/static
+      
+logging:
+    level:
+        org.hibernate.type.descriptor.sql.BasicBinder: trace
+        org.hibernate.SQL: debug
+    path: E:\logs\loan
+    
+upload:
+    image: E:/www/upload/image/
+   
+mysql:
+    write:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/loan?characterEncoding=utf8&useSSL=false
+        username: root
+        password: 123456
+    read:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3307/loan?characterEncoding=utf8&useSSL=false
+        username: root
+        password: 123456
