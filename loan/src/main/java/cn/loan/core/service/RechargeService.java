@@ -84,13 +84,13 @@ public class RechargeService {
 		List<Recharge> content = page.getContent();
 		List<SystemDictionaryItem> audits = SystemDictionaryUtil.getItems(SystemDictionaryUtil.AUDIT,
 				systemDictionaryHashService);
-		for (Recharge recharge : content) {
-			for (SystemDictionaryItem item : audits) {
+		audits.forEach(item -> {
+			content.forEach(recharge -> {
 				if (recharge.getAuditStatus().equals(Integer.valueOf(item.getItemValue()))) {
 					recharge.setAuditStatusDisplay(item.getItemName());
 				}
-			}
-		}
+			});
+		});
 		return new PageResult(content, page.getTotalPages(), qo.getCurrentPage());
 	}
 

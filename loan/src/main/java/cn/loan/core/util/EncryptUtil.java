@@ -11,9 +11,10 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 public class EncryptUtil {
 	private EncryptUtil() {
 	}
+
 	public static final Md5PasswordEncoder MD5 = new Md5PasswordEncoder();
-	
-	public static String md5Encrypt(String salt,String... texts) {
+
+	public static String md5Encrypt(String salt, String... texts) {
 		StringBuilder builder = new StringBuilder();
 		if (texts != null) {
 			for (String string : texts) {

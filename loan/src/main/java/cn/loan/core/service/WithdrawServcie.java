@@ -142,13 +142,14 @@ public class WithdrawServcie {
 		List<Withdraw> content = page.getContent();
 		List<SystemDictionaryItem> audits = SystemDictionaryUtil.getItems(SystemDictionaryUtil.AUDIT,
 				systemDictionaryHashService);
-		for (Withdraw withdraw : content) {
-			for (SystemDictionaryItem item : audits) {
+
+		audits.forEach(item -> {
+			content.forEach(withdraw -> {
 				if (withdraw.getAuditStatus().equals(Integer.valueOf(item.getItemValue()))) {
 					withdraw.setAuditStatusDisplay(item.getItemName());
 				}
-			}
-		}
+			});
+		});
 		return new PageResult(content, page.getTotalPages(), qo.getCurrentPage());
 	}
 

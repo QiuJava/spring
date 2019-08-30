@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.loan.core.common.BaseResult;
@@ -76,11 +75,9 @@ public class CreditFileController {
 	@PostMapping(WEBSITE_CREDIT_FILE_UPLOAD_MAPPING)
 	@ResponseBody
 	public void upload(MultipartHttpServletRequest request) throws IOException {
-		List<MultipartFile> files = request.getFiles(StringUtil.FILE);
-		for (MultipartFile file : files) {
-			String fileName = UploadUtil.upload(file, image);
-			creditFileService.save(fileName);
-		}
+		request.getFiles(StringUtil.FILE).forEach(file ->{
+			creditFileService.save(UploadUtil.upload(file, image));
+		});
 	}
 
 	@GetMapping(MANAGE_CREDIT_FILE_MAPPING)

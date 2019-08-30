@@ -62,11 +62,11 @@ public class RealAuthController {
 			List<SystemDictionaryItem> genders = SystemDictionaryUtil.getItems(SystemDictionaryUtil.GENDER,
 					systemDictionaryHashService);
 			RealAuth realAuth = realAuthService.get(realAuthId);
-			for (SystemDictionaryItem item : genders) {
+			genders.forEach(item -> {
 				if (realAuth.getGender().equals(Integer.valueOf(item.getItemValue()))) {
 					realAuth.setDisplayGender(item.getItemName());
 				}
-			}
+			});
 			model.addAttribute(StringUtil.REAL_AUTH, realAuth);
 			model.addAttribute(StringUtil.USER_INFO, userInfo);
 			return REALAUTH_RESULT;
