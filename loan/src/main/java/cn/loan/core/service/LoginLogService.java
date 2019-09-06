@@ -65,4 +65,8 @@ public class LoginLogService {
 		return loginLogDao.findByUsernameOrderByLoginTimeDesc(username, new PageRequest(0, 1)).get(0);
 	}
 
+	public List<LoginLog> getAll() {
+		return loginLogDao.findAll();
+	}
+
 }

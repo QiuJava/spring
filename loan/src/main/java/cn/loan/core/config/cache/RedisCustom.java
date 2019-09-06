@@ -18,11 +18,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import cn.loan.core.util.StringUtil;
 
 /**
  * 自定义Redis配置
@@ -43,9 +40,6 @@ public class RedisCustom extends CachingConfigurerSupport {
 		redisTemplate.setKeySerializer(stringRedisSerializer);
 		redisTemplate.setHashKeySerializer(stringRedisSerializer);
 
-		RedisSerializer<?> jdkSerializationRedisSerializer = new JdkSerializationRedisSerializer();
-		redisTemplate.setHashValueSerializer(jdkSerializationRedisSerializer);
-		redisTemplate.setValueSerializer(jdkSerializationRedisSerializer);
 		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		return redisTemplate;
 	}
@@ -56,9 +50,14 @@ public class RedisCustom extends CachingConfigurerSupport {
 		return (target, method, params) -> {
 			StringBuilder sb = new StringBuilder();
 			sb.append(target.getClass().getName());
-			sb.append(StringUtil.COLON).append(method.getName()).append(StringUtil.COLON);
+			sb.append(".").append(method.getName());
 			List<Object> asList = Arrays.asList(params);
-			asList.forEach(obj -> sb.append(obj.toString().replaceAll(StringUtil.COLON, StringUtil.DOT)));
+			sb.append("(");
+			if (asList.size() > 0) {
+				asList.forEach(obj -> sb.append(obj.toString()).append(","));
+				sb.deleteCharAt(sb.length() - 1);
+			}
+			sb.append(")");
 			return sb.toString();
 		};
 	}

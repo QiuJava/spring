@@ -10,6 +10,12 @@ import org.springframework.data.jpa.domain.Specification;
 import cn.loan.core.entity.Borrow;
 import cn.loan.core.util.StringUtil;
 
+/**
+ * 借款查询条件
+ *
+ * @author Qiujian
+ *
+ */
 public class BorrowSpecification {
 
 	public static Specification<Borrow> equalBorrowStatus(Integer borrowStatus) {

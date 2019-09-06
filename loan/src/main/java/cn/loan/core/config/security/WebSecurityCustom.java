@@ -57,7 +57,7 @@ public class WebSecurityCustom {
 
 	@Configuration
 	@Order(2)
-	public static class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+	public static class ManageWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 		@Autowired
 		private AuthenticationSuccessHandlerCustom authenticationSuccessHandlerCustom;
 		@Autowired
@@ -73,6 +73,18 @@ public class WebSecurityCustom {
 					.permitAll().successHandler(authenticationSuccessHandlerCustom)
 					.failureHandler(authenticationFailureHandlerCustom).and().logout().logoutUrl("/manage/logout")
 					.permitAll().and().addFilterBefore(XSS, CsrfFilter.class);
+		}
+	}
+
+	@Configuration
+	@Order(3)
+	public static class ApiWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.csrf().disable();
+			http.antMatcher("/api/**").authorizeRequests().anyRequest().anonymous().and().addFilterBefore(XSS,
+					CsrfFilter.class);
 		}
 	}
 
