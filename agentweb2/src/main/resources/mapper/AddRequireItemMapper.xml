@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.AddRequireItemDao">
+	<resultMap id="BaseResultMap"
+		type="cn.eeepay.framework.model.AddRequireItem">
+		<result column="item_id" property="itemId" jdbcType="BIGINT" />
+		<result column="item_name" property="itemName"
+			jdbcType="VARCHAR" />
+		<result column="example_type" property="exampleType"
+			jdbcType="VARCHAR" />
+		<result column="example" property="example" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="photo" property="photo" jdbcType="VARCHAR" />
+		<result column="data_all" property="dataAll" jdbcType="VARCHAR" />
+		<result column="check_msg" property="checkMsg"
+			jdbcType="VARCHAR" />
+		<result column="photo_address" property="photoAddress"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="NameResultMap"
+		type="cn.eeepay.framework.model.AddRequireItem">
+		<result column="item_name" jdbcType="VARCHAR"
+			property="itemName" />
+	</resultMap>
+
+	<select id="findRequireItemByNameList" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM
+		add_require_item
+		WHERE item_id IN
+		<foreach collection="intoList" item="into" open="(" close=")"
+			separator=",">
+			#{into}
+		</foreach>
+	</select>
+
+</mapper>

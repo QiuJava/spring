@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.daoSuperBank.RankingPushRecordDao" >
+
+    <select id="queryRankingPushRecordPage" resultType="cn.eeepay.framework.model.RankingPushRecordInfo">
+        SELECT
+        rpr.`id`,
+        rpr.`order_no`,
+        rpr.`ranking_no`,
+        rpr.`batch_no`,
+        rpr.`rule_no`,
+        rpr.`ranking_name`,
+        rpr.`ranking_type`,
+        rpr.`org_id`,
+        rpr.`show_no`,
+        rpr.`user_name`,
+        rpr.`nick_name`,
+        rpr.`user_code`,
+        rpr.`phone`,
+        rpr.`ranking_data`,
+        rpr.`ranking_level`,
+        rpr.`ranking_money`,
+        rpr.`push_status`,
+        rpr.`account_status`,
+        rpr.`remove_remark`,
+        oi.`org_name`,
+        DATE_FORMAT(rpr.`push_time`,'%Y-%m-%d %H:%i:%s') push_time,
+        DATE_FORMAT(rpr.`remove_time`,'%Y-%m-%d %H:%i:%s') remove_time,
+        DATE_FORMAT(rpr.`start_time`,'%Y-%m-%d %H:%i:%s') start_time,
+        DATE_FORMAT(rpr.`end_time`,'%Y-%m-%d %H:%i:%s') end_time,
+        rpr.`data_type`
+        FROM ranking_push_record rpr
+        LEFT JOIN org_info oi ON oi.`org_id` = rpr.`org_id`
+        <include refid="rankingPushRecordCommonWhere"/>
+        ORDER BY rpr.`push_time` desc
+    </select>
+
+    <select id="selectRankingPushRecordTotalMoneySum" resultType="String">
+        SELECT
+        sum(rpr.`ranking_money`) as totalRankingMoney
+        FROM ranking_push_record rpr
+        <include refid="rankingPushRecordCommonWhere"/>
+    </select>
+
+
+    <sql id="rankingPushRecordCommonWhere">
+        WHERE rpr.`org_id` = #{bean.orgId}
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.rankingNo)">
+            AND rpr.`ranking_no` = #{bean.rankingNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.batchNo)">
+            AND rpr.`batch_no` = #{bean.batchNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.rankingType)">
+            AND rpr.`ranking_type` = #{bean.rankingType}
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.userCode)">
+            AND rpr.`user_code` = #{bean.userCode}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.phone)">
+            AND rpr.`phone` = #{bean.phone}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.accountStatus)">
+            AND rpr.`account_status` = #{bean.accountStatus}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.dataType)">
+            AND rpr.`data_type` = #{bean.dataType}
+        </if>
+    </sql>
+
+</mapper>

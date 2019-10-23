@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.daoRedem.RedemMerchantDao" >
+
+    <select id="selectByUserRedemMerchant" resultType="cn.eeepay.framework.model.RedemMerchantBean">
+        SELECT
+            rmi.merchant_no,
+            rcm.account_name,
+            rmi.user_name,
+            rmi.mobile_username,
+            rmi.mer_capa,
+            rmi.mer_account,
+            rmi.par_mer_no,
+            rmi.agent_no,
+            rmi.agent_node,
+            DATE_FORMAT(rmi.create_time,'%Y-%m-%d %H:%i:%s') create_time
+        FROM rdmp_merchant_info rmi
+        LEFT JOIN rdmp_card_manage rcm on rmi.merchant_no=rcm.mer_no and rcm.is_settle = 1
+        <include refid="merchantWhere"/>
+        ORDER BY rmi.create_time desc
+    </select>
+
+    <select id="selectSum" resultType="cn.eeepay.framework.model.redemActive.MerInfoTotal">
+        SELECT
+        count(*) merTotal,
+        sum(IF(rmi.mer_capa='1',1,0)) ordmemTotal,
+        sum(IF(rmi.mer_capa='2',1,0)) supermemTotal,
+        sum(IF(rmi.mer_capa='3',1,0)) ordparTotal,
+        sum(IF(rmi.mer_capa='4',1,0)) goldparTotal,
+        sum(IF(rmi.mer_capa='5',1,0)) diamparTotal,
+        sum(IF(rmi.mer_act_status='2',1,0)) merActTotal
+        FROM rdmp_merchant_info rmi
+        LEFT JOIN rdmp_card_manage rcm on rmi.merchant_no=rcm.mer_no and rcm.is_settle = 1
+        <include refid="merchantWhere"/>
+        ORDER BY rmi.create_time desc
+    </select>
+
+    <sql id="merchantWhere">
+        WHERE rmi.agent_node LIKE CONCAT (#{loginAgent.agentNode}, '%')
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.merchantNo)">
+            AND rmi.merchant_no = #{bean.merchantNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.agentNo)">
+            AND rmi.agent_no = #{bean.agentNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.merCapa)">
+            AND rmi.mer_capa = #{bean.merCapa}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.mobileUsername)">
+            AND rmi.mobile_username = #{bean.mobileUsername}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.userName)">
+            AND position(#{bean.userName} in rmi.user_name) > 0
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.creTimeStart)">
+            AND rmi.create_time >= #{bean.creTimeStart}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.creTimeEnd)">
+            AND rmi.create_time &lt;= #{bean.creTimeEnd}
+        </if>
+    </sql>
+
+
+    <select id="selectRootMerchantNo" resultType="string">
+        SELECT merchant_no FROM rdmp_merchant_info
+        WHERE agent_no = #{loginAgentNo} AND par_mer_no = 0
+        LIMIT 1
+    </select>
+
+    <select id="queryMerchantInfoByMerchantNoAndRootMerNo" resultType="cn.eeepay.framework.model.RedemMerchantBean">
+        SELECT
+            rmi.oem_no,
+            rmi.merchant_no,
+            rmi.user_name,
+            rmi.mobile_username,
+            rcm.account_type,
+            rcm.account_name,
+            rcm.account_no,
+            rcm.bank_name,
+            rcm.account_province,
+            rcm.account_city,
+            rcm.zh_name,
+            rcm.cnaps cnapsNo,
+            rmi.agent_no,
+            rmi.mer_node,
+            (select oem_config_value from rdmp_oem_config where oem_no = rmi.oem_no and oem_config_code = 'ordpar_pro_share') ordparProShare,
+            (select oem_config_value from rdmp_oem_config where oem_no = rmi.oem_no and oem_config_code = 'goldpar_pro_share') goldparProShare,
+            (select oem_config_value from rdmp_oem_config where oem_no = rmi.oem_no and oem_config_code = 'diampar_pro_share') diamparProShare,
+            (select oem_config_value from rdmp_oem_config where oem_no = rmi.oem_no and oem_config_code = 'oem_fee') oemFee
+        FROM rdmp_merchant_info rmi
+            LEFT JOIN rdmp_card_manage rcm ON rcm.mer_no = rmi.merchant_no AND rcm.is_settle = 1
+        WHERE merchant_no = #{merchantNo}
+              AND par_mer_no = #{rootMerchantNo}
+        limit 1
+    </select>
+
+    <select id="getOemConfigValue" resultType="map">
+        SELECT
+          oem_config_value
+          from rdmp_oem_config
+          where oem_no =#{oemNo}  and oem_config_code = 'oem_fee'
+    </select>
+
+    <insert id="insertRdmpAgentShareConfig">
+        INSERT INTO rdmp_agent_share_config(mer_no, agent_no, share_capa, share_rate,share_type, create_time)
+        VALUES(#{merchantNo}, #{agentNo}, #{merCapa}, #{share}, 'A', now())
+    </insert>
+
+    <insert id="insertRdmpAgentFeeConfig">
+        INSERT INTO rdmp_agent_share_config
+        (mer_no, agent_no, share_capa, share_rate,share_type,share_fee,create_time)
+        VALUES(#{merchantNo}, #{agentNo},'0','0', 'D',#{shareFee},now())
+    </insert>
+
+    <select id="getRdmpAgentShareConfig" resultType="map">
+        SELECT
+          *
+        from rdmp_agent_share_config
+        WHERE mer_no = #{merchantNo}
+        AND   agent_no = #{agentNo}
+        AND   share_capa = #{merCapa}
+        AND   share_type = 'A'
+    </select>
+    <update id="updateRdmpAgentShareConfig">
+        update rdmp_agent_share_config set share_rate = #{share}
+        WHERE mer_no = #{merchantNo}
+        AND   agent_no = #{agentNo}
+        AND   share_capa = #{merCapa}
+        AND   share_type = 'A'
+    </update>
+
+    <select id="getRdmpAgentFeeConfig" resultType="map">
+        SELECT
+          *
+        from rdmp_agent_share_config
+        WHERE mer_no = #{merchantNo}
+        AND   agent_no = #{agentNo}
+        AND   share_type = 'D'
+    </select>
+    <update id="updateRdmpAgentFeeConfig">
+        update rdmp_agent_share_config set share_fee = #{shareFee}
+        WHERE mer_no = #{merchantNo}
+        AND   agent_no = #{agentNo}
+        AND   share_type = 'D'
+    </update>
+
+    <update id="updateMerchantAgentNode">
+        UPDATE rdmp_merchant_info SET agent_no = #{agentNo}, agent_node = #{agentNode} WHERE mer_node like concat(#{merchantNode},'%')
+    </update>
+
+    <select id="selectMerchantShare" resultType="string">
+        select
+        <choose>
+            <when test="@org.apache.commons.lang3.StringUtils@isNotBlank(merCapa)">
+                share_rate
+            </when>
+            <otherwise>
+                share_fee
+            </otherwise>
+        </choose>
+        from rdmp_agent_share_config
+        WHERE mer_no = #{merchantNo}
+        AND   agent_no = #{agentNo}
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(merCapa)">
+            AND  share_capa = #{merCapa}
+        </if>
+        AND  share_type = #{shareType}
+        limit 1
+    </select>
+
+    <select id="queryMerchantInfoByMerchantNo" resultType="map">
+        SELECT
+            rmi.*,
+            rcm.*,
+            ros.*,
+            rb.*,
+            DATE_FORMAT(rmi.create_time,'%Y-%m-%d %H:%i:%s') enter_time
+        FROM rdmp_merchant_info rmi
+            LEFT JOIN rdmp_card_manage rcm ON rcm.mer_no = rmi.merchant_no AND rcm.is_settle = 1
+            LEFT JOIN rdmp_oem_service ros ON ros.oem_no = rmi.oem_no
+            LEFT JOIN rdmp_balance rb ON rb.mer_no = rmi.merchant_no
+        WHERE rmi.merchant_no = #{merchantNo}
+        LIMIT 1
+    </select>
+
+    <select id="countDirectUserNumber" resultType="int">
+        SELECT COUNT(*) FROM rdmp_merchant_info
+        WHERE par_mer_no = #{merchantNo} AND mer_act_status = 1
+    </select>
+
+    <select id="countDirectMemberNumber" resultType="int">
+        SELECT COUNT(*) FROM rdmp_merchant_info
+        WHERE par_mer_no = #{merchantNo} AND mer_act_status = 2
+    </select>
+
+    <select id="selectMemberTime" resultType="string">
+        SELECT DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s')  FROM rdmp_merchant_act_info
+        WHERE merchant_no = #{merchantNo}
+          AND mer_capa = #{merCapa}
+          limit 1
+    </select>
+    <select id="listBalanceHis" resultType="map">
+        SELECT
+            rbh.amount,
+            rbh.amount_behind,
+            rbh.service,
+            rbh.result_status,
+            DATE_FORMAT(rbh.create_time,'%Y-%m-%d %H:%i:%s') create_time
+        FROM rdmp_balance_his rbh
+        JOIN rdmp_balance rb ON rbh.balance_no = rb.balance_no
+        WHERE rb.mer_no = #{merchantNo}
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(startTime)">
+          and rbh.create_time >= #{startTime}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(endTime)">
+            and rbh.create_time &lt;= #{endTime}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(service)">
+            and rbh.service = #{service}
+        </if>
+        order by rbh.create_time desc, rbh.service ASC
+    </select>
+</mapper>

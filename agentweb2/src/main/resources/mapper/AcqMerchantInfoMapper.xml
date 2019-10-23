@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.eeepay.framework.dao.AcqMerchantInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.AcqMerchantInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="merchant_type" jdbcType="INTEGER" property="merchantType" />
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="legal_person" jdbcType="VARCHAR" property="legalPerson" />
+    <result column="legal_person_id" jdbcType="VARCHAR" property="legalPersonId" />
+    <result column="id_valid_start" jdbcType="TIMESTAMP" property="idValidStart" />
+    <result column="id_valid_end" jdbcType="TIMESTAMP" property="idValidEnd" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="one_scope" jdbcType="VARCHAR" property="oneScope" />
+    <result column="two_scope" jdbcType="VARCHAR" property="twoScope" />
+    <result column="charter_name" jdbcType="VARCHAR" property="charterName" />
+    <result column="charter_no" jdbcType="VARCHAR" property="charterNo" />
+    <result column="charter_valid_start" jdbcType="TIMESTAMP" property="charterValidStart" />
+    <result column="charter_valid_end" jdbcType="TIMESTAMP" property="charterValidEnd" />
+    <result column="account_type" jdbcType="INTEGER" property="accountType" />
+    <result column="bank_no" jdbcType="VARCHAR" property="bankNo" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="account_bank" jdbcType="VARCHAR" property="accountBank" />
+    <result column="account_province" jdbcType="VARCHAR" property="accountProvince" />
+    <result column="account_city" jdbcType="VARCHAR" property="accountCity" />
+    <result column="account_district" jdbcType="VARCHAR" property="accountDistrict" />
+    <result column="bank_branch" jdbcType="VARCHAR" property="bankBranch" />
+    <result column="line_number" jdbcType="VARCHAR" property="lineNumber" />
+    <result column="acq_into_no" jdbcType="VARCHAR" property="acqIntoNo" />
+    <result column="into_source" jdbcType="VARCHAR" property="intoSource" />
+    <result column="audit_status" jdbcType="INTEGER" property="auditStatus" />
+    <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="agent_no" jdbcType="VARCHAR" property="agentNo" />
+    <result column="one_agent_no" jdbcType="VARCHAR" property="oneAgentNo" />
+    <result column="mcc" jdbcType="VARCHAR" property="mcc" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap type="cn.eeepay.framework.model.AcqMerchantInfo" id="acqMerInfoDetailMap">
+  	<id column="id" jdbcType="BIGINT" property="id" />
+    <result column="merchant_type" jdbcType="INTEGER" property="merchantType" />
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="legal_person" jdbcType="VARCHAR" property="legalPerson" />
+    <result column="legal_person_id" jdbcType="VARCHAR" property="legalPersonId" />
+    <result column="id_valid_start" jdbcType="TIMESTAMP" property="idValidStart" />
+    <result column="id_valid_end" jdbcType="TIMESTAMP" property="idValidEnd" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="one_scope" jdbcType="VARCHAR" property="oneScope" />
+    <result column="two_scope" jdbcType="VARCHAR" property="twoScope" />
+    <result column="charter_name" jdbcType="VARCHAR" property="charterName" />
+    <result column="charter_no" jdbcType="VARCHAR" property="charterNo" />
+    <result column="charter_valid_start" jdbcType="TIMESTAMP" property="charterValidStart" />
+    <result column="charter_valid_end" jdbcType="TIMESTAMP" property="charterValidEnd" />
+    <result column="account_type" jdbcType="INTEGER" property="accountType" />
+    <result column="bank_no" jdbcType="VARCHAR" property="bankNo" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="account_bank" jdbcType="VARCHAR" property="accountBank" />
+    <result column="account_province" jdbcType="VARCHAR" property="accountProvince" />
+    <result column="account_city" jdbcType="VARCHAR" property="accountCity" />
+    <result column="account_district" jdbcType="VARCHAR" property="accountDistrict" />
+    <result column="bank_branch" jdbcType="VARCHAR" property="bankBranch" />
+    <result column="line_number" jdbcType="VARCHAR" property="lineNumber" />
+    <result column="acq_into_no" jdbcType="VARCHAR" property="acqIntoNo" />
+    <result column="into_source" jdbcType="VARCHAR" property="intoSource" />
+    <result column="audit_status" jdbcType="INTEGER" property="auditStatus" />
+    <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="agent_no" jdbcType="VARCHAR" property="agentNo" />
+    <result column="one_agent_no" jdbcType="VARCHAR" property="oneAgentNo" />
+    <result column="mcc" jdbcType="VARCHAR" property="mcc" />		
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  	<collection property="fileList" ofType="cn.eeepay.framework.model.AcqMerchantFileInfo">
+		<id column="mer_file_id" jdbcType="BIGINT" property="id" />
+		<result column="mer_file_create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="mer_file_file_type" jdbcType="VARCHAR" property="fileType" />
+		<result column="mer_file_file_url" jdbcType="VARCHAR" property="fileUrl" />
+		<result column="mer_file_status" jdbcType="INTEGER" property="status" />
+		<result column="mer_file_acq_into_no" jdbcType="VARCHAR" property="acqIntoNo" />	
+		<result column="mer_file_name" jdbcType="VARCHAR" property="name" />	
+  	</collection>
+  </resultMap>
+  
+  <select id="findAcqMerInfoDetail" resultMap="acqMerInfoDetailMap">
+	SELECT
+		mer_in.*, mer_file.acq_into_no mer_file_acq_into_no,
+		mer_file.create_time mer_file_create_time,
+		mer_file.file_type mer_file_file_type,
+		mer_file.file_url mer_file_file_url,
+		mer_file.id mer_file_id,
+		mer_file.`status` mer_file_status,
+		add_item.item_name mer_file_name
+	FROM
+		acq_merchant_info mer_in
+	JOIN acq_merchant_file_info mer_file ON mer_in.acq_into_no = mer_file.acq_into_no
+	JOIN add_require_item add_item ON add_item.item_id = mer_file.file_type
+	AND mer_in.id = #{id}
+  </select>
+  
+  <sql id="Base_Column_List">
+    id, merchant_type, merchant_name, legal_person, legal_person_id, id_valid_start, 
+    id_valid_end, province, city, district, address, one_scope, two_scope, charter_name, 
+    charter_no, charter_valid_start, charter_valid_end, account_type, bank_no, account_name, 
+    account_bank, account_province, account_city, account_district, bank_branch, line_number, 
+    acq_into_no, into_source, audit_status, audit_time, create_time, agent_no, one_agent_no, 
+    mcc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from acq_merchant_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from acq_merchant_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.eeepay.framework.model.AcqMerchantInfo">
+    insert into acq_merchant_info (id, merchant_type, merchant_name, 
+      legal_person, legal_person_id, id_valid_start, 
+      id_valid_end, province, city, 
+      district, address, one_scope, 
+      two_scope, charter_name, charter_no, 
+      charter_valid_start, charter_valid_end, 
+      account_type, bank_no, account_name, 
+      account_bank, account_province, account_city, 
+      account_district, bank_branch, line_number, 
+      acq_into_no, into_source, audit_status, 
+      audit_time, create_time, agent_no, 
+      one_agent_no, mcc)
+    values (#{id,jdbcType=BIGINT}, #{merchantType,jdbcType=INTEGER}, #{merchantName,jdbcType=VARCHAR}, 
+      #{legalPerson,jdbcType=VARCHAR}, #{legalPersonId,jdbcType=VARCHAR}, #{idValidStart,jdbcType=TIMESTAMP}, 
+      #{idValidEnd,jdbcType=TIMESTAMP}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{oneScope,jdbcType=VARCHAR}, 
+      #{twoScope,jdbcType=VARCHAR}, #{charterName,jdbcType=VARCHAR}, #{charterNo,jdbcType=VARCHAR}, 
+      #{charterValidStart,jdbcType=TIMESTAMP}, #{charterValidEnd,jdbcType=TIMESTAMP}, 
+      #{accountType,jdbcType=INTEGER}, #{bankNo,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, 
+      #{accountBank,jdbcType=VARCHAR}, #{accountProvince,jdbcType=VARCHAR}, #{accountCity,jdbcType=VARCHAR}, 
+      #{accountDistrict,jdbcType=VARCHAR}, #{bankBranch,jdbcType=VARCHAR}, #{lineNumber,jdbcType=VARCHAR}, 
+      #{acqIntoNo,jdbcType=VARCHAR}, #{intoSource,jdbcType=VARCHAR}, #{auditStatus,jdbcType=INTEGER}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{agentNo,jdbcType=VARCHAR}, 
+      #{oneAgentNo,jdbcType=VARCHAR}, #{mcc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.eeepay.framework.model.AcqMerchantInfo">
+    insert into acq_merchant_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantType != null">
+        merchant_type,
+      </if>
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="legalPerson != null">
+        legal_person,
+      </if>
+      <if test="legalPersonId != null">
+        legal_person_id,
+      </if>
+      <if test="idValidStart != null">
+        id_valid_start,
+      </if>
+      <if test="idValidEnd != null">
+        id_valid_end,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="oneScope != null">
+        one_scope,
+      </if>
+      <if test="twoScope != null">
+        two_scope,
+      </if>
+      <if test="charterName != null">
+        charter_name,
+      </if>
+      <if test="charterNo != null">
+        charter_no,
+      </if>
+      <if test="charterValidStart != null">
+        charter_valid_start,
+      </if>
+      <if test="charterValidEnd != null">
+        charter_valid_end,
+      </if>
+      <if test="accountType != null">
+        account_type,
+      </if>
+      <if test="bankNo != null">
+        bank_no,
+      </if>
+      <if test="accountName != null">
+        account_name,
+      </if>
+      <if test="accountBank != null">
+        account_bank,
+      </if>
+      <if test="accountProvince != null">
+        account_province,
+      </if>
+      <if test="accountCity != null">
+        account_city,
+      </if>
+      <if test="accountDistrict != null">
+        account_district,
+      </if>
+      <if test="bankBranch != null">
+        bank_branch,
+      </if>
+      <if test="lineNumber != null">
+        line_number,
+      </if>
+      <if test="acqIntoNo != null">
+        acq_into_no,
+      </if>
+      <if test="intoSource != null">
+        into_source,
+      </if>
+      <if test="auditStatus != null">
+        audit_status,
+      </if>
+      <if test="auditTime != null">
+        audit_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="agentNo != null">
+        agent_no,
+      </if>
+      <if test="oneAgentNo != null">
+        one_agent_no,
+      </if>
+      <if test="mcc != null">
+        mcc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="merchantType != null">
+        #{merchantType,jdbcType=INTEGER},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null">
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null">
+        #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="idValidStart != null">
+        #{idValidStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idValidEnd != null">
+        #{idValidEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="oneScope != null">
+        #{oneScope,jdbcType=VARCHAR},
+      </if>
+      <if test="twoScope != null">
+        #{twoScope,jdbcType=VARCHAR},
+      </if>
+      <if test="charterName != null">
+        #{charterName,jdbcType=VARCHAR},
+      </if>
+      <if test="charterNo != null">
+        #{charterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="charterValidStart != null">
+        #{charterValidStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="charterValidEnd != null">
+        #{charterValidEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountType != null">
+        #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="bankNo != null">
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBank != null">
+        #{accountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="accountProvince != null">
+        #{accountProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCity != null">
+        #{accountCity,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDistrict != null">
+        #{accountDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="bankBranch != null">
+        #{bankBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNumber != null">
+        #{lineNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="acqIntoNo != null">
+        #{acqIntoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="intoSource != null">
+        #{intoSource,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentNo != null">
+        #{agentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oneAgentNo != null">
+        #{oneAgentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mcc != null">
+        #{mcc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.eeepay.framework.model.AcqMerchantInfo">
+    update acq_merchant_info
+    <set>
+      <if test="merchantType != null">
+        merchant_type = #{merchantType,jdbcType=INTEGER},
+      </if>
+      <if test="merchantName != null">
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null">
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null">
+        legal_person_id = #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="idValidStart != null">
+        id_valid_start = #{idValidStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idValidEnd != null">
+        id_valid_end = #{idValidEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="oneScope != null">
+        one_scope = #{oneScope,jdbcType=VARCHAR},
+      </if>
+      <if test="twoScope != null">
+        two_scope = #{twoScope,jdbcType=VARCHAR},
+      </if>
+      <if test="charterName != null">
+        charter_name = #{charterName,jdbcType=VARCHAR},
+      </if>
+      <if test="charterNo != null">
+        charter_no = #{charterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="charterValidStart != null">
+        charter_valid_start = #{charterValidStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="charterValidEnd != null">
+        charter_valid_end = #{charterValidEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountType != null">
+        account_type = #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="bankNo != null">
+        bank_no = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBank != null">
+        account_bank = #{accountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="accountProvince != null">
+        account_province = #{accountProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCity != null">
+        account_city = #{accountCity,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDistrict != null">
+        account_district = #{accountDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="bankBranch != null">
+        bank_branch = #{bankBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNumber != null">
+        line_number = #{lineNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="acqIntoNo != null">
+        acq_into_no = #{acqIntoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="intoSource != null">
+        into_source = #{intoSource,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        audit_status = #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditTime != null">
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentNo != null">
+        agent_no = #{agentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oneAgentNo != null">
+        one_agent_no = #{oneAgentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mcc != null">
+        mcc = #{mcc,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+      	update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.eeepay.framework.model.AcqMerchantInfo">
+    update acq_merchant_info
+    set merchant_type = #{merchantType,jdbcType=INTEGER},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      legal_person_id = #{legalPersonId,jdbcType=VARCHAR},
+      id_valid_start = #{idValidStart,jdbcType=TIMESTAMP},
+      id_valid_end = #{idValidEnd,jdbcType=TIMESTAMP},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      one_scope = #{oneScope,jdbcType=VARCHAR},
+      two_scope = #{twoScope,jdbcType=VARCHAR},
+      charter_name = #{charterName,jdbcType=VARCHAR},
+      charter_no = #{charterNo,jdbcType=VARCHAR},
+      charter_valid_start = #{charterValidStart,jdbcType=TIMESTAMP},
+      charter_valid_end = #{charterValidEnd,jdbcType=TIMESTAMP},
+      account_type = #{accountType,jdbcType=INTEGER},
+      bank_no = #{bankNo,jdbcType=VARCHAR},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      account_bank = #{accountBank,jdbcType=VARCHAR},
+      account_province = #{accountProvince,jdbcType=VARCHAR},
+      account_city = #{accountCity,jdbcType=VARCHAR},
+      account_district = #{accountDistrict,jdbcType=VARCHAR},
+      bank_branch = #{bankBranch,jdbcType=VARCHAR},
+      line_number = #{lineNumber,jdbcType=VARCHAR},
+      acq_into_no = #{acqIntoNo,jdbcType=VARCHAR},
+      into_source = #{intoSource,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=INTEGER},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      agent_no = #{agentNo,jdbcType=VARCHAR},
+      one_agent_no = #{oneAgentNo,jdbcType=VARCHAR},
+      mcc = #{mcc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+</mapper>

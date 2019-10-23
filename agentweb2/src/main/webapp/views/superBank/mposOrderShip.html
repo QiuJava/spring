@@ -1,0 +1,124 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>Mpos订单</a></li>
+            <li class="active"><strong>Mpos订单发货</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="mposOrderShipCtrl">
+    <form class="form-horizontal" name="horizontal" >
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-body ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>发货机具</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group" ng-show="baseInfo.shipWay == 1">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>快递公司：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="baseInfo.shipExpress" ng-options="x.text as x.text for x in shipExpressList">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="baseInfo.shipWay == 1">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>物流单号：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" ng-model="baseInfo.shipExpressNo">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>发货机具：</label>
+                            <div class="col-sm-4">
+                                <textarea class="form-control" name="machinesSnNo" ng-model="baseInfo.machinesSnNo" readonly required></textarea>
+                                <div class="req_mesg" ng-show="horizontal.machinesSnNo.$dirty && horizontal.machinesSnNo.$invalid">
+                                    <span ng-show="horizontal.machinesSnNo.$error.required">发货机具Sn号不能为空</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-new btn-mr20" type="button" ng-click="chooseSn()">选择机具</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:30px">
+                    <label class="col-sm-1 control-label"></label>
+                    <div class="col-sm-8">
+                        <button class="btn btn-primary btn-mr20"  style="width: 150px;" ng-click="ship()" ng-disabled="horizontal.$invalid || submitting">确认发货</button>
+                        <input type="button" class="btn btn-primary4 btn-mr20" ui-sref="superBank.mposOrder" value='返回'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="chooseSnModal" class="modal fade form-horizontal" tabindex="3" role="dialog">
+        <div class="modal-dialog" style="height:300px;width: 900px">
+            <div class="modal-content" style="width: 900px">
+                <form class="form-horizontal" name="horizontalAcc">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;</button>
+                        <h3 class="modal-title">选择机具</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">机具SN号：</label>
+                            <div  class="col-sm-7">
+                                <input type="text" class="form-control" ng-model="machines.snStart" style="width: auto;display: inline-block;">
+                                ~
+                                <input type="text" class="form-control" ng-model="machines.snEnd" style="width: auto;display: inline-block;">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">硬件产品种类：</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" ng-model="machines.productType" ng-options="x.id as x.typeName for x in productTypeList">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 30px">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-8">
+                                <button class="btn btn-primary6 btn-mr20"  ng-click="queryMachines()"  ng-disabled="queryMachinesSubmitting">查询</button>
+                                <button class="btn btn-primary3 btn-mr20" type="button" ng-click="resetForm()">清空</button>
+                            </div>
+                        </div>
+
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <div class="col-sm-6 checkbox">订单购买数量为{{baseInfo.buyNum}}台</div>
+                            </div>
+                            <div class="tposition">
+                                <div class="gridStyle" ui-grid="machinesGrid" ui-grid-selection ui-grid-pagination
+                                     ui-grid-resize-columns ui-grid-pinning></div>
+                                <div ng-show="loadImg" class="timg"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group control-label">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6">
+                                <button class="btn btn-primary btn-mr20" type="button" ng-click='chooseSnModalSubmit()'
+                                        ng-disabled="checked || chooseSnStatus"
+                                >确定</button>
+                                <button class="btn btn-primary4" type="button" ng-click='chooseSnModalCancel()'
+                                >返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,155 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a>主页</a></li>
+			<li><a>超级盟主</a></li>
+			<li class="active"><strong>申购售后订单</strong></li>
+		</ol>
+	</div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="afterSaleCtrl">
+	<form class="form-horizontal" id="form1">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel-body ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>订单查询</h5>
+					</div>
+					<div class="ibox-content">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">售后编号：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.orderNo">
+							</div>
+							<label class="col-sm-2 control-label">订单编号：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.payOrder">
+							</div>
+							<label class="col-sm-2 control-label">售后类型：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="baseInfo.saleType" ng-options="x.value as x.text for x in saleTypeList">
+									<option value="" selected>全部</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">售后状态：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="baseInfo.status" ng-options="x.value as x.text for x in statusList">
+									<option value="" selected>全部</option>
+								</select>
+							</div>
+							<label class="col-sm-2 control-label">提交日期：</label>
+							<div class="col-sm-5">
+								<input id="d5221" class="form-control" type="datetime" ng-model="baseInfo.applyTimeBegin" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="var d5222=$dp.$('d5222');WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5222.focus();},maxDate:'#F{$dp.$D(\'d5222\')}'})"/>
+								~
+								<input id="d5222" class="form-control" type="datetime"  ng-model="baseInfo.applyTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5221\')}'})"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">处理日期：</label>
+							<div class="col-sm-5">
+								<input id="d5223" class="form-control" type="datetime" ng-model="baseInfo.dealTimeBegin" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="var d5224=$dp.$('d5224');WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5224.focus();},maxDate:'#F{$dp.$D(\'d5224\')}'})"/>
+								~
+								<input id="d5224" class="form-control" type="datetime"  ng-model="baseInfo.dealTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5223\')}'})"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-8">
+								<button class="btn btn-primary6 btn-mr20"  ng-click="query()">查询</button>
+								<button class="btn btn-primary3 btn-mr20" type="button" ng-click="resetForm()">清空</button>
+								<button class="btn btn-primary7 btn-mr20" type="button" ng-click="exportAfterSale()">导出</button>
+							</div>
+						</div>
+					</div>
+                </div>
+
+				<div class="panel-body ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>查询列表</h5>
+					</div>
+                    <div class="col-sm-8 checkbox" style="float: right;">
+                    	总计：待处理<span style="color: red;" >{{waitHandleTotal}}</span> 单,
+                    		  大于3天小于等于7天未处理<span style="color: red;" >{{waitHandleTotalTreeDays}}</span> 单,
+                    		  大于7天未处理 <span style="color: red;" >{{waitHandleTotalSevenDays}}</span> 单
+                    </div>
+					<div class="ibox-content">
+						<div class="gridStyle" ui-grid="myGrid" ui-grid-selection ui-grid-pagination
+							 ui-grid-resize-columns ui-grid-pinning></div>
+					</div>
+				</div>
+				<div style="height:30px;"></div>
+			</div>
+		</div>
+	</form>
+
+	<div id="showDeliver" class="modal fade" tabindex="3"
+		 role="dialog">
+		<form class="form-horizontal" id="form2">
+			<div class="modal-dialog" style="height: 400px; width: 900px">
+				<div class="modal-content" style="height: 600px; width: 900px">
+					<div class="modal-body">
+						<div class="ibox-content">
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><i class="red_req">*</i> 处理结果: </label>
+								<div class="col-sm-8">
+									<textarea rows="5" cols="20" placeholder="请输入处理结果说明，不超过200字" class="form-control" ng-model="baseInfo.dealDesc"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" style="text-align:left;">图片凭证 ：</label>
+								<div class="z_photo upimg-div clear">	 
+									 <section class="z_file" style="float:left">
+									 	<div style="position:relative;width:150px;">
+											<img src="img/111.png" id="imgmodel" class="add-img" type="file" style="width:150px;">
+											<input type="file" name="file" id="file" style="width:150px; height:150px;opacity: 0;position: absolute;
+												left: 0;top: 0;" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" ngf-multiple="true">
+										</div>
+									 </section>
+									 <style>
+									 	.up-section{width:150px; float:left; position:relative; margin-right:10px; border:2px solid #eee;}
+									 	.up-img{width:150px; display:block; height:150px;}
+									 	.img-name-p{word-break: break-all; display:none}
+									 	.close-upimg{ position:absolute; right:0; top:0; width:30px; height:30px; border-radius:50%; border:1px solid #eee;}
+									 </style>
+								 </div>
+							 </div>
+						</div>
+						<div class="form-group control-label">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-6 control-label">
+								<button class="btn btn-primary " type="button" ng-click='updateNowAfterSale()'>确定</button>
+								<button class="btn btn-primary4" type="button" ng-click="hideDevModel()">返回</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="applyImg1" class="modal fade">
+		<img alt="" style="width:1000px;height:500px;position: absolute;left: 40%; top:40%; display:block;margin: -175px 0 0 -350px;" src="{{applyImg1}}" ng-click='hidePicture1()'>
+	</div>
+	<div id="applyImg2" class="modal fade">
+		<img alt="" style="width:1000px;height:500px;position: absolute;left: 40%; top:40%; display:block;margin: -175px 0 0 -350px;" src="{{applyImg2}}" ng-click='hidePicture2()'>
+	</div>
+	<div id="applyImg3" class="modal fade">
+		<img alt="" style="width:1000px;height:500px;position: absolute;left: 40%; top:40%; display:block;margin: -175px 0 0 -350px;" src="{{applyImg3}}" ng-click='hidePicture3()'>
+	</div>
+	<div id="dealImg1" class="modal fade">
+		<img alt="" style="width:1000px;height:500px;position: absolute;left: 40%; top:40%; display:block;margin: -175px 0 0 -350px;" src="{{dealImg1}}" ng-click='hidePicture11()'>
+	</div>
+	<div id="dealImg2" class="modal fade">
+		<img alt="" style="width:1000px;height:500px;position: absolute;left: 40%; top:40%; display:block;margin: -175px 0 0 -350px;" src="{{dealImg2}}" ng-click='hidePicture22()'>
+	</div>
+	<div id="dealImg3" class="modal fade">
+		<img alt="" style="width:1000px;height:500px;position: absolute;left: 40%; top:40%; display:block;margin: -175px 0 0 -350px;" src="{{dealImg3}}" ng-click='hidePicture33()'>
+	</div>
+</div>

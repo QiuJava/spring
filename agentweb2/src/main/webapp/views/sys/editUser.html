@@ -1,0 +1,69 @@
+<div class="wrapper wrapper-content animated fadeIn" ng-app
+	ng-controller="sysUserModalCtrl" style="min-height: 800px; ">
+	<div><span class="close-modal" ng-click="cancel()"></span></div>
+	<form class="form-horizontal" >
+		<div class="col-sm-12 form-group">
+			<div class="col-sm-7">
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<label class="col-sm-4 control-label">用户姓名：</label>
+						<input class="col-sm-8" ng-model="currUser.userName" />
+						</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<label class="col-sm-4 control-label">手机号：</label>
+						<input ng-if="!currUser.id" class="col-sm-8" ng-model="currUser.mobilephone" />
+						<div class="radio" ng-if="currUser.id" ng-bind="currUser.mobilephone"></div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<label class="col-sm-4 control-label">邮箱：</label>
+						<input ng-if="!currUser.id" class="col-sm-8" ng-model="currUser.email" />
+						<div class="radio" ng-if="currUser.id" ng-bind="currUser.email"></div>
+					</div>
+				</div>
+				<div class="row form-group" ng-show="!currUser.id">
+					<div class="col-sm-12">
+						<label class="col-sm-4 control-label">密码：</label>
+						<input type="password" autocomplete="off"  class="col-sm-8" ng-model="currUser.password" />
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<label class="col-sm-4 control-label">状态：</label>
+						<select class="col-sm-8" ng-model="currUser.status" ng-options="x.value as x.text for x in statusTypes"/>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<label class="col-sm-4 control-label">APP角色：</label>
+						<select class="col-sm-8" ng-model="currUser.userEntityInfos[0].manage" ng-options="x.value as x.text for x in appRoleTypes"/>
+					</div>
+				</div>
+				
+				<div ng-switch on="entityId" ng-if="!isNotSameEntity" >
+					<div ng-switch-when="ALL">
+						<div class="row form-group">
+							<div class="col-sm-12">
+								<label class="col-sm-4 control-label">组织：</label>
+								<select class="col-sm-8" ng-model="currUser.teamId" ng-options="x.value as x.text for x in teamIds"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-5" ng-if="!isNotSameEntity" >
+				<div js-tree="roleTreeConfig" id="roleTreeConfig" ng-model="roles" tree="roleTreeInstance"></div>
+				<br/>
+			</div>
+		</div>
+		<div class="row form-group col-sm-12">
+		<!-- ng-show="hasPermit('sysUser:saveUser')" -->
+			<label class="col-sm-3 control-label"></label>
+			<button  class="btn" ng-show="currUser.id" ng-click="resetPwd()">重置密码</button>
+			<button  class="btn btn-new" ng-click="saveUser()" ng-bind="currUser1.title"></button>
+		</div>
+	</form>
+</div>

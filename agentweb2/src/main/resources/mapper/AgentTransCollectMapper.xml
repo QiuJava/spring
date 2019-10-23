@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.AgentTransCollectDao" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.AgentTransCollect" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="trans_time" property="transTime" jdbcType="DATE" />
+    <result column="agent_no" property="agentNo" jdbcType="VARCHAR" />
+    <result column="agent_node" property="agentNode" jdbcType="VARCHAR" />
+    <result column="bp_id" property="bpId" jdbcType="VARCHAR" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="single_count" property="singleCount" jdbcType="INTEGER" />
+    <result column="calc_time" property="calcTime" jdbcType="TIMESTAMP" />
+    <result column="agent_share_amount" property="agentShareAmount" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, trans_time, agent_no, agent_node, bp_id, service_id, trans_amount, single_count, calc_time,
+    agent_share_amount
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from agent_trans_collect
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from agent_trans_collect
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="cn.eeepay.framework.model.AgentTransCollect" >
+    insert into agent_trans_collect (id, trans_time, agent_no, 
+      agent_node, bp_id, service_id, 
+      trans_amount, single_count, agent_share_amount, calc_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{transTime,jdbcType=DATE}, #{agentNo,jdbcType=VARCHAR}, 
+      #{agentNode,jdbcType=VARCHAR}, #{bpId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, 
+      #{transAmount,jdbcType=DECIMAL}, #{singleCount,jdbcType=INTEGER}, #{agentShareAmount,jdbcType=DECIMAL}, #{calcTime, jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.eeepay.framework.model.AgentTransCollect" >
+    update agent_trans_collect
+    <set >
+      <if test="transTime != null" >
+        trans_time = #{transTime,jdbcType=DATE},
+      </if>
+      <if test="agentNo != null" >
+        agent_no = #{agentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="agentNode != null" >
+        agent_node = #{agentNode,jdbcType=VARCHAR},
+      </if>
+      <if test="bpId != null" >
+        bp_id = #{bpId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="transAmount != null" >
+        trans_amount = #{transAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="singleCount != null" >
+        single_count = #{singleCount,jdbcType=INTEGER},
+      </if>
+      <if test="agentShareAmount != null" >
+        agent_share_amount = #{agentShareAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="calcTime != null" >
+        calc_time = #{calcTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.eeepay.framework.model.AgentTransCollect" >
+    update agent_trans_collect
+    set trans_time = #{transTime,jdbcType=DATE},
+      agent_no = #{agentNo,jdbcType=VARCHAR},
+      agent_node = #{agentNode,jdbcType=VARCHAR},
+      bp_id = #{bpId,jdbcType=VARCHAR},
+      service_id = #{serviceId,jdbcType=VARCHAR},
+      trans_amount = #{transAmount,jdbcType=DECIMAL},
+      single_count = #{singleCount,jdbcType=INTEGER},
+      agent_share_amount = #{agentShareAmount,jdbcType=DECIMAL},
+      calc_time = #{calcTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

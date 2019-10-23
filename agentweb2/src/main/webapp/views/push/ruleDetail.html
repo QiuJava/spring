@@ -1,0 +1,79 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#/service/addService">主页</a></li>
+			<li><a>超级推管理</a></li>
+			<li class="active"><strong>超级推规则详情</strong></li>
+		</ol>
+	</div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="ruleDetailCtrl">
+<form class="form-horizontal">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>超级推规则详情</h5>
+						<!--<div ibox-tools></div>-->
+					</div>
+					<div class="ibox-content">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">业务产品：</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">{{info.bpId}}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">推荐人奖励金额：</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">{{info.recommendedAmount}}</p>
+							</div>
+							<label class="col-sm-2 control-label">奖励有效节点：</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">{{info.rewardValidNode | formatDropping:validNode}}</p>
+							</div>
+							<label class="col-sm-2 control-label">抢单时间：</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">{{info.grabOrderTime}}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" >代理商接单费用：</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">{{info.orderAgentFee}}</p>
+							</div>
+							<label class="col-sm-2 control-label">费用有效节点：</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">{{info.feeValidNode | formatDropping:validNode}}</p>
+							</div>
+							<label class="col-sm-2 control-label">反馈时间：</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">{{info.feedbackTime}}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">有效日期：</label>
+							<div class="col-sm-6">
+								<p class="form-control-static">{{info.efficientDate | date:'yyyy-MM-dd'}} - {{info.disabledDate | date:'yyyy-MM-dd'}}</p>
+							</div>
+							<label class="col-sm-2 control-label">待处理订单阈值：</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">{{info.orderThreshold}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-lg-10">
+				<a class="btn btn-primary4" ui-sref='push.managerRule'>返回</a>
+			</div>
+		</div>
+	</div>
+</form>
+</div>

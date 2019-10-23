@@ -1,0 +1,23 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#/service/addService">主页</a></li>
+            <li>
+                <a>更多</a>
+            </li>
+            <li class="active">
+                <strong>公告详情</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="noticeDetailCtrl">
+<form class="form-horizontal" id="form1">
+	<div class="form-group">
+	<div ui-view="noticeCommon"></div>
+			<a class="btn btn-primary4" ui-sref="more.sentNotices">返回</a>
+</div>
+</form>
+</div>

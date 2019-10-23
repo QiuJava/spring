@@ -1,0 +1,152 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#/service/addService">主页</a></li>
+			<li><a>代理商</a></li>
+			<li class="active"><strong>查询代理商</strong></li>
+		</ol>
+	</div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-app
+	ng-controller="queryAgentCtrl">
+	<form class="form-horizontal" id="form1">
+			<div class="row">
+				<div class="col-lg-12">
+						<div class="panel-body ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>代理商查询</h5>
+							</div>
+							<div class="ibox-content">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">代理商名称：</label>
+									<div class="col-sm-3">
+										<select chosen="{width:'100%'}"  class="chosen-select" tabindex="4" ng-model="baseInfo.agentName" ng-options="x.value as x.text for x in agent"  ng-change="agt_ch()">
+							            	 <option value=""></option>
+							            </select>
+									</div>
+									<!-- tgh406 -->
+									<label class="col-sm-2 control-label">是否包含下级：</label>
+									<div class="col-sm-3">
+										<select class="form-control" ng-model="baseInfo.bool"  ng-options="x.value as x.text for x in bools">
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">代理商编号：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" ng-model="baseInfo.agentNo">
+									</div>
+									<label class="col-sm-2 control-label">手机号：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" ng-model="baseInfo.mobilephone">
+									</div>
+
+								</div>
+								<div class="form-group" ng-show="showAgentWebPromotionSwitch || showAgentWebShareSwitch">
+									<label class="col-sm-2 control-label" ng-show="showAgentWebShareSwitch">分润日结功能：</label>
+									<div class="col-sm-3" ng-show="showAgentWebShareSwitch">
+										<select class="form-control" ng-model="baseInfo.profitSwitch" >
+											<option value="">全部</option>
+											<option value="1">打开</option>
+											<option value="0">关闭</option>
+										</select>
+									</div>
+									<label class="col-sm-2 control-label" ng-show="showAgentWebPromotionSwitch">代理商推广功能：</label>
+									<div class="col-sm-3" ng-show="showAgentWebPromotionSwitch">
+										<select class="form-control" ng-model="baseInfo.promotionSwitch" >
+											<option value="">全部</option>
+											<option value="1">打开</option>
+											<option value="0">关闭</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group" ng-show="showAgentWebCashBackSwitch">
+									<label class="col-sm-2 control-label" ng-show="showAgentWebCashBackSwitch">欢乐返返现功能：</label>
+									<div class="col-sm-3" ng-show="showAgentWebCashBackSwitch">
+										<select class="form-control" ng-model="baseInfo.cashBackSwitch" >
+											<option value="">全部</option>
+											<option value="1">打开</option>
+											<option value="0">关闭</option>
+										</select>
+									</div>
+								</div>
+<!-- 								<div class="form-group"> -->
+<!-- 									<label class="col-sm-2 control-label">直属下级代理商名称：</label> -->
+<!-- 									<div class="col-sm-3"> -->
+<!-- 										<select chosen="{width:'100%'}"  class="chosen-select" tabindex="4" ng-model="baseInfo.belongAgentNo" ng-options="x.value as x.text for x in belongAgent")"> -->
+<!-- 							            	 <option value=""></option> -->
+<!-- 							            </select> -->
+<!-- 									</div> -->
+<!-- 									<label class="col-sm-2 control-label">直属下级代理商编号：</label> -->
+<!-- 									<div class="col-sm-3"> -->
+<!-- 										<select chosen="{width:'100%'}"  class="chosen-select" tabindex="4" ng-model="baseInfo.belongAgentName" ng-options="x.text as x.value for x in belongAgent""> -->
+<!-- 							            	 <option value=""></option> -->
+<!-- 							            </select> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label"></label>
+									<div class="col-sm-8">
+										<button class="btn btn-primary6  btn-mr20"  ng-click="query()">查询</button>
+										<button class="btn btn-primary3 btn-mr20" type="button" ng-click="resetForm()">清空</button>
+										<button class="btn btn-new2 btn-mr20"  type="button" ng-click="batchUpdateProfitSwitch()" ng-show="showAgentWebShareSwitch">修改分润日结功能</button>
+										<button class="btn btn-new2 btn-mr20"  type="button" ng-click="batchUpdatePromotionSwitch()" ng-show="showAgentWebPromotionSwitch">修改代理商推广功能</button>
+										<button class="btn btn-new2 btn-mr20"  type="button" ng-click="batchUpdateCashBackSwitch()" ng-show="showAgentWebCashBackSwitch && types">修改欢乐返返现功能</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="panel-body ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>代理商列表</h5>
+									</div>
+								<div class="ibox-content">
+									<div class="gridStyle" ui-grid="agentGrid" ui-grid-selection ui-grid-pagination ui-grid-resize-columns ui-grid-pinning></div>
+								</div>
+							</div>
+                            <div style="height:30px;"></div>
+				</div>
+			</div>
+	</form>
+	<!-- 修改分润 -->
+	<form class="form-horizontal" name="horizontalCreate" novalidate>
+		<div id="changeShareLevel" class="modal fade" role="dialog">
+			<div class="modal-dialog" style="width: 500px">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							&times;</button>
+						<h3 class="modal-title">修改分润等级</h3>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">分润等级：</label>
+							<div class="col-sm-5">
+								<select class="form-control" ng-model="updateShareLevelData.after_level"
+										ng-options="x.value as x.text disable when x.show for x in shareLevelSelect">
+									<option value="" selected>请选择分润等级</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10">
+								<span style="padding-left: 12px">注：升级后盟主的起始交易分润等级就按设定的等级计算且不可再降级。</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-10">
+								<button class="btn btn-primary" type="button" ng-click='updateShareLevel()'>确定</button>
+								<button class="btn btn-primary8" type="button" ng-click='hideAllModel()'>取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

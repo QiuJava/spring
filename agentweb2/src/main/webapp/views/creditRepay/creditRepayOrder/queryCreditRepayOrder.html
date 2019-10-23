@@ -1,0 +1,158 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>信用卡还款</a></li>
+            <li class="active"><strong>信用卡还款订单</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-app ng-controller="queryCreditRepayOrderCtrl">
+    <form class="form-horizontal" id="form1">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="ibox-title">
+                                <h5>信用卡还款订单查询</h5>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">代理商编号/名称：</label>
+                                <div class="col-sm-2">
+                                    <select chosen="{width:'100%'}"  class="chosen-select" tabindex="4" ng-model="info.agentNo" ng-options="x.value as x.text for x in agentList">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-2 control-label">是否包含下级：</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="info.bool"  ng-options="x.value as x.text for x in bools">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">订单ID:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" ng-model="info.batchNo">
+                                </div>
+                                <label class="col-sm-2 control-label">用户编号:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" ng-model="info.merchantNo">
+                                </div>
+                                <label class="col-sm-2 control-label">手机号:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" ng-model="info.mobileNo">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务金额:</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" ng-model="info.minRepayAmount" style="width:auto;display:inline-block;">
+                                    ~
+                                    <input type="number" class="form-control" ng-model="info.maxRepayAmount" style="width:auto;display:inline-block;">
+                                </div>
+                                <label class="col-sm-2 control-label">订单状态:</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="info.status" ng-options="x.value as x.text for x in statusSelect">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">保证金:</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" ng-model="info.minEnsureAmount" style="width:auto;display:inline-block;">
+                                    ~
+                                    <input type="number" class="form-control" ng-model="info.maxEnsureAmount" style="width:auto;display:inline-block;">
+                                </div>
+                                <label class="col-sm-2 control-label">记账状态:</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="info.billingStatus"  ng-options="x.value as x.text for x in billingStatusSelect">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">服务费:</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" ng-model="info.minRepayFee" style="width:auto;display:inline-block;">
+                                    ~
+                                    <input type="number" class="form-control" ng-model="info.maxRepayFee" style="width:auto;display:inline-block;">
+                                </div>
+                                <label class="col-sm-2 control-label">订单类型:</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="info.repayType"  ng-options="x.value as x.text for x in repayTypeList">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">创建时间：</label>
+                                <div class="col-sm-6">
+                                    <!--<input id="d5223" class="form-control" type="datetime" ng-model="info.createTimeBegin" onchange=""  style="width:auto;display:inline-block;"
+                                           onFocus="var d5224=$dp.$('d5224');WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5224.focus();},maxDate:'#F{$dp.$D(\'d5224\')}'})"/>
+                                    ~
+                                    <input id="d5224" class="form-control" type="datetime"  ng-model="info.createTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+                                           onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5223\')}'})"/>-->
+                                    <input id="d5223" class="form-control" type="datetime" ng-model="info.createTimeBegin" onchange=""  style="width:auto;display:inline-block;"
+                                           onFocus="var d5224=$dp.$('d5224');WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',changed:verifyTimeFun(1,'#d5223','#d5224',31,isVerifyTime,setCreateTimeBegin,setCreateTimeEnd),onpicked:function(){d5224.focus();},maxDate:'#F{$dp.$D(\'d5224\')||\'%y-%M-%d\'}'})"/>
+                                    ~
+                                    <input id="d5224" class="form-control" type="datetime"  ng-model="info.createTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+                                           onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',changed:verifyTimeFun(2,'#d5223','#d5224',31,isVerifyTime,setCreateTimeBegin,setCreateTimeEnd),minDate:'#F{$dp.$D(\'d5223\')}',maxDate:'%y-%M-%d 23:59:59'})"/>
+                                    <br/><span><font color="#999">备注：查询范围不能超过31天</font></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">终态时间:</label>
+                                <div class="col-sm-6">
+                                    <!--<input id="d5225" class="form-control" type="datetime" ng-model="info.completeTimeBegin" onchange=""  style="width:auto;display:inline-block;"
+                                           onFocus="var d5226=$dp.$('d5226');WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5226.focus();},maxDate:'#F{$dp.$D(\'d5226\')}'})"/>
+                                    ~
+                                    <input id="d5226" class="form-control" type="datetime"  ng-model="info.completeTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+                                           onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5225\')}'})"/>-->
+                                    <input id="d5225" class="form-control" type="datetime" ng-model="info.completeTimeBegin" onchange=""  style="width:auto;display:inline-block;"
+                                           onFocus="var d5226=$dp.$('d5226');WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',changed:verifyTimeFun(1,'#d5225','#d5226',31,isVerifyTime,setCompleteTimeBegin,setCompleteTimeEnd),onpicked:function(){d5226.focus();},maxDate:'#F{$dp.$D(\'d5226\')||\'%y-%M-%d\'}'})"/>
+                                    ~
+                                    <input id="d5226" class="form-control" type="datetime"  ng-model="info.completeTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+                                           onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',changed:verifyTimeFun(2,'#d5225','#d5226',31,isVerifyTime,setCompleteTimeBegin,setCompleteTimeEnd),minDate:'#F{$dp.$D(\'d5225\')}',maxDate:'%y-%M-%d 23:59:59'})"/>
+                                    <br/><span><font color="#999">备注：查询范围不能超过31天</font></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <div class="col-sm-1"></div>
+                                    <button class="btn btn-primary6 btn-mr20" type="button"
+                                            id="btnSubmit" ng-click="query()">查询</button>
+                                    <button class="btn btn-primary3 btn-mr20" type="button" ng-click="clear()"
+                                            id="btnSubmit2">清空</button>
+                                    <button class="btn btn-primary7 btn-mr20" type="button"
+                                            ng-click="import()">导出</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <div class="col-sm-2 checkbox">还款总额:<span ng-bind="repayAmountAll | currency:''"></span>元</div>
+                                <div class="col-sm-2 checkbox">保证金:<span ng-bind="ensureAmountAll | currency:''"></span>元</div>
+                                <div class="col-sm-2 checkbox">服务费:<span ng-bind="repayFeeAll | currency:''"></span>元</div>
+                                <div class="col-sm-2 checkbox">冻结金额:<span ng-bind="ensureAmountFreezingAll | currency:''"></span>元</div>
+                            </div>
+                            <div class="form-group">
+                                <div ui-grid="gridOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-pinning class="grid"></div>
+                                <div ng-show="loadImg" class="timg"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

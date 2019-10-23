@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.eeepay.framework.dao.TransDaySummaryDao">
+
+    <delete id="deleteByTransDate">
+        DELETE FROM trans_day_summary WHERE trans_date = #{transDate}
+    </delete>
+
+    <insert id="batchInsert">
+        INSERT INTO trans_day_summary
+        (agent_no,agent_node,parent_id,
+        trans_date,agent_level,self_trans_amount, self_trans_num)VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.agent_no}, #{item.agent_node},#{item.parent_id},
+            #{transDate}, #{agentLevel}, #{item.trans_amount}, #{item.order_num})
+        </foreach>
+    </insert>
+
+    <update id="updateMaxLevelAllTransAmount">
+        UPDATE trans_day_summary
+        SET all_trans_amount = self_trans_amount,
+          all_trans_num = self_trans_num
+        WHERE trans_date = #{transDate}
+        AND agent_level = #{agentLevel}
+    </update>
+
+    <update id="updateOtherLevelAllTransAmount">
+        UPDATE trans_day_summary tds
+        LEFT JOIN (
+            SELECT parent_id, SUM(all_trans_amount) child_trans_amount, SUM(self_trans_num) child_trans_num FROM trans_day_summary
+            WHERE trans_date = #{transDate}
+            AND agent_level = #{agentLevel} + 1
+            GROUP BY parent_id
+        )t ON tds.agent_no = t.parent_id
+        SET tds.all_trans_amount = tds.self_trans_amount + IFNULL(t.child_trans_amount, 0),
+            tds.all_trans_num = tds.self_trans_num  + IFNULL(t.child_trans_num, 0)
+        WHERE tds.trans_date = #{transDate}
+        AND tds.agent_level = #{agentLevel}
+    </update>
+</mapper>

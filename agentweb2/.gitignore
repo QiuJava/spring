@@ -1,0 +1,10 @@
+/.project
+/.idea
+/.externalToolBuiders
+/.setting
+/target
+/agentweb2.iml
+*.classpath
+/Users/
+/.externalToolBuilders/
+/.settings/

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>file:/opt/conf/agentweb_constants.properties</value>
+  				<!--<value>classpath:agentweb_constants.properties</value>-->
+
+			</list>
+		</property>
+	</bean>
+
+	<!-- spring异步线程池 -->
+	<bean id="taskExecutor"  class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 核心线程数 -->
+		<property name="corePoolSize" value="10" />
+		<!-- 最大线程数 -->
+		<property name="maxPoolSize" value="100" />
+		<!-- 队列最大长度 >=mainExecutor.maxSize -->
+		<property name="queueCapacity" value="50" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="300" />
+		<!-- 线程池对拒绝任务(无线程可用)的处理策略 -->
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+
+	<context:component-scan base-package="cn.eeepay.framework">
+		<context:include-filter type="regex" expression="cn.eeepay.framework.service.impl" />
+	</context:component-scan>
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<context:annotation-config/>
+
+
+	<import resource="applicationContext-jdbc-read.xml"/>
+	<import resource="applicationContext-jdbc-write.xml"/>
+	<import resource="applicationContext-jdbc-superbank.xml"/>
+	<import resource="applicationContext-jdbc-creditManager.xml"/>
+	<import resource="applicationContext-jdbc-redem.xml"/>
+	<import resource="applicationContext-jdbc-perAgent.xml"/>
+	<import resource="applicationContext-jdbc-history.xml"/>
+
+	<bean id="springUtil" class="cn.eeepay.framework.util.SpringContextHolder"/>
+	
+	<!---->
+
+	<!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+		<!--<tx:attributes>-->
+			<!--<tx:method name="insert*" propagation="REQUIRED"-->
+				<!--rollback-for="java.lang.Throwable" />-->
+			<!--<tx:method name="update*" propagation="REQUIRED"-->
+				<!--rollback-for="java.lang.Throwable" />-->
+			<!--<tx:method name="delete*" propagation="REQUIRED"-->
+				<!--rollback-for="java.lang.Throwable" />-->
+			<!--<tx:method name="select*" read-only="true" />-->
+			<!--<tx:method name="count*" read-only="true" />-->
+			<!--<tx:method name="*" />-->
+		<!--</tx:attributes>-->
+	<!--</tx:advice>-->
+
+
+	
+	<!-- redis 配置 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.pool.maxTotal}" />
+		<property name="maxIdle" value="${redis.pool.maxIdle}" />
+		<property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}" />
+	</bean>
+
+	<!-- Redis Connection Factory -->
+	<bean id="jedisConnFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${redis.ip}" />
+		<property name="port" value="${redis.port}" />
+		<property name="password" value="${redis.pass}" />
+		<property name="poolConfig" ref="jedisPoolConfig" />
+	</bean>
+
+	<!-- Redis Template -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		  p:connection-factory-ref="jedisConnFactory" >
+	</bean>
+</beans>

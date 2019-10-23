@@ -1,0 +1,104 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#/service/addService">主页</a></li>
+            <li><a>直清商户</a></li>
+            <li class="active"><strong>商户查询</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-app
+     ng-controller="zqQueryMerchantCtrl">
+    <form class="form-horizontal" id="form1">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="">
+                    <div class="panel-body ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>商户信息多条列表查询</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">手机号：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="info.mobilephone" ng-model="info.mobilephone">
+                                </div>
+                                <label class="col-sm-2 control-label">银联报备商户编号：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="info.unionpayMerNo" ng-model="info.unionpayMerNo">
+                                </div>
+                                <label class="col-sm-2 control-label">商户进件编号：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="info.bpId" ng-model="info.bpId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商户编号/名称：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="info.merchantNo" ng-model="info.merchantNo">
+                                </div>
+                                <label class="col-sm-2 control-label">身份证：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="info.idCardNo" ng-model="info.idCardNo">
+                                </div>
+                                <label class="col-sm-2 control-label">持卡人姓名：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="info.idCardName" ng-model="info.idCardName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">终端号：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="info.terminalId" ng-model="info.terminalId">
+                                </div>
+                                <label class="col-sm-2 control-label">同步状态：</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" name="info.syncStatus"  ng-model="info.syncStatus">
+                                        <option selected value="">全部</option>
+                                        <option value="0">初始化</option>
+                                        <option value="1">同步成功</option>
+                                        <option value="2">同步失败</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">创建时间：</label>
+                                <div class="col-sm-5">
+                                    <input type="datetime"
+                                           style="width: auto; display: inline-block;"
+                                           class="form-control" date-time ng-model="info.startCreateTime"
+                                           view="date" format="YYYY-MM-DD HH:mm:ss"> -
+                                    <input type="datetime" style="width: auto; display: inline-block;"
+                                        class="form-control" date-time ng-model="info.endCreateTime"
+                                        view="date" format="YYYY-MM-DD HH:mm:ss">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <button class="btn btn-primary6 btn-mr20" type="button" ng-click="queryZQMerchantInfo()" >查询</button>
+                                    <button class="btn btn-primary3" type="button" ng-click="clear()">清空</button>
+                                    <button class="btn btn-primary7" type="button" id="btnSubmit" ng-click="exportZQMerchantInfo()">导出</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel-body ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>商户信息列表</h5>
+                            <div class="ibox-content">
+                                <div ui-grid="gridOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns class="grid"></div>
+                            </div>
+                        </div>
+                        <div style="height:30px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

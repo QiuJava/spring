@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.SuperPushDao" >
+
+    <select id="listSuperPushMerchant" resultType="cn.eeepay.framework.model.SuperPush">
+        SELECT
+            mi.merchant_no,mi.merchant_name,
+            ui.mobilephone,IFNULL(mbp.status, '999') status,spu.create_time,
+            ai.agent_no,ai.agent_name,ai.one_level_id,
+            spu.one_merchant_no,spu.two_merchant_no,
+            spu.three_merchant_no,spu.user_id
+        FROM super_push_user spu
+        LEFT JOIN user_info ui ON spu.user_id = ui.user_id
+        LEFT JOIN agent_info ai ON ai.agent_node = spu.agent_node
+        LEFT JOIN merchant_business_product mbp ON mbp.merchant_no = spu.merchant_no and mbp.bp_id = #{bpId}
+        LEFT JOIN merchant_info mi ON mi.merchant_no = spu.merchant_no
+        <where>
+            spu.agent_node like CONCAT(#{loginAgentInfo.agentNode}, '%')
+            AND spu.recommended_source = 1
+            <if test="bean.merchantNo != null and bean.merchantNo != ''">
+                and mi.merchant_no = #{bean.merchantNo}
+            </if>
+            <if test="bean.mobilephone != null and bean.mobilephone != ''">
+                and ui.mobilephone = #{bean.mobilephone}
+            </if>
+            <if test="bean.status != null and bean.status != ''">
+                <if test="bean.status == '999'.toString()">
+                    and IFNULL(mbp.status, '') = ''
+                </if>
+                <if test="bean.status != '999'.toString()">
+                    and mbp.status = #{bean.status}
+                </if>
+            </if>
+            <if test="bean.startCreateTime != null and bean.startCreateTime != ''">
+                and spu.create_time >= #{bean.startCreateTime}
+            </if>
+            <if test="bean.endCreateTime != null and bean.endCreateTime != ''">
+                and spu.create_time &lt;= #{bean.endCreateTime}
+            </if>
+            <if test="bean.oneMerchantNo != null and bean.oneMerchantNo != ''">
+                and spu.one_merchant_no = #{bean.oneMerchantNo}
+            </if>
+            <if test="bean.twoMerchantNo != null and bean.twoMerchantNo != ''">
+                and spu.two_merchant_no = #{bean.twoMerchantNo}
+            </if>
+            <if test="bean.threeMerchantNo != null and bean.threeMerchantNo != ''">
+                and spu.three_merchant_no = #{bean.threeMerchantNo}
+            </if>
+            <if test="bean.agentNode != null and bean.agentNode != ''">
+                and spu.agent_node = #{bean.agentNode}
+            </if>
+        </where>
+        order by spu.create_time desc
+    </select>
+
+    <select id="getSuperPushUser" resultType="cn.eeepay.framework.model.SuperPush">
+        SELECT
+            ui.mobilephone,spu.create_time,spu.agent_node,
+            spu.one_merchant_no,(SELECT merchant_name FROM merchant_info WHERE merchant_no = spu.one_merchant_no) one_merchant_name,
+            spu.two_merchant_no,(SELECT merchant_name FROM merchant_info WHERE merchant_no = spu.two_merchant_no) two_merchant_name,
+            spu.three_merchant_no,(SELECT merchant_name FROM merchant_info WHERE merchant_no = spu.three_merchant_no) three_merchant_name,
+            spu.user_id,spu.merchant_no,
+            ai.agent_no,ai.one_level_id,ai.agent_name
+        FROM super_push_user spu
+        LEFT JOIN user_info ui ON spu.user_id = ui.user_id
+        LEFT JOIN agent_info ai ON ai.agent_node = spu.agent_node
+        WHERE spu.user_id = #{userId}
+        LIMIT 1
+    </select>
+    
+    <select id="selectMerchantDetail" resultType="cn.eeepay.framework.model.MerchantInfo">
+        SELECT * FROM merchant_info
+        WHERE merchant_no = #{merchantNo}
+    </select>
+
+    <select id="selectFromTerminalInfo" resultType="map">
+      SELECT ti.SN,bpd.bp_name bpName FROM terminal_info ti
+      LEFT JOIN business_product_define bpd ON ti.bp_id = bpd.bp_id
+      WHERE ti.merchant_no = #{merchantNo}
+    </select>
+
+    <select id="selectMerchantCardInfo" resultType="cn.eeepay.framework.model.MerchantCardInfo">
+        SELECT * FROM merchant_card_info
+        WHERE merchant_no = #{merchantNo}
+        and def_settle_card = '1'
+    </select>
+
+    <select id="listSuperPushShare" resultType="cn.eeepay.framework.model.SuperPushShare">
+        <include refid="subListSuperPushShare"/>
+    </select>
+
+    <select id="exportSuperPushShare" resultType="cn.eeepay.framework.model.SuperPushShare">
+        <include refid="subListSuperPushShare"/>
+    </select>
+
+    <sql id="subListSuperPushShare">
+        SELECT
+            sps.id,
+            sps.order_no,
+            sps.trans_amount,
+            sps.trans_time,
+            sps.merchant_no,
+            sps.mobile,
+            sps.agent_node,
+            sps.share_type,
+            sps.share_no,
+            ai.agent_name share_name,
+            sps.share_amount,
+            sps.share_rate,
+            sps.share_status,
+            sps.share_time,
+            sps.create_time
+        FROM super_push_share sps
+        LEFT JOIN agent_info ai ON sps.share_no = ai.agent_no AND sps.share_type IN (0, 1)
+        <include refid="shareCommonWhere"/>
+        order by sps.create_time desc
+    </sql>
+    <select id="countSuperPushShare" resultType="map">
+        SELECT
+            SUM(share_amount) shareAmount,
+            SUM(IF(share_status=0,share_amount,0)) unrecordedAmount,
+            SUM(IF(share_status=1,share_amount,0)) recordedAmount,
+            COUNT(DISTINCT order_no) orderCount
+        FROM super_push_share sps
+        LEFT JOIN agent_info ai ON sps.share_no = ai.agent_no AND sps.share_type IN (0, 1)
+        <include refid="shareCommonWhere"/>
+    </select>
+
+    <select id="countSuperPushTransAmount" resultType="java.math.BigDecimal">
+        SELECT SUM(s.trans_amount) transAmount FROM (
+            SELECT  AVG(sps.trans_amount) trans_amount FROM super_push_share sps
+            LEFT JOIN agent_info ai ON sps.share_no = ai.agent_no AND sps.share_type IN (0, 1)
+            <include refid="shareCommonWhere"/>
+            GROUP BY order_no
+        )s
+    </select>
+
+    <sql id="shareCommonWhere">
+        <where>
+            sps.share_no = #{loginAgentNo}
+            <if test="bean.orderNo != null and bean.orderNo != ''">
+                AND sps.order_no = #{bean.orderNo }
+            </if>
+            <if test="bean.merchantNo != null and bean.merchantNo != ''">
+                AND sps.merchant_no = #{bean.merchantNo }
+            </if>
+            <if test="bean.shareType != null and bean.shareType != ''">
+                AND sps.share_type = #{bean.shareType }
+            </if>
+            <if test="bean.shareStatus != null and bean.shareStatus != ''">
+                AND sps.share_status = #{bean.shareStatus }
+            </if>
+            <if test="bean.startShareTime != null and bean.startShareTime != ''">
+                AND sps.share_time >= #{bean.startShareTime }
+            </if>
+            <if test="bean.endShareTime != null and bean.endShareTime != ''">
+                AND sps.share_time &lt;= #{bean.endShareTime }
+            </if>
+            <if test="bean.startCreateTime != null and bean.startCreateTime != ''">
+                AND sps.create_time >= #{bean.startCreateTime }
+            </if>
+            <if test="bean.endCreateTime != null and bean.endCreateTime != ''">
+                AND sps.create_time &lt;= #{bean.endCreateTime }
+            </if>
+        </where>
+    </sql>
+
+    <select id="getTodaySuperPushAmount" resultType="string">
+        SELECT SUM(share_amount) FROM super_push_share
+        WHERE share_no = #{loginAgentNo}
+        AND share_type IN (0, 1)
+        AND DATE(create_time) = CURRENT_DATE
+    </select>
+</mapper>

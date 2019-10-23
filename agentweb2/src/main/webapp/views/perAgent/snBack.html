@@ -1,0 +1,178 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a>主页</a></li>
+			<li><a>超级盟主</a></li>
+			<li class="active"><strong>SN号回拨记录</strong></li>
+		</ol>
+	</div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="snBackCtrl">
+	<form class="form-horizontal" id="form1">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel-body ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>订单查询</h5>
+					</div>
+					<div class="ibox-content">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">回拨单号：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.orderNo">
+							</div>
+							<label class="col-sm-2 control-label">回拨盟主编号：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.userCode">
+							</div>
+							<label class="col-sm-2 control-label">接收盟主编号：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.receiveUserCode">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">接收盟主类型：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="baseInfo.receiveUserType" ng-options="x.value as x.text for x in receiveUserTypeList">
+									<option value="" selected>全部</option>
+								</select>
+							</div>
+							<label class="col-sm-2 control-label">回拨状态：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="baseInfo.status" ng-options="x.value as x.text for x in statusList">
+									<option value="" selected>全部</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">回拨日期：</label>
+							<div class="col-sm-5">
+								<input id="d5221" class="form-control" type="datetime" ng-model="baseInfo.createTimeStart" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="var d5222=$dp.$('d5222');WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5222.focus();},maxDate:'#F{$dp.$D(\'d5222\')}'})"/>
+								~
+								<input id="d5222" class="form-control" type="datetime"  ng-model="baseInfo.createTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5221\')}'})"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">处理日期：</label>
+							<div class="col-sm-5">
+								<input id="d5223" class="form-control" type="datetime" ng-model="baseInfo.lastUpdateTimeStart" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="var d5224=$dp.$('d5224');WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5224.focus();},maxDate:'#F{$dp.$D(\'d5224\')}'})"/>
+								~
+								<input id="d5224" class="form-control" type="datetime"  ng-model="baseInfo.lastUpdateTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5223\')}'})"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-8">
+								<button class="btn btn-primary6 btn-mr20"  ng-click="query()">查询</button>
+								<button class="btn btn-primary3 btn-mr20" type="button" ng-click="resetForm()">清空</button>
+								<button class="btn btn-primary7 btn-mr20" type="button" ng-click="exportSnBack()">导出</button>
+							</div>
+						</div>
+					</div>
+                </div>
+
+				<div class="panel-body ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>查询列表</h5>
+					</div>
+					<div class="ibox-content">
+						<div class="gridStyle" ui-grid="myGrid" ui-grid-selection ui-grid-pagination
+							 ui-grid-resize-columns ui-grid-pinning></div>
+					</div>
+				</div>
+				<div style="height:30px;"></div>
+			</div>
+		</div>
+	</form>
+
+	<!-- SN列表 -->
+	<form class="form-horizontal" name="horizontalCreate" novalidate>
+		<div id="expressage" class="modal fade" role="dialog">
+			<div class="modal-dialog" style="width: 700px">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="panel-body ibox float-e-margins">
+							<div class="ibox-content">
+								<div class="form-group">
+									<label class="col-sm-5 control-label">接收数量：</label>
+									<div class="col-sm-2">
+										<p class="form-control-static">{{totalCount}} 台</p>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>SN号:</h5>
+								</div>
+								<div class="ibox-content">
+									<div class="gridStyle" ui-grid="myDevGrid"   ui-grid-resize-columns ui-grid-pinning></div>
+									<div style="height:30px;"></div>
+								</div>
+							</div>
+                            <div class="panel-body ibox float-e-margins">
+								<div class="ibox-title">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label"></label>
+                                        <div class="col-sm-7">
+                                            <button class="btn btn-primary" type="button" ng-click="hideDevModel()">确定</button>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- 接收 -->
+	<form class="form-horizontal" name="horizontalCreate" novalidate>
+		<div id="receiveIdModel" class="modal fade" role="dialog">
+			<div class="modal-dialog" style="width: 700px">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="panel-body ibox float-e-margins">
+							<div class="ibox-content">
+								<div class="form-group">
+									<label class="col-sm-5 control-label">接收数量：</label>
+									<div class="col-sm-2">
+										<p class="form-control-static">{{totalCount}} 台</p>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>SN号:</h5>
+								</div>
+								<div class="ibox-content">
+									<div class="gridStyle" ui-grid="myDevGrid" ui-grid-resize-columns ui-grid-pinning>
+									</div>
+									<div style="height:30px;"></div>
+								</div>
+							</div>
+                            <div class="panel-body ibox float-e-margins">
+								<div class="ibox-title">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-5">
+                                            <button class="btn btn-primary" type="button" ng-click="revecied(orderNo)">确定接收</button>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <button class="btn btn-primary8" type="button" ng-click='hideAllModel()'>取消</button>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

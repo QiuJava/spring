@@ -1,0 +1,88 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="index.html">主页</a></li>
+			<li>业务活动</li>
+			<li class="active"><strong>超级推</strong></li>
+		</ol>
+	</div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn"
+	ng-controller="superPushCtrl">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>商户分润查询</h5>
+				</div>
+				<div class="ibox-content">
+					<form class="form-horizontal" id="form1">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="panel-body ibox float-e-margins">
+									<div class="ibox-content">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">商户编号/名称：</label>
+											<div class="col-sm-2">
+												<input type="text" class="form-control"ng-model='baseInfo.merchantNo'>
+											</div>
+											<label class="col-sm-2 control-label">手机号：</label>
+											<div class="col-sm-2">
+											<input type="text" class="form-control" ng-model='baseInfo.mobilephone'>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">所属代理商编号/名称：</label>
+											<div class="col-sm-2">
+												<input type="text" class="form-control"ng-model='baseInfo.agentNo'>
+											</div>
+											<label class="col-sm-2 control-label">一级代理商编号/名称：</label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control"ng-model='baseInfo.oneLevelId'>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">上一级商户编号/名称：</label>
+											<div class="col-sm-2">
+												<input type="text" class="form-control"ng-model='baseInfo.oneMerchantNo'>
+											</div>
+											<label class="col-sm-2 control-label">上二级商户编号/名称：</label>
+											<div class="col-sm-2">
+												<input type="text" class="form-control"ng-model='baseInfo.twoMerchantNo'>
+											</div>
+											<label class="col-sm-2 control-label">上三级商户编号/名称：</label>
+											<div class="col-sm-2">
+												<input type="text" class="form-control"ng-model='baseInfo.threeMerchantNo'>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2"></label>
+											<div class="col-sm-10">
+												<button class="btn btn-primary6 btn-mr20" type="button" ng-click='query()' id="btnSubmit">查询</button>
+												<button class="btn btn-primary3 btn-mr20" type="button" ng-click="resetForm()">清空</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-body ibox float-e-margins">
+									<div class="ibox-title">
+									</div>
+									<div class="ibox-content">
+										<div class="gridStyle" ui-grid="activityGrid"
+											ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+									</div>
+								</div>
+								<div style="height: 50px"></div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div style="height: 30px;"></div>
+</div>

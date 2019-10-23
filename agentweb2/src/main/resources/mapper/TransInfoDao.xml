@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.TransInfoDao" >
+
+    <select id="queryAllInfoByMerchant" resultType="cn.eeepay.framework.model.CollectiveTransOrder">
+        <include refid="commonQueryAllInfoByMerchant"/>
+        LIMIT #{page.offset}, #{page.pageSize}
+    </select>
+
+    <select id="exportAllInfoByMerchant" resultType="cn.eeepay.framework.model.CollectiveTransOrder">
+        <include refid="commonQueryAllInfoByMerchant"/>
+    </select>
+
+    <select id="countAllInfoByMerchant" resultType="int">
+        select count(1) from (
+        SELECT
+        cto.merchant_no,
+        SUM(cto.trans_amount) transAmount
+        FROM collective_trans_order cto 
+        JOIN merchant_info mi ON mi.merchant_no = cto.merchant_no
+        JOIN agent_info ai ON ai.agent_node = mi.parent_node
+        <include refid="commonWhereByMerchant"/>
+        )t
+    </select>
+
+    <sql id="commonQueryAllInfoByMerchant">
+        SELECT
+            SUM(cto.trans_amount) transAmount,
+            <!-- cto.order_no, -->
+            cto.merchant_no,
+            mi.merchant_name,
+            mi.parent_node,
+            mi.mobilephone,
+            mi.create_time ct,
+            ai.agent_node,
+            ai.agent_no,
+            ai.agent_name,
+            IF(ai.parent_id = 0, '', ai.parent_id) as parentAgentNo
+        FROM collective_trans_order cto 
+        JOIN merchant_info mi ON mi.merchant_no = cto.merchant_no
+        JOIN agent_info ai ON ai.agent_node = mi.parent_node
+        <include refid="commonWhereByMerchant"/>
+    </sql>
+    <sql id="commonWhereByMerchant">
+        <if test="transInfo.activityType != null and transInfo.activityType != ''">
+            JOIN terminal_info ti ON ti.SN = cto.device_sn
+        </if>
+        <where>
+            cto.trans_time BETWEEN #{transInfo.sdate} and #{transInfo.edate}
+            <if test="transInfo.bool == '1'.toString()">
+                AND cto.agent_node LIKE CONCAT(#{searchAgent.agentNode}, '%')
+            </if>
+            <if test="transInfo.bool != '1'.toString()">
+                AND cto.agent_node = #{searchAgent.agentNode}
+            </if>
+            <if test="transInfo.activityType != null and transInfo.activityType != ''">
+                and FIND_IN_SET(#{transInfo.activityType}, ti.activity_type)
+            </if>
+            <if test="transInfo.orderType != null and transInfo.orderType != ''">
+                and cto.order_type = #{transInfo.orderType}
+            </if>
+            <if test="transInfo.settleStatus != null and transInfo.settleStatus != ''">
+                and cto.settle_status = #{transInfo.settleStatus}
+            </if>
+            <if test="transInfo.payMethod != null and transInfo.payMethod != ''">
+                and cto.pay_method=#{transInfo.payMethod}
+            </if>
+            <if test="transInfo.settlementMethod != null and transInfo.settlementMethod != ''">
+                and cto.settlement_method=#{transInfo.settlementMethod}
+            </if>
+            <if test="transInfo.productType != null and transInfo.productType != ''">
+                and cto.business_product_id=#{transInfo.productType}
+            </if>
+            <if test="transInfo.transStatus != null and transInfo.transStatus != ''">
+                and cto.trans_status=#{transInfo.transStatus}
+            </if>
+            <if test="transInfo.mobilephone != null and transInfo.mobilephone != ''">
+                and mi.mobilephone=#{transInfo.mobilephone}
+            </if>
+            <if test="transInfo.merchantNo != null and transInfo.merchantNo != ''">
+                and mi.merchant_no=#{transInfo.merchantNo}
+            </if>
+            <if test="transInfo.startCreateTime != null and transInfo.startCreateTime != ''">
+                and mi.create_time >= #{transInfo.startCreateTime}
+            </if>
+            <if test="transInfo.endCreateTime != null and transInfo.endCreateTime != ''">
+                and mi.create_time &lt;= #{transInfo.endCreateTime}
+            </if>
+        </where>
+        GROUP BY mi.merchant_no
+        <if test="(transInfo.minTransAmount != null and transInfo.minTransAmount != '') or (transInfo.maxTransAmount != null and transInfo.maxTransAmount != '')">
+            having
+            <if test="transInfo.minTransAmount != null and transInfo.minTransAmount != ''">
+                transAmount >=  #{transInfo.minTransAmount}
+            </if>
+            <if test="(transInfo.minTransAmount != null and transInfo.minTransAmount != '') and (transInfo.maxTransAmount != null and transInfo.maxTransAmount != '')">
+                and
+            </if>
+            <if test="transInfo.maxTransAmount != null and transInfo.maxTransAmount != ''">
+                transAmount &lt;=  #{transInfo.maxTransAmount}
+            </if>
+        </if>
+    </sql>
+
+    <select id="queryMaxAgentLevel" resultType="int">
+        SELECT MAX(CAST(agent_level AS UNSIGNED INTEGER)) FROM agent_info
+    </select>
+
+    <select id="summaryTransAmount" resultType="map">
+        SELECT t.agent_no, t.agent_node, t.parent_id, count(cto.order_no) order_num, IFNULL(SUM(cto.trans_amount), 0) trans_amount FROM
+        (
+            SELECT ai.agent_no, ai.agent_node, ai.parent_id FROM agent_info ai
+            WHERE ai.agent_level = #{agentLevel}
+            ORDER BY ai.id ASC
+            LIMIT #{start}, #{offset}
+        )t LEFT JOIN collective_trans_order cto ON cto.agent_node = t.agent_node
+                      AND cto.trans_time between #{startTransTime} AND #{endTransTime}
+                      AND cto.trans_status = 'SUCCESS'
+         GROUP BY t.agent_node
+    </select>
+</mapper>

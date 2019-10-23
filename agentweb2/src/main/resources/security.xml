@@ -1,0 +1,111 @@
+<beans xmlns="http://www.springframework.org/schema/beans"  
+	xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd
+        ">
+ 	<security:http pattern="/skin-config.html*" security="none"/>
+ 	<security:http pattern="/" security="none"/>
+ 	<security:http pattern="/index*" security="none"/>
+ 	<security:http pattern="/oemlogin.do*" security="none" />
+	<security:http pattern="/login.do*" security="none" />
+	<security:http pattern="/findPwd/**" security="none" />
+	<security:http pattern="/static/**" security="none"/>
+	<security:http pattern="/img/**" security="none"/>
+	<security:http pattern="/fonts/**" security="none"/>
+    <security:http pattern="/js/**" security="none"/>
+    <security:http pattern="/css/**" security="none"/>
+    <security:http pattern="/template/**" security="none"/>
+    <security:http pattern="/Angular/**" security="none"/>
+    <security:http pattern="/font-awesome/**" security="none"/>
+    
+ 	<!--定义用户详细信息类，用于获取用户信息-->
+    <bean id="userDetailService" class="cn.eeepay.boss.security.UserDetailsServiceImpl"/>
+
+    <!--资源元数据，获取某个资源（页面）可以被哪些角色访问-->
+    <bean id="securityMetadataSource" class="cn.eeepay.boss.security.SecurityMetadataSource"/>
+
+    <!--访问决策器，判定用户拥有的角色是否可以访问某个资源（页面）-->
+    <bean id="accessDecisionManager" class="cn.eeepay.boss.security.AccessDecisionManagerImpl"/>
+
+    <!-- 认证供应实现 -->
+    <bean id="authenticationProvider" class="cn.eeepay.boss.security.AuthenticationProviderIml"/>
+
+    <!--认证管理器，实现用户认证-->
+    <security:authentication-manager alias="authenticationManager">
+        <!-- <security:authentication-provider user-service-ref='userDetailService'>
+            <security:password-encoder hash="md5">
+               <security:salt-source user-property="username"/>
+           </security:password-encoder>
+       </security:authentication-provider> -->
+        <security:authentication-provider ref="authenticationProvider"></security:authentication-provider>
+    </security:authentication-manager>
+ 
+ 	<!--自定义过滤器-->
+    <bean id="securityFilter" class="cn.eeepay.boss.security.FilterSecurityInterceptor">
+        <property name="securityMetadataSource" ref="securityMetadataSource"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <property name="authenticationManager" ref="authenticationManager"/>
+    </bean>
+    
+    <bean id="ajaxAccessDeniedHandler" class="cn.eeepay.boss.security.AjaxAccessDeniedHandler"/>
+    
+    <bean id="ajaxLogoutSuccessHandler" class="cn.eeepay.boss.security.AjaxLogoutSuccessHandler"/>
+    <bean id="ajaxAuthenticationFailureHandler" class="cn.eeepay.boss.security.AjaxAuthenticationFailureHandler"/>
+    <bean id="ajaxLoginUrlAuthenticationEntryPoint" class="cn.eeepay.boss.security.AjaxLoginUrlAuthenticationEntryPoint">
+    	<constructor-arg><value>/oemlogin.do?logout</value></constructor-arg>
+    </bean>
+
+
+    <security:http use-expressions="true" entry-point-ref="ajaxLoginUrlAuthenticationEntryPoint" >
+    
+    	<security:access-denied-handler ref="ajaxAccessDeniedHandler"/>
+	    <!-- 登录页面不需要控制权限
+	    <security:intercept-url pattern="/login*" access="permitAll"/> -->
+        <!-- 访问所有页面都需要有USER权限 -->
+        <!-- <security:intercept-url pattern="/**" access="ROLE_USER" /> -->
+        <!-- 配置登录页面地址login-page、登录失败后的跳转地址authentication-failure-url -->
+    	<security:form-login authentication-failure-handler-ref="ajaxAuthenticationFailureHandler"
+                             login-processing-url="/perform_login.do" default-target-url="/welcome.do" />
+        <!-- 登出功能 -->
+        <security:logout logout-url="/logout.do" success-handler-ref="ajaxLogoutSuccessHandler"  delete-cookies="JSESSIONID" invalidate-session="false" />
+        <security:session-management>
+        </security:session-management>
+        <!--<security:session-management session-fixation-protection="newSession">-->
+             <!--<security:concurrency-control error-if-maximum-exceeded="false"-->
+                                           <!--expired-url="/logout.do"/>-->
+        <!--</security:session-management>-->
+        <!--添加自定义的过滤器-->
+        <security:custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <security:csrf request-matcher-ref="csrfSecurityRequestMatcher"/>
+        <security:intercept-url pattern="/appApi/getVersion" access="permitAll"/>
+        <security:intercept-url pattern="/agentTask/**" access="permitAll"/>
+        <security:intercept-url pattern="/superBankApi/**" access="permitAll"/>
+        <security:intercept-url pattern="/druid/**" access="permitAll"/>
+
+        <security:custom-filter before="LOGOUT_FILTER" ref="logoutLoggerFilter" />
+    </security:http>
+    <bean id="logoutLoggerFilter" class="cn.eeepay.boss.security.LogoutLoggerFilter">
+        <property name="logoutUrl" value="/logout.do" />
+    </bean>
+
+
+
+
+    <bean id="csrfSecurityRequestMatcher" class="cn.eeepay.boss.security.CsrfSecurityRequestMatcher">
+          <property name="execludeUrls">
+             <list>
+             	<value>/logout.do</value>
+             	<value>/perform_login.do</value>
+				<value>/upload/</value>
+				<value>/admin/</value>
+				<value>/banner/</value>
+				<value>/agentTask/</value>
+				<value>/superBankApi/</value>
+				<value>/druid</value>
+             </list>
+         </property>
+     </bean>
+</beans>

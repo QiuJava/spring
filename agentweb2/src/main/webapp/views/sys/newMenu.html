@@ -1,0 +1,33 @@
+<div class="wrapper wrapper-content animated fadeIn" ng-app
+	ng-controller="sysMenuCtrl">
+	<form class="form-horizontal">
+		<div class="row form-group">
+			<div class="col-sm-12">
+				<label class="col-sm-2 control-label">菜单名称：</label>
+				<input class="col-sm-4" ng-model="newMenu.menuName" />
+				<label class="col-sm-2 control-label">菜单编码：</label>
+				<input class="col-sm-4" ng-model="newMenu.menuCode" />
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-sm-12">
+				<label class="col-sm-2 control-label">父级菜单：</label>
+				<input class="col-sm-4" ng-model="newMenu.parentId" />
+				<label class="col-sm-2 control-label">菜单路径：</label>
+				<input class="col-sm-4" ng-model="newMenu.menuUrl" />
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-sm-12">
+				<label class="col-sm-2 control-label">排序：</label>
+				<input class="col-sm-4" ng-model="newMenu.orderNo" />
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<label class="col-sm-2 control-label"></label>
+				<button class="btn btn-new" ng-click="saveNewMenu()">新增菜单</button>
+			</div>
+		</div>
+	</form>
+</div>

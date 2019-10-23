@@ -1,0 +1,153 @@
+<!-- 银行家开发配置 -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>开始配置</a></li>
+<!--             <li class="active"><strong>开通办理信用卡订单详情</strong></li> -->
+        </ol>
+    </div>
+</div>
+
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="developmentConfigurationCtrl">
+    <form class="form-horizontal" name="horizontal" >
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-body ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="form-group">
+							<div>
+                       			银行家功能首页  银行家功能首页链接地址:
+                       			<a ng-show="!isEnableFirstPage">功能未开通</a>
+								<a href="" id="superBankId" rel="noopener noreferrer" target="_blank" ng-show="isEnableFirstPage">{{firstPage}}</a>
+								<input type="button" ng-click="copyFunction(1)" value="复制链接" ng-show="isEnableFirstPage"/>
+							</div>
+						</div>
+                        <div class="form-group">
+							<div>
+                       			办理信用卡 办信用卡链接地址:
+                       			<a ng-show="!isEnableCreditCard">功能未开通</a>
+								<a href="" id="creditCardId" rel="noopener noreferrer" target="_blank"  ng-show="isEnableCreditCard">{{creditCard}}</a>
+								<input type="button" ng-click="copyFunction(2)" value="复制链接" ng-show="isEnableCreditCard"/>
+							</div>
+                        </div>
+                        <div class="form-group">
+							<div>
+                       			查询办卡进度  查询办卡进度链接地址:
+                       			<a ng-show="!isEnableQueryProgress">功能未开通</a>
+								<a href="" id="queryProgressId" rel="noopener noreferrer" target="_blank" ng-show="isEnableQueryProgress">{{queryProgress}}</a>
+								<input type="button" ng-click="copyFunction(3)" value="复制链接" ng-show="isEnableQueryProgress"/>
+							</div>
+                        </div>
+                        <div class="form-group">
+                   			办理贷款:
+                   			<a ng-show="!isEnable4">功能未开通</a>
+                			<a href="" id="handleLoanId" rel="noopener noreferrer" target="_blank" ng-show="isEnable4">{{handleLoan}}</a>
+							<input type="button" ng-click="copyFunction(4)" value="复制链接" ng-show="isEnable4"/>
+                        </div>
+                        <div class="form-group">
+							<div>
+                       			订单查询(贷款与办卡订单) 订单查询链接地址:
+                       			<a ng-show="!isEnableQueryOrder">功能未开通</a>
+								<a href="" id="queryOrderId" rel="noopener noreferrer" target="_blank"  ng-show="isEnableQueryOrder">{{queryOrder}}</a>
+								<input type="button" ng-click="copyFunction(5)" value="复制链接"  ng-show="isEnableQueryOrder"/>
+							</div>
+                        </div>
+                        <div class="form-group">
+                   			违章代缴:
+                   			<a ng-show="!isEnable6">功能未开通</a>
+                			<a href="" id="peccancyId" rel="noopener noreferrer" target="_blank" ng-show="isEnable6">{{peccancy}}</a>
+							<input type="button" ng-click="copyFunction(6)" value="复制链接" ng-show="isEnable6"/>
+                        </div>
+                        <div class="form-group">
+                   			信用卡还款:
+                   			<a ng-show="!isEnable7">功能未开通</a>
+                			<a href="" id="repayCardId" rel="noopener noreferrer" target="_blank" ng-show="isEnable7">{{repayCard}}</a>
+							<input type="button" ng-click="copyFunction(7)" value="复制链接" ng-show="isEnable7"/>
+                        </div>
+                        <div class="form-group">
+                   			商户收款:
+                   			<a ng-show="!isEnable8">功能未开通</a>
+                			<a href="" id="merchantReceivablesId" rel="noopener noreferrer" target="_blank" ng-show="isEnable8">{{merchantReceivables}}</a>
+							<input type="button" ng-click="copyFunction(8)" value="复制链接" ng-show="isEnable8"/>
+                        </div>
+<!--                         <div class="form-group"> -->
+<!-- 							<div> -->
+<!--                        			授权回调地址: -->
+<!-- 								<input type="text"  id="callBackId" readonly="readonly" value="{{notifyUrl}}" style="width:500px"/> -->
+<!-- 								<input type="button" ng-click="copyFunction(9)" value="复制链接" /> -->
+<!-- 							</div> -->
+<!--                         </div> -->
+                        <div class="form-group">
+							<div>
+                       			订单结果通知地址:
+								<input type="text"  id="orderResultId" readonly="readonly" value="{{batchOrderNotifyUrl}}" style="width:500px"/>
+								<input type="button" ng-click="copyFunction(10)" value="复制链接" />
+							</div>
+                        </div>
+                        <div class="form-group">
+							<div>
+                       			用户信息查询地址:
+								<input type="text"  id="userInfoId" readonly="readonly" value="{{getUserInfoUrl}}" style="width:500px"/>
+								<input type="button" ng-click="copyFunction(13)" value="复制链接" />
+							</div>
+                        </div>
+                        <div class="form-group">
+							<div>
+                       			APP首页地址（公众号无需填写）:
+								<input type="text"  id="appId" readonly="readonly" value="{{openAppUrl}}" style="width:500px"/>
+								<input type="button" ng-click="copyFunction(11)" value="复制链接" />
+							</div>
+                        </div>
+                        <div class="form-group">
+                        	<div>
+	                        	应用名称:
+	                            <span ng-bind="baseInfo.openAppName"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+							<div>
+                       			应用简介:
+								<span ng-bind="baseInfo.openAppIntro"/>
+							</div>
+                        </div>
+                        <div class="form-group">
+							<div>
+                       			商户应用密钥:
+								<input type="text"  id="merchantKeyId" readonly="readonly" value="{{openMerchantKey}}" style="width:500px"/>
+								<input type="button" ng-click="copyFunction(12)" value="复制密钥" />
+							</div>
+                        </div>
+						<div class="form-group">
+							<div>
+								测试环境地址：
+								<a href="" id="testEnvId" rel="noopener noreferrer" target="_blank" >{{testMobilePage}}</a>
+								<input type="button" ng-click="copyFunction(14)" value="复制链接" />
+
+								<a href="" id="testEnvId2" rel="noopener noreferrer" target="_blank" >{{testOpenPage}}</a>
+								<input type="button" ng-click="copyFunction(15)" value="复制链接" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div>
+								生产环境地址：
+								<a href="" id="productionEnvId" rel="noopener noreferrer" target="_blank" >{{productionMobilePage}}</a>
+								<input type="button" ng-click="copyFunction(16)" value="复制链接" />
+
+								<a href="" id="productionEnvId2" rel="noopener noreferrer" target="_blank" >{{productionOpenPage}}</a>
+								<input type="button" ng-click="copyFunction(17)" value="复制链接" />
+							</div>
+						</div>
+<!--                         <div class="form-group"> -->
+<!-- 							<div> -->
+<!--                        			密钥版本号: -->
+<!-- 								<span ng-bind="baseInfo.keyVersion"/> -->
+<!-- 							</div> -->
+<!--                         </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,560 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>聚合平台组织管理 </a></li>
+            <li class="active"><strong>聚合平台组织修改</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn"
+     ng-controller="OEMQueryCtrl">
+    <form class="form-horizontal" name="horizontal" >
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox-content">
+                    <div class="ibox-title">
+                        <h5>基本信息</h5>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">组织ID：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.orgId">
+                        </div>
+                        <label class="col-sm-2 control-label">组织名称：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.orgName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">对应V2代理商编号：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.v2AgentNumber">
+                        </div>
+                        <label class="col-sm-2 control-label">对应超级还组织编号：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.superOrgcode">
+                        </div>
+                        <label class="col-sm-2 control-label">对应V2收款组织编号：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.v2Orgcode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">微信公众号：</label>
+                       	<div class="col-sm-2 checkbox" ng-bind="baseInfo.publicAccount"/>
+                        <label class="col-sm-2 control-label">客服电话：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.servicePhone"/>
+                        <label class="col-sm-2 control-label">授权单位：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.authorizedUnit"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">公司编号：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.companyNo"/>
+                        <label class="col-sm-2 control-label">公司名称：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.companyName">
+                        </div>
+                        <label class="col-sm-2 control-label">公众号名称：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.publicAccountName"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">公众号appid：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.appid"/>
+                        <label class="col-sm-2 control-label">公众号secret：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.secret"/>
+                        <label class="col-sm-2 control-label">公众号密文：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.encodingAesKey"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">商务邮箱：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.businessEmail"/>
+                        <label class="col-sm-2 control-label">平台UI风格：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.uiStatus"/>
+                        <label class="col-sm-2 control-label"><input type="checkbox" ng-model='baseInfo.isSupportPay'  ng-true-value="'1'" ng-false-value="'0'" disabled="disabled"/>
+                            <span class="">是否支持支付</span></lable>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">备注：</label>
+                        <div class="col-sm-6">
+                            <textarea rows="6" class="form-control" ng-model="baseInfo.remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">首页LOGO：</label>
+                        <div class="col-sm-4">
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderImg.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderImg.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderImg.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderImg.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderImg.queue.length>0">
+                                <a ng-show="baseInfo.orgLogoUrl" href="{{baseInfo.orgLogoUrl}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.orgLogoUrl}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议首页LOGO尺寸为 314*80</div>-->
+                        </div>
+                        <label class="col-sm-2 control-label">授权单位印章：</label>
+                        <div class="col-sm-4">
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderSeal.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderSeal.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderSeal.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderSeal.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderSeal.queue.length>0">
+                                <a ng-show="baseInfo.authorizedUnitSealUrl" href="{{baseInfo.authorizedUnitSealUrl}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.authorizedUnitSealUrl}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议印章尺寸为 140*140</div>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">会员中心LOGO：</label>
+                        <div class="col-sm-4">
+<!--                             <input type="file" nv-file-select="" uploader="uploaderMemeberLogo"   multiple  /> -->
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderMemeberLogo.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderMemeberLogo.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderMemeberLogo.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderMemeberLogo.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderMemeberLogo.queue.length>0">
+                                <a ng-show="baseInfo.memberCenterLogoUrl" href="{{baseInfo.memberCenterLogoUrl}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.memberCenterLogoUrl}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议会员中心LOGO尺寸为 158*42</div>-->
+                        </div>
+                        <label class="col-sm-2 control-label">启动页：</label>
+                        <div class="col-sm-4">
+<!--                             <input type="file" nv-file-select="" uploader="uploaderStartPage"   multiple  /> -->
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderStartPage.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderStartPage.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderStartPage.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderStartPage.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderStartPage.queue.length>0">
+                                <a ng-show="baseInfo.startPageUrl" href="{{baseInfo.startPageUrl}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.startPageUrl}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议启动页尺寸为 750*1334</div>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">APP LOGO：</label>
+                        <div class="col-sm-4">
+<!--                             <input type="file" nv-file-select="" uploader="uploaderAppLogo"   multiple  /> -->
+                            <table class="table" class="col-sm-3">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderAppLogo.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderAppLogo.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderAppLogo.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderAppLogo.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderAppLogo.queue.length>0">
+                                <a ng-show="baseInfo.appLogoUrl" href="{{baseInfo.appLogoUrl}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.appLogoUrl}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议APP LOGO尺寸为 424*110</div>-->
+                        </div>
+                        <label class="col-sm-2 control-label">公众号二维码：</label>
+                        <div class="col-sm-4">
+<!--                             <input type="file" nv-file-select="" uploader="uploaderQr"   multiple  /> -->
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderQr.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderQr.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderQr.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderQr.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderQr.queue.length>0">
+                                <a ng-show="baseInfo.publicQrCodeUrl" href="{{baseInfo.publicQrCodeUrl}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.publicQrCodeUrl}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议公众号二维码图片尺寸为 400*400</div>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">分享消息LOGO：</label>
+                        <div class="col-sm-4">
+<!--                             <input type="file" nv-file-select="" uploader="uploaderShareMessage"   multiple  /> -->
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderShareMessage.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderShareMessage.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderShareMessage.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderShareMessage.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderShareMessage.queue.length>0">
+                                <a ng-show="baseInfo.shareMessageLogoUrl" href="{{baseInfo.shareMessageLogoUrl}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.shareMessageLogoUrl}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议分享消息LOGO尺寸为 300*300</div>-->
+                        </div>
+                        <label class="col-sm-2 control-label">分享模板图片1：</label>
+                        <div class="col-sm-4">
+<!--                             <input type="file" nv-file-select="" uploader="uploaderShare1"   multiple  /> -->
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderShare1.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderShare1.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderShare1.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderShare1.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderShare1.queue.length>0">
+                                <a ng-show="baseInfo.shareTemplateImage1Url" href="{{baseInfo.shareTemplateImage1Url}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.shareTemplateImage1Url}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议分享模板尺寸为 750*1334</div>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">分享模板图片2：</label>
+                        <div class="col-sm-4">
+<!--                             <input type="file" nv-file-select="" uploader="uploaderShare2"   multiple  /> -->
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderShare2.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderShare2.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderShare2.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderShare2.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderShare2.queue.length>0">
+                                <a ng-show="baseInfo.shareTemplateImage2Url" href="{{baseInfo.shareTemplateImage2Url}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.shareTemplateImage2Url}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议分享模板尺寸为 750*1334</div>-->
+                        </div>
+                        <label class="col-sm-2 control-label">分享模板图片3：</label>
+                        <div class="col-sm-4">
+<!--                             <input type="file" nv-file-select="" uploader="uploaderShare3"   multiple  /> -->
+                            <table class="table" class="col-sm-4">
+                                <tbody>
+                                <tr ng-repeat="item in uploaderShare3.queue">
+                                    <td>
+                                        <strong style="word-break: break-all;">{{ item.file.name }}</strong>
+                                        <div ng-show="uploaderShare3.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    </td>
+                                    <td ng-show="uploaderShare3.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderShare3.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4" style="padding: 0" ng-hide="uploaderShare3.queue.length>0">
+                                <a ng-show="baseInfo.shareTemplateImage3Url" href="{{baseInfo.shareTemplateImage3Url}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.shareTemplateImage3Url}}"/>
+                                </a>
+                            </div>
+                            <!--<div>注：建议分享模板尺寸为 750*1334</div>-->
+                        </div>
+                    </div>
+                    <div class="ibox-title">
+                        <h5>费率信息</h5>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">代理售价：</label>
+                        <div class="col-sm-2 checkbox" ><span ng-bind="baseInfo.agentPrice"></span>元</div>
+                        <label class="col-sm-2 control-label">品牌代理成本（公司收入）：</label>
+                        <div class="col-sm-2 checkbox" ><span ng-bind="baseInfo.agentCost"></span>元</div>
+                        <label class="col-sm-2 control-label">品牌代理发放总奖金：</label>
+                        <div class="col-sm-2 checkbox" ><span ng-bind="baseInfo.agentPushCost"></span>元</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">超级还激活售价：</label>
+                        <div class="col-sm-2 checkbox" ><span ng-bind="baseInfo.openRepayPrice"></span>元</div>
+                        <label class="col-sm-2 control-label">品牌超级还激活成本（公司收入）：</label>
+                        <div class="col-sm-2 checkbox" ><span ng-bind="baseInfo.openRepayCost"></span>元</div>
+                        <label class="col-sm-2 control-label">品牌超级还激活发放总奖金：</label>
+                        <div class="col-sm-2 checkbox" ><span ng-bind="baseInfo.openRepayPushCost"></span>元</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">品牌快捷收款成本扣率：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.receiveKjCost"/>
+                        <label class="col-sm-2 control-label">品牌快捷收款发放奖金扣率：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.receivePushCost"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">品牌超级还成本扣率：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.repaymentCost"/>
+                        <label class="col-sm-2 control-label">品牌超级还发放奖金扣率：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.repaymentPushCost"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">超级还商户交易费率：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.tradeFeeRateStr">
+                        </div>
+                        <label class="col-sm-2 control-label">超级还商户交易单笔手续费：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.tradeSingleFeeStr">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">超级还商户提现手续费：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.withdrawFeeRateStr">
+                        </div>
+                        <label class="col-sm-2 control-label">超级还商户提现单笔手续费：</label>
+                        <div class="col-sm-2 checkbox" ng-bind="baseInfo.withdrawSingleFeeStr">
+                        </div>
+                    </div>
+
+                    <div class="ibox-title">
+                        <h5>代理升级方案</h5>
+                    </div>
+                    <div class="form-group">
+                    	<div class="col-sm-3 checkbox">升级经理需要发展代理数: <span ng-bind="baseInfo.upManagerNum"></span>个</div>
+                        <div class="col-sm-3 checkbox">或</div>
+                    	<div class="col-sm-3 checkbox">升级经理需要办卡数: <span ng-bind="baseInfo.upManagerCardnum"></span>个</div>
+                    </div>
+                    <div class="form-group">
+                    	<div class="col-sm-3 checkbox">升级银行家需要发展代理数：<span ng-bind="baseInfo.upBankerNum"></span>个</div>
+                    	<div class="col-sm-3 checkbox">或</div>
+                    	<div class="col-sm-3 checkbox">升级银行家需要办卡数：<span ng-bind="baseInfo.upBankerCardnum"></span>个</div>
+                    </div>
+                    <div class="ibox-title">
+                        <h5>代理退费方案</h5>
+                    </div>
+                    <div class="form-group">
+                        <div  class="col-sm-12" style="padding:20px 0 0px 50px;">
+                            1.当月 <input type="text" style="width: 50px;" name="dayStart"  ng-model="baseInfo.dayStart" disabled>
+                            一 <input type="text" style="width: 50px;"  name="dayEnd" ng-model="baseInfo.dayEnd" disabled> 号
+                            直推办理 <input type="text" style="width: 50px;"  name="monthCardNum" ng-model="baseInfo.monthCardNum" disabled/> 张信用卡。
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12" style="padding:20px 0 20px 50px;">
+                            2.当年累计直推办理 <input type="text" style="width: 50px;" name="yearCardNum" ng-model="baseInfo.yearCardNum" disabled>
+                            张信用卡。
+                        </div>
+                        <div class="req_mesg" ng-show="horizontal.yearCardNum.$dirty && horizontal.yearCardNum.$invalid">
+                            <span ng-show="horizontal.yearCardNum.$error.required">信用卡张数不能为空</span>
+                        </div>
+                    </div>
+<!--                     <div class="ibox-title"> -->
+<!--                         <h5>全民拆红包方案</h5> -->
+<!--                     </div> -->
+<!--                     <div class="form-group"> -->
+<!--                         <div class="col-sm-12" style="padding:20px 0 0px 50px;"> -->
+<!-- 				                            用户成功办理信用卡、贷款等业务，红包随机金额： -->
+<!-- 				                <input type="text" style="width: 50px;" name="redMoneyMin" ng-model="baseInfo.redMoneyMin" disabled> 元 -->
+<!-- 				                            一 <input type="text" style="width: 50px;" name="redMoneyMax" ng-model="baseInfo.redMoneyMax" disabled> 元。 -->
+<!--                         </div> -->
+<!--                     </div> -->
+                    <div class="ibox-title">
+                        <h5>分润账户留存金额</h5>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12" style="padding:20px 0 20px 50px;">
+                         		   由于用户红包奖励，给达标的代理退费，都要扣除OEM相应的分润账户，因此要求分润账户超过
+                            <input type="text" style="width: 50px;" name="withdrawMoneyMin" ng-model="baseInfo.withdrawMoneyMin" disabled>
+                          		  元的部分才能提现。
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="padding-bottom: 50px;">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-8">
+                            <input type="button" class="btn btn-primary4 btn-mr20" ui-sref="superBank.orgInfoManager" value='返回'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

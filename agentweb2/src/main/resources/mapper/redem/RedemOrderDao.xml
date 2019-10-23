@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.daoRedem.RedemOrderDao" >
+
+    <select id="listActivityOrder" resultType="cn.eeepay.framework.model.RedemOrderBean">
+        SELECT
+            ro.order_no,
+            ro.order_status,
+            rmi.agent_no,
+            rmi.merchant_no,
+            rmi.user_name,
+            rmi.mobile_username mobile,
+            rac.amount,
+            DATE_FORMAT(rac.create_time,'%Y-%m-%d %H:%i:%s') create_time,
+            DATE_FORMAT(rac.pay_time,'%Y-%m-%d %H:%i:%s') pay_time,
+            rac.pay_order_no,
+            ro.acc_status,
+            ro.provide_amout,
+            ro.acc_status,
+            ro.oem_share
+        FROM rdmp_order ro
+            JOIN rdmp_activity_order rac ON rac.order_no = ro.order_no AND ro.order_type = 'A'
+            JOIN rdmp_merchant_info rmi ON rmi.merchant_no = rac.mer_no
+        <include refid="activityOrderCommonWhere"/>
+        ORDER BY rac.create_time desc
+    </select>
+
+    <select id="summaryActivityOrder" resultType="map">
+        SELECT
+          sum(ro.oem_share) oemShare
+        FROM rdmp_order ro
+        JOIN rdmp_activity_order rac ON rac.order_no = ro.order_no AND ro.order_type = 'A'
+        JOIN rdmp_merchant_info rmi ON rmi.merchant_no = rac.mer_no
+        <include refid="activityOrderCommonWhere"/>
+    </select>
+
+    <sql id="activityOrderCommonWhere">
+        WHERE rmi.agent_node LIKE CONCAT (#{loginAgent.agentNode}, '%')
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.orderNo)">
+            AND ro.order_no = #{bean.orderNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.merchantNo)">
+            AND rmi.merchant_no = #{bean.merchantNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.createTimeStart)">
+            AND rac.create_time >= #{bean.createTimeStart}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.createTimeEnd)">
+            AND rac.create_time &lt;= #{bean.createTimeEnd}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.payTimeStart)">
+            AND rac.pay_time >= #{bean.payTimeStart}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.payTimeEnd)">
+            AND rac.pay_time &lt;= #{bean.payTimeEnd}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.orderStatus)">
+            AND ro.order_status = #{bean.orderStatus}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.payOrderNo)">
+            AND rac.pay_order_no = #{bean.payOrderNo}
+        </if>
+    </sql>
+
+    <select id="listDeclareOrder" resultType="cn.eeepay.framework.model.RedemOrderBean">
+        SELECT
+            ro.order_no,
+            ro.order_status,
+            rdo.org_code,
+            roi.org_name,
+            rmi.merchant_no,
+            rmi.user_name,
+            rmi.mobile_username mobile,
+            rdo.price amount,
+            DATE_FORMAT(rdo.create_time,'%Y-%m-%d %H:%i:%s') create_time,
+            ro.oem_share,
+            ro.acc_status,
+            rdo.receive_status,
+            rdo.check_status
+        FROM rdmp_order ro
+            JOIN rdmp_declare_order rdo ON rdo.order_no = ro.order_no AND ro.order_type = 'D'
+            JOIN rdmp_merchant_info rmi ON rmi.merchant_no = rdo.mer_no
+            JOIN rdmp_org_info roi ON roi.org_code = rdo.org_code
+        <include refid="declareOrderCommonWhere"/>
+        ORDER BY rdo.create_time desc
+    </select>
+
+    <select id="summaryDeclareOrder" resultType="map">
+        SELECT
+          sum(ro.oem_share) oemShare
+        FROM rdmp_order ro
+        JOIN rdmp_declare_order rdo ON rdo.order_no = ro.order_no AND ro.order_type = 'D'
+        JOIN rdmp_merchant_info rmi ON rmi.merchant_no = rdo.mer_no
+        JOIN rdmp_org_info roi ON roi.org_code = rdo.org_code
+        <include refid="declareOrderCommonWhere"/>
+    </select>
+
+    <sql id="declareOrderCommonWhere">
+        WHERE rmi.agent_node LIKE CONCAT (#{loginAgent.agentNode}, '%')
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.orderNo)">
+            AND ro.order_no = #{bean.orderNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.checkStatus)">
+            AND rdo.check_status = #{bean.checkStatus}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.orgCode)">
+            AND rdo.org_code = #{bean.orgCode}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.merchantNo)">
+            AND rmi.merchant_no = #{bean.merchantNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.mobile)">
+            AND rmi.mobile_username = #{bean.mobile}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.userName)">
+            AND rmi.user_name like concat('%', #{bean.userName} ,'%')
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.createTimeStart)">
+            AND rdo.create_time >= #{bean.createTimeStart}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.createTimeEnd)">
+            AND rdo.create_time &lt;= #{bean.createTimeEnd}
+        </if>
+    </sql>
+
+    <select id="listShareOrder" resultType="cn.eeepay.framework.model.RedemOrderBean">
+        SELECT
+            rsd.id,
+            rsd.order_no,
+            rsd.share_type orderType,
+            rsd.check_status,
+            rmi_s.merchant_no,
+            rmi_s.user_name,
+            rsd.amount,
+            rmi_s.mobile_username mobile,
+            rmi_p.merchant_no profitMerchantNo,
+            rmi_p.user_name profitUserName,
+            rmi_p.mobile_username profitMobile,
+            rmi_p.mer_capa profitMerCapa,
+            rsd.share_amount,
+            rsd.share_grade,
+            DATE_FORMAT(rsd.create_time,'%Y-%m-%d %H:%i:%s') create_time,
+            rsd.acc_status
+        FROM rdmp_share_detail rsd
+            JOIN rdmp_order ro ON ro.order_no = rsd.order_no
+            JOIN rdmp_merchant_info rmi_s ON rmi_s.merchant_no = rsd.mer_no
+            JOIN rdmp_merchant_info rmi_p ON rmi_p.merchant_no = rsd.share_mer_no
+        <include refid="listShareOrderWhere"/>
+        order by rsd.create_time desc
+    </select>
+
+    <select id="listShareOrderSum" resultType="map">
+        SELECT
+           sum(rsd.share_amount) shareAmountTotal
+        FROM rdmp_share_detail rsd
+        JOIN rdmp_order ro ON ro.order_no = rsd.order_no
+        JOIN rdmp_merchant_info rmi_s ON rmi_s.merchant_no = rsd.mer_no
+        JOIN rdmp_merchant_info rmi_p ON rmi_p.merchant_no = rsd.share_mer_no
+        <include refid="listShareOrderWhere"/>
+    </select>
+
+    <sql id="listShareOrderWhere">
+        WHERE rmi_p.agent_node LIKE CONCAT (#{loginAgent.agentNode}, '%')
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.orderNo)">
+            AND rsd.order_no = #{bean.orderNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.checkStatus)">
+            AND ro.check_status = #{bean.checkStatus}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.orderType)">
+            AND rsd.share_type = #{bean.orderType}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.createTimeStart)">
+            AND rsd.create_time >= #{bean.createTimeStart}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.createTimeEnd)">
+            AND rsd.create_time &lt;= #{bean.createTimeEnd}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.accStatus)">
+            AND rsd.acc_status = #{bean.accStatus}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.merchantNo)">
+            AND rmi_s.merchant_no = #{bean.merchantNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.mobile)">
+            AND rmi_s.mobile_username = #{bean.mobile}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.profitMerchantNo)">
+            AND rmi_p.merchant_no = #{bean.profitMerchantNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.profitMobile)">
+            AND rmi_p.mobile_username  = #{bean.profitMobile}
+        </if>
+    </sql>
+    <select id="listOrgCode" resultType="map">
+        SELECT * FROM rdmp_org_info
+    </select>
+</mapper>

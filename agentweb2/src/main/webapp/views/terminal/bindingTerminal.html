@@ -1,0 +1,36 @@
+	<div class="modal-body" style="height: 200px;">
+		<form class="form-horizontal">
+		<div class="ibox-content">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">商户编号：</label>
+				<!--<div class="col-sm-6">
+					<select chosen="{width:'100%'}" class="chosen-select" data-placeholder="请选择需要选择的商户" ng-model="info.merchant_no" 
+							ng-options="x.merchant_no for x in merchantInfos" ng-change="onChange(info.merchant_no)">
+						<option value=""></option>
+					</select>
+				</div>-->
+				<div class="col-sm-6">
+					<input type="text" class="form-control" ng-model="info.merchant_no" ng-blur="matchName(info.merchant_no)">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">商户名称：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" ng-model="info.merchant_name" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">业务产品：</label>
+				<div class="col-sm-6">
+					<select chosen="{width:'100%'}" class="chosen-select" data-placeholder="请选择业务产品" tabindex="3" ng-model="info.merBpId" ng-options="x.value as x.text for x in merBPLists">
+						<option value=""></option>
+					</select>
+				</div>
+			</div>
+		</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="solutionModalClose()">关闭</button>
+		<button type="button" class="btn btn-primary" ng-disabled="submitting" ng-click="solutionModalOk()">确定</button>
+	</div>

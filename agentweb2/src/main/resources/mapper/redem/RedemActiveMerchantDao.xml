@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.daoRedem.redemActive.RedemActiveMerchantDao" >
+
+    <select id="listMerchant" resultType="cn.eeepay.framework.model.redemActive.RedemActiveMerchantBean">
+        SELECT
+            ymi.one_agent_no,
+            ymi.merchant_no,
+            ymi.agent_no,
+            ymi.user_name,
+            ymi.mobile_username,
+            ymi.real_name,
+            armi.receive_merchant_no,
+            armi.merchant_status,
+            ymi.repay_merchant_no,
+            DATE_FORMAT( armi.success_time,'%Y-%m-%d %H:%i:%s') receiveCreateTime,
+            DATE_FORMAT( ymi.create_time,'%Y-%m-%d %H:%i:%s') create_time
+        FROM yfb_merchant_info ymi
+        LEFT JOIN act_receive_merchant_info armi ON armi.source_merchant_no = ymi.merchant_no
+        WHERE ymi.agent_node like concat(#{loginAgent.agentNode}, '%')
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.agentNo)">
+            and ymi.agent_no = #{bean.agentNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.merchantNo)">
+            and ymi.merchant_no = #{bean.merchantNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.mobileUsername)">
+            and ymi.mobile_username = #{bean.mobileUsername}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.startCreateTime)">
+            and ymi.create_time >= #{bean.startCreateTime}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.endCreateTime)">
+            and ymi.create_time &lt;= #{bean.endCreateTime}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.receiveMerchantNo)">
+            and armi.receive_merchant_no = #{bean.receiveMerchantNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.repayMerchantNo)">
+            and ymi.repay_merchant_no = #{bean.repayMerchantNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.merchantStatus)">
+            and armi.merchant_status = #{bean.merchantStatus}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.startReceiveCreateTime)">
+            and armi.success_time >= #{bean.startReceiveCreateTime}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.endReceiveCreateTime)">
+            and armi.success_time &lt;= #{bean.endReceiveCreateTime}
+        </if>
+        order by  ymi.create_time desc
+    </select>
+
+    <select id="queryMerchantInfo" resultType="map">
+        SELECT
+            ymi.merchant_no,
+            ymi.one_agent_no,
+            ymi.user_name,
+            ymi.mobile_username,
+            ymi.agent_no,
+            ymi.agent_node,
+            DATE_FORMAT( ymi.create_time,'%Y-%m-%d %H:%i:%s') create_time,
+            ycm.account_name,
+            ycm.account_no,
+            ycm.bank_name,
+            ycm.business_code,
+            ycm.mobile_no,
+            yb.balance_no,
+            yb.balance,
+            yb.freeze_amount,
+            armi.receive_merchant_no,
+            armi.merchant_status,
+            ymi.repay_merchant_no,
+            DATE_FORMAT( armi.create_time,'%Y-%m-%d %H:%i:%s') receiveCreateTime
+        FROM yfb_merchant_info ymi
+            LEFT JOIN yfb_card_manage ycm ON ycm.mer_no = ymi.merchant_no AND ycm.is_settle = 1
+            LEFT JOIN yfb_balance yb ON yb.mer_no = ymi.merchant_no
+            LEFT JOIN act_receive_merchant_info armi ON armi.source_merchant_no = ymi.merchant_no
+        where ymi.merchant_no = #{merchantNo}
+        limit 1
+    </select>
+    <select id="listBalanceHis" resultType="map">
+        SELECT
+            ybh.amount,
+            ybh.amount_behind,
+            ybh.service,
+            ybh.result_status,
+            DATE_FORMAT(ybh.create_time,'%Y-%m-%d %H:%i:%s') create_time
+        FROM yfb_balance_his ybh
+        JOIN yfb_balance yb ON ybh.balance_no = yb.balance_no
+        WHERE yb.mer_no = #{merchantNo}
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(startTime)">
+            and ybh.create_time >= #{startTime}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(endTime)">
+            and ybh.create_time &lt;= #{endTime}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(service)">
+            and ybh.service = #{service}
+        </if>
+        order by ybh.create_time desc, ybh.service ASC
+    </select>
+</mapper>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.eeepay.framework.dao.AcqMerchantInfoLogMapper">
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.AcqMerchantInfoLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="acq_merchant_info_id" jdbcType="BIGINT" property="acqMerchantInfoId" />
+    <result column="audit_status" jdbcType="INTEGER" property="auditStatus" />
+    <result column="examination_opinions" jdbcType="VARCHAR" property="examinationOpinions" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, acq_merchant_info_id, audit_status, examination_opinions, operator, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from acq_merchant_info_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from acq_merchant_info_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.eeepay.framework.model.AcqMerchantInfoLog">
+    insert into acq_merchant_info_log (id, acq_merchant_info_id, audit_status, 
+      examination_opinions, operator, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{acqMerchantInfoId,jdbcType=BIGINT}, #{auditStatus,jdbcType=INTEGER}, 
+      #{examinationOpinions,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.eeepay.framework.model.AcqMerchantInfoLog">
+    insert into acq_merchant_info_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="acqMerchantInfoId != null">
+        acq_merchant_info_id,
+      </if>
+      <if test="auditStatus != null">
+        audit_status,
+      </if>
+      <if test="examinationOpinions != null">
+        examination_opinions,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="acqMerchantInfoId != null">
+        #{acqMerchantInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="examinationOpinions != null">
+        #{examinationOpinions,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.eeepay.framework.model.AcqMerchantInfoLog">
+    update acq_merchant_info_log
+    <set>
+      <if test="acqMerchantInfoId != null">
+        acq_merchant_info_id = #{acqMerchantInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="auditStatus != null">
+        audit_status = #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="examinationOpinions != null">
+        examination_opinions = #{examinationOpinions,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.eeepay.framework.model.AcqMerchantInfoLog">
+    update acq_merchant_info_log
+    set acq_merchant_info_id = #{acqMerchantInfoId,jdbcType=BIGINT},
+      audit_status = #{auditStatus,jdbcType=INTEGER},
+      examination_opinions = #{examinationOpinions,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.daoRedem.redemActive.RedemAgentShareDao" >
+    <insert id="openRedemActive">
+        REPLACE INTO yfb_agent_share_config(agent_no, share_rate, oem_fee, share_type, create_time)
+        VALUE 
+        <foreach collection="list" item="item" separator=",">
+            (#{item.agentNo}, #{item.shareRate}, #{item.oemFee}, 'D', now())
+        </foreach>
+    </insert>
+
+    <update id="updateServiceCost">
+        update yfb_agent_share_config
+        set share_rate = #{bean.shareRate},
+            oem_fee = #{bean.oemFee},
+            receive_share_rate = #{bean.receiveShareRate},
+            repayment_share_rate = #{bean.repaymentShareRate}
+        where agent_no = #{bean.agentNo}
+        and share_type = 'D'
+    </update>
+</mapper>

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.CollectiveTransOrderDao" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.CollectiveTransOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="mobile_no" property="mobileNo" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="pay_method" property="payMethod" jdbcType="VARCHAR" />
+    <result column="trans_status" property="transStatus" jdbcType="VARCHAR" />
+    <result column="trans_time" property="transTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="holidays_mark" property="holidaysMark" jdbcType="VARCHAR" />
+    <result column="business_product_id" property="businessProductId" jdbcType="INTEGER" />
+    <result column="service_id" property="serviceId" jdbcType="INTEGER" />
+    <result column="acq_org_id" property="acqOrgId" jdbcType="INTEGER" />
+    <result column="acq_name" property="acqName" jdbcType="VARCHAR" />
+    <result column="acq_service_id" property="acqServiceId" jdbcType="INTEGER" />
+    <result column="merchant_fee" property="merchantFee" jdbcType="DECIMAL" />
+    <result column="merchant_rate" property="merchantRate" jdbcType="VARCHAR" />
+    <result column="merchant_rate_type" property="merchantRateType" jdbcType="VARCHAR" />
+    <result column="acq_merchant_fee" property="acqMerchantFee" jdbcType="DECIMAL" />
+    <result column="acq_merchant_rate" property="acqMerchantRate" jdbcType="VARCHAR" />
+    <result column="acq_rate_type" property="acqRateType" jdbcType="VARCHAR" />
+    <result column="agent_node" property="agentNode" jdbcType="VARCHAR" />
+    <result column="settlement_method" property="settlementMethod" jdbcType="VARCHAR" />
+    <result column="hardware_product" property="hardwareProduct" jdbcType="INTEGER" />
+    <result column="profits_1" property="profits1" jdbcType="DECIMAL" />
+    <result column="profits_2" property="profits2" jdbcType="DECIMAL" />
+    <result column="profits_3" property="profits3" jdbcType="DECIMAL" />
+    <result column="profits_4" property="profits4" jdbcType="DECIMAL" />
+    <result column="profits_5" property="profits5" jdbcType="DECIMAL" />
+    <result column="profits_6" property="profits6" jdbcType="DECIMAL" />
+    <result column="profits_7" property="profits7" jdbcType="DECIMAL" />
+    <result column="profits_8" property="profits8" jdbcType="DECIMAL" />
+    <result column="profits_9" property="profits9" jdbcType="DECIMAL" />
+    <result column="profits_10" property="profits10" jdbcType="DECIMAL" />
+    <result column="profits_11" property="profits11" jdbcType="DECIMAL" />
+    <result column="profits_12" property="profits12" jdbcType="DECIMAL" />
+    <result column="profits_13" property="profits13" jdbcType="DECIMAL" />
+    <result column="profits_14" property="profits14" jdbcType="DECIMAL" />
+    <result column="profits_15" property="profits15" jdbcType="DECIMAL" />
+    <result column="profits_16" property="profits16" jdbcType="DECIMAL" />
+    <result column="profits_17" property="profits17" jdbcType="DECIMAL" />
+    <result column="profits_18" property="profits18" jdbcType="DECIMAL" />
+    <result column="profits_19" property="profits19" jdbcType="DECIMAL" />
+    <result column="profits_20" property="profits20" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, order_no, mobile_no, merchant_no, trans_amount, pay_method, trans_status, trans_time, 
+    create_time, account_no, card_type, holidays_mark, business_product_id, service_id, 
+    acq_org_id, acq_name, acq_service_id, merchant_fee, merchant_rate, merchant_rate_type, 
+    acq_merchant_fee, acq_merchant_rate, acq_rate_type, agent_node, settlement_method, 
+    hardware_product, profits_1, profits_2, profits_3, profits_4, profits_5, profits_6, 
+    profits_7, profits_8, profits_9, profits_10, profits_11, profits_12, profits_13, 
+    profits_14, profits_15, profits_16, profits_17, profits_18, profits_19, profits_20
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from collective_trans_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from collective_trans_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="cn.eeepay.framework.model.CollectiveTransOrder" >
+    insert into collective_trans_order (id, order_no, mobile_no, 
+      merchant_no, trans_amount, pay_method, 
+      trans_status, trans_time, create_time, 
+      account_no, card_type, holidays_mark, 
+      business_product_id, service_id, acq_org_id, 
+      acq_name, acq_service_id, merchant_fee, 
+      merchant_rate, merchant_rate_type, acq_merchant_fee, 
+      acq_merchant_rate, acq_rate_type, agent_node, 
+      settlement_method, hardware_product, profits_1, 
+      profits_2, profits_3, profits_4, 
+      profits_5, profits_6, profits_7, 
+      profits_8, profits_9, profits_10, 
+      profits_11, profits_12, profits_13, 
+      profits_14, profits_15, profits_16, 
+      profits_17, profits_18, profits_19, 
+      profits_20)
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{mobileNo,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{transAmount,jdbcType=DECIMAL}, #{payMethod,jdbcType=VARCHAR}, 
+      #{transStatus,jdbcType=VARCHAR}, #{transTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{accountNo,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, #{holidaysMark,jdbcType=VARCHAR}, 
+      #{businessProductId,jdbcType=INTEGER}, #{serviceId,jdbcType=INTEGER}, #{acqOrgId,jdbcType=INTEGER}, 
+      #{acqName,jdbcType=VARCHAR}, #{acqServiceId,jdbcType=INTEGER}, #{merchantFee,jdbcType=DECIMAL}, 
+      #{merchantRate,jdbcType=VARCHAR}, #{merchantRateType,jdbcType=VARCHAR}, #{acqMerchantFee,jdbcType=DECIMAL}, 
+      #{acqMerchantRate,jdbcType=VARCHAR}, #{acqRateType,jdbcType=VARCHAR}, #{agentNode,jdbcType=VARCHAR}, 
+      #{settlementMethod,jdbcType=VARCHAR}, #{hardwareProduct,jdbcType=INTEGER}, #{profits1,jdbcType=DECIMAL}, 
+      #{profits2,jdbcType=DECIMAL}, #{profits3,jdbcType=DECIMAL}, #{profits4,jdbcType=DECIMAL}, 
+      #{profits5,jdbcType=DECIMAL}, #{profits6,jdbcType=DECIMAL}, #{profits7,jdbcType=DECIMAL}, 
+      #{profits8,jdbcType=DECIMAL}, #{profits9,jdbcType=DECIMAL}, #{profits10,jdbcType=DECIMAL}, 
+      #{profits11,jdbcType=DECIMAL}, #{profits12,jdbcType=DECIMAL}, #{profits13,jdbcType=DECIMAL}, 
+      #{profits14,jdbcType=DECIMAL}, #{profits15,jdbcType=DECIMAL}, #{profits16,jdbcType=DECIMAL}, 
+      #{profits17,jdbcType=DECIMAL}, #{profits18,jdbcType=DECIMAL}, #{profits19,jdbcType=DECIMAL}, 
+      #{profits20,jdbcType=DECIMAL})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.eeepay.framework.model.CollectiveTransOrder" >
+    update collective_trans_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null" >
+        mobile_no = #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transAmount != null" >
+        trans_amount = #{transAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payMethod != null" >
+        pay_method = #{payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="transStatus != null" >
+        trans_status = #{transStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="transTime != null" >
+        trans_time = #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountNo != null" >
+        account_no = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="holidaysMark != null" >
+        holidays_mark = #{holidaysMark,jdbcType=VARCHAR},
+      </if>
+      <if test="businessProductId != null" >
+        business_product_id = #{businessProductId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="acqOrgId != null" >
+        acq_org_id = #{acqOrgId,jdbcType=INTEGER},
+      </if>
+      <if test="acqName != null" >
+        acq_name = #{acqName,jdbcType=VARCHAR},
+      </if>
+      <if test="acqServiceId != null" >
+        acq_service_id = #{acqServiceId,jdbcType=INTEGER},
+      </if>
+      <if test="merchantFee != null" >
+        merchant_fee = #{merchantFee,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantRate != null" >
+        merchant_rate = #{merchantRate,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantRateType != null" >
+        merchant_rate_type = #{merchantRateType,jdbcType=VARCHAR},
+      </if>
+      <if test="acqMerchantFee != null" >
+        acq_merchant_fee = #{acqMerchantFee,jdbcType=DECIMAL},
+      </if>
+      <if test="acqMerchantRate != null" >
+        acq_merchant_rate = #{acqMerchantRate,jdbcType=VARCHAR},
+      </if>
+      <if test="acqRateType != null" >
+        acq_rate_type = #{acqRateType,jdbcType=VARCHAR},
+      </if>
+      <if test="agentNode != null" >
+        agent_node = #{agentNode,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementMethod != null" >
+        settlement_method = #{settlementMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="hardwareProduct != null" >
+        hardware_product = #{hardwareProduct,jdbcType=INTEGER},
+      </if>
+      <if test="profits1 != null" >
+        profits_1 = #{profits1,jdbcType=DECIMAL},
+      </if>
+      <if test="profits2 != null" >
+        profits_2 = #{profits2,jdbcType=DECIMAL},
+      </if>
+      <if test="profits3 != null" >
+        profits_3 = #{profits3,jdbcType=DECIMAL},
+      </if>
+      <if test="profits4 != null" >
+        profits_4 = #{profits4,jdbcType=DECIMAL},
+      </if>
+      <if test="profits5 != null" >
+        profits_5 = #{profits5,jdbcType=DECIMAL},
+      </if>
+      <if test="profits6 != null" >
+        profits_6 = #{profits6,jdbcType=DECIMAL},
+      </if>
+      <if test="profits7 != null" >
+        profits_7 = #{profits7,jdbcType=DECIMAL},
+      </if>
+      <if test="profits8 != null" >
+        profits_8 = #{profits8,jdbcType=DECIMAL},
+      </if>
+      <if test="profits9 != null" >
+        profits_9 = #{profits9,jdbcType=DECIMAL},
+      </if>
+      <if test="profits10 != null" >
+        profits_10 = #{profits10,jdbcType=DECIMAL},
+      </if>
+      <if test="profits11 != null" >
+        profits_11 = #{profits11,jdbcType=DECIMAL},
+      </if>
+      <if test="profits12 != null" >
+        profits_12 = #{profits12,jdbcType=DECIMAL},
+      </if>
+      <if test="profits13 != null" >
+        profits_13 = #{profits13,jdbcType=DECIMAL},
+      </if>
+      <if test="profits14 != null" >
+        profits_14 = #{profits14,jdbcType=DECIMAL},
+      </if>
+      <if test="profits15 != null" >
+        profits_15 = #{profits15,jdbcType=DECIMAL},
+      </if>
+      <if test="profits16 != null" >
+        profits_16 = #{profits16,jdbcType=DECIMAL},
+      </if>
+      <if test="profits17 != null" >
+        profits_17 = #{profits17,jdbcType=DECIMAL},
+      </if>
+      <if test="profits18 != null" >
+        profits_18 = #{profits18,jdbcType=DECIMAL},
+      </if>
+      <if test="profits19 != null" >
+        profits_19 = #{profits19,jdbcType=DECIMAL},
+      </if>
+      <if test="profits20 != null" >
+        profits_20 = #{profits20,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.eeepay.framework.model.CollectiveTransOrder" >
+    update collective_trans_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      mobile_no = #{mobileNo,jdbcType=VARCHAR},
+      merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      trans_amount = #{transAmount,jdbcType=DECIMAL},
+      pay_method = #{payMethod,jdbcType=VARCHAR},
+      trans_status = #{transStatus,jdbcType=VARCHAR},
+      trans_time = #{transTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      holidays_mark = #{holidaysMark,jdbcType=VARCHAR},
+      business_product_id = #{businessProductId,jdbcType=INTEGER},
+      service_id = #{serviceId,jdbcType=INTEGER},
+      acq_org_id = #{acqOrgId,jdbcType=INTEGER},
+      acq_name = #{acqName,jdbcType=VARCHAR},
+      acq_service_id = #{acqServiceId,jdbcType=INTEGER},
+      merchant_fee = #{merchantFee,jdbcType=DECIMAL},
+      merchant_rate = #{merchantRate,jdbcType=VARCHAR},
+      merchant_rate_type = #{merchantRateType,jdbcType=VARCHAR},
+      acq_merchant_fee = #{acqMerchantFee,jdbcType=DECIMAL},
+      acq_merchant_rate = #{acqMerchantRate,jdbcType=VARCHAR},
+      acq_rate_type = #{acqRateType,jdbcType=VARCHAR},
+      agent_node = #{agentNode,jdbcType=VARCHAR},
+      settlement_method = #{settlementMethod,jdbcType=VARCHAR},
+      hardware_product = #{hardwareProduct,jdbcType=INTEGER},
+      profits_1 = #{profits1,jdbcType=DECIMAL},
+      profits_2 = #{profits2,jdbcType=DECIMAL},
+      profits_3 = #{profits3,jdbcType=DECIMAL},
+      profits_4 = #{profits4,jdbcType=DECIMAL},
+      profits_5 = #{profits5,jdbcType=DECIMAL},
+      profits_6 = #{profits6,jdbcType=DECIMAL},
+      profits_7 = #{profits7,jdbcType=DECIMAL},
+      profits_8 = #{profits8,jdbcType=DECIMAL},
+      profits_9 = #{profits9,jdbcType=DECIMAL},
+      profits_10 = #{profits10,jdbcType=DECIMAL},
+      profits_11 = #{profits11,jdbcType=DECIMAL},
+      profits_12 = #{profits12,jdbcType=DECIMAL},
+      profits_13 = #{profits13,jdbcType=DECIMAL},
+      profits_14 = #{profits14,jdbcType=DECIMAL},
+      profits_15 = #{profits15,jdbcType=DECIMAL},
+      profits_16 = #{profits16,jdbcType=DECIMAL},
+      profits_17 = #{profits17,jdbcType=DECIMAL},
+      profits_18 = #{profits18,jdbcType=DECIMAL},
+      profits_19 = #{profits19,jdbcType=DECIMAL},
+      profits_20 = #{profits20,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

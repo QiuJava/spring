@@ -1,0 +1,156 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a>主页</a></li>
+			<li><a>超级盟主</a></li>
+			<li class="active"><strong>盟主管理</strong></li>
+		</ol>
+	</div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="userCtrl" ng-init="shareLevelList()">
+	<form class="form-horizontal" id="form1">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel-body ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>盟主查询</h5>
+					</div>
+					<div class="ibox-content">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户编号：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.userCode">
+							</div>
+							<label class="col-sm-2 control-label">用户姓名：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.realName">
+							</div>
+							<label class="col-sm-2 control-label">注册手机：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.mobile">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">上级编号：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.parentId">
+							</div>
+							<!--<label class="col-sm-2 control-label">上级名称：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.parentName">
+							</div>-->
+							<label class="col-sm-2 control-label">用户类型：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="baseInfo.userType" ng-options="x.value as x.text for x in userTypes">
+									<option value="" selected>全部</option>
+								</select>
+							</div>
+							<label class="col-sm-2 control-label">上级类型：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="baseInfo.parentType" ng-options="x.value as x.text for x in parentTypes">
+									<option value="" selected>全部</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+						<label class="col-sm-2 control-label">昵称：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" ng-model="baseInfo.nickName">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">是否已认证：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="baseInfo.isBindCard" ng-options="x.value as x.text for x in statusSelect">
+									<option value="" selected>全部</option>
+								</select>
+							</div>
+							<label class="col-sm-2 control-label">注册日期：</label>
+							<div class="col-sm-5">
+								<input id="d5221" class="form-control" type="datetime" ng-model="baseInfo.createTimeBegin" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="var d5222=$dp.$('d5222');WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5222.focus();},maxDate:'#F{$dp.$D(\'d5222\')}'})"/>
+								~
+								<input id="d5222" class="form-control" type="datetime"  ng-model="baseInfo.createTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+									   onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5221\')}'})"/>
+							</div>
+						</div>
+						<!--<div class="form-group" ng-show="entityAgentLevel == 1">
+							<label class="col-sm-2 control-label">是否允许调比例 ：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="baseInfo.canProfitChange" ng-options="x.value as x.text for x in bool">
+									<option value="" selected>全部</option>
+								</select>
+							</div>
+						</div>-->
+						<div class="form-group">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-8">
+								<button class="btn btn-primary6 btn-mr20"  ng-click="query()">查询</button>
+								<button class="btn btn-primary3 btn-mr20" type="button" ng-click="resetForm()">清空</button>
+								<button class="btn btn-primary7 btn-mr20" type="button" ng-click="import()">导出</button>
+							</div>
+						</div>
+					</div>
+					
+				<div class="panel-body ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>查询列表</h5>
+					</div>
+					<div class="ibox-content">
+						<div class="form-group">
+							<div>
+								大盟主总数:&nbsp;<span ng-bind="bigUserTotal"></span>&nbsp;名，盟主总数:&nbsp;<span ng-bind="userTotal"></span>&nbsp;名，其中由商家成为盟主的为&nbsp;<span ng-bind="merUserTotal"></span>&nbsp;名
+							</div>
+						</div>
+						<div class="gridStyle" ui-grid="myGrid" ui-grid-selection ui-grid-pagination
+							 ui-grid-resize-columns ui-grid-pinning></div>
+					</div>
+				</div>
+				<div style="height:30px;"></div>
+			</div>
+		</div>
+		</div>
+	</form>
+
+	<!-- 修改分润 -->
+	<form class="form-horizontal" name="horizontalCreate" novalidate>
+		<div id="changeShareLevel" class="modal fade" role="dialog">
+			<div class="modal-dialog" style="width: 500px">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							&times;</button>
+						<h3 class="modal-title">修改标准分润比例</h3>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">标准分润比例：</label>
+							<div class="col-sm-5">
+								<select class="form-control" ng-model="updateShareLevelData.after_level"
+										ng-options="x.value as x.text disable when x.show for x in shareLevelSelect">
+									<option value="" selected>请选择标准分润比例</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10">
+								<span style="padding-left: 12px">注：升级后，用户的起始交易标准分润比例就按设定的等级计算且不可再降级，调整后第二天生效。</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-10">
+								<button class="btn btn-primary" type="button" ng-click='updateShareLevel()'>确定</button>
+								<button class="btn btn-primary8" type="button" ng-click='hideAllModel()'>取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+</div>

@@ -1,0 +1,21 @@
+<div class="wrapper wrapper-content animated fadeIn" ng-app
+	ng-controller="batchUpdateProfitSwitchCtrl" style="min-height: 300px;max-height: 300px;">
+	<div><span class="close-modal" ng-click="cancel()"></span></div>
+	<form class="form-horizontal">
+		<div class="bg-primary" style="height: 43px;line-height: 43px; text-align: center;">批量修改代理商分润日结功能</div>
+
+		<div style="height: 170px;">
+			<div style="margin: 20px 0 40px 30px">选择代理商个数: {{profitSwitchAgent.length}} 个.</div>
+			<div class="col-sm-12 form-group" style="margin-bottom: 30px; ">
+				<label class="col-xs-2">状态</label>
+				<div class="col-xs-2"><input type="radio" ng-model="profitSwitch" name="statue" value="1"> 打开</div>
+				<div class="col-xs-2"><input type="radio" ng-model="profitSwitch" name="statue" value="0">  关闭 </div>
+				<div class="col-xs-12"><span style="color: red;">备注: 选择关闭，该代理商及所有下级代理商分润日结功能都会一起关闭!</span></div>
+			</div>
+			<div class="row form-group col-sm-12">
+				<button  class="btn col-xs-4 col-xs-offset-1" ng-click="subBatchUpdateProfitSwitch()">确认</button>
+				<button  class="btn col-xs-4 col-xs-offset-2" ng-click="cancel()">关闭</button>
+			</div>
+		</div>
+	</form>
+</div>

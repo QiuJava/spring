@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.MerchantCardInfoDao" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.MerchantCardInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="merchant_no" property="merchantId" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="quick_pay" property="quickPay" jdbcType="VARCHAR" />
+    <result column="def_quick_pay" property="defQuickPay" jdbcType="VARCHAR" />
+    <result column="def_settle_card" property="defSettleCard" jdbcType="VARCHAR" />
+    <result column="account_type" property="accountType" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="cnaps_no" property="cnapsNo" jdbcType="VARCHAR" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, merchant_no, card_type, quick_pay, def_quick_pay, def_settle_card, account_type, 
+    bank_name, cnaps_no, account_name, account_no, status, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.eeepay.framework.model.MerchantCardInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from merchant_card_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_card_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from merchant_card_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.eeepay.framework.model.MerchantCardInfoExample" >
+    delete from merchant_card_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.eeepay.framework.model.MerchantCardInfo" >
+    insert into merchant_card_info (id, merchant_no, card_type, 
+      quick_pay, def_quick_pay, def_settle_card, 
+      account_type, bank_name, cnaps_no, 
+      account_name, account_no, status, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{merchantId,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
+      #{quickPay,jdbcType=VARCHAR}, #{defQuickPay,jdbcType=VARCHAR}, #{defSettleCard,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{cnapsNo,jdbcType=VARCHAR}, 
+      #{accountName,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.eeepay.framework.model.MerchantCardInfo" >
+    insert into merchant_card_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_no,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="quickPay != null" >
+        quick_pay,
+      </if>
+      <if test="defQuickPay != null" >
+        def_quick_pay,
+      </if>
+      <if test="defSettleCard != null" >
+        def_settle_card,
+      </if>
+      <if test="accountType != null" >
+        account_type,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="cnapsNo != null" >
+        cnaps_no,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="accountNo != null" >
+        account_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="quickPay != null" >
+        #{quickPay,jdbcType=VARCHAR},
+      </if>
+      <if test="defQuickPay != null" >
+        #{defQuickPay,jdbcType=VARCHAR},
+      </if>
+      <if test="defSettleCard != null" >
+        #{defSettleCard,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnapsNo != null" >
+        #{cnapsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null" >
+        #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.eeepay.framework.model.MerchantCardInfoExample" resultType="java.lang.Integer" >
+    select count(*) from merchant_card_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update merchant_card_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_no = #{record.merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        card_type = #{record.cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quickPay != null" >
+        quick_pay = #{record.quickPay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defQuickPay != null" >
+        def_quick_pay = #{record.defQuickPay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defSettleCard != null" >
+        def_settle_card = #{record.defSettleCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountType != null" >
+        account_type = #{record.accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null" >
+        bank_name = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnapsNo != null" >
+        cnaps_no = #{record.cnapsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountName != null" >
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountNo != null" >
+        account_no = #{record.accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update merchant_card_info
+    set id = #{record.id,jdbcType=BIGINT},
+      merchant_no = #{record.merchantId,jdbcType=VARCHAR},
+      card_type = #{record.cardType,jdbcType=VARCHAR},
+      quick_pay = #{record.quickPay,jdbcType=VARCHAR},
+      def_quick_pay = #{record.defQuickPay,jdbcType=VARCHAR},
+      def_settle_card = #{record.defSettleCard,jdbcType=VARCHAR},
+      account_type = #{record.accountType,jdbcType=VARCHAR},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      cnaps_no = #{record.cnapsNo,jdbcType=VARCHAR},
+      account_name = #{record.accountName,jdbcType=VARCHAR},
+      account_no = #{record.accountNo,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.eeepay.framework.model.MerchantCardInfo" >
+    update merchant_card_info
+    <set >
+      <if test="merchantId != null" >
+        merchant_no = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="quickPay != null" >
+        quick_pay = #{quickPay,jdbcType=VARCHAR},
+      </if>
+      <if test="defQuickPay != null" >
+        def_quick_pay = #{defQuickPay,jdbcType=VARCHAR},
+      </if>
+      <if test="defSettleCard != null" >
+        def_settle_card = #{defSettleCard,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        account_type = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnapsNo != null" >
+        cnaps_no = #{cnapsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null" >
+        account_no = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.eeepay.framework.model.MerchantCardInfo" >
+    update merchant_card_info
+    set merchant_no = #{merchantId,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      quick_pay = #{quickPay,jdbcType=VARCHAR},
+      def_quick_pay = #{defQuickPay,jdbcType=VARCHAR},
+      def_settle_card = #{defSettleCard,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      cnaps_no = #{cnapsNo,jdbcType=VARCHAR},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+</mapper>

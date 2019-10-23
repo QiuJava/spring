@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.daoSuperBank.RankingRecordDetailDao" >
+
+    <select id="queryRankingRecordDetailPage" resultType="cn.eeepay.framework.model.RankingRecordDetailInfo">
+        SELECT
+        rrd.`id`,
+        rrd.`record_id`,
+        rrd.`user_name`,
+        rrd.`nick_name`,
+        rrd.`user_code`,
+        rrd.`user_total_amount`,
+        rrd.`is_rank`,
+        rrd.`ranking_level`,
+        rrd.`ranking_amount`,
+        rrd.`status`,
+        DATE_FORMAT(rrd.`remove_time`,'%Y-%m-%d %H:%i:%s') remove_time,
+        DATE_FORMAT(rrd.`push_time`,'%Y-%m-%d %H:%i:%s') push_time,
+        rrd.`remark`,
+        rrd.`ranking_index`
+        FROM ranking_record_detail rrd LEFT JOIN user_info ui ON rrd.user_code=ui.user_code
+        WHERE rrd.`record_id` = #{bean}
+        ORDER BY rrd.`user_total_amount` desc,ui.toagent_date asc
+    </select>
+
+    <select id="queryRankingRecordDetailUserTotalAmountSum" resultType="String">
+        SELECT
+        sum(rrd.`user_total_amount`) as userTotalAmount
+        FROM ranking_record_detail rrd
+        WHERE rrd.`record_id` = #{bean}
+    </select>
+
+
+
+	<update id="updSort" parameterType="cn.eeepay.framework.model.RankingRecordDetailInfo">
+		update ranking_record_detail set ranking_index=#{baseInfo.rankingIndex}  where id=#{baseInfo.id}
+	</update>
+
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.eeepay.framework.dao.UserInfoReadDao">
+
+  <resultMap id="userResultMap" type="cn.eeepay.framework.model.UserInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="mobilephone" jdbcType="VARCHAR" property="mobilephone" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="update_pwd_time" jdbcType="TIMESTAMP" property="updatePwdTime" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="team_id" jdbcType="VARCHAR" property="teamId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <collection property="userEntityInfos" javaType="list" select="select_user_entity_info" column="user_id"
+                ofType="cn.eeepay.framework.model.UserEntityInfo" />
+  </resultMap>
+
+  <select id="select_user_entity_info"  parameterType="String" resultType="cn.eeepay.framework.model.UserEntityInfo">
+  		select u.* from user_entity_info as u where  u.user_id=#{user_id}
+  </select>
+
+  <select id="findUserInfoListByAdmin"  resultMap="userResultMap">
+      select <include refid="commonUserColumn"/>
+      from user_info ui
+      join user_entity_info uei on uei.user_id = ui.user_id
+      where ui.team_id in (999, 998)
+      <include refid="commonUserWhere"/>
+      <if test="sort != null and sort != ''">
+        ${sort}
+      </if>
+  </select>
+
+  <select id="findUserInfoListByAgent"  resultMap="userResultMap">
+    select <include refid="commonUserColumn"/>
+    from user_info ui
+    join user_entity_info uei on uei.user_id = ui.user_id
+    join agent_info ai on ai.agent_no = uei.entity_id
+    where ui.team_id = #{teamId}
+    <if test="user.hasChildren == '1'.toString()">
+      and ai.agent_node like concat(#{loginAgentNode}, '%')
+    </if>
+    <if test="user.hasChildren != '1'.toString()">
+      and ai.agent_node = #{loginAgentNode}
+    </if>
+    <include refid="commonUserWhere"/>
+    <if test="sort != null and sort != ''">
+      ${sort}
+    </if>
+  </select>
+
+  <sql id="commonUserColumn">
+    ui.id,
+    ui.user_id,
+    ui.user_name,
+    ui.mobilephone,
+    ui.email,
+    ui.status,
+    ui.update_pwd_time,
+    ui.password,
+    ui.team_id,
+    ui.create_time
+  </sql>
+
+  <sql id="commonUserWhere">
+      and uei.user_type = 1
+      and uei.apply = 1
+      <if test="user.status != null and user.status != ''">
+        and ui.status = #{user.status }
+      </if>
+      <if test="user.userName != null and user.userName != ''">
+        and position(#{user.userName} in ui.user_name)
+      </if>
+      <if test="user.mobilephone != null and user.mobilephone != ''">
+        and position(#{user.mobilephone} in ui.mobilephone)
+      </if>
+  </sql>
+</mapper>

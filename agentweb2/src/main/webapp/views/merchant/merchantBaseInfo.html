@@ -1,0 +1,205 @@
+<div class="row">
+	<div class="col-lg-12">
+				<div class="panel-body ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>基本信息</h5>
+							</div>
+							<div class="ibox-content">
+								<div class="form-group">
+									<label class="col-sm-2 control-label" ><i class="red_req">*</i>商户名称：</label>
+									<div class="col-sm-3">
+										<!--<input type="text" class="form-control" ng-model="info.merchantName" name="merchantName" ng-pattern="/^[\u4E00-\u9FA5A-Za-z0-9]{1,40}$/"  required>-->
+										<input type="text" class="form-control" ng-model="info.merchantName" name="merchantName" ng-pattern="/^[\u4E00-\u9FA5]{4,40}$/"  required>
+										<div class="req_mesg" ng-show="horizontal.merchantName.$dirty && horizontal.merchantName.$invalid">
+											<span ng-show="horizontal.merchantName.$error.required">商户名称不能为空</span>
+											<span ng-show="horizontal.merchantName.$error.pattern">商户名称只能输入4-40个的中文字符</span>
+										</div>
+									</div>
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>手机号：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" name="mobilephone" ng-model="info.mobilephone" ng-pattern="/^1\d{10}$/" required>
+										<div class="req_mesg" ng-show="horizontal.mobilephone.$dirty && horizontal.mobilephone.$invalid">
+											<span ng-show="horizontal.mobilephone.$error.required">手机号码不能为空</span>
+											<span ng-show="horizontal.mobilephone.$error.pattern">手机号码必须是11位数字！</span>
+										</div>
+									</div>
+									
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>法人姓名：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" name="lawyer" ng-model="info.lawyer" required>
+										<div class="req_mesg" ng-show="horizontal.lawyer.$dirty && horizontal.lawyer.$invalid">
+											<span ng-show="horizontal.lawyer.$error.required">法人姓名不能为空</span>
+										</div>
+										<div class="req_mesg" ng-show="info.lawyer && info.lawyer === info.merchantName">
+											<span>法人姓名和商户名称不能一样</span>
+										</div>
+									</div>
+									
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>法人身份证号：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" name="idCardNo" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" ng-model="info.idCardNo" required>
+										<div class="req_mesg" ng-show="horizontal.idCardNo.$dirty && horizontal.idCardNo.$invalid">
+											<span ng-show="horizontal.idCardNo.$error.required">法人身份证号不能为空</span>
+											<span ng-show="horizontal.idCardNo.$error.pattern">法人身份证号不正确</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">所属代理商：</label>
+									<div class="col-sm-3">
+										<input disabled="disabled" type="text" class="form-control" name="info.agentName" ng-model="info.agentName">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">备注：</label>
+									<div class="col-sm-8">
+										<textarea rows="5" cols="20" class="form-control" ng-model="info.remark"></textarea>
+									</div>
+								</div>
+							
+							</div>
+
+				</div>
+				
+				
+				<div class="panel-body ibox float-e-margins">
+		
+								<div class="ibox-title">
+									<h5>经营信息</h5>
+								</div>
+								<div class="ibox-content">
+		
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><i class="red_req">*</i>商户类型：</label>
+										<div class="col-sm-2">
+											<select class="form-control" ng-change="serMerchantType(info.merchantType)" ng-model="info.merchantType" ng-options="x.value as x.text for x in mTypes"/>
+										</div>
+										<label class="col-sm-2 control-label"><i class="red_req">*</i>业务产品：</label>
+										<div class="col-sm-2">
+											<select  class="form-control" ng-model="mbp.bpId" ng-change="infos()"
+											 ng-options="x.bpId as x.bpName for x in productTypes"/>
+										</div>
+									</div>
+						<div class="form-group"  ng-hide="info.merchantType==1">
+							<label class="col-sm-2 control-label"><i class="red_req">*</i>经营范围：</label>
+							<div class="col-sm-2">
+								<select class="form-control" ng-change="serType(info.businessType)" ng-model="info.businessType" ng-options="x.sysValue as x.sysName for x in merTypes"/>
+							</div>
+							<div class="col-sm-2">
+								<select class="form-control" ng-model="info.industryType" ng-options="x.value as x.text for x in merMcc"/>
+							</div>
+						</div>
+					
+					 <div class="form-group">
+					 		<label class="col-sm-2 control-label"><i class="red_req">*</i>经营地址：</label>
+			                <div class="col-sm-2">
+			                     <select class="form-control input-s-sm inline" ng-model="info.province" ng-change="getCities()" ng-options="x.name as x.name for x in provinceGroup" required="required"/>
+			                </div>
+			                <div class="col-sm-2">
+			                     <select class="form-control input-s-sm inline" ng-model="info.city" ng-change="getAreas()" ng-options="x.name as x.name for x in cityGroup" required="required"/>
+			                </div>
+			                <div class="col-sm-2">
+			                     <select class="form-control input-s-sm inline" ng-model="info.district" ng-options="x.name as x.name for x in areaGroup" required="required"/>
+			                </div>
+			                 <div class="col-sm-4">
+								<input type="text" class="form-control" ng-model="info.address" required="required">
+							</div>
+			        </div>
+									
+               		</div>  
+				</div>
+			</div>
+				
+				<div class="panel-body ibox float-e-margins">
+						<div class="ibox-title">
+							<h5>结算账户信息</h5>
+						</div>
+						<div class="ibox-content">
+							<div class="form-group">
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>开户名：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" ng-model="item.accountName" name="accountName" required>
+										<div class="req_mesg" ng-show="horizontal.accountName.$dirty && horizontal.accountName.$invalid">
+											<span ng-show="horizontal.accountName.$error.required">开户名不能为空</span>
+										</div>
+									</div>
+									
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>账户类型：</label>
+									<div class="col-sm-3">
+										<select class="form-control" ng-model="item.accountType" ng-options="x.value as x.text for x in itemType"/>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>开户账号：</label>
+									<div class="col-sm-3">
+										<input type="text" ng-blur="getHangName()" class="form-control" ng-model="item.accountNo" name="accountNo" ng-pattern="/^(\d{15,21})$/" required>
+										<div class="req_mesg" ng-show="horizontal.accountNo.$dirty && horizontal.accountNo.$invalid">
+											<span ng-show="horizontal.accountNo.$error.required">开户账号不能为空</span>
+											<span ng-show="horizontal.accountNo.$error.pattern">开户账号不正确</span>
+										</div>
+									</div>
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>开户银行：</label>
+									<div class="col-sm-3">
+										<select class="form-control" ng-model="item.accountHangName" ng-options="x.bankName as x.bankName for x in cards"/>
+<!-- 										<input disabled="disabled" type="text" class="form-control" ng-model="item.accountHangName" > -->
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>开户地区：</label>
+					                <div class="col-sm-2">
+					                     <select required class="form-control input-s-sm inline" ng-model="adds.province" ng-change="getCitiess()" ng-options="x.name as x.name for x in provinceGroups"/>
+					                </div>
+					                <label class="col-sm-1 control-label">省</label>
+					                <div class="col-sm-2">
+					                     <select required class="form-control input-s-sm inline" ng-model="adds.city" ng-change="getAreass()" ng-options="x.name as x.name for x in cityGroups"/>
+					                </div>
+					                <label class="col-sm-1 control-label">市</label>
+					                <div class="col-sm-2">
+					                     <select required class="form-control input-s-sm inline" ng-model="adds.district" ng-change="getPosCnaps()" ng-options="x.name as x.name for x in areaGroups"/>
+					                </div>
+					                <label class="col-sm-1 control-label">县/区</label>
+								</div>
+								
+								<div class="form-group">
+									 <label class="col-sm-2 control-label"><i class="red_req">*</i>支行</label>
+					                <div class="col-sm-3 cl-csn">
+					                	<select chosen  style="width:280px; z-index:100000;" tabindex="4" required
+											ng-model="zhihang" ng-change="getUnionAccountNo(zhihang)"
+											ng-options="x.cnapsNo as x.bankName for x in bankNames">
+												<option value=""></option>
+											</select>
+					                </div>
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>联行行号：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" ng-model="item.unionAccountNo" required>
+									</div>
+<!-- 									<label class="col-sm-2 control-label"><a href="http://www.posp.cn/" rel="noopener noreferrer" target="_blank">联行行号查询</a></label> -->
+								</div>
+						</div>
+				</div>
+				
+				<div class="panel-body ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>机具	</h5>
+							</div>
+							<div class="ibox-content">
+								<div class="form-group" ng-repeat="val in shuzu">
+									<label class="col-sm-2 control-label"><i class="red_req">*</i>SN号<span ng-show="$index!=0">{{$index+1}}</span>：</label>
+									<div class="col-sm-3">
+										<input type="text" ng-model="val.sn" class="form-control" required>
+									</div>
+<!-- 									<div class="col-sm-3"> -->
+<!-- 										<button ng-click="addTermianl()" type="button" class="btn btn-new">添加</button> -->
+<!-- 										<button ng-click="delTermianl($index)" ng-show="$index!=0" type="button" class="btn btn-new2">删除</button> -->
+<!-- 									</div> -->
+								</div>
+							</div>
+					</div>
+	
+	
+	</div>
+</div>

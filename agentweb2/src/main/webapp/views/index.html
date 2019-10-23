@@ -1,0 +1,53 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-lg-10" ng-show="teamId == 100010">
+		<h2 style="padding: 20px">欢迎使用移联支付第二代代理商系统</h2>
+	</div>
+	<div class="col-lg-10" ng-show="teamId == 200010">
+		<h2 style="padding: 20px">欢迎使用代理商系统</h2>
+	</div>
+	<div class="col-lg-2"></div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="indexCtrl" ng-hidden="$root.oemType == 'SUPERBANK'" ng-init="getUnDealOrder()">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel-body"  ng-show="baseInfo!=null || num!=null">
+				<!-- <strong>欢迎使用移联支付V2代理商系统</strong> -->
+				<div class="tips_con">
+					<div>
+						<span ng-show="num!=0" style="color: #f43e3e">您好！您有&nbsp;{{num}}&nbsp;条调单未处理！</span>
+						<span ng-show="overdueOrders!=null&&overdueOrders!=''" style="color: #f43e3e">订单{{overdueOrders}}已逾期，请及时处理！</span>
+					</div>
+			        <div class="tips_text">
+			            <h2 style="text-align: center;margin-bottom: 30px" >{{baseInfo.title}}
+							<span class="notice_zd" ng-show="baseInfo.strong === '1'"><img height="48" width="42" src="img/notice_zd.png"></span></h2>
+			             <p ng-bind-html="baseInfo.content | trustHtml"></p>
+			        </div>
+			        <div class="tips_history">
+                        <div class="tips-header">
+                            <div class="tips-title" ng-show="listNotice.length > 0">最近公告</div>
+                            <div class="tip-more"><a ui-sref="more.receivedNotices">更多历史公告</a></div>
+                        </div>
+                        <div class="tips-content" ng-show="listNotice.length > 0">
+                            <ul class="tips-left-content" >
+                                <li  class="tip-content-item" ng-repeat="notice  in listNotice.slice(0,2)">
+                                    <div class="tips-content-title"><a href="#/more/rnoticeDetail/{{notice.ntId}}"><span style="color: red" ng-show="notice.strong == 1">[置顶]&nbsp;</span>{{notice.title}}</a></div>
+                                    <div class="tips-content-date" >{{notice.issuedTime | date:"yyyy-MM-dd"}}</div>
+                                </li>
+                            </ul>
+                            <ul class="tips-right-content" ng-show="listNotice.length > 2">
+                                <li  class="tip-content-item" ng-repeat="notice in listNotice.slice(2,4)">
+                                    <div class="tips-content-title"><a href="#/more/rnoticeDetail/{{notice.ntId}}"><span style="color: red" ng-show="notice.strong == 1">[置顶]&nbsp;</span>{{notice.title}}</a></div>
+                                    <div class="tips-content-date" >{{notice.issuedTime | date:"yyyy-MM-dd"}}</div>
+                                </li>
+                            </ul>
+                        </div>
+					</div>
+			    </div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+</div>

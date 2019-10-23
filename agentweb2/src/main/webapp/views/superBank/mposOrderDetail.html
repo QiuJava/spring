@@ -1,0 +1,323 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>Mpos订单</a></li>
+            <li class="active"><strong>Mpos订单详情</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="mposOrderDetailCtrl">
+    <form class="form-horizontal" name="horizontal" >
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-body ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>订单信息</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">订单编号：</label>
+                            <div class="col-sm-2 checkbox wbba" ng-bind="baseInfo.orderNo">
+                            </div>
+                            <label class="col-sm-2 control-label">创建时间：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.createDate | date:'yyyy-MM-dd HH:mm:ss'">
+                            </div>
+                            <label class="col-sm-2 control-label">订单状态：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.status | formatDropping:[{text:'待付款',value:'1'},{text:'待发货',value:'2'},{text:'待收货',value:'3'},{text:'已收货',value:'4'},{text:'已关闭',value:'9'}]">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">支付状态：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.payStatus | formatDropping:[{text:'未支付',value:'1'},{text:'已支付',value:'2'}]">
+                            </div>
+                            <label class="col-sm-2 control-label">支付时间：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.payDate | date:'yyyy-MM-dd HH:mm:ss'">
+                            </div>
+                            <label class="col-sm-2 control-label">支付方式：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.payMethod | formatDropping:[{text:'微信',value:'1'},{text:'支付宝',value:'2'},{text:'快捷',value:'3'},{text:'红包账户',value:'4'},{text:'分润账户',value:'5'}]">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">采购者编号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.userCode">
+                            </div>
+                            <label class="col-sm-2 control-label">采购者名称：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.userName ">
+                            </div>
+                            <label class="col-sm-2 control-label">采购者手机号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.userPhone ">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">采购者省市区：</label>
+                            <div class="col-sm-2 checkbox" >
+                                {{baseInfo.provinceName}}{{baseInfo.cityName}}{{baseInfo.districtName}}
+                            </div>
+                            <label class="col-sm-2 control-label">所属组织：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.orgName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">订单金额：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.totalPrice | currency:''">
+                            </div>
+                            <label class="col-sm-2 control-label">是否包邮：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.needShipFee | formatDropping:[{text:'是',value:'1'},{text:'否',value:'2'}]">
+                            </div>
+                            <label class="col-sm-2 control-label">运费：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.shipFee | currency:''">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">发货方：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.shipper | formatDropping:[{text:'平台发货',value:'1'},{text:'组织发货',value:'2'}]">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">货款转账金额：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.toOrgAmount | currency:''">
+                            </div>
+                            <label class="col-sm-2 control-label">货款转账状态：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.toOrgStatus | formatDropping:[{text:'未转账',value:'1'},{text:'已转账',value:'2'},{text:'转账失败',value:'3'}]">
+                            </div>
+                            <label class="col-sm-2 control-label">货款转账时间：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.toOrgDate | date:'yyyy-MM-dd HH:mm:ss'">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">确认收货人：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.receiveType  | formatDropping:[{text:'用户确认收货',value:'1'},{text:'系统自动收货',value:'2'}] ">
+                            </div>
+                            <label class="col-sm-2 control-label">确认收货时间：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.receiveDate | date:'yyyy-MM-dd HH:mm:ss'">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>商品信息</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">商品编号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.goodNo">
+                            </div>
+                            <label class="col-sm-2 control-label">商品标题：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.goodTitle">
+                            </div>
+                            <label class="col-sm-2 control-label">商品销售价：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.goodSinglePrice | currency:''">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">所在商品分类：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.typeName">
+                            </div>
+                            <label class="col-sm-2 control-label">设备类型：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.productType">
+                            </div>
+                            <label class="col-sm-2 control-label">购买数量(台)：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.buyNum">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">商品总价：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.goodTotalPrice | currency:''">
+                            </div>
+                            <label class="col-sm-2 control-label">商品主图：</label>
+                            <div class="col-sm-2 checkbox">
+                                <a ng-show="baseInfo.imgUrl" href="{{baseInfo.imgUrl}}" fancybox  rel="group">
+                                    <img width="250px" height="150px" ng-src="{{baseInfo.imgUrl}}"/>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>奖金分润</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">采购机具总奖金包：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.totalBonus">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">一级编号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.oneUserCode">
+                            </div>
+                            <label class="col-sm-1 control-label">一级名称：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.oneUserName">
+                            </div>
+                            <label class="col-sm-1 control-label">一级身份：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.oneUserType | formatDropping:[{text:'普通用户',value:'10'},{text:'专员',value:'20'},{text:'经理',value:'30'},{text:'银行家',value:'40'}]">
+                            </div>
+                            <label class="col-sm-1 control-label">一级分润：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.oneUserProfit">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">二级编号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.twoUserCode">
+                            </div>
+                            <label class="col-sm-1 control-label">二级名称：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.twoUserName">
+                            </div>
+                            <label class="col-sm-1 control-label">二级身份：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.twoUserType | formatDropping:[{text:'普通用户',value:'10'},{text:'专员',value:'20'},{text:'经理',value:'30'},{text:'银行家',value:'40'}]">
+                            </div>
+                            <label class="col-sm-1 control-label">二级分润：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.twoUserProfit">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">三级编号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.thrUserCode">
+                            </div>
+                            <label class="col-sm-1 control-label">三级名称：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.thrUserName">
+                            </div>
+                            <label class="col-sm-1 control-label">三级身份：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.thrUserType | formatDropping:[{text:'普通用户',value:'10'},{text:'专员',value:'20'},{text:'经理',value:'30'},{text:'银行家',value:'40'}]">
+                            </div>
+                            <label class="col-sm-1 control-label">三级分润：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.thrUserProfit">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">四级编号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.fouUserCode">
+                            </div>
+                            <label class="col-sm-1 control-label">四级名称：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.fouUserName">
+                            </div>
+                            <label class="col-sm-1 control-label">四级身份：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.fouUserType | formatDropping:[{text:'普通用户',value:'10'},{text:'专员',value:'20'},{text:'经理',value:'30'},{text:'银行家',value:'40'}]">
+                            </div>
+                            <label class="col-sm-1 control-label">四级分润：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.fouUserProfit">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">组织分润：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.orgProfit">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="panel-body ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>收货人信息</h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">收货人姓名：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.receiverName">
+                            </div>
+                            <label class="col-sm-2 control-label">收货人手机号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.receiverPhone">
+                            </div>
+                            <label class="col-sm-2 control-label">收货人地址：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.receiverAddr">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">订单备注：</label>
+                            <div class="col-sm-5 checkbox" ng-bind="baseInfo.remark">
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="panel-body ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>发货信息</h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">配送方式：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.shipWay   | formatDropping:[{text:'快递配送',value:'1'},{text:'线下自提',value:'2'}]">
+                            </div>
+                            <label class="col-sm-2 control-label">发货时间：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.shipDate | date:'yyyy-MM-dd HH:mm:ss'">
+                            </div>
+                            <label class="col-sm-2 control-label">发货组织：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.shipOrg">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">快递公司：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.shipExpress">
+                            </div>
+                            <label class="col-sm-2 control-label">发货单号：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.shipExpressNo">
+                            </div>
+                            <label class="col-sm-2 control-label">委托备注：</label>
+                            <div class="col-sm-2 checkbox" ng-bind="baseInfo.consignRemark">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 40px;">
+                            <label class="col-sm-1 control-label">&nbsp;</label>
+                            <div class="col-sm-5 ">
+                                <div class="panel panel-default">
+
+                                    <table  class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>硬件产品种类</th>
+                                            <th>机具SN号</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="x in baseInfo.mposMachines">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{x.productTypeName}}</td>
+                                            <td>{{x.snNo}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-lg-12 bgff" style="margin-top:30px">
+                    <div class="col-sm-12">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
+                            <input type="button" class="btn btn-primary4 btn-mr20" ui-sref="superBank.mposOrder" value='返回'>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

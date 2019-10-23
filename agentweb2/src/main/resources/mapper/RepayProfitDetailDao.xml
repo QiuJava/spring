@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.RepayProfitDetailDao" >
+
+    <select id="listRepayProfitDetail" resultType="cn.eeepay.framework.model.RepayProfitDetailBean">
+        SELECT
+            ypd.profit_no,
+            ai.agent_no profitMerNo,
+            ai.agent_name,
+            ypd.share_amount,
+            yrp.repay_amount,
+            yrp.ensure_amount,
+            yrp.repay_fee,
+            yrp.success_pay_amount,
+            yrp.success_repay_amount,
+            yrp.actual_pay_fee,
+            yrp.actual_withdraw_fee,
+            ypd.order_no batchNo,
+            ypd.merchant_no,
+            yrp.create_time orderCreateTime,
+            ypd.profit_type,
+            yrp.create_time orderCreateTime,
+            ypd.trans_time completeTime,
+            yrp.status orderStatus,
+            ypd.to_profit_amount
+        FROM yfb_profit_detail ypd
+        JOIN agent_info ai ON ypd.profit_mer_no = ai.agent_no AND ypd.profit_mer_type = 'A'
+        left JOIN yfb_repay_plan yrp ON ypd.order_no = yrp.batch_no
+        WHERE ai.agent_node = #{searchAgent.agentNode}
+        <include refid="commonWhere"/>
+    </select>
+
+    <select id="sumRepayProfitDetail" resultType="cn.eeepay.framework.model.RepayProfitDetailBean">
+        SELECT
+            ifnull(sum(ypd.share_amount),0) share_amount,
+            ifnull(sum(yrp.actual_pay_fee),0) actual_pay_fee,
+            ifnull(sum(yrp.actual_withdraw_fee),0) actual_withdraw_fee
+        FROM yfb_profit_detail ypd
+        JOIN agent_info ai ON ypd.profit_mer_no = ai.agent_no AND ypd.profit_mer_type = 'A'
+        left JOIN yfb_repay_plan yrp ON ypd.order_no = yrp.batch_no
+        WHERE ai.agent_node = #{searchAgent.agentNode}
+        <include refid="commonWhere"/>
+    </select>
+
+
+    <select id="sumAllShareAmount" resultType="java.math.BigDecimal">
+        SELECT
+          ifnull(sum(ypd.share_amount),0)
+        FROM yfb_profit_detail ypd
+        JOIN agent_info ai ON ypd.profit_mer_no = ai.agent_no AND ypd.profit_mer_type = 'A'
+        left JOIN yfb_repay_plan yrp ON ypd.order_no = yrp.batch_no
+        WHERE ai.agent_node = #{searchAgent.agentNode}
+        <include refid="commonWhere"/>
+    </select>
+
+    <select id="sumChildShareAmount" resultType="java.math.BigDecimal">
+        SELECT
+          ifnull(sum(ypd.share_amount),0)
+        FROM yfb_profit_detail ypd
+        JOIN agent_info ai ON ypd.profit_mer_no = ai.agent_no AND ypd.profit_mer_type = 'A'
+        left JOIN yfb_repay_plan yrp ON ypd.order_no = yrp.batch_no
+        WHERE ai.agent_node like concat(#{searchAgent.agentNode},'_%')
+        and ai.agent_level = #{agentLevel}
+        <include refid="commonWhere"/>
+    </select>
+
+    <sql id="commonWhere">
+        <if test="bean.orderStatus != null and bean.orderStatus != ''">
+            and yrp.status = #{bean.orderStatus}
+        </if>
+        <if test="bean.minShareAmount != null and bean.minShareAmount != ''">
+            and ypd.share_amount >= #{bean.minShareAmount}
+        </if>
+        <if test="bean.profitType != null and bean.profitType != ''">
+            and ypd.profit_type = #{bean.profitType}
+        </if>
+        <if test="bean.maxShareAmount != null and bean.maxShareAmount != ''">
+            and ypd.share_amount &lt;= #{bean.maxShareAmount}
+        </if>
+        <if test="bean.batchNo != null and bean.batchNo != ''">
+            and ypd.order_no = #{bean.batchNo}
+        </if>
+        <if test="bean.profitNo != null and bean.profitNo != ''">
+            and ypd.profit_no = #{bean.profitNo}
+        </if>
+        <if test="bean.minOrderCreateTime != null and bean.minOrderCreateTime != ''">
+            and yrp.create_time >= #{bean.minOrderCreateTime}
+        </if>
+        <if test="bean.maxOrderCreateTime != null and bean.maxOrderCreateTime != ''">
+            and yrp.create_time &lt;= #{bean.maxOrderCreateTime}
+        </if>
+        <if test="bean.completeTimeBegin != null and bean.completeTimeBegin != ''">
+            and ypd.trans_time >= concat(#{bean.completeTimeBegin}, ' 00:00:00')
+        </if>
+        <if test="bean.completeTimeEnd != null and bean.completeTimeEnd != ''">
+            and ypd.trans_time &lt;= concat(#{bean.completeTimeEnd}, ' 23:59:59')
+        </if>
+    </sql>
+</mapper>

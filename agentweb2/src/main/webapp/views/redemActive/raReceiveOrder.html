@@ -1,0 +1,126 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#/service/addService">主页</a></li>
+			<li><a>积分兑换-激活版</a></li>
+			<li class="active"><strong>商户收款订单查询</strong></li>
+		</ol>
+	</div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-app ng-controller="raReceiveOrderCtrl">
+	<form class="form-horizontal" id="form1">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>商户收款订单查询</h5>
+							</div>
+							<div class="ibox-content">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">订单ID：</label>
+									<div class="col-sm-2">
+										<input type="text" class="form-control" ng-model="info.orderNo">
+									</div>
+									<label class="col-sm-2 control-label">关联收款订单号：</label>
+									<div class="col-sm-2">
+										<input type="text" class="form-control" ng-model="info.sourceOrderNo">
+									</div>
+									<label class="col-sm-2 control-label">订单状态：</label>
+									<div class="col-sm-2">
+										<select class="form-control" ng-model="info.orderStatus"
+												ng-options="x.value as x.text for x in orderStatusList">
+											<option value="">全部</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">用户ID：</label>
+									<div class="col-sm-2">
+										<input type="text" class="form-control" ng-model="info.merchantNo">
+									</div>
+									<label class="col-sm-2 control-label">用户手机号：</label>
+									<div class="col-sm-2">
+										<input type="text" class="form-control" ng-model="info.mobile">
+									</div>
+									<label class="col-sm-2 control-label">收款商户ID：</label>
+									<div class="col-sm-2">
+										<input type="text" class="form-control" ng-model="info.receiveMerchantNo">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">服务商名称：</label>
+									<div class="col-sm-2">
+										<select chosen="{width:'100%'}" class="chosen-select form-control" tabindex="5"
+												ng-model="info.agentNo" ng-options="x.value as x.text for x in agentList">
+										</select>
+									</div>
+									<label class="col-sm-2 control-label">支付方式：</label>
+									<div class="col-sm-2">
+										<select class="form-control" ng-model="info.payMethod"
+												ng-options="x.value as x.text for x in payMethodList">
+											<option value="">全部</option>
+										</select>
+									</div>
+									<label class="col-sm-2 control-label">记账状态：</label>
+									<div class="col-sm-2">
+										<select class="form-control" ng-model="info.accStatus"
+												ng-options="x.value as x.text for x in accStatusList">
+											<option value="">全部</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label">创建时间：</label>
+									<div class="col-sm-6">
+										<input id="d5221" class="form-control" type="datetime"
+											   ng-model="info.createTimeStart" onchange=""
+											   style="width:auto;display:inline-block;"
+											   onFocus="var d5222=$dp.$('d5222');WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5222.focus();},maxDate:'#F{$dp.$D(\'d5222\')}'})"/>
+										~
+										<input id="d5222" class="form-control" type="datetime" ng-model="info.createTimeEnd"
+											   onchange="" style="width:auto;display:inline-block;"
+											   onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5221\')}'})"/>
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-lg-12">
+										<div class="col-sm-1"></div>
+										<button class="btn btn-primary6 btn-mr20" type="button" ng-click="query()">查询
+										</button>
+										<button class="btn btn-primary3 btn-mr20" type="button" ng-click="clear()">清空
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>商户收款订单查询列表</h5>
+							</div>
+							<div class="ibox-content">
+								<div class="form-group">
+									<label class="col-sm-1 control-label">汇总</label>
+									<div class="col-sm-2 checkbox">收款金额：<span ng-bind="count.amount | currency:''"></span>元</div>
+									<div class="col-sm-2 checkbox">品牌分润：<span ng-bind="count.oemShare | currency:''"></span>元</div>
+								</div>
+								<div class="form-group">
+									 <div ui-grid="gridOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns class="grid"></div>
+								</div>
+							</div>
+							
+						</div>
+						<div style="height: 50px"></div>
+					</div>
+				</div>
+			</div>
+	</form>
+
+</div>

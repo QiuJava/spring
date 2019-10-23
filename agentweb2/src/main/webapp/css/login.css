@@ -1,0 +1,19 @@
+.loginbg{ background:none}
+.login-bg{background: url("../img/login/login_bg@2x.png") no-repeat #DEDFE0; background-size:cover;min-height:600px;}
+.login-bgperagent{background: url("../img/login_bg@2x.png") no-repeat #DEDFE0; background-size:cover;min-height:600px;}
+.loginColumns{ max-width: 1000px;}
+.loginColumns h2{ color:#fff; font-size:30px; text-align:center; margin:0 0 64px; line-height:30px;}
+.lg-top{ background:#fff; height:120px;}
+.lg-top img{ padding:30px 40px 0 50px; float:left}
+.lg-top span{ font-size:34px; color:#666; line-height:36px; height:36px; border-left:1px solid #dbdbdb; padding-left:30px; margin-top:42px; float:left}
+.loginbox{ width:562px; height:330px; margin-right: -120px; border-radius:0; box-shadow: 0px 0px 10px #ddd;}
+.lg-left{ width:360px;}
+.lg-left h3{color:#333;}
+.lg-right{ padding:75px 0 0;}
+.lg-right img{ width:140px; height:140px; border:9px solid #eee; padding:10px; background:#fff;}
+.lg-right p{font-size:16px;color:#666; padding-top:18px;}
+.lg-right::after{ background:none}
+.forget-ps a{color:#72B1FF; text-decoration:none}
+.lg-txt1{background: url("../img/login/login_account@2x.png") no-repeat left; border-radius:2px;}
+.lg-txt2{background: url("../img/login/login_password@2x.png") no-repeat left; border-radius:2px;}
+.loginBottom{ width: 100%; padding: 15px 0 ; text-align: center;}

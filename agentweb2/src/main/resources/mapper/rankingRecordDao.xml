@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.daoSuperBank.RankingRecordDao" >
+
+    <select id="queryRankingRecord" resultType="cn.eeepay.framework.model.RankingRecordInfo">
+        SELECT
+        rr.`id`,
+        rr.`ranking_no`,
+        rr.`batch_no`,
+        rr.`rule_no`,
+        rr.`ranking_name`,
+        rr.`ranking_type`,
+        rr.`org_id`,
+        rr.`push_num`,
+        rr.`push_total_amount`,
+        rr.`push_real_num`,
+        rr.`push_real_amount`,
+        rr.`status`,
+        rr.`data_type`,
+        oi.`org_name`,
+        DATE_FORMAT(rr.`create_date`,'%Y-%m-%d %H:%i:%s') create_date,
+        DATE_FORMAT(rr.`start_date`,'%Y-%m-%d %H:%i:%s') start_date,
+        DATE_FORMAT(rr.`end_date`,'%Y-%m-%d %H:%i:%s') end_date
+        FROM ranking_record rr
+        LEFT JOIN org_info oi ON oi.`org_id` = rr.`org_id`
+        <include refid="rankingRecordCommonWhere"/>
+        ORDER BY rr.`create_date` desc
+    </select>
+    <select id="getRankingRecordById" resultType="cn.eeepay.framework.model.RankingRecordInfo">
+        SELECT
+        rr.`id`,
+        rr.`ranking_no`,
+        rr.`batch_no`,
+        rr.`rule_no`,
+        rr.`ranking_name`,
+        rr.`ranking_type`,
+        rr.`org_id`,
+        rr.`push_num`,
+        rr.`push_total_amount`,
+        rr.`push_real_num`,
+        rr.`push_real_amount`,
+        rr.`status`,
+        oi.`org_name`,
+        DATE_FORMAT(rr.`create_date`,'%Y-%m-%d %H:%i:%s') create_date,
+        DATE_FORMAT(rr.`start_date`,'%Y-%m-%d %H:%i:%s') start_date,
+        DATE_FORMAT(rr.`end_date`,'%Y-%m-%d %H:%i:%s') end_date
+        FROM ranking_record rr
+        LEFT JOIN org_info oi ON oi.`org_id` = rr.`org_id`
+        <include refid="rankingRecordCommonWhere"/>
+    </select>
+
+    <select id="queryRankingRecordSum" resultType="map">
+        SELECT
+        sum(rr.`push_real_num`) as pushRealNumCount,
+        sum(rr.`push_real_amount`) as pushRealAmountCount
+        FROM ranking_record rr
+        <include refid="rankingRecordCommonWhere"/>
+    </select>
+
+
+    <sql id="rankingRecordCommonWhere">
+        WHERE rr.`org_id` = #{bean.orgId}
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.rankingNo)">
+            AND rr.`ranking_no` = #{bean.rankingNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.rankingType)">
+            AND rr.`ranking_type` = #{bean.rankingType}
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.status)">
+            AND rr.`status` = #{bean.status}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.rankingName)">
+            AND rr.`ranking_name` = #{bean.rankingName}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.ruleNo)">
+            AND rr.`rule_no` = #{bean.ruleNo}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.id)">
+            AND rr.`id` = #{bean.id}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(bean.dataType)">
+            AND rr.`data_type` = #{bean.dataType}
+        </if>
+    </sql>
+
+</mapper>

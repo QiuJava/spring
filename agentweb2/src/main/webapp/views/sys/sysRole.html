@@ -1,0 +1,81 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#/service/addService">主页</a></li>
+			<li><a>系统管理</a></li>
+			<li class="active"><strong>系统角色</strong></li>
+		</ol>
+	</div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-app
+	ng-controller="sysRoleCtrl">
+	<form class="form-horizontal" id="form1">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel-body ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>角色条件查询</h5>
+						<!--<div ibox-tools></div>-->
+					</div>
+					<div class="ibox-content">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">角色名称：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control"
+									ng-model='baseInfo.roleName'>
+							</div>
+							<label class="col-sm-2 control-label">角色编码：</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control"
+									ng-model='baseInfo.roleCode'>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2"></label>
+							<div class="col-sm-8">
+								<button class="btn btn-primary6 btn-mr20" type="button" ng-click='refreshRoleList()'>查询</button>
+								<button class="btn btn-primary3 btn-mr20" type="button" ng-click="resetForm()">清空</button>
+								<button class="btn btn-primary5" type="button" ng-click="showNewRole()">新增</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-body ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>角色信息列表</h5>
+						<!--<div ibox-tools="" class="ng-scope"></div>-->
+					</div>
+					<div class="ibox-content">
+						<div class="gridStyle" ui-grid="roleGrid" ui-grid-pagination ui-grid-resize-columns ui-grid-pinning></div>
+					</div>
+				</div>
+				<div style="height: 50px"></div>
+			</div>
+		</div>
+	</form>
+
+	<!-- 模态框（Modal）确定删除 -->
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal">
+	                  &times;
+	            </button>
+	            <h3 class="modal-title">消息对话框</h3>
+	         </div>
+	         <div class="modal-body">
+	         	 确定删除{{nameDel}}吗？
+	         	 <input type="hidden" class="form-control" ng-model="id">
+	         </div>
+	         <div class="modal-footer">
+			    <button type="button" ng-click="deleteModalClose()" class="btn btn-primary">确定</button>
+			    <button type="button" data-dismiss="modal" class="btn btn-primary8">取消</button>
+			 </div>
+	      </div>
+		</div>
+	</div>
+</div>

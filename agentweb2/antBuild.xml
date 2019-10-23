@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	 ======================================================================
+     flowmoney builder 4 product
+     ======================================================================
+-->
+
+<project name="agentweb2" default="pack">
+    <property name="tarForFlowmoney" value="./target/tarForFlowmoney"/>
+    <property name="Web" value="./target/agentweb2"/>
+    <property name="appName" value="agentweb2"/>
+    <property name="source" value="1.7"/>
+    <property name="target" value="1.7"/>
+    <property name="app.dir" value="."/>
+
+    <path id="core2.classpath">
+        <fileset dir="${app.dir}/target/agentweb2/WEB-INF/lib/"/>
+    </path>
+
+    <target name="init">
+        <tstamp>
+            <format property="TODAY" pattern="yyyyMMdd" locale="cn"/>
+        </tstamp>
+        <delete dir="${tarForFlowmoney}"/>
+        <mkdir dir="${tarForFlowmoney}"/>
+        <echo>${appName} ${TODAY}</echo>
+    </target>
+    <target name="packStatic" depends="init">
+        <tar destfile="${tarForFlowmoney}/${appName}-${TODAY}.tar">
+            <tarfileset dir="${Web}">
+                <include name="js/controllers/agent/addAgentCtrl.js"/>
+                <include name="js/controllers/agent/editAgentCtrl.js"/>
+                <!--<include name="WEB-INF/classes/cn/eeepay/boss/action/BusinessProductDefineAction*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/service/BusinessProductDefineService*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/service/impl/BusinessProductDefineServiceImpl*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/dao/BusinessProductDefineDao*.class"/>-->
+
+                <!--<include name="WEB-INF/classes/cn/eeepay/boss/action/AgentInfoAction*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/service/AgentInfoService*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/service/impl/AgentInfoServiceImpl*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/dao/AgentInfoDao*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/service/impl/AgentShareTaskServiceImpl*.class"/>-->
+                <!--<include name="WEB-INF/classes/mapper/AgentInfoDao.xml"/>-->
+
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/model/JoinTable*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/model/ServiceRate*.class"/>-->
+                <!--<include name="WEB-INF/classes/cn/eeepay/framework/model/AgentShareRule*.class"/>-->
+                <!--<include name="views/agent/agentBase.html"/>-->
+                <!--<include name="views/agent/addAgent.html"/>-->
+                <!--<include name="views/agent/editAgent.html"/>-->
+                <!--<include name="views/agent/agentDetailBase.html"/>-->
+                <!--<include name="views/agent/agentDetail.html"/>-->
+
+                <!--<include name="js/controllers.js"/>-->
+                <!---->
+                <!--<include name="js/controllers/agent/editAgentCtrl.js"/>-->
+                <!--<include name="js/controllers/agent/agentDetailCtrl.js"/>-->
+                <!--<include name="js/controllers/myInfo/myInfoAccountCtrl.js"/>-->
+                <!--<include name="WEB-INF/classes/applicationContext-jdbc-read.xml"/>-->
+
+                <!--20191021-zxs机具管理-更改活动-->
+                <include name="WEB-INF/classes/cn/eeepay/framework/dao/TerminalInfoDao*.class"/>
+                <include name="WEB-INF/classes/cn/eeepay/framework/service/impl/TerminalInfoServiceImpl*.class"/>
+                <!--机具管理-更改活动-->
+            </tarfileset>
+        </tar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${tarForFlowmoney}"/>
+        <mkdir dir="${tarForFlowmoney}"/>
+    </target>
+
+    <target name="pack" depends="packStatic"/>
+
+    <target name="all" depends="clean, packStatic"/>
+</project>

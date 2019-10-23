@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.MerchantServiceQuotaDao" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.MerchantServiceQuota" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="holidays_mark" property="holidaysMark" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantId" jdbcType="VARCHAR" />
+    <result column="single_day_amount" property="singleDayAmount" jdbcType="DECIMAL" />
+    <result column="single_count_amount" property="singleCountAmount" jdbcType="DECIMAL" />
+    <result column="single_daycard_amount" property="singleDaycardAmount" jdbcType="DECIMAL" />
+    <result column="single_daycard_count" property="singleDaycardCount" jdbcType="INTEGER" />
+    <result column="efficient_date" property="efficientDate" jdbcType="TIMESTAMP" />
+    <result column="disabled_date" property="disabledDate" jdbcType="TIMESTAMP" />
+    <result column="service_name" property="serviceName" jdbcType="TIMESTAMP" />
+    <result column="useable" property="useable" jdbcType="TIMESTAMP" />
+    <result column="fixed_mark" property="fixedMark" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, service_id, card_type, holidays_mark, merchant_no, single_day_amount, single_count_amount, 
+    single_daycard_amount, single_daycard_count, efficient_date, disabled_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.eeepay.framework.model.MerchantServiceQuotaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from merchant_service_quota
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_service_quota
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from merchant_service_quota
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.eeepay.framework.model.MerchantServiceQuotaExample" >
+    delete from merchant_service_quota
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.eeepay.framework.model.MerchantServiceQuota" >
+    insert into merchant_service_quota (id, service_id, card_type, 
+      holidays_mark, merchant_no, single_day_amount, 
+      single_count_amount, single_daycard_amount, 
+      single_daycard_count, efficient_date, disabled_date
+      )
+    values (#{id,jdbcType=BIGINT}, #{serviceId,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
+      #{holidaysMark,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR}, #{singleDayAmount,jdbcType=DECIMAL}, 
+      #{singleCountAmount,jdbcType=DECIMAL}, #{singleDaycardAmount,jdbcType=DECIMAL}, 
+      #{singleDaycardCount,jdbcType=INTEGER}, #{efficientDate,jdbcType=TIMESTAMP}, #{disabledDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.eeepay.framework.model.MerchantServiceQuota" >
+    insert into merchant_service_quota
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serviceId != null" >
+        service_id,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="holidaysMark != null" >
+        holidays_mark,
+      </if>
+      <if test="merchantId != null" >
+        merchant_no,
+      </if>
+      <if test="singleDayAmount != null" >
+        single_day_amount,
+      </if>
+      <if test="singleCountAmount != null" >
+        single_count_amount,
+      </if>
+      <if test="singleDaycardAmount != null" >
+        single_daycard_amount,
+      </if>
+      <if test="singleDaycardCount != null" >
+        single_daycard_count,
+      </if>
+      <if test="efficientDate != null" >
+        efficient_date,
+      </if>
+      <if test="disabledDate != null" >
+        disabled_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="holidaysMark != null" >
+        #{holidaysMark,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="singleDayAmount != null" >
+        #{singleDayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="singleCountAmount != null" >
+        #{singleCountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="singleDaycardAmount != null" >
+        #{singleDaycardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="singleDaycardCount != null" >
+        #{singleDaycardCount,jdbcType=INTEGER},
+      </if>
+      <if test="efficientDate != null" >
+        #{efficientDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disabledDate != null" >
+        #{disabledDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.eeepay.framework.model.MerchantServiceQuotaExample" resultType="java.lang.Integer" >
+    select count(*) from merchant_service_quota
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update merchant_service_quota
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceId != null" >
+        service_id = #{record.serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        card_type = #{record.cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.holidaysMark != null" >
+        holidays_mark = #{record.holidaysMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_no = #{record.merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singleDayAmount != null" >
+        single_day_amount = #{record.singleDayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.singleCountAmount != null" >
+        single_count_amount = #{record.singleCountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.singleDaycardAmount != null" >
+        single_daycard_amount = #{record.singleDaycardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.singleDaycardCount != null" >
+        single_daycard_count = #{record.singleDaycardCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.efficientDate != null" >
+        efficient_date = #{record.efficientDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.disabledDate != null" >
+        disabled_date = #{record.disabledDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update merchant_service_quota
+    set id = #{record.id,jdbcType=BIGINT},
+      service_id = #{record.serviceId,jdbcType=VARCHAR},
+      card_type = #{record.cardType,jdbcType=VARCHAR},
+      holidays_mark = #{record.holidaysMark,jdbcType=VARCHAR},
+      merchant_no = #{record.merchantId,jdbcType=VARCHAR},
+      single_day_amount = #{record.singleDayAmount,jdbcType=DECIMAL},
+      single_count_amount = #{record.singleCountAmount,jdbcType=DECIMAL},
+      single_daycard_amount = #{record.singleDaycardAmount,jdbcType=DECIMAL},
+      single_daycard_count = #{record.singleDaycardCount,jdbcType=INTEGER},
+      efficient_date = #{record.efficientDate,jdbcType=TIMESTAMP},
+      disabled_date = #{record.disabledDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.eeepay.framework.model.MerchantServiceQuota" >
+    update merchant_service_quota
+    <set >
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="holidaysMark != null" >
+        holidays_mark = #{holidaysMark,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        merchant_no = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="singleDayAmount != null" >
+        single_day_amount = #{singleDayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="singleCountAmount != null" >
+        single_count_amount = #{singleCountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="singleDaycardAmount != null" >
+        single_daycard_amount = #{singleDaycardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="singleDaycardCount != null" >
+        single_daycard_count = #{singleDaycardCount,jdbcType=INTEGER},
+      </if>
+      <if test="efficientDate != null" >
+        efficient_date = #{efficientDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disabledDate != null" >
+        disabled_date = #{disabledDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.eeepay.framework.model.MerchantServiceQuota" >
+    update merchant_service_quota
+    set service_id = #{serviceId,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      holidays_mark = #{holidaysMark,jdbcType=VARCHAR},
+      merchant_no = #{merchantId,jdbcType=VARCHAR},
+      single_day_amount = #{singleDayAmount,jdbcType=DECIMAL},
+      single_count_amount = #{singleCountAmount,jdbcType=DECIMAL},
+      single_daycard_amount = #{singleDaycardAmount,jdbcType=DECIMAL},
+      single_daycard_count = #{singleDaycardCount,jdbcType=INTEGER},
+      efficient_date = #{efficientDate,jdbcType=TIMESTAMP},
+      disabled_date = #{disabledDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+</mapper>

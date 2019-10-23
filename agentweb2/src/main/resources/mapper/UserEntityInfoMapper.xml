@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.eeepay.framework.dao.UserEntityInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.UserEntityInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="entity_id" jdbcType="VARCHAR" property="entityId" />
+    <result column="apply" jdbcType="VARCHAR" property="apply" />
+    <result column="manage" jdbcType="VARCHAR" property="manage" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="last_notice_time" jdbcType="TIMESTAMP" property="lastNoticeTime" />
+    <result column="loginkey" jdbcType="VARCHAR" property="loginkey" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="access_team_id" jdbcType="VARCHAR" property="accessTeamId" />
+  </resultMap>
+  
+  <resultMap id="OneToManyResultMap" type="cn.eeepay.framework.model.UserEntityInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="entity_id" jdbcType="VARCHAR" property="entityId" />
+    <result column="apply" jdbcType="VARCHAR" property="apply" />
+    <result column="manage" jdbcType="VARCHAR" property="manage" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="last_notice_time" jdbcType="TIMESTAMP" property="lastNoticeTime" />
+    <result column="loginkey" jdbcType="VARCHAR" property="loginkey" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <collection property="roles" javaType="list" select="select_role" column="id"
+    	ofType="cn.eeepay.framework.model.ShiroRole" />    	
+  </resultMap>
+  
+  <select id="select_role"  parameterType="int" resultMap="cn.eeepay.framework.dao.ShiroRoleMapper.OneToManyResultMap">  
+  		select r.* from agent_shiro_role r,agent_user_role ur where  ur.role_id=r.id and ur.user_id=#{id}
+  </select>
+</mapper>

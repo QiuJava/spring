@@ -1,0 +1,144 @@
+<!-- 导航URL -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="index.html">主页</a></li>
+            <li>业务活动</li>
+            <li class="active"><strong>赠送记录查询</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn"
+     ng-controller="giftsRecordCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>赠送记录查询</h5>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" id="form1">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel-body ibox float-e-margins">
+                                    <div class="ibox-content">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">商户编号/名称：</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control"
+                                                       ng-model='queryInfo.merchantNo'>
+                                            </div>
+                                            <label class="col-sm-2 control-label">参与活动：</label>
+                                            <div class="col-sm-2">
+                                                <select class="form-control" ng-model="queryInfo.couponCode" ng-options="x.value as x.text for x in dictList['COUPON_CODE']">
+                                                    <option value="" selected>全部</option>
+                                                </select>
+                                            </div>
+                                            <label class="col-sm-2 control-label">商户手机号：</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control"
+                                                       ng-model='queryInfo.mobilephone'>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label class="col-sm-2 control-label">券编号：</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control" ng-model='queryInfo.couponNo'>
+                                            </div>
+                                            <label class="col-sm-2 control-label">代理商：</label>
+                                            <div class="col-sm-3">
+                                                <select chosen="{width:'100%'}" class="chosen-select " tabindex="4"
+                                                        ng-model='queryInfo.agentNo'
+                                                        ng-options="x.value as x.text for x in agent"/>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" >赠送日期：</label>
+                                           <!-- <div class="col-sm-2">
+                                                <input type="datetime" class="form-control"
+                                                       style="width:auto;display:inline-block;"
+                                                       date-time ng-model="queryInfo.startTime"
+                                                       date-change="changeMinMax" max-date="maxDate" view="date"
+                                                       min-view="date" format="YYYY-MM-DD">
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input type="datetime" class="form-control"
+                                                       style="width:auto;display:inline-block;"
+                                                       date-time ng-model="queryInfo.endTime"
+                                                       date-change="changeMinMax" max-date="maxDate" view="date"
+                                                       min-view="date" format="YYYY-MM-DD">
+                                            </div>-->
+                                            <div class="col-sm-5">
+                                                <input id="d5221" class="form-control" type="datetime" ng-model="queryInfo.startTime" onchange=""  style="width:auto;display:inline-block;"
+                                                       onFocus="var d5222=$dp.$('d5222');WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',changed:verifyTime(1,'#d5221','#d5222',31,isVerifyTime),onpicked:function(){d5222.focus();},maxDate:'#F{$dp.$D(\'d5222\')||\'%y-%M-%d\'}'})"/>
+                                                ~
+                                                <input id="d5222" class="form-control" type="datetime"  ng-model="queryInfo.endTime" onchange=""  style="width:auto;display:inline-block;"
+                                                       onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',changed:verifyTime(2,'#d5221','#d5222',31,isVerifyTime),minDate:'#F{$dp.$D(\'d5221\')}',maxDate:'%y-%M-%d 23:59:59'})"/>
+                                                <br/><span><font color="#999">备注：查询范围不能超过31天</font></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2"></label>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-primary6 btn-mr20" type="button"
+                                                        ng-click='listUserCoupons()' id="btnSubmit">查询
+                                                </button>
+                                                <button class="btn btn-primary3 btn-mr20" type="button"
+                                                        ng-click="resetForm()">清空
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>列表</h5>
+                                        <!--<div ibox-tools="" class="ng-scope"></div>-->
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">汇总</label>
+                                            <div class="col-sm-2 checkbox">
+                                                赠送金额:
+                                                <span ng-bind="countUserCoupon.faceValue" class="ng-binding"/>
+                                                元
+                                            </div>
+                                            <div class="col-sm-2 checkbox">
+                                                可用金额:
+                                                <span ng-bind="countUserCoupon.balance" class="ng-binding"/>
+                                                元
+                                            </div>
+                                            <div class="col-sm-2 checkbox">
+                                                已使用金额:
+                                                <span ng-bind="countUserCoupon.usedMoney" class="ng-binding"/>
+                                                元
+                                            </div>
+                                            <div class="col-sm-2 checkbox">
+                                                过期金额:
+                                                <span ng-bind="countUserCoupon.overdueMoney" class="ng-binding"/>
+                                                元
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="gridStyle" ui-grid="activityGrid" ui-grid-pagination
+                                                 ui-grid-resize-columns ui-grid-pinning></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 50px"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 30px;"></div>
+</div>
