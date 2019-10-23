@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>移联支付账务系统</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+<!-- 消息提示 样式-->
+<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!-- 提示后逐渐消失 -->
+<link href="js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+<!-- jqGrid plugin -->
+<link href="css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+<link href="css/plugins/jqGrid/ui.jqgrid.css" rel="stylesheet">
+<!-- 动画效果 -->
+<link href="css/animate.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
+
+<body class="no-skin-config1">
+	<div id="wrapper">
+		<!-- 导航开始-->
+		<nav class="navbar-default navbar-static-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav metismenu" id="side-menu">
+					<!-- 导航头开始 -->
+					<li class="nav-header">
+						<div class="dropdown profile-element">
+							<span> 
+								<img alt="image" class="img-circle" src="img/profile_small.jpg" />
+							</span>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<span class="clear"> 
+									<span class="block m-t-xs">
+										<strong class="font-bold">David Williams</strong>
+									</span> 
+									<span class="text-muted text-xs block">
+										Art Director <b class="caret"></b>
+									</span>
+								</span>
+							</a>
+							<ul class="dropdown-menu animated fadeInRight m-t-xs">
+								<li><a href="profile.html">Profile</a></li>
+								<li><a href="contacts.html">Contacts</a></li>
+								<li><a href="mailbox.html">Mailbox</a></li>
+								<li class="divider"></li><!-- 分割线 -->
+								<li><a href="login.html">Logout</a></li>
+							</ul>
+						</div>
+						<div class="logo-element">IN+</div>
+					</li>
+					<!-- 导航头结束 -->
+					
+					<!-- 导航列表开始 -->
+					<li class="active"><!-- 活动列表并展开 -->
+						<a href="index.html">
+							<i class="fa fa-th-large"></i> 
+							<span class="nav-label">Dashboards</span>
+							<span class="fa arrow"></span>
+						</a>
+						<ul class="nav nav-second-level">
+							<li class="active"><a href="index.html">Dashboard v.1</a></li>
+							<li><a href="dashboard_2.html">Dashboard v.2</a></li>
+							<li><a href="dashboard_3.html">Dashboard v.3</a></li>
+							<li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
+							<li><a href="dashboard_5.html">
+									Dashboard v.5<span class="label label-primary pull-right">NEW</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="jq_grid.html"><i class="fa fa-envelope"></i>
+							<span class="nav-label">表格 </span>
+							<span class="label label-warning pull-right"></span>
+						</a>
+					</li>
+					<li>
+						<a href="layouts.html">
+							<i class="fa fa-diamond"></i> 
+							<span class="nav-label">Layouts</span>
+						</a>
+					</li>
+					<li>	
+						<a href="#">
+							<i class="fa fa-bar-chart-o"></i> 
+							<span class="nav-label">Graphs</span>
+							<span class="fa arrow"></span>
+						</a>
+						<ul class="nav nav-second-level ">
+							<li><a href="graph_flot.html">Flot Charts</a></li>
+							<li><a href="graph_morris.html">Morris.js Charts</a></li>
+							<li><a href="graph_rickshaw.html">Rickshaw Charts</a></li>
+							<li><a href="graph_chartjs.html">Chart.js</a></li>
+							<li><a href="graph_chartist.html">Chartist</a></li>
+							<li><a href="c3.html">c3 charts</a></li>
+							<li><a href="graph_peity.html">Peity Charts</a></li>
+							<li><a href="graph_sparkline.html">Sparkline Charts</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="mailbox.html"><i class="fa fa-envelope"></i>
+							<span class="nav-label">Mailbox </span>
+							<span class="label label-warning pull-right">16/24</span>
+						</a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="mailbox.html">Inbox</a></li>
+							<li><a href="mail_detail.html">Email view</a></li>
+							<li><a href="mail_compose.html">Compose email</a></li>
+							<li><a href="email_template.html">Email templates</a></li>
+						</ul>
+					</li>
+					<li class="special_link">
+						<a href="package.html">
+							<i class="fa fa-database"></i> 
+							<span class="nav-label">Package</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<!-- 导航结束 -->
+		
+		<!-- 主要内容开始 -->
+		<div id="page-wrapper" class="gray-bg dashbard-1">
+			<div class="row border-bottom">
+				<nav class="navbar navbar-static-top" role="navigation"
+					style="margin-bottom: 0">
+					<div class="navbar-header">
+						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
+							href="#"><i class="fa fa-bars"></i> </a>
+						<form role="search" class="navbar-form-custom"
+							action="search_results.html">
+							<div class="form-group">
+								<input type="text" placeholder="Search for something..." 
+									class="form-control" name="top-search" id="top-search">
+							</div>
+						</form>
+					</div>
+					
+					<ul class="nav navbar-top-links navbar-right">
+						<li>
+							<span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> 
+								<i class="fa fa-envelope"></i>
+								<span class="label label-warning">16</span>
+							</a>
+							<ul class="dropdown-menu dropdown-messages">
+								<li>
+									<div class="dropdown-messages-box">
+										<a href="profile.html" class="pull-left"> <img alt="image"
+											class="img-circle" src="img/a7.jpg">
+										</a>
+										<div class="media-body">
+											<small class="pull-right">46h ago</small> <strong>Mike
+												Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+											<small class="text-muted">3 days ago at 7:58 pm -
+												10.06.2014</small>
+										</div>
+									</div>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<div class="dropdown-messages-box">
+										<a href="profile.html" class="pull-left"> <img alt="image"
+											class="img-circle" src="img/a4.jpg">
+										</a>
+										<div class="media-body ">
+											<small class="pull-right text-navy">5h ago</small> <strong>Chris
+												Johnatan Overtunk</strong> started following <strong>Monica
+												Smith</strong>. <br> <small class="text-muted">Yesterday
+												1:21 pm - 11.06.2014</small>
+										</div>
+									</div>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<div class="dropdown-messages-box">
+										<a href="profile.html" class="pull-left"> <img alt="image"
+											class="img-circle" src="img/profile.jpg">
+										</a>
+										<div class="media-body ">
+											<small class="pull-right">23h ago</small> <strong>Monica
+												Smith</strong> love <strong>Kim Smith</strong>. <br> <small
+												class="text-muted">2 days ago at 2:30 am -
+												11.06.2014</small>
+										</div>
+									</div>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<div class="text-center link-block">
+										<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>Read
+												All Messages</strong>
+										</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> 
+								<i class="fa fa-bell"></i>
+								<span class="label label-primary">8</span>
+							</a>
+							<ul class="dropdown-menu dropdown-alerts">
+								<li>
+									<a href="mailbox.html">
+										<div>
+											<i class="fa fa-envelope fa-fw"></i> You have 16 messages <span
+												class="pull-right text-muted small">4 minutes ago</span>
+										</div>
+									</a>
+								</li>
+								<li class="divider"></li>
+								<li><a href="profile.html">
+										<div>
+											<i class="fa fa-twitter fa-fw"></i> 3 New Followers <span
+												class="pull-right text-muted small">12 minutes ago</span>
+										</div>
+								</a></li>
+								<li class="divider"></li>
+								<li>
+									<a href="grid_options.html">
+										<div>
+											<i class="fa fa-upload fa-fw"></i> Server Rebooted <span
+												class="pull-right text-muted small">4 minutes ago</span>
+										</div>
+									</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<div class="text-center link-block">
+										<a href="notifications.html"> <strong>See All
+												Alerts</strong> <i class="fa fa-angle-right"></i>
+										</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="login.html"> 
+								<i class="fa fa-sign-out"></i>Log out
+							</a>
+						</li>
+						<li>
+							<a class="right-sidebar-toggle">
+								<i class="fa fa-tasks"></i>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		
+			
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<h2>jqGrid</h2>
+					<ol class="breadcrumb">
+						<li><a href="index.html">Home</a></li>
+						<li><a>Tables</a></li>
+						<li class="active"><strong>jqGrid</strong></li>
+					</ol>
+				</div>
+			</div>
+			<div class="wrapper wrapper-content  animated fadeInRight">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox ">
+							<div class="ibox-title">
+								<h5>jQuery Grid Plugin – jqGrid</h5>
+							</div>
+							<div class="ibox-content">
+								<p>
+									<strong>jqGrid</strong> is an Ajax-enabled JavaScript control
+									that provides solutions for representing and manipulating
+									tabular data on the web. Since the grid is a client-side
+									solution loading data dynamically through Ajax callbacks, it
+									can be integrated with any server-side technology, including
+									PHP, ASP, Java Servlets, JSP, ColdFusion, and Perl. jqGrid uses
+									a jQuery Java Script Library and is written as plugin for that
+									package. For more information on jQuery Grid, please refer to
+									the <a target="_blank" href="http://www.trirand.com/blog/">
+										jqGrid web site.</a>
+								</p>
+
+								<h4>Basic example</h4>
+
+								<div class="jqGrid_wrapper">
+									<table id="table_list_1"></table>
+									<div id="pager_list_1"></div>
+								</div>
+
+								<h4>Advanced example</h4>
+								<p></p>
+
+								<div class="jqGrid_wrapper">
+									<table id="table_list_2"></table>
+									<div id="pager_list_2"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				<input type="BUTTON" id="ed1" value="Edit row 13" />
+				<input type="BUTTON" id="sved1" disabled='true' value="Save row 13" />
+				<input type="BUTTON" id="cned1" disabled='true' value="Cancel Save" />
+				<input type="BUTTON" id="bedata" value="Edit Selected" />
+
+		</div>
+
+		
+		<!-- 主要内容结束 -->
+		
+		<!-- 右则功能设置开始 -->		
+		<div id="right-sidebar">
+			<div class="sidebar-container">
+				<ul class="nav nav-tabs navs-3">
+					<li class="active">
+						<a data-toggle="tab" href="#tab-1">Notes</a>
+					</li>
+					<li class="">
+						<a data-toggle="tab" href="#tab-2"> <i class="fa fa-gear"></i></a>
+					</li>
+				</ul>
+
+				<div class="tab-content">
+					<div id="tab-1" class="tab-pane active">
+						<div class="sidebar-title">
+							<h3>
+								<i class="fa fa-comments-o"></i> Latest Notes
+							</h3>
+							<small><i class="fa fa-tim"></i> You have 10 new message.</small>
+						</div>
+						<div>
+							<div class="sidebar-message">
+								<a href="#">
+									<div class="pull-left text-center">
+										<img alt="image" class="img-circle message-avatar"
+											src="img/a1.jpg">
+
+										<div class="m-t-xs">
+											<i class="fa fa-star text-warning"></i> <i
+												class="fa fa-star text-warning"></i>
+										</div>
+									</div>
+									<div class="media-body">
+
+										There are many variations of passages of Lorem Ipsum
+										available. <br> <small class="text-muted">Today
+											4:21 pm</small>
+									</div>
+								</a>
+							</div>
+							<div class="sidebar-message">
+								<a href="#">
+									<div class="pull-left text-center">
+										<img alt="image" class="img-circle message-avatar"
+											src="img/a2.jpg">
+									</div>
+									<div class="media-body">
+										The point of using Lorem Ipsum is that it has a more-or-less
+										normal. <br> <small class="text-muted">Yesterday
+											2:45 pm</small>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div id="tab-2" class="tab-pane">
+
+						<div class="sidebar-title">
+							<h3>
+								<i class="fa fa-gears"></i> Settings
+							</h3>
+							<small><i class="fa fa-tim"></i> You have 14 projects. 10
+								not completed.</small>
+						</div>
+
+						<div class="setings-item">
+							<span> Show notifications </span>
+							<div class="switch">
+								<div class="onoffswitch">
+									<input type="checkbox" name="collapsemenu"
+										class="onoffswitch-checkbox" id="example"> <label
+										class="onoffswitch-label" for="example"> <span
+										class="onoffswitch-inner"></span> <span
+										class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="setings-item">
+							<span> Disable Chat </span>
+							<div class="switch">
+								<div class="onoffswitch">
+									<input type="checkbox" name="collapsemenu" checked
+										class="onoffswitch-checkbox" id="example2"> <label
+										class="onoffswitch-label" for="example2"> <span
+										class="onoffswitch-inner"></span> <span
+										class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="setings-item">
+							<span> Enable history </span>
+							<div class="switch">
+								<div class="onoffswitch">
+									<input type="checkbox" name="collapsemenu"
+										class="onoffswitch-checkbox" id="example3"> <label
+										class="onoffswitch-label" for="example3"> <span
+										class="onoffswitch-inner"></span> <span
+										class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="setings-item">
+							<span> Show charts </span>
+							<div class="switch">
+								<div class="onoffswitch">
+									<input type="checkbox" name="collapsemenu"
+										class="onoffswitch-checkbox" id="example4"> <label
+										class="onoffswitch-label" for="example4"> <span
+										class="onoffswitch-inner"></span> <span
+										class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="setings-item">
+							<span> Offline users </span>
+							<div class="switch">
+								<div class="onoffswitch">
+									<input type="checkbox" checked name="collapsemenu"
+										class="onoffswitch-checkbox" id="example5"> <label
+										class="onoffswitch-label" for="example5"> <span
+										class="onoffswitch-inner"></span> <span
+										class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="setings-item">
+							<span> Global search </span>
+							<div class="switch">
+								<div class="onoffswitch">
+									<input type="checkbox" checked name="collapsemenu"
+										class="onoffswitch-checkbox" id="example6"> <label
+										class="onoffswitch-label" for="example6"> <span
+										class="onoffswitch-inner"></span> <span
+										class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="setings-item">
+							<span> Update everyday </span>
+							<div class="switch">
+								<div class="onoffswitch">
+									<input type="checkbox" name="collapsemenu"
+										class="onoffswitch-checkbox" id="example7"> <label
+										class="onoffswitch-label" for="example7"> <span
+										class="onoffswitch-inner"></span> <span
+										class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- 右则功能设置结束 -->		
+		<!-- 消息小窗口开始 -->
+		<div class="small-chat-box fadeInRight animated">
+			<!-- 消息标题开始 -->
+			<div class="heading" draggable="true">
+				<small class="chat-date pull-right"> 02.19.2015 </small> Small chat
+			</div>
+			<!-- 消息标题结束 -->
+			<!-- 消息内容开始 -->
+			<div class="content">
+				<div class="left">
+					<div class="author-name">
+						用户1 <small class="chat-date"> 10:02 am </small>
+					</div>
+					<div class="chat-message active">你好！</div>
+				</div>
+				<div class="right">
+					<div class="author-name active">
+						用户2 <small class="chat-date"> 11:24 am </small>
+					</div>
+					<div class="chat-message">大家好！</div>
+				</div>
+			</div>
+			<!-- 消息标题结束 -->
+			<!-- 发送消息开始 -->
+			<div class="form-chat">
+				<div class="input-group input-group-sm">
+					<input type="text" class="form-control"> <span
+						class="input-group-btn">
+						<button class="btn btn-primary" type="button">Send</button>
+					</span>
+				</div>
+			</div>
+			<!-- 发送消息结束 -->
+		</div>
+		<!-- 消息小窗口结束 -->
+		
+		<div id="small-chat">
+			<span class="badge badge-warning pull-right">5</span> 
+			<a class="open-small-chat"> <i class="fa fa-comments"></i></a>
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Flot 
+	<script src="js/plugins/flot/jquery.flot.js"></script>
+	<script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+	<script src="js/plugins/flot/jquery.flot.spline.js"></script>
+	<script src="js/plugins/flot/jquery.flot.resize.js"></script>
+	<script src="js/plugins/flot/jquery.flot.pie.js"></script>-->
+
+	<!-- jqGrid -->
+    <script src="js/plugins/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="js/plugins/jqGrid/jquery.jqGrid.min.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
+
+	<!-- jQuery UI -->
+	<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+	<!-- GITTER -->
+	<script src="js/plugins/gritter/jquery.gritter.min.js"></script>
+
+	<!-- Sparkline 
+	<script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>-->
+
+	<!-- Sparkline demo data  
+	<script src="js/demo/sparkline-demo.js"></script>-->
+
+	<!-- ChartJS
+	<script src="js/plugins/chartJs/Chart.min.js"></script>-->
+
+	<!-- Toastr -->
+	<script src="js/plugins/toastr/toastr.min.js"></script>
+
+
+	<script>  
+		$(document).ready(function() {
+					setTimeout(function() {
+						toastr.options = {
+							closeButton : true,
+							progressBar : true,
+							showMethod : 'slideDown',
+							timeOut : 1000
+						};
+						toastr.success('Responsive Admin Theme','Welcome to INSPINIA');
+					}, 500);
+					var lastsel;
+
+					//初始化表格
+					//表格数据
+		            var mydata = [
+		                {id: "1", invdate: "20010-05-25 23:15:15", name: "test", note: "IN", tax: "10.00", total: "2111.00"} ,
+		                {id: "2", invdate: "2010-05-25", name: "test2", note: "IN", tax: "20.00", total: "320.00"},
+		                {id: "3", invdate: "2007-09-01", name: "test3", note: "FE", tax: "30.00", total: "430.00"},
+		                {id: "4", invdate: "2007-10-04", name: "test", note: "FE", tax: "10.00", total: "210.00"},
+		                {id: "5", invdate: "2007-10-05", name: "test2", note: "note2", tax: "20.00", total: "320.00"},
+		                {id: "6", invdate: "2007-09-06", name: "test3", note: "note3", tax: "30.00", total: "430.00"},
+		                {id: "7", invdate: "2007-10-04", name: "test", note: "note", tax: "10.00", total: "210.00"},
+		                {id: "8", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "21.00", total: "320.00"},
+		                {id: "9", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "11", invdate: "2007-10-01", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "12", invdate: "2007-10-02", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "13", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "14", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "15", invdate: "2007-10-05", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "16", invdate: "2007-09-06", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "17", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "18", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "19", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "21", invdate: "2007-10-01", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "22", invdate: "2007-10-02", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "23", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "24", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "25", invdate: "2007-10-05", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "26", invdate: "2007-09-06", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "27", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "28", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "8", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "21.00", total: "320.00"},
+		                {id: "9", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "11", invdate: "2007-10-01", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "12", invdate: "2007-10-02", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "13", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "14", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "15", invdate: "2007-10-05", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "16", invdate: "2007-09-06", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "17", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "18", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "19", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "21", invdate: "2007-10-01", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "22", invdate: "2007-10-02", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "23", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "24", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "25", invdate: "2007-10-05", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "26", invdate: "2007-09-06", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
+		                {id: "27", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
+		                {id: "28", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
+		                {id: "29", invdate: "2007-09-01 23:15:15", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"}
+		                
+		            ];
+
+		            // Configuration for jqGrid Example 1
+		            $("#table_list_1").jqGrid({
+		                data: mydata,
+		                datatype: "local",
+		                height: 250,
+		                autowidth: true,
+		                shrinkToFit: true,
+		                rowNum: 14,
+		                rowList: [10, 20],
+		                colNames: ['Inv---', 'Date', 'Client', 'Amount', 'Tax', 'Total', 'Notes'],
+		                colModel: [
+		                    {name: 'id', index: 'id', width: 60, sorttype: "int"},
+		                    {name: 'invdate', index: 'invdate', width: 90, sorttype: "date", formatter: "date",formatoptions:{srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s'},},
+		                    {name: 'name', index: 'name', editable:true, edittype:"text", width: 100},
+		                    {name: 'amount', index: 'amount',width: 80, align: "right", editable: true, sorttype: "float", formatter: "number"},
+		                    {name: 'tax', index: 'tax', width: 80, align: "right", sorttype: "float",editable: true},
+		                    {name: 'total', index: 'total', width: 80, align: "right", sorttype: "float",editable: true},
+		                    {name: 'note', index: 'note', width: 160, edittype:"select",editoptions: { value: "FE:FedEx; IN:InTime; TN:TNT" },editable: true}
+		                ],
+		                onSelectRow: function(id){
+		            		if(id && id!==lastsel){
+		            			jQuery('#table_list_1').jqGrid('restoreRow',lastsel);
+		            			jQuery('#table_list_1').jqGrid('editRow',id,true);
+		            			lastsel=id;
+		            		}
+		            	},
+
+		                multiselect: true,//支持多项选择
+		                pager: "#pager_list_1",
+		                viewrecords: true,
+		                caption: "我的JG表格",
+		                hidegrid: false
+		            });
+
+		            // Configuration for jqGrid Example 2
+		            $("#table_list_2").jqGrid({
+		                data: mydata,
+		                datatype: "local",
+		                height: 450,
+		                autowidth: true,
+		                shrinkToFit: true,
+		                rowNum: 20,
+		                rowList: [10, 20, 30],
+		                colNames:['Actions','Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
+		                colModel:[
+							{name:'act',index:'act', width:120,sortable:false},
+		                    {name:'id',index:'id', editable: true, width:60, sorttype:"int",search:true},
+		                    {name:'invdate',index:'invdate', editable: true, width:90, sorttype:"date", formatter:"date"},
+		                    {name:'name',index:'name', editable: true, width:100},
+		                    {name:'amount',index:'amount', editable: true,edittype:"float", width:80, align:"right", formatter:"number"},
+		                    {name:'tax',index:'tax', editable: true, width:80, align:"right",sorttype:"float"},
+		                    {name:'total',index:'total', editable: true, width:80,align:"right",sorttype:"float"},
+		                    {name:'note',index:'note', editable: true, width:100, sortable:false}
+		                    
+		                ],
+		                pager: "#pager_list_2",
+		                viewrecords: true,
+		                caption: "Example jqGrid 2",
+		                add: true,
+		                edit: true,
+		                addtext: 'Add',
+		                edittext: 'Edit',
+		                gridComplete: function(){
+		            		var ids = jQuery("#table_list_2").jqGrid('getDataIDs');
+		            		for(var i=0;i < ids.length;i++){
+		            			var cl = ids[i];
+		            			if(cl=='1'){
+		            				
+		            				/* be = "<input style='height:22px;width:20px;'/>"; */
+		            				be='&nbsp';
+		            				alert("1+!"); 
+		            			}else{
+		            			be = "<input style='height:22px;width:50px;' type='button' value='修改' onclick=\"jQuery('#table_list_2').editRow('"+cl+"');\"  />"; }
+		            			se = "<input style='height:22px;width:50px;' type='button' value='保存' onclick=\"jQuery('#table_list_2').saveRow('"+cl+"');\"  />"; 
+		            			ce = "<input style='height:22px;width:50px;' type='button' value='取消' onclick=\"jQuery('#table_list_2').restoreRow('"+cl+"');\" />"; 
+		            			jQuery("#table_list_2").jqGrid('setRowData',ids[i],{act:be+se+ce});
+		            		}	
+		            	},
+
+		                hidegrid: false
+		            });
+
+		            // Add selection
+		            $("#table_list_2").setSelection(4, true);
+
+
+		            // Setup buttons
+		            $("#table_list_2").jqGrid('navGrid', '#pager_list_2',
+		                    {edit: true, add: true, del: true, search: true},
+		                    {height: 200, reloadAfterSubmit: true}
+		            );
+
+		            // Add responsive to jqGrid
+		            $(window).bind('resize', function () {
+		                var width = $('.jqGrid_wrapper').width();
+		                $('#table_list_1').setGridWidth(width);
+		                $('#table_list_2').setGridWidth(width);
+		            });
+		});
+		
+		
+		function saveRow() {
+			alert("11111Update is missing!"); 
+			return true;
+		}
+
+		function checksave() {
+			alert("Update is missing!"); 
+			return true;
+		}
+
+		jQuery("#ed1").click( function() {
+			
+			jQuery("#table_list_1").jqGrid('editRow',"2");
+			this.disabled = 'true';
+			jQuery("#sved1,#cned1").attr("disabled",false);
+		});
+		jQuery("#sved1").click( function() {
+			jQuery("#table_list_1").jqGrid('saveRow',"2",checksave);
+			jQuery("#sved1,#cned1").attr("disabled",true);
+			jQuery("#ed1").attr("disabled",false);
+		});
+		jQuery("#cned1").click( function() {
+			jQuery("#table_list_1").jqGrid('restoreRow',"2");
+			jQuery("#sved1,#cned1").attr("disabled",true);
+			jQuery("#ed1").attr("disabled",false);
+		});
+
+		$("#bedata").click(function(){
+			jQuery("#table_list_1").jqGrid('editGridRow',"new",{height:280,reloadAfterSubmit:false});
+		});
+
+	</script>
+</body>
+</html>

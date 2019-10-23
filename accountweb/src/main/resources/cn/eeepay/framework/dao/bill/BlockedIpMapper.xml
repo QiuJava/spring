@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.eeepay.framework.dao.bill.BlockedIpMapper">
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.BlockedIp">
+    <id column="deny_ip" jdbcType="VARCHAR" property="denyIp" />
+    <id column="deny_day" jdbcType="VARCHAR" property="denyDay" />
+    <result column="deny_num" jdbcType="VARCHAR" property="denyNum" />
+    <result column="deny_time" jdbcType="TIMESTAMP" property="denyTime" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.HlfAgentDebtRecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.HlfAgentDebtRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="agent_no" property="agentNo" jdbcType="VARCHAR" />
+    <result column="agent_level" property="agentLevel" jdbcType="VARCHAR" />
+    <result column="agent_node" property="agentNode" jdbcType="VARCHAR" />
+    <result column="parent_agent_no" property="parentAgentNo" jdbcType="VARCHAR" />
+    <result column="one_agent_no" property="oneAgentNo" jdbcType="VARCHAR" />
+    <result column="adjust_amount" property="adjustAmount" jdbcType="DECIMAL" />
+    <result column="debt_amount" property="debtAmount" jdbcType="DECIMAL" />
+    <result column="should_debt_amount" property="shouldDebtAmount" jdbcType="DECIMAL" />
+    <result column="total_debt_amount" property="totalDebtAmount" jdbcType="DECIMAL" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="debt_time" property="debtTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+
+</mapper>

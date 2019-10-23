@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.peragent.PaShareDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.peragent.PaShareDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
+    <result column="user_node" property="userNode" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    
+    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
+    <result column="share_type" property="shareType" jdbcType="VARCHAR" />
+    
+    <result column="share_amount" property="shareAmount" jdbcType="DECIMAL" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="gold_amount" property="goldAmount" jdbcType="DECIMAL" />
+    
+    <result column="count_gold" property="countGold" jdbcType="INTEGER" />
+    <result column="count_team_user" property="countTeamUser" jdbcType="INTEGER" />
+    
+    <result column="team_total_amount" property="teamTotalAmount" jdbcType="DECIMAL" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    
+    <result column="share_month" property="shareMonth" jdbcType="VARCHAR" />
+    <result column="acc_status" property="accStatus" jdbcType="VARCHAR" />
+    <result column="acc_message" property="accMessage" jdbcType="VARCHAR" />
+    <result column="acc_operator" property="accOperator" jdbcType="VARCHAR" />
+    
+    <result column="acc_time" property="accTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="acc_user_agent" property="accUserAgent" jdbcType="VARCHAR" />
+    
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    
+    <result column="brand_code" property="brandCode" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+
+    <result column="one_user_code" property="oneUserCode" jdbcType="VARCHAR" />
+    <result column="two_user_code" property="twoUserCode" jdbcType="VARCHAR" />
+    
+    <result column="trans_no" property="transNo" jdbcType="VARCHAR" />
+    <result column="share_level" property="shareLevel" jdbcType="VARCHAR" />
+    <result column="share_ratio" property="shareRatio" jdbcType="VARCHAR" />
+    
+    <result column="setter_no" property="setterNo" jdbcType="VARCHAR" />
+    
+    
+  </resultMap>
+</mapper>

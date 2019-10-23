@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.ExtTransInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.ExtTransInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+    <result column="record_amount" property="recordAmount" jdbcType="DECIMAL" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="avali_balance" property="avaliBalance" jdbcType="DECIMAL" />
+    <result column="control_amount" property="controlAmount" jdbcType="DECIMAL" />
+    <result column="settling_amount" property="settlingAmount" jdbcType="DECIMAL" />
+    <result column="pre_freeze_amount" property="preFreezeAmount" jdbcType="DECIMAL" />
+    <result column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+    <result column="child_serial_no" property="childSerialNo" jdbcType="VARCHAR" />
+    <result column="record_date" property="recordDate" jdbcType="DATE" />
+    <result column="record_time" property="recordTime" jdbcType="TIME" />
+    <result column="debit_credit_side" property="debitCreditSide" jdbcType="VARCHAR" />
+    <result column="summary_info" property="summaryInfo" jdbcType="VARCHAR" />
+    <result column="trans_order_no" property="transOrderNo" jdbcType="VARCHAR" />
+    <result column="trans_type" property="transType" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="OneToOneResultMap" type="cn.eeepay.framework.model.bill.ExtTransInfo" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+    <result column="record_amount" property="recordAmount" jdbcType="DECIMAL" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="avali_balance" property="avaliBalance" jdbcType="DECIMAL" />
+    <result column="control_amount" property="controlAmount" jdbcType="DECIMAL" />
+    <result column="settling_amount" property="settlingAmount" jdbcType="DECIMAL" />
+    <result column="pre_freeze_amount" property="preFreezeAmount" jdbcType="DECIMAL" />
+    <result column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+    <result column="child_serial_no" property="childSerialNo" jdbcType="VARCHAR" />
+    <result column="record_date" property="recordDate" jdbcType="DATE" />
+    <result column="record_time" property="recordTime" jdbcType="TIME" />
+    <result column="debit_credit_side" property="debitCreditSide" jdbcType="VARCHAR" />
+    <result column="summary_info" property="summaryInfo" jdbcType="VARCHAR" />
+    <result column="trans_order_no" property="transOrderNo" jdbcType="VARCHAR" />
+    <result column="trans_type" property="transType" jdbcType="VARCHAR" />
+    <association property="extAccount" column="account_no"
+    		javaType="cn.eeepay.framework.model.bill.ExtAccount">
+         <id property="accountNo" column="account_no"/>
+         <result property="orgNo" column="org_no"/>
+         <result property="currencyNo" column="currency_no"/>
+         <result property="subjectNo" column="subject_no"/>
+    	 <result column="balance_add_from" property="balanceAddFrom" />
+    </association>
+
+  </resultMap>
+</mapper>

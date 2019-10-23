@@ -1,0 +1,17 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.BusinessAccountDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.BusinessAccountDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="business_id" property="businessId" jdbcType="INTEGER" />
+    <result column="out_user_no" property="outUserNo" jdbcType="VARCHAR" />
+    <result column="in_user_no" property="inUserNo" jdbcType="VARCHAR" />
+    <result column="account_type" property="accountType" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="trans_no" property="transNo" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="INTEGER" />
+    <result column="record_result" property="recordResult" jdbcType="VARCHAR" />
+  </resultMap>
+  
+</mapper>

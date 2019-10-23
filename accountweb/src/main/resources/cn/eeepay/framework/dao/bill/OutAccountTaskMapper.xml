@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.OutAccountTaskMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.OutAccountTask" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trans_time" property="transTime" jdbcType="TIMESTAMP" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="up_balance" property="upBalance" jdbcType="DECIMAL" />
+    <result column="up_today_balance" property="upTodayBalance" jdbcType="DECIMAL" />
+    <result column="out_account_task_amount" property="outAccountTaskAmount" jdbcType="DECIMAL" />
+    <result column="up_company_count" property="upCompanyCount" jdbcType="INTEGER" />
+    <result column="out_accountid" property="outAccountId" jdbcType="INTEGER" />
+    <result column="sys_time" property="sysTime" jdbcType="TIMESTAMP" />
+    
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    
+    <result column="acq_enname" property="acqEnname" jdbcType="VARCHAR" />
+    <result column="bill_status" property="billStatus" jdbcType="INTEGER" />
+    
+    <result column="out_bill_range" property="outBillRange" jdbcType="VARCHAR" />
+    
+    
+  </resultMap>
+  
+  <resultMap id="OneToOneResultMap" type="cn.eeepay.framework.model.bill.OutAccountTask" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trans_time" property="transTime" jdbcType="TIMESTAMP" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="up_balance" property="upBalance" jdbcType="DECIMAL" />
+    <result column="up_today_balance" property="upTodayBalance" jdbcType="DECIMAL" />
+    <result column="out_account_task_amount" property="outAccountTaskAmount" jdbcType="DECIMAL" />
+    <result column="up_company_count" property="upCompanyCount" jdbcType="INTEGER" />
+    <result column="out_accountid" property="outAccountId" jdbcType="INTEGER" />
+    <result column="sys_time" property="sysTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="acq_enname" property="acqEnname" jdbcType="VARCHAR" />
+    <result column="bill_status" property="billStatus" jdbcType="INTEGER" />
+    
+    <result column="out_bill_range" property="outBillRange" jdbcType="VARCHAR" />
+    
+     <collection property="outAccountTaskDetails" javaType="list" select="select_out_account_task_detail" column="out_account_task_id"
+    	ofType="cn.eeepay.framework.model.bill.OutAccountTaskDetail" />  
+  </resultMap>
+   <select id="select_out_account_task_detail"  parameterType="String" resultType="cn.eeepay.framework.model.bill.OutAccountTaskDetail">  
+  		select t.* from ext_trans_info as t where t.account_no=#{account_no}
+  </select>
+
+  
+</mapper>

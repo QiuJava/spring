@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.AgentShareDaySettleMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.AgentShareDaySettle" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="collection_batch_no" property="collectionBatchNo" jdbcType="VARCHAR" />
+    <result column="group_time" property="groupTime" jdbcType="TIMESTAMP" />
+    <result column="trans_date" property="transDate" jdbcType="DATE" />
+    <result column="one_agent_no" property="oneAgentNo" jdbcType="VARCHAR" />
+    <result column="one_agent_name" property="oneAgentName" jdbcType="VARCHAR" />
+    <result column="agent_no" property="agentNo" jdbcType="VARCHAR" />
+    <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+    <result column="agent_node" property="agentNode" jdbcType="VARCHAR" />
+    <result column="agent_level" property="agentLevel" jdbcType="VARCHAR" />
+    <result column="parent_agent_no" property="parentAgentNo" jdbcType="VARCHAR" />
+    <result column="sale_name" property="saleName" jdbcType="VARCHAR" />
+    <result column="trans_total_amount" property="transTotalAmount" jdbcType="DECIMAL" />
+    <result column="trans_total_num" property="transTotalNum" jdbcType="INTEGER" />
+    <result column="dui_succ_trans_total_amount" property="duiSuccTransTotalAmount" jdbcType="DECIMAL" />
+    <result column="dui_succ_trans_total_num" property="duiSuccTransTotalNum" jdbcType="INTEGER" />
+    <result column="cash_total_num" property="cashTotalNum" jdbcType="INTEGER" />
+    <result column="mer_fee" property="merFee" jdbcType="DECIMAL" />
+    <result column="mer_cash_fee" property="merCashFee" jdbcType="DECIMAL" />
+    <result column="deduction_fee" property="deductionFee" jdbcType="DECIMAL" />
+    <result column="acq_out_cost" property="acqOutCost" jdbcType="DECIMAL" />
+    <result column="acq_out_profit" property="acqOutProfit" jdbcType="DECIMAL" />
+    <result column="dai_cost" property="daiCost" jdbcType="DECIMAL" />
+    <result column="dian_cost" property="dianCost" jdbcType="DECIMAL" />
+    <result column="pre_trans_share_amount" property="preTransShareAmount" jdbcType="DECIMAL" />
+    <result column="pre_trans_cash_amount" property="preTransCashAmount" jdbcType="DECIMAL" />
+    <result column="open_back_amount" property="openBackAmount" jdbcType="DECIMAL" />
+    <result column="rate_diff_amount" property="rateDiffAmount" jdbcType="DECIMAL" />
+    <result column="tui_cost_amount" property="tuiCostAmount" jdbcType="DECIMAL" />
+    <result column="risk_sub_amount" property="riskSubAmount" jdbcType="DECIMAL" />
+    <result column="bail_sub_amount" property="bailSubAmount" jdbcType="DECIMAL" />
+    <result column="mer_mg_amount" property="merMgAmount" jdbcType="DECIMAL" />
+    <result column="other_amount" property="otherAmount" jdbcType="DECIMAL" />
+    <result column="adjust_trans_share_amount" property="adjustTransShareAmount" jdbcType="DECIMAL" />
+    <result column="adjust_trans_cash_amount" property="adjustTransCashAmount" jdbcType="DECIMAL" />
+    <result column="adjust_total_share_amount" property="adjustTotalShareAmount" jdbcType="DECIMAL" />
+    <result column="terminal_freeze_amount" property="terminalFreezeAmount" jdbcType="DECIMAL" />
+    <result column="other_freeze_amount" property="otherFreezeAmount" jdbcType="DECIMAL" />
+    <result column="enter_account_status" property="enterAccountStatus" jdbcType="VARCHAR" />
+    <result column="enter_account_message" property="enterAccountMessage" jdbcType="VARCHAR" />
+    <result column="real_enter_share_amount" property="realEnterShareAmount" jdbcType="DECIMAL" />
+    
+    <!-- 账户数据显示优化新增五个字段 -->
+	<result column="trans_deduction_fee" property="transDeductionFee" jdbcType="DECIMAL" />
+	<result column="actual_fee" property="actualFee" jdbcType="DECIMAL" />
+	<result column="merchant_price" property="merchantPrice" jdbcType="DECIMAL" />
+	<result column="deduction_mer_fee" property="deductionMerFee" jdbcType="DECIMAL" />
+	<result column="actual_optional_fee" property="actualOptionalFee" jdbcType="DECIMAL" />
+    
+  </resultMap>
+</mapper>

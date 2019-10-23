@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: accountweb
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: cn.eeepay
+Built-By: Administrator
+Build-Jdk: 1.7.0_71
+Specification-Title: accountweb
+Created-By: Apache Maven 3.3.3
+Specification-Version: 0.0.1-SNAPSHOT
+Archiver-Version: Plexus Archiver
+

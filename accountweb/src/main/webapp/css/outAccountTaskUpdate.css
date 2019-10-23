@@ -1,0 +1,7 @@
+input[type="text"]:focus {
+    border:double;
+}
+
+input[type="text"] {
+    border:none ;
+    }
