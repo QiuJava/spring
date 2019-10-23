@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.FastCheckAccountDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.FastCheckAccDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="check_batch_no" property="checkBatchNo" jdbcType="VARCHAR" />
+    <result column="acq_order_no" property="acqOrderNo" jdbcType="VARCHAR" />
+    <result column="acq_trans_type" property="acqTransType" jdbcType="VARCHAR" />
+    <result column="acq_trans_order_no" property="acqTransOrderNo" jdbcType="INTEGER" />
+    <result column="acq_order_time" property="acqOrderTime" jdbcType="TIMESTAMP" />
+    <result column="acq_order_status" property="acqOrderStatus" jdbcType="VARCHAR" />
+    <result column="acq_trans_amount" property="acqTransAmount" jdbcType="DECIMAL" />
+    <result column="acq_refund_amount" property="acqRefundAmount" jdbcType="DECIMAL" />
+    <result column="acq_check_date" property="acqCheckDate" jdbcType="TIMESTAMP" />
+    <result column="acq_enname" property="acqEnname" jdbcType="VARCHAR" />
+    <result column="plate_order_no" property="plateOrderNo" jdbcType="VARCHAR" />
+    <result column="plate_agent_no" property="plateAgentNo" jdbcType="VARCHAR" />
+    <result column="plate_merchant_no" property="plateMerchantNo" jdbcType="VARCHAR" />
+    <result column="plate_trans_amount" property="plateTransAmount" jdbcType="DECIMAL" />
+    <result column="plate_acq_merchant_fee" property="plateAcqMerchantFee" jdbcType="DECIMAL" />
+    <result column="plate_merchant_fee" property="plateMerchantFee" jdbcType="DECIMAL" />
+    <result column="plate_agent_fee" property="plateAgentFee" jdbcType="DECIMAL" />  
+    <result column="plate_order_time" property="plateOrderTime" jdbcType="TIMESTAMP" />
+     <result column="plate_trans_type" property="plateTransType" jdbcType="VARCHAR" />
+    <result column="plate_trans_status" property="plateTransStatus" jdbcType="VARCHAR" />
+    <result column="plate_trans_id" property="plateTransId" jdbcType="INTEGER" />
+    <result column="check_account_status" property="checkAccountStatus" jdbcType="VARCHAR" />
+    <result column="error_msg" property="errorMsg" jdbcType="VARCHAR" />
+    <result column="error_handle_status" property="errorHandleStatus" jdbcType="VARCHAR" />
+    <result column="error_handle_creator" property="errorHandleCreator" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    
+    <result column="settlement_method" property="settlementMethod" jdbcType="VARCHAR" />
+    <result column="settle_status" property="settleStatus" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="INTEGER" />
+  </resultMap>
+ 
+</mapper>

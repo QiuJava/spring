@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.OutBillDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.OutBillDetail" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="out_bill_id" property="outBillId" jdbcType="INTEGER" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="merchant_balance" property="merchantBalance" jdbcType="DECIMAL" />
+    <result column="out_account_task_amount" property="outAccountTaskAmount" jdbcType="DECIMAL" />
+    <result column="out_amount" property="outAmount" jdbcType="DECIMAL" />
+    <result column="acq_org_no" property="acqOrgNo" jdbcType="VARCHAR" />
+    <result column="today_balance" property="todayBalance" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="change_remark" property="changeRemark" jdbcType="VARCHAR" />
+    <result column="change_operator_id" property="changeOperatorId" jdbcType="INTEGER" />
+    <result column="change_operator_name" property="changeOperatorName" jdbcType="VARCHAR" />
+    <result column="out_bill_result" property="outBillResult" jdbcType="VARCHAR" />
+    <result column="export_status" property="exportStatus" jdbcType="INTEGER" />
+    <result column="export_file_serial" property="exportFileSerial" jdbcType="VARCHAR" />
+    <result column="export_date" property="exportDate" jdbcType="DATE" />
+    <result column="verify_flag" property="verifyFlag" jdbcType="VARCHAR" />
+    <result column="verify_msg" property="verifyMsg" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="out_bill_status" property="outBillStatus" jdbcType="INTEGER" />    
+  </resultMap>
+  
+</mapper>

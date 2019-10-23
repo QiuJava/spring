@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.nposp.MerchantServiceRateMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.nposp.MerchantServiceRate" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+    <result column="holidays_mark" property="holidaysMark" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="rate_type" property="rateType" jdbcType="VARCHAR" />
+    <result column="single_num_amount" property="singleNumAmount" jdbcType="DECIMAL" />
+    <result column="rate" property="rate" jdbcType="DECIMAL" />
+    <result column="capping" property="capping" jdbcType="DECIMAL" />
+    <result column="safe_line" property="safeLine" jdbcType="DECIMAL" />
+    <result column="efficient_date" property="efficientDate" jdbcType="TIMESTAMP" />
+    <result column="disabled_date" property="disabledDate" jdbcType="TIMESTAMP" />
+    <result column="service_name" property="serviceName" jdbcType="VARCHAR" />
+    <result column="useable" property="useable" jdbcType="TIMESTAMP" />
+    <result column="fixed_mark" property="fixedMark" jdbcType="TIMESTAMP" />
+    <result column="ladder1_rate" property="ladder1Rate" jdbcType="DECIMAL" />
+    <result column="ladder1_max" property="ladder1Max" jdbcType="DECIMAL" />
+    <result column="ladder2_rate" property="ladder2Rate" jdbcType="DECIMAL" />
+    <result column="ladder2_max" property="ladder2Max" jdbcType="DECIMAL" />
+    <result column="ladder3_rate" property="ladder3Rate" jdbcType="DECIMAL" />
+    <result column="ladder3_max" property="ladder3Max" jdbcType="DECIMAL" />
+    <result column="ladder4_rate" property="ladder4Rate" jdbcType="DECIMAL" />
+    <result column="ladder4_max" property="ladder4Max" jdbcType="DECIMAL" />
+    
+  </resultMap>
+  <!-- <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, service_id, merchant_id, holidays_mark, card_type, rate_type, single_num_amount, 
+    rate, capping, safe_line, efficient_date, disabled_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.eeepay.framework.model.MerchantServiceRateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from merchant_service_rate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_service_rate
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from merchant_service_rate
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.eeepay.framework.model.MerchantServiceRateExample" >
+    delete from merchant_service_rate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.eeepay.framework.model.MerchantServiceRate" >
+    insert into merchant_service_rate (id, service_id, merchant_id, 
+      holidays_mark, card_type, rate_type, 
+      single_num_amount, rate, capping, 
+      safe_line, efficient_date, disabled_date
+      )
+    values (#{id,jdbcType=BIGINT}, #{serviceId,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR}, 
+      #{holidaysMark,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, #{rateType,jdbcType=VARCHAR}, 
+      #{singleNumAmount,jdbcType=DECIMAL}, #{rate,jdbcType=DECIMAL}, #{capping,jdbcType=DECIMAL}, 
+      #{safeLine,jdbcType=DECIMAL}, #{efficientDate,jdbcType=TIMESTAMP}, #{disabledDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.eeepay.framework.model.MerchantServiceRate" >
+    insert into merchant_service_rate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serviceId != null" >
+        service_id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="holidaysMark != null" >
+        holidays_mark,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="rateType != null" >
+        rate_type,
+      </if>
+      <if test="singleNumAmount != null" >
+        single_num_amount,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="capping != null" >
+        capping,
+      </if>
+      <if test="safeLine != null" >
+        safe_line,
+      </if>
+      <if test="efficientDate != null" >
+        efficient_date,
+      </if>
+      <if test="disabledDate != null" >
+        disabled_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="holidaysMark != null" >
+        #{holidaysMark,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="rateType != null" >
+        #{rateType,jdbcType=VARCHAR},
+      </if>
+      <if test="singleNumAmount != null" >
+        #{singleNumAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="capping != null" >
+        #{capping,jdbcType=DECIMAL},
+      </if>
+      <if test="safeLine != null" >
+        #{safeLine,jdbcType=DECIMAL},
+      </if>
+      <if test="efficientDate != null" >
+        #{efficientDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disabledDate != null" >
+        #{disabledDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.eeepay.framework.model.MerchantServiceRateExample" resultType="java.lang.Integer" >
+    select count(*) from merchant_service_rate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update merchant_service_rate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceId != null" >
+        service_id = #{record.serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.holidaysMark != null" >
+        holidays_mark = #{record.holidaysMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        card_type = #{record.cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rateType != null" >
+        rate_type = #{record.rateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singleNumAmount != null" >
+        single_num_amount = #{record.singleNumAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rate != null" >
+        rate = #{record.rate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.capping != null" >
+        capping = #{record.capping,jdbcType=DECIMAL},
+      </if>
+      <if test="record.safeLine != null" >
+        safe_line = #{record.safeLine,jdbcType=DECIMAL},
+      </if>
+      <if test="record.efficientDate != null" >
+        efficient_date = #{record.efficientDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.disabledDate != null" >
+        disabled_date = #{record.disabledDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update merchant_service_rate
+    set id = #{record.id,jdbcType=BIGINT},
+      service_id = #{record.serviceId,jdbcType=VARCHAR},
+      merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      holidays_mark = #{record.holidaysMark,jdbcType=VARCHAR},
+      card_type = #{record.cardType,jdbcType=VARCHAR},
+      rate_type = #{record.rateType,jdbcType=VARCHAR},
+      single_num_amount = #{record.singleNumAmount,jdbcType=DECIMAL},
+      rate = #{record.rate,jdbcType=DECIMAL},
+      capping = #{record.capping,jdbcType=DECIMAL},
+      safe_line = #{record.safeLine,jdbcType=DECIMAL},
+      efficient_date = #{record.efficientDate,jdbcType=TIMESTAMP},
+      disabled_date = #{record.disabledDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.eeepay.framework.model.MerchantServiceRate" >
+    update merchant_service_rate
+    <set >
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="holidaysMark != null" >
+        holidays_mark = #{holidaysMark,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="rateType != null" >
+        rate_type = #{rateType,jdbcType=VARCHAR},
+      </if>
+      <if test="singleNumAmount != null" >
+        single_num_amount = #{singleNumAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="capping != null" >
+        capping = #{capping,jdbcType=DECIMAL},
+      </if>
+      <if test="safeLine != null" >
+        safe_line = #{safeLine,jdbcType=DECIMAL},
+      </if>
+      <if test="efficientDate != null" >
+        efficient_date = #{efficientDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disabledDate != null" >
+        disabled_date = #{disabledDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.eeepay.framework.model.MerchantServiceRate" >
+    update merchant_service_rate
+    set service_id = #{serviceId,jdbcType=VARCHAR},
+      merchant_id = #{merchantId,jdbcType=VARCHAR},
+      holidays_mark = #{holidaysMark,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      rate_type = #{rateType,jdbcType=VARCHAR},
+      single_num_amount = #{singleNumAmount,jdbcType=DECIMAL},
+      rate = #{rate,jdbcType=DECIMAL},
+      capping = #{capping,jdbcType=DECIMAL},
+      safe_line = #{safeLine,jdbcType=DECIMAL},
+      efficient_date = #{efficientDate,jdbcType=TIMESTAMP},
+      disabled_date = #{disabledDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+</mapper>

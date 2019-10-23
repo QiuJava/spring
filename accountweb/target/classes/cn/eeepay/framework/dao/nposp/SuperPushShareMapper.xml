@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.nposp.SuperPushShareMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.nposp.SuperPushShare" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="trans_time" property="transTime" jdbcType="TIMESTAMP" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="agent_node" property="agentNode" jdbcType="VARCHAR" />
+    <result column="share_type" property="shareType" jdbcType="VARCHAR" />
+    <result column="share_no" property="shareNo" jdbcType="VARCHAR" />
+    <result column="share_amount" property="shareAmount" jdbcType="DECIMAL" />
+    <result column="share_rate" property="shareRate" jdbcType="DECIMAL" />
+    <result column="share_status" property="shareStatus" jdbcType="VARCHAR" />
+    <result column="share_time" property="shareTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

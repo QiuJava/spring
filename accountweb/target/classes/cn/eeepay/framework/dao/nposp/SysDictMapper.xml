@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.nposp.SysDictNpospMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.nposp.SysDict" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sys_key" property="sysKey" jdbcType="VARCHAR" />
+    <result column="sys_name" property="sysName" jdbcType="VARCHAR" />
+    <result column="sys_value" property="sysValue" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

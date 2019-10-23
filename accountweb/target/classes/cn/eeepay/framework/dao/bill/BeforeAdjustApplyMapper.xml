@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.BeforeAdjustApplyMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.BeforeAdjustApply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="agent_no" property="agentNo" jdbcType="VARCHAR" />
+    <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+    <result column="applicant" property="applicant" jdbcType="VARCHAR" />
+    <result column="freeze_amount" property="freezeAmount" jdbcType="DECIMAL" />
+    <result column="activity_available_amount" property="activityAvailableAmount" jdbcType="DECIMAL" />
+    <result column="activity_freeze_amount" property="activityFreezeAmount" jdbcType="DECIMAL" />
+    <result column="generate_amount" property="generateAmount" jdbcType="DECIMAL" />
+    <result column="apply_date" property="applyDate" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_apply" property="isApply" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

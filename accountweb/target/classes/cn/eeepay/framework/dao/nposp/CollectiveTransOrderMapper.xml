@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.nposp.CollectiveTransOrderMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.nposp.CollectiveTransOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="mobile_no" property="mobileNo" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="pay_method" property="payMethod" jdbcType="VARCHAR" />
+    <result column="trans_status" property="transStatus" jdbcType="VARCHAR" />
+    <result column="trans_type" property="transType" jdbcType="VARCHAR" />
+    <result column="trans_time" property="transTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="holidays_mark" property="holidaysMark" jdbcType="VARCHAR" />
+    <result column="business_product_id" property="businessProductId" jdbcType="INTEGER" />
+    <result column="service_id" property="serviceId" jdbcType="INTEGER" />
+    
+    <result column="acq_org_id" property="acqOrgId" jdbcType="INTEGER" />
+    <result column="acq_name" property="acqName" jdbcType="VARCHAR" />
+    <result column="acq_enname" property="acqEnname" jdbcType="VARCHAR" />
+    <result column="acq_service_id" property="acqServiceId" jdbcType="INTEGER" />
+    <result column="merchant_fee" property="merchantFee" jdbcType="DECIMAL" />
+    <result column="merchant_rate" property="merchantRate" jdbcType="VARCHAR" />
+    <result column="merchant_rate_type" property="merchantRateType" jdbcType="VARCHAR" />
+    <result column="acq_merchant_fee" property="acqMerchantFee" jdbcType="DECIMAL" />
+    <result column="acq_merchant_rate" property="acqMerchantRate" jdbcType="VARCHAR" />
+    <result column="acq_rate_type" property="acqRateType" jdbcType="VARCHAR" />
+    <result column="agent_node" property="agentNode" jdbcType="VARCHAR" />
+    <result column="settlement_method" property="settlementMethod" jdbcType="VARCHAR" />
+    <result column="settle_status" property="settleStatus" jdbcType="VARCHAR" />
+    <result column="settle_msg" property="settleMsg" jdbcType="VARCHAR" />
+    
+    <result column="syn_status" property="synStatus" jdbcType="INTEGER" />
+    <result column="freeze_status" property="freezeStatus" jdbcType="INTEGER" />
+    <result column="device_sn" property="deviceSn" jdbcType="VARCHAR" />
+    <result column="hardware_product" property="hardwareProduct" jdbcType="INTEGER" />
+    
+    <result column="account" property="account" jdbcType="INTEGER" />
+    <result column="acq_reference_no" property="acqReferenceNo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+</mapper>

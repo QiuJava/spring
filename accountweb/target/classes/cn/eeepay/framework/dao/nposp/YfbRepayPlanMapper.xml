@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.nposp.YfbRepayPlanMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.nposp.YfbRepayPlan" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="repay_amount" property="repayAmount" jdbcType="DECIMAL" />
+    <result column="repay_begin_time" property="repayBeginTime" jdbcType="TIMESTAMP" />
+    <result column="repay_end_time" property="repayEndTime" jdbcType="TIMESTAMP" />
+    <result column="ensure_amount_rate" property="ensureAmountRate" jdbcType="VARCHAR" />
+    <result column="ensure_amount" property="ensureAmount" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="repay_fee_rate" property="repayFeeRate" jdbcType="VARCHAR" />
+    <result column="repay_fee" property="repayFee" jdbcType="DECIMAL" />
+    <result column="row_lock" property="rowLock" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="mobile_no" property="mobileNo" jdbcType="VARCHAR" />
+    <result column="ru_status" property="ruStatus" jdbcType="VARCHAR" />
+    <result column="tally_time" property="tallyTime" jdbcType="TIMESTAMP" />
+    <result column="service_order_no" property="serviceOrderNo" jdbcType="VARCHAR" />
+    <result column="count_time" property="countTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

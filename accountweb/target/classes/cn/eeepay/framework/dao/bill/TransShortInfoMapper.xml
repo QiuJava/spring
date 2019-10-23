@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.TransShortInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.TransShortInfo" >
+    <id column="plate_order_no" property="plateOrderNo" jdbcType="VARCHAR" />
+    <result column="trans_time" property="transTime" jdbcType="TIMESTAMP" />
+    <result column="hardware_product" property="hardwareProduct" jdbcType="INTEGER" />
+    <result column="business_product_id" property="businessProductId" jdbcType="INTEGER" />
+    <result column="service_id" property="serviceId" jdbcType="INTEGER" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+    <result column="one_agent_no" property="oneAgentNo" jdbcType="VARCHAR" />
+    <result column="one_agent_name" property="oneAgentName" jdbcType="VARCHAR" />
+    <result column="agent_no" property="agentNo" jdbcType="VARCHAR" />
+    <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+    <result column="agent_node" property="agentNode" jdbcType="VARCHAR" />
+    <result column="agent_level" property="agentLevel" jdbcType="VARCHAR" />
+    <result column="parent_agent_no" property="parentAgentNo" jdbcType="VARCHAR" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="merchant_rate" property="merchantRate" jdbcType="VARCHAR" />
+    <result column="merchant_fee" property="merchantFee" jdbcType="DECIMAL" />
+    <result column="acq_org_id" property="acqOrgId" jdbcType="INTEGER" />
+    <result column="acq_ename" property="acqEname" jdbcType="VARCHAR" />
+    <result column="acq_out_cost" property="acqOutCost" jdbcType="DECIMAL" />
+    <result column="agent_share_amount" property="agentShareAmount" jdbcType="DECIMAL" />
+    <result column="mer_cash_fee" property="merCashFee" jdbcType="DECIMAL" />
+    <result column="cash_agent_share_amount" property="cashAgentShareAmount" jdbcType="DECIMAL" />
+    <result column="dai_cost" property="daiCost" jdbcType="DECIMAL" />
+    <result column="dian_cost" property="dianCost" jdbcType="DECIMAL" />
+    <result column="deduction_fee" property="deductionFee" jdbcType="DECIMAL" />
+    <result column="sale_name" property="saleName" jdbcType="VARCHAR" />
+    <result column="acq_out_profit" property="acqOutProfit" jdbcType="DECIMAL" />
+    <result column="hardware_product_name" property="hardwareProductName" jdbcType="VARCHAR" />
+    <result column="business_product_name" property="businessProductName" jdbcType="VARCHAR" />
+    <result column="service_name" property="serviceName" jdbcType="VARCHAR" />
+    <result column="agent_profit_collection_status" property="agentProfitCollectionStatus" jdbcType="VARCHAR" />
+    <result column="collection_batch_no" property="collectionBatchNo" jdbcType="VARCHAR" />
+    <result column="agent_profit_group_time" property="agentProfitGroupTime" jdbcType="TIMESTAMP" />
+    <result column="check_account_status" property="checkAccountStatus" jdbcType="VARCHAR" />
+    <result column="plate_acq_merchant_rate" property="plateAcqMerchantRate" jdbcType="VARCHAR" />
+
+    <result column="profits_1" property="profits1" jdbcType="DECIMAL" />
+	<result column="profits_2" property="profits2" jdbcType="DECIMAL" />
+	<result column="profits_3" property="profits3" jdbcType="DECIMAL" />
+	<result column="profits_4" property="profits4" jdbcType="DECIMAL" />
+	<result column="profits_5" property="profits5" jdbcType="DECIMAL" />
+	<result column="profits_6" property="profits6" jdbcType="DECIMAL" />
+	<result column="profits_7" property="profits7" jdbcType="DECIMAL" />
+	<result column="profits_8" property="profits8" jdbcType="DECIMAL" />
+	<result column="profits_9" property="profits9" jdbcType="DECIMAL" />
+	<result column="profits_10" property="profits10" jdbcType="DECIMAL" />
+	<result column="profits_11" property="profits11" jdbcType="DECIMAL" />
+	<result column="profits_12" property="profits12" jdbcType="DECIMAL" />
+	<result column="profits_13" property="profits13" jdbcType="DECIMAL" />
+	<result column="profits_14" property="profits14" jdbcType="DECIMAL" />
+	<result column="profits_15" property="profits15" jdbcType="DECIMAL" />
+	<result column="profits_16" property="profits16" jdbcType="DECIMAL" />
+	<result column="profits_17" property="profits17" jdbcType="DECIMAL" />
+	<result column="profits_18" property="profits18" jdbcType="DECIMAL" />
+	<result column="profits_19" property="profits19" jdbcType="DECIMAL" />
+	<result column="profits_20" property="profits20" jdbcType="DECIMAL" />
+	<result column="settle_profits_1" property="settleProfits1" jdbcType="DECIMAL" />
+	<result column="settle_profits_2" property="settleProfits2" jdbcType="DECIMAL" />
+	<result column="settle_profits_3" property="settleProfits3" jdbcType="DECIMAL" />
+	<result column="settle_profits_4" property="settleProfits4" jdbcType="DECIMAL" />
+	<result column="settle_profits_5" property="settleProfits5" jdbcType="DECIMAL" />
+	<result column="settle_profits_6" property="settleProfits6" jdbcType="DECIMAL" />
+	<result column="settle_profits_7" property="settleProfits7" jdbcType="DECIMAL" />
+	<result column="settle_profits_8" property="settleProfits8" jdbcType="DECIMAL" />
+	<result column="settle_profits_9" property="settleProfits9" jdbcType="DECIMAL" />
+	<result column="settle_profits_10" property="settleProfits10" jdbcType="DECIMAL" />
+	<result column="settle_profits_11" property="settleProfits11" jdbcType="DECIMAL" />
+	<result column="settle_profits_12" property="settleProfits12" jdbcType="DECIMAL" />
+	<result column="settle_profits_13" property="settleProfits13" jdbcType="DECIMAL" />
+	<result column="settle_profits_14" property="settleProfits14" jdbcType="DECIMAL" />
+	<result column="settle_profits_15" property="settleProfits15" jdbcType="DECIMAL" />
+	<result column="settle_profits_16" property="settleProfits16" jdbcType="DECIMAL" />
+	<result column="settle_profits_17" property="settleProfits17" jdbcType="DECIMAL" />
+	<result column="settle_profits_18" property="settleProfits18" jdbcType="DECIMAL" />
+	<result column="settle_profits_19" property="settleProfits19" jdbcType="DECIMAL" />
+	<result column="settle_profits_20" property="settleProfits20" jdbcType="DECIMAL" />
+	
+	<!-- 账户数据显示优化新增五个字段 -->
+	<result column="trans_deduction_fee" property="transDeductionFee" jdbcType="DECIMAL" />
+	<result column="actual_fee" property="actualFee" jdbcType="DECIMAL" />
+	<result column="merchant_price" property="merchantPrice" jdbcType="DECIMAL" />
+	<result column="deduction_mer_fee" property="deductionMerFee" jdbcType="DECIMAL" />
+	<result column="actual_optional_fee" property="actualOptionalFee" jdbcType="DECIMAL" />
+    
+  </resultMap>
+</mapper>

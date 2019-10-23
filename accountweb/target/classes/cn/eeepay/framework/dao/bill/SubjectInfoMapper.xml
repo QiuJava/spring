@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.SubjectInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.SubjectInfo" >
+    <id column="subject_no" property="subjectNo" jdbcType="VARCHAR" />
+    <result column="org_no" property="orgNo" jdbcType="VARCHAR" />
+    <result column="currency_no" property="currencyNo" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="subject_level" property="subjectLevel" jdbcType="INTEGER" />
+    <result column="balance_from" property="balanceFrom" jdbcType="VARCHAR" />
+    <result column="today_balance" property="todayBalance" jdbcType="DECIMAL" />
+    <result column="today_debit_amount" property="todayDebitAmount" jdbcType="DECIMAL" />
+    <result column="today_credit_amount" property="todayCreditAmount" jdbcType="DECIMAL" />
+    <result column="yesterday_amount" property="yesterdayAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="OneToOneResultMap" type="cn.eeepay.framework.model.bill.SubjectInfo" >
+  	<id column="subject_no" property="subjectNo" jdbcType="VARCHAR" />
+    <result column="org_no" property="orgNo" jdbcType="VARCHAR" />
+    <result column="currency_no" property="currencyNo" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="INTEGER" />
+    <result column="subject_level" property="subjectLevel" jdbcType="INTEGER" />
+    <result column="balance_from" property="balanceFrom" jdbcType="VARCHAR" />
+    <result column="today_balance" property="todayBalance" jdbcType="DECIMAL" />
+    <result column="today_debit_amount" property="todayDebitAmount" jdbcType="DECIMAL" />
+    <result column="today_credit_amount" property="todayCreditAmount" jdbcType="DECIMAL" />
+    <result column="yesterday_amount" property="yesterdayAmount" jdbcType="DECIMAL" />
+    <association property="subject" column="subject_no"
+    		javaType="cn.eeepay.framework.model.bill.Subject">
+    	<id column="subject_no" property="subjectNo" jdbcType="VARCHAR" />
+	    <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+ 
+</mapper>

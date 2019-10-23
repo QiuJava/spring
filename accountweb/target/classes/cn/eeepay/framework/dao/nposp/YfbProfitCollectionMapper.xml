@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.nposp.YfbProfitCollectionMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.nposp.YfbProfitCollection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="collection_no" property="collectionNo" jdbcType="VARCHAR" />
+    <result column="collection_batch_no" property="collectionBatchNo" jdbcType="VARCHAR" />
+    <result column="mer_type" property="merType" jdbcType="VARCHAR" />
+    <result column="mer_no" property="merNo" jdbcType="VARCHAR" />
+    <result column="agent_node" property="agentNode" jdbcType="VARCHAR" />
+    <result column="service_cost_rate" property="serviceCostRate" jdbcType="DECIMAL" />
+    <result column="service_cost_single_fee" property="serviceCostSingleFee" jdbcType="DECIMAL" />
+    <result column="profit_amount" property="profitAmount" jdbcType="DECIMAL" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="income_status" property="incomeStatus" jdbcType="INTEGER" />
+    <result column="income_time" property="incomeTime" jdbcType="TIMESTAMP" />
+    <result column="allow_income" property="allowIncome" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+
+
+
+  </resultMap>
+</mapper>

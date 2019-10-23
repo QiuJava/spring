@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.TransImportInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.TransImportInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="from_serial_no" property="fromSerialNo" jdbcType="VARCHAR" />
+    <result column="record_date" property="recordDate" jdbcType="TIMESTAMP" />
+    <result column="trans_date" property="transDate" jdbcType="TIMESTAMP" />
+    <result column="record_serial_no" property="recordSerialNo" jdbcType="VARCHAR" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="trans_type" property="transType" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="terminal_no" property="terminalNo" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="acq_merchant_no" property="acqMerchantNo" jdbcType="VARCHAR" />
+    <result column="reverse_flag" property="reverseFlag" jdbcType="VARCHAR" />
+    <result column="reverse_status" property="reverseStatus" jdbcType="VARCHAR" />
+    <result column="direct_agent_no" property="directAgentNo" jdbcType="VARCHAR" />
+    <result column="device_sn" property="deviceSn" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="merchant_fee" property="merchantFee" jdbcType="DECIMAL" />
+    <result column="bp_id" property="bpId" jdbcType="VARCHAR" />
+    <result column="agent_share_amount" property="agentShareAmount" jdbcType="DECIMAL" />
+    <result column="from_system" property="fromSystem" jdbcType="VARCHAR" />
+    <result column="from_date" property="fromDate" jdbcType="DATE" />
+    <result column="merchant_rate_type" property="merchantRateType" jdbcType="VARCHAR" />
+    <result column="merchant_rate" property="merchantRate" jdbcType="DECIMAL" />
+    <result column="acq_service_rate" property="acqServiceRate" jdbcType="DECIMAL" />
+    <result column="acq_org_fee1" property="acqOrgFee1" jdbcType="DECIMAL" />
+    <result column="holidays_mark" property="holidaysMark" jdbcType="VARCHAR" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="hp_id" property="hpId" jdbcType="VARCHAR" />
+    <result column="acq_org_id" property="acqOrgId" jdbcType="VARCHAR" />
+    <result column="acq_service_id" property="acqServiceId" jdbcType="VARCHAR" />
+    <result column="acq_rate_type" property="acqRateType" jdbcType="VARCHAR" />
+    <result column="acq_rate_type2" property="acqRateType2" jdbcType="VARCHAR" />
+    <result column="acq_org_fee2" property="acqOrgFee2" jdbcType="DECIMAL" />
+    <result column="acq_enname" property="acqEnname" jdbcType="VARCHAR" />
+    <result column="out_acq_enname" property="outAcqEnname" jdbcType="VARCHAR" />
+    <result column="out_rate_type1" property="outRateType1" jdbcType="VARCHAR" />
+    <result column="out_rate_fee1" property="outRateFee1" jdbcType="DECIMAL" />
+    <result column="out_rate_type2" property="outRateType2" jdbcType="VARCHAR" />
+    <result column="out_rate_fee2" property="outRateFee2" jdbcType="DECIMAL" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="days" property="days" jdbcType="DECIMAL" />
+    <result column="ss1" property="ss1" jdbcType="DECIMAL" />
+    <result column="ss2" property="ss2" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <resultMap id="OneToOneResultMap" type="cn.eeepay.framework.model.bill.TransImportInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="from_serial_no" property="fromSerialNo" jdbcType="VARCHAR" />
+    <result column="record_date" property="recordDate" jdbcType="TIMESTAMP" />
+    <result column="trans_date" property="transDate" jdbcType="TIMESTAMP" />
+    <result column="record_serial_no" property="recordSerialNo" jdbcType="VARCHAR" />
+    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+    <result column="trans_type" property="transType" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="terminal_no" property="terminalNo" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="acq_merchant_no" property="acqMerchantNo" jdbcType="VARCHAR" />
+    <result column="reverse_flag" property="reverseFlag" jdbcType="VARCHAR" />
+    <result column="reverse_status" property="reverseStatus" jdbcType="VARCHAR" />
+    <result column="direct_agent_no" property="directAgentNo" jdbcType="VARCHAR" />
+    <result column="device_sn" property="deviceSn" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="merchant_fee" property="merchantFee" jdbcType="DECIMAL" />
+    <result column="bp_id" property="bpId" jdbcType="VARCHAR" />
+    <result column="agent_share_amount" property="agentShareAmount" jdbcType="DECIMAL" />
+    <result column="from_system" property="fromSystem" jdbcType="VARCHAR" />
+    <result column="from_date" property="fromDate" jdbcType="DATE" />
+    <result column="merchant_rate_type" property="merchantRateType" jdbcType="VARCHAR" />
+    <result column="merchant_rate" property="merchantRate" jdbcType="DECIMAL" />
+    <result column="acq_service_rate" property="acqServiceRate" jdbcType="DECIMAL" />
+    <result column="acq_org_fee1" property="acqOrgFee1" jdbcType="DECIMAL" />
+    <result column="holidays_mark" property="holidaysMark" jdbcType="VARCHAR" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="hp_id" property="hpId" jdbcType="VARCHAR" />
+    <result column="acq_org_id" property="acqOrgId" jdbcType="VARCHAR" />
+    <result column="acq_service_id" property="acqServiceId" jdbcType="VARCHAR" />
+    <result column="acq_rate_type" property="acqRateType" jdbcType="VARCHAR" />
+    <result column="acq_rate_type2" property="acqRateType2" jdbcType="VARCHAR" />
+    <result column="acq_org_fee2" property="acqOrgFee2" jdbcType="DECIMAL" />
+    <result column="acq_enname" property="acqEnname" jdbcType="VARCHAR" />
+    <result column="out_acq_enname" property="outAcqEnname" jdbcType="VARCHAR" />
+    <result column="out_rate_type1" property="outRateType1" jdbcType="VARCHAR" />
+    <result column="out_rate_fee1" property="outRateFee1" jdbcType="DECIMAL" />
+    <result column="out_rate_type2" property="outRateType2" jdbcType="VARCHAR" />
+    <result column="out_rate_fee2" property="outRateFee2" jdbcType="DECIMAL" />
+	    
+	    <association property="extAccountInfo" column="merchant_no"
+		    		javaType="cn.eeepay.framework.model.bill.ExtAccountInfo">
+			    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+			    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+			    <result column="account_type" property="accountType" jdbcType="VARCHAR" />
+			    <result column="account_owner" property="accountOwner" jdbcType="VARCHAR" />
+			    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+			    <result column="subject_no" property="subjectNo" jdbcType="VARCHAR" />
+			    <result column="currency_no" property="currencyNo" jdbcType="VARCHAR" />
+			    <association property="extAccount" column="account_no"
+				    		javaType="cn.eeepay.framework.model.bill.ExtAccount">
+					    <id column="account_no" property="accountNo" jdbcType="VARCHAR" />
+					    <result column="org_no" property="orgNo" jdbcType="VARCHAR" />
+					    <result column="currency_no" property="currencyNo" jdbcType="VARCHAR" />
+					    <result column="subject_no" property="subjectNo" jdbcType="VARCHAR" />
+					    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+					    <result column="curr_balance" property="currBalance" jdbcType="DECIMAL" />
+					    <result column="control_amount" property="controlAmount" jdbcType="DECIMAL" />
+					    <result column="settling_amount" property="settlingAmount" jdbcType="DECIMAL" />
+					    <result column="pre_freeze_amount" property="preFreezeAmount" jdbcType="DECIMAL" />
+					    <result column="avail_balance" property="availBalance" jdbcType="DECIMAL" />
+					    <result column="parent_trans_day" property="parentTransDay" jdbcType="DATE" />
+					    <result column="parent_trans_balance" property="parentTransBalance" jdbcType="DECIMAL" />
+					    <result column="account_status" property="accountStatus" jdbcType="VARCHAR" />
+					    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+					    <result column="balance_add_from" property="balanceAddFrom" jdbcType="VARCHAR" />
+					    <result column="balance_from" property="balanceFrom" jdbcType="VARCHAR" />
+					    <result column="day_bal_flag" property="dayBalFlag" jdbcType="VARCHAR" />
+					    <result column="sum_flag" property="sumFlag" jdbcType="VARCHAR" />
+			    </association>
+	    </association>
+    
+  </resultMap>
+  	<!-- <select id="findExtAccountInfo" parameterType="String" resultType="cn.eeepay.framework.model.ExtAccountInfo">
+		select * from ext_account_info where user_id = #{merchant_no}
+	</select> -->
+  
+</mapper>

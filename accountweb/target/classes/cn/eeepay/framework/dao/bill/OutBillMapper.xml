@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.OutBillMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.OutBill" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="out_account_task_id" property="outAccountTaskId" jdbcType="INTEGER" />
+    <result column="out_account_task_amount" property="outAccountTaskAmount" jdbcType="DECIMAL" />
+    <result column="calc_out_amount" property="calcOutAmount" jdbcType="DECIMAL" />
+    <result column="balance_up_count" property="balanceUpCount" jdbcType="INTEGER" />
+    <result column="balance_merchant_count" property="balanceMerchantCount" jdbcType="INTEGER" />
+    <result column="out_bill_status" property="outBillStatus" jdbcType="VARCHAR" />
+    <result column="sys_time" property="sysTime" jdbcType="TIMESTAMP" />
+    
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="back_operator" property="backOperator" jdbcType="VARCHAR" />
+    
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="back_time" property="backTime" jdbcType="TIMESTAMP" />
+    
+    <result column="account_owner" property="accountOwner" jdbcType="VARCHAR" />
+    <result column="acq_enname" property="acqEnname" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    
+    <result column="out_account_bill_method" property="outAccountBillMethod" jdbcType="VARCHAR" />
+    <result column="out_bill_range" property="outBillRange" jdbcType="VARCHAR" />
+
+     <result column="out_amount" property="outAmount" jdbcType="DECIMAL" />
+  </resultMap>
+</mapper>

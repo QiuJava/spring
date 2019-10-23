@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eeepay.framework.dao.bill.DuiAccountDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.DuiAccountDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="acq_trans_serial_no" property="acqTransSerialNo" jdbcType="VARCHAR" />
+    <result column="acq_merchant_order_no" property="acqMerchantOrderNo" jdbcType="VARCHAR" />
+    
+    <result column="acq_order_no" property="acqOrderNo" jdbcType="VARCHAR" />
+    <result column="acq_trans_type" property="acqTransType" jdbcType="VARCHAR" />
+    <result column="acq_trans_order_no" property="acqTransOrderNo" jdbcType="VARCHAR" />
+     <result column="order_reference_no" property="orderReferenceNo" jdbcType="VARCHAR" />
+    
+    <result column="acq_merchant_no" property="acqMerchantNo" jdbcType="VARCHAR" />
+    <result column="acq_merchant_name" property="acqMerchantName" jdbcType="INTEGER" />
+    <result column="acq_terminal_no" property="acqTerminalNo" jdbcType="VARCHAR" />
+    <result column="access_org_no" property="accessOrgNo" jdbcType="VARCHAR" />
+    <result column="access_org_name" property="accessOrgName" jdbcType="VARCHAR" />
+    <result column="acq_batch_no" property="acqBatchNo" jdbcType="VARCHAR" />
+    <result column="acq_serial_no" property="acqSerialNo" jdbcType="VARCHAR" />
+    <result column="acq_account_no" property="acqAccountNo" jdbcType="VARCHAR" />
+    <result column="acq_card_sequence_no" property="acqCardSequenceNo" jdbcType="VARCHAR" />
+    <result column="acq_trans_time" property="acqTransTime" jdbcType="TIMESTAMP" />
+    <result column="acq_reference_no" property="acqReferenceNo" jdbcType="VARCHAR" />
+    <result column="acq_settle_date" property="acqSettleDate" jdbcType="TIMESTAMP" />
+    <result column="acq_trans_code" property="acqTransCode" jdbcType="VARCHAR" />
+    <result column="acq_trans_status" property="acqTransStatus" jdbcType="VARCHAR" />
+    <result column="acq_trans_amount" property="acqTransAmount" jdbcType="DECIMAL" />
+    <result column="acq_refund_amount" property="acqRefundAmount" jdbcType="DECIMAL" />
+    <result column="acq_check_date" property="acqCheckDate" jdbcType="TIMESTAMP" />
+    <result column="acq_ori_trans_serial_no" property="acqOriTransSerialNo" jdbcType="VARCHAR" />
+    <result column="acq_enname" property="acqEnname" jdbcType="VARCHAR" />
+    <result column="plate_trans_id" property="plateTransId" jdbcType="INTEGER" />
+    <result column="plate_acq_merchant_no" property="plateAcqMerchantNo" jdbcType="VARCHAR" />
+    <result column="plate_acq_terminal_no" property="plateAcqTerminalNo" jdbcType="VARCHAR" />
+    <result column="plate_merchant_no" property="plateMerchantNo" jdbcType="VARCHAR" />
+    <result column="plate_terminal_no" property="plateTerminalNo" jdbcType="VARCHAR" />
+    <result column="plate_acq_batch_no" property="plateAcqBatchNo" jdbcType="VARCHAR" />
+    <result column="plate_acq_serial_no" property="plateAcqSerialNo" jdbcType="VARCHAR" />
+    <result column="plate_batch_no" property="plateBatchNo" jdbcType="VARCHAR" />
+    <result column="plate_serial_no" property="plateSerialNo" jdbcType="VARCHAR" />
+    <result column="plate_account_no" property="plateAccountNo" jdbcType="VARCHAR" />
+    <result column="plate_trans_amount" property="plateTransAmount" jdbcType="DECIMAL" />
+    <result column="plate_acq_merchant_fee" property="plateAcqMerchantFee" jdbcType="DECIMAL" />
+    <result column="plate_merchant_fee" property="plateMerchantFee" jdbcType="DECIMAL" />
+    <result column="plate_agent_fee" property="plateAgentFee" jdbcType="DECIMAL" />
+    <result column="plate_acq_merchant_rate" property="plateAcqMerchantRate" jdbcType="VARCHAR" />
+    <result column="plate_merchant_rate" property="plateMerchantRate" jdbcType="VARCHAR" />
+    <result column="plate_acq_reference_no" property="plateAcqReferenceNo" jdbcType="VARCHAR" />
+    <result column="plate_acq_trans_time" property="plateAcqTransTime" jdbcType="TIMESTAMP" />
+    <result column="plate_merchant_settle_date" property="plateMerchantSettleDate" jdbcType="TIMESTAMP" />
+    <result column="plate_trans_type" property="plateTransType" jdbcType="VARCHAR" />
+    <result column="plate_trans_status" property="plateTransStatus" jdbcType="VARCHAR" />
+    <result column="check_account_status" property="checkAccountStatus" jdbcType="VARCHAR" />
+    <result column="check_batch_no" property="checkBatchNo" jdbcType="VARCHAR" />
+    <result column="mend_batch_no" property="mendBatchNo" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="plate_agent_no" property="plateAgentNo" jdbcType="VARCHAR" />
+    <result column="plate_trans_source" property="plateTransSource" jdbcType="VARCHAR" />
+    <result column="my_settle" property="mySettle" jdbcType="VARCHAR" />
+    <result column="bag_settle" property="bagSettle" jdbcType="VARCHAR" />
+    <result column="pos_type" property="posType" jdbcType="VARCHAR" />
+    <!-- <result column="riqieMatch" property="riqieMatch" jdbcType="VARCHAR" /> -->
+    <result column="error_msg" property="errorMsg" jdbcType="VARCHAR" />
+    <result column="error_handle_status" property="errorHandleStatus" jdbcType="VARCHAR" />
+    
+    <result column="error_handle_creator" property="errorHandleCreator" jdbcType="VARCHAR" />
+    
+    <result column="plate_agent_share_amount" property="plateAgentShareAmount" jdbcType="DECIMAL" />
+    <result column="record_status" property="recordStatus" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    
+    <result column="settlement_method" property="settlementMethod" jdbcType="VARCHAR" />
+    <result column="settle_status" property="settleStatus" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="INTEGER" />
+    <result column="acq_auth_no" property="acqAuthNo" jdbcType="VARCHAR" />
+    
+    <result column="is_add_bill" property="isAddBill" jdbcType="VARCHAR" />
+    
+    <result column="plate_order_time" property="plateOrderTime" jdbcType="TIMESTAMP" />
+	<result column="plate_order_no" property="plateOrderNo" jdbcType="VARCHAR" />
+	<result column="plate_card_no" property="plateCardNo" jdbcType="VARCHAR" />
+	<result column="settle_type" property="settleType" jdbcType="VARCHAR" />
+    
+    <result column="plate_merchant_entry_no" property="plateMerchantEntryNo" jdbcType="VARCHAR" />
+    <result column="deduction_fee" property="deductionFee" jdbcType="DECIMAL" />
+    <result column="actual_fee" property="actualFee" jdbcType="DECIMAL" />
+    <result column="coupon_nos" property="couponNos" jdbcType="VARCHAR" />
+    <result column="mer_fee2" property="merFee2" jdbcType="DECIMAL" />
+    <result column="pay_method" property="payMethod" jdbcType="VARCHAR" />
+
+    <result column="merchant_price" property="merchantPrice" jdbcType="DECIMAL" />
+    <result column="deduction_mer_fee" property="deductionMerFee" jdbcType="DECIMAL" />
+    <result column="freeze_status" property="freezeStatus" jdbcType="VARCHAR" />
+    <result column="out_bill_status" property="outBillStatus" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+</mapper>
