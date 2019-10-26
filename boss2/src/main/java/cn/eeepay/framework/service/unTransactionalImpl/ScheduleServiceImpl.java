@@ -77,9 +77,6 @@ public class ScheduleServiceImpl implements ScheduleService {
             }else if("reSettle".equals(interfaceType)){//再次出款
                 runnable = getSrpingBean(ReSettleJob.class);
 
-            }else if("superBankUserAccount".equals(interfaceType)){//未开户的超级银行家账户系统开户
-                runnable = getSrpingBean(SuperBankUserJob.class);
-
             }else if("outAccountServiceBalance".equals(interfaceType)){//出款服务余额和上游同步
                 runnable = getSrpingBean(OutAccountServiceBalanceJob.class);
 
@@ -100,12 +97,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
             }else if("activityDetailBackstage".equals(interfaceType)){//欢乐返活动延时核算清算定时
                 runnable = getSrpingBean(ActivityDetailBackstageJob.class);
-
-            }else if("lotteryMatch".equals(interfaceType)){//超级银行家彩票导入文件匹配的定时任务
-                runnable = getSrpingBean(LotteryMatchJob.class);
-
-            }else if("analysisData".equals(interfaceType)){//超级银行家数据分析定时任务
-                runnable = getSrpingBean(AnalysisDataJob.class);
 
             }else if("updateAcqServiceRate".equals(interfaceType)){//替换收单服务费率
                 runnable = getSrpingBean(UpdateAcqServiceRateJob.class);

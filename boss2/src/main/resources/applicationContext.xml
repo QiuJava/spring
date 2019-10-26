@@ -49,7 +49,6 @@
 		resource="classpath*:applicationContext-jdbc-exchange.xml" />
 	<import
 		resource="classpath*:applicationContext-jdbc-history.xml" />
-	<import resource="classpath*:dubbo-consumer.xml" />
 	<import
 		resource="classpath*:applicationContext-jdbc-allAgent.xml" />
 

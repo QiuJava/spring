@@ -1,6 +1,5 @@
 package cn.eeepay.boss.thread;
 
-import cn.eeepay.framework.service.SuperBankService;
 import cn.eeepay.framework.util.ClientInterface;
 import com.auth0.jwt.internal.org.apache.commons.lang3.StringUtils;
 
