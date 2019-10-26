@@ -47,7 +47,6 @@
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
         p:defaultEncoding="utf-8" />
 
-    <bean id="springLoadedListener" class="cn.eeepay.boss.listener.SpringLoadedListener"></bean>
 
 	<mvc:interceptors>
 		<!-- 全局导出日志记录拦截器 -->

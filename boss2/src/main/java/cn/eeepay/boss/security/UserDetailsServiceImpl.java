@@ -6,7 +6,6 @@ import cn.eeepay.framework.model.RightInfo;
 import cn.eeepay.framework.model.UserInfo;
 import cn.eeepay.framework.model.UserLoginInfo;
 import cn.eeepay.framework.service.MenuService;
-import cn.eeepay.framework.service.SysDictService;
 import cn.eeepay.framework.service.UserGrantService;
 import cn.eeepay.framework.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,8 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserService userService;
     @Resource
     public UserGrantService userGrantService;
-    @Resource
-    public SysDictService sysDictService;
+
     @Resource
     private HttpServletRequest request;
     @Resource
@@ -79,7 +77,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 userInfo.setTheme(shiroUser.getTheme());
                 //userInfo.setExtended(CommonConst.isSalesperson, false);
 
-                String sale_role_code = sysDictService.getByKey("SALESPERSON_ROLE").getSysValue();
+                String sale_role_code ="";
                 List<RightInfo> userRoles = userService.getRightsByUser(userInfo.getId());
                 String right_code;
                 for (RightInfo rightInfo: userRoles) {

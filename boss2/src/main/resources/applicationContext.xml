@@ -41,17 +41,9 @@
 
 	<import resource="classpath*:security.xml" />
 	<import resource="classpath*:applicationContext-jdbc.xml" />
-	<import
-		resource="classpath*:applicationContext-jdbc-superbank.xml" />
-	<import
-		resource="classpath*:applicationContext-jdbc-creditMgr.xml" />
-	<import
-		resource="classpath*:applicationContext-jdbc-exchange.xml" />
+
 	<import
 		resource="classpath*:applicationContext-jdbc-history.xml" />
-	<import
-		resource="classpath*:applicationContext-jdbc-allAgent.xml" />
-
 
 	<!-- spring异步线程池 -->
 	<bean id="taskExecutor"

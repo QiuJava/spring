@@ -8,7 +8,6 @@ import cn.eeepay.framework.model.SysMenu;
 import cn.eeepay.framework.model.UserLoginInfo;
 import cn.eeepay.framework.service.BossOperLogService;
 import cn.eeepay.framework.service.MenuService;
-import cn.eeepay.framework.service.SysDictService;
 import cn.eeepay.framework.util.Constants;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.alibaba.fastjson.JSON;
@@ -32,9 +31,6 @@ public class IndexAction {
 	@Resource
 	MenuService menuService;
 	
-	@Resource
-	SysDictService sysDictService;
-
 	@Resource
 	BossOperLogService bossOperLogService;
 
@@ -84,11 +80,8 @@ public class IndexAction {
 		try {
 			principalObj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			//获取js的版本号
-			SysDict sysDict = sysDictService.getByKey("VER_NUM");
-			if(sysDict!=null){
-				verNo = sysDict.getSysValue();
-			}
-			model.addAttribute("verNo", verNo);
+		
+			model.addAttribute("verNo", "1.0");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
