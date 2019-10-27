@@ -23,9 +23,6 @@
 		<property name="locations">
 			<list>
 				<value>classpath:boss_constants.properties</value>
-				<value>classpath:zfconfig/pureAcctInfo-test.properties</value>
-				<value>classpath:ysconfig/gateway-test.properties</value>
-
 			</list>
 		</property>
 	</bean>
