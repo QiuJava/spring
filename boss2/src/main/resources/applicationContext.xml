@@ -107,5 +107,6 @@
 
 	<import resource="/quatz.xml" />
 	<import resource="/spring-task.xml" />
+	<import resource="/spring-mvc.xml" />
 
 </beans>
