@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 180 #3分钟 单位秒
+      
+datasource:
+  master:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  slaveOne:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/mybatis?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+        
+logging:
+  level:
+    com.example.mapper: debug #mybatis sql执行日志
+
+spring:
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    password: null
+    timeout: 5000 #单位毫秒
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+        max-wait: 1
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+      
+mybatis:
+  configuration:
+    cache-enabled: true #开启二级缓存
+    
+loan:    
+  serviceAddress: http://localhost:8082/api

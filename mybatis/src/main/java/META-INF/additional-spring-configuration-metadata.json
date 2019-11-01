@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "datasource",
+    "type": "java.lang.Map",
+    "description": "A description for 'datasource'"
+  },
+  {
+    "name": "loan",
+    "type": "java.lang.Map",
+    "description": "A description for 'loan'"
+  }
+]}
