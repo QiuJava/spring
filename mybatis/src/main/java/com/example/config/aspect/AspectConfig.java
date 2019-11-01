@@ -1,4 +1,4 @@
-package com.example.config.datasource;
+package com.example.config.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,7 +16,7 @@ import com.example.util.DataSourceUtil;
  */
 @Aspect
 @Configuration
-public class SetDataSourceAspect {
+public class AspectConfig {
 
 	@Around("@annotation(dataSourceKey)")
 	public Object aroundSetDataSource(ProceedingJoinPoint joinPoint, DataSourceKey dataSourceKey) {

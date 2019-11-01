@@ -6,14 +6,12 @@ import java.text.SimpleDateFormat;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,25 +32,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 @MapperScan("com.example.mapper")
 @EnableRedisHttpSession
 @ServletComponentScan("com.example.servlet")
-@ComponentScan({ "com.example.service", "com.example.controller", "com.example.listener", "com.example.config" })
-public class MybatisApplication extends WebMvcAutoConfiguration {
+@ComponentScan({ "com.example.service", "com.example.controller", "com.example.config" })
+public class MybatisApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MybatisApplication.class, args);
-	}
-
-	/**
-	 * 自定义线程池
-	 * 
-	 * @return
-	 */
-	@Bean
-	public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
-		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(20);
-		executor.setMaxPoolSize(20);
-		executor.setQueueCapacity(20);
-		return executor;
 	}
 
 	/**
