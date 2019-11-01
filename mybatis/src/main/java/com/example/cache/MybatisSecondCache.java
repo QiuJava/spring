@@ -1,4 +1,4 @@
-package com.example.config.cache;
+package com.example.cache;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -7,6 +7,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.apache.ibatis.cache.Cache;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import com.example.config.helper.SpringContextHelper;
 
 /**
  * Mybatis二级缓存

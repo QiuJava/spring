@@ -1,5 +1,5 @@
 
-package com.example.config.cache;
+package com.example.config.helper;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -18,7 +18,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
-import com.example.config.cache.MybatisSecondCache;
+import com.example.cache.MybatisSecondCache;
 import com.example.entity.Employee;
 import com.example.mapper.sqlprovider.EmployeeSqlProvider;
 

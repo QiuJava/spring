@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguratio
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -32,7 +33,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 @SpringBootApplication
 @MapperScan("com.example.mapper")
 @EnableRedisHttpSession
-@ServletComponentScan("com.example")
+@ServletComponentScan("com.example.servlet")
+@ComponentScan({ "com.example.service", "com.example.controller", "com.example.listener", "com.example.config" })
 public class MybatisApplication extends WebMvcAutoConfiguration {
 
 	public static void main(String[] args) {

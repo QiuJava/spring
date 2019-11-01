@@ -1,4 +1,4 @@
-package com.example.quartz;
+package com.example.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.common.LogicException;
+import com.example.quartz.JobDetails;
+import com.example.quartz.JobDetailsQo;
+import com.example.quartz.JobKeyDo;
 import com.example.util.ListUtil;
 import com.example.util.StrUtil;
 

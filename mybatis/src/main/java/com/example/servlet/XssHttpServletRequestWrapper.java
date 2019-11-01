@@ -1,4 +1,4 @@
-package com.example.common;
+package com.example.servlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
