@@ -34,20 +34,17 @@ public class TestController {
 
 	@Autowired
 	private JobManageService jobManageService;
-	
+
 	@Autowired
 	private ValueOperations<String, Object> valueOperations;
-	
+
 	@Autowired
 	private EmployeeServiceImpl employeeService;
-	
+
 	@GetMapping("/addEmployee")
-	public Result addEmployee() {
+	public Result addEmployee(Employee employee) {
 		Result result = new Result();
 		result.setSucceed(true);
-		Employee employee = new Employee();
-		employee.setUsername("admin1");
-		employee.setPassword("admin1");
 		try {
 			int save = employeeService.save(employee);
 			if (save < 1) {
@@ -59,7 +56,7 @@ public class TestController {
 		}
 		return result;
 	}
-	
+
 	@GetMapping("/addValueCache")
 	public Result addValueCache() {
 		Result result = new Result();

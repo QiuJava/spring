@@ -30,6 +30,13 @@ import com.example.mapper.sqlprovider.EmployeeSqlProvider;
  */
 @CacheNamespace(implementation = MybatisSecondCache.class)
 public interface EmployeeMapper {
+
+	/**
+	 * 根据主键id删除
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@Delete({ "delete from employee",
 			//
 			"where id = #{id,jdbcType=BIGINT}"
@@ -37,9 +44,21 @@ public interface EmployeeMapper {
 	})
 	int deleteByPrimaryKey(Long id);
 
+	/**
+	 * 根据主键列表删除
+	 * 
+	 * @param idList
+	 * @return
+	 */
 	@DeleteProvider(type = EmployeeSqlProvider.class, method = "deleteByPrimaryKeyList")
 	int deleteByPrimaryKeyList(@Param("idList") List<Long> idList);
 
+	/**
+	 * 插入一条数据并返回Id到对象
+	 * 
+	 * @param record
+	 * @return
+	 */
 	@Insert({ "insert into employee (id, username, ",
 			//
 			"password)",
@@ -52,9 +71,21 @@ public interface EmployeeMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(Employee record);
 
+	/**
+	 * 插入有值的数据
+	 * 
+	 * @param record
+	 * @return
+	 */
 	@InsertProvider(type = EmployeeSqlProvider.class, method = "insertSelective")
 	int insertSelective(Employee record);
 
+	/**
+	 * 根据主键Id查询
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@Select({ "select",
 			//
 			"id, username, password",
@@ -69,9 +100,21 @@ public interface EmployeeMapper {
 			@Result(column = "password", property = "password", jdbcType = JdbcType.VARCHAR) }, id = "baseResults")
 	Employee selectByPrimaryKey(Long id);
 
+	/**
+	 * 更新值变动的字段
+	 * 
+	 * @param record
+	 * @return
+	 */
 	@UpdateProvider(type = EmployeeSqlProvider.class, method = "updateByPrimaryKeySelective")
 	int updateByPrimaryKeySelective(Employee record);
 
+	/**
+	 * 根据主键id进行更新
+	 * 
+	 * @param record
+	 * @return
+	 */
 	@Update({ "update employee",
 			//
 			"set username = #{username,jdbcType=VARCHAR},",
@@ -83,6 +126,11 @@ public interface EmployeeMapper {
 	})
 	int updateByPrimaryKey(Employee record);
 
+	/**
+	 * 查询所有
+	 * 
+	 * @return
+	 */
 	@Select({ "select",
 			//
 			"id, username, password",
@@ -93,6 +141,12 @@ public interface EmployeeMapper {
 	@ResultMap("baseResults")
 	List<Employee> selectAll();
 
+	/**
+	 * 批量插入并返回id到对象
+	 * 
+	 * @param employeeList
+	 * @return
+	 */
 	@InsertProvider(type = EmployeeSqlProvider.class, method = "insertList")
 	@SelectKey(before = false, keyProperty = "id", resultType = Long.class, statement = { "SELECT LAST_INSERT_ID()" })
 	int insertList(@Param("employeeList") List<Employee> employeeList);
