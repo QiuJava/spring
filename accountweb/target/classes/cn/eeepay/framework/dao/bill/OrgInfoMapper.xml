@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.eeepay.framework.dao.bill.OrgInfoMapper" >
-  <resultMap id="BaseResultMap" type="cn.eeepay.framework.model.bill.OrgInfo" >
-    <id column="org_no" property="orgNo" jdbcType="VARCHAR" />
-    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
-  </resultMap>
-</mapper>
