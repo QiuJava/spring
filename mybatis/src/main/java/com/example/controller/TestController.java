@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.common.Result;
+import com.example.dto.JobKeyDto;
 import com.example.entity.Employee;
-import com.example.quartz.JobKeyDo;
+import com.example.entity.JobDetails;
+import com.example.qo.JobDetailsQo;
 import com.example.service.EmployeeServiceImpl;
 import com.example.service.JobManageService;
-import com.example.quartz.JobDetails;
-import com.example.quartz.JobDetailsQo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -113,7 +113,7 @@ public class TestController {
 	@GetMapping("/deleteJob")
 	public Result deleteJob() {
 		Result result = new Result();
-		JobKeyDo jobKeyDo = new JobKeyDo();
+		JobKeyDto jobKeyDo = new JobKeyDto();
 		jobKeyDo.setJobName("Cron测试任务");
 		jobKeyDo.setJobGroupName("测试任务组");
 		result.setSucceed(true);
@@ -129,7 +129,7 @@ public class TestController {
 	@GetMapping("/pauseJob")
 	public Result pauseJob() {
 		Result result = new Result();
-		JobKeyDo jobKeyDo = new JobKeyDo();
+		JobKeyDto jobKeyDo = new JobKeyDto();
 		jobKeyDo.setJobName("Cron测试任务");
 		jobKeyDo.setJobGroupName("测试任务组");
 		result.setSucceed(true);
@@ -145,7 +145,7 @@ public class TestController {
 	@GetMapping("/resumeJob")
 	public Result resumeJob() {
 		Result result = new Result();
-		JobKeyDo jobKeyDo = new JobKeyDo();
+		JobKeyDto jobKeyDo = new JobKeyDto();
 		jobKeyDo.setJobName("Cron测试任务");
 		jobKeyDo.setJobGroupName("测试任务组");
 		result.setSucceed(true);

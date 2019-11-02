@@ -23,9 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.common.LogicException;
-import com.example.quartz.JobDetails;
-import com.example.quartz.JobDetailsQo;
-import com.example.quartz.JobKeyDo;
+import com.example.dto.JobKeyDto;
+import com.example.entity.JobDetails;
+import com.example.qo.JobDetailsQo;
 import com.example.util.ListUtil;
 import com.example.util.StrUtil;
 
@@ -133,7 +133,7 @@ public class JobManageService {
 	 * @throws SchedulerException
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void deleteJob(JobKeyDo jobKeyDo) throws SchedulerException {
+	public void deleteJob(JobKeyDto jobKeyDo) throws SchedulerException {
 		JobKey jobKey = new JobKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
 		scheduler.deleteJob(jobKey);
 
@@ -148,7 +148,7 @@ public class JobManageService {
 	 * @throws SchedulerException
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void resumeJob(JobKeyDo jobKeyDo) throws SchedulerException {
+	public void resumeJob(JobKeyDto jobKeyDo) throws SchedulerException {
 		JobKey jobKey = new JobKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
 		scheduler.resumeJob(jobKey);
 
@@ -163,7 +163,7 @@ public class JobManageService {
 	 * @throws SchedulerException
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void pauseJob(JobKeyDo jobKeyDo) throws SchedulerException {
+	public void pauseJob(JobKeyDto jobKeyDo) throws SchedulerException {
 		JobKey jobKey = new JobKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
 		scheduler.pauseJob(jobKey);
 

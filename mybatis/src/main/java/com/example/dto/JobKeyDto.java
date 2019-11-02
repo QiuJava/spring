@@ -1,4 +1,4 @@
-package com.example.quartz;
+package com.example.dto;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class JobKeyDo implements Serializable {
+public class JobKeyDto implements Serializable {
 	private static final long serialVersionUID = 6703867715727416961L;
 
 	private String jobGroupName;

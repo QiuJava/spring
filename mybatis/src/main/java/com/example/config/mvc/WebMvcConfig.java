@@ -14,14 +14,11 @@ import com.example.interceptor.MyHandlerInterceptor;
  *
  */
 @Configuration
-public class WebMvcConfigurerImpl implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private MyHandlerInterceptor myHandlerInterceptor;
 
-	/**
-	 * 添加拦截器
-	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(myHandlerInterceptor).addPathPatterns("/*");

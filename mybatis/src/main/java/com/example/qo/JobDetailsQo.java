@@ -1,6 +1,4 @@
-package com.example.quartz;
-
-import com.example.qo.BaseQo;
+package com.example.qo;
 
 import lombok.Getter;
 import lombok.Setter;

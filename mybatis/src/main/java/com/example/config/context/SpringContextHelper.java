@@ -1,5 +1,5 @@
 
-package com.example.config.helper;
+package com.example.config.context;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
