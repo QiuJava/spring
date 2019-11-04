@@ -17,7 +17,7 @@ public class StrUtil {
 	/**
 	 * 空字符串
 	 */
-	public static final String EMPTY = "";
+	public static final String EMPTY_TEXT = "";
 
 	/**
 	 * 手机号码正则

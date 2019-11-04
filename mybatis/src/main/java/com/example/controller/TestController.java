@@ -3,11 +3,9 @@ package com.example.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,9 +34,6 @@ public class TestController {
 	private JobManageService jobManageService;
 
 	@Autowired
-	private ValueOperations<String, Object> valueOperations;
-
-	@Autowired
 	private EmployeeServiceImpl employeeService;
 
 	@GetMapping("/addEmployee")
@@ -50,20 +45,6 @@ public class TestController {
 			if (save < 1) {
 				result.setSucceed(false);
 			}
-		} catch (Exception e) {
-			result.setSucceed(false);
-			log.error("系统异常", e);
-		}
-		return result;
-	}
-
-	@GetMapping("/addValueCache")
-	public Result addValueCache() {
-		Result result = new Result();
-		result.setSucceed(true);
-		try {
-			List<Employee> list = employeeService.listAll();
-			valueOperations.set("list", list, 1, TimeUnit.MINUTES);
 		} catch (Exception e) {
 			result.setSucceed(false);
 			log.error("系统异常", e);

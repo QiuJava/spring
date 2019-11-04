@@ -1,9 +1,10 @@
 package com.example.listener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import lombok.extern.slf4j.Slf4j;
+import com.example.service.EmployeeServiceImpl;
 
 /**
  * 应用启动监听
@@ -12,12 +13,21 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2019年3月7日
  *
  */
-@Slf4j
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
+
+	@Autowired
+	private EmployeeServiceImpl employeeService;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		log.info("系统启动中-------------------------------------------");
+		// 系统启动创建超级管理员
+
+		// 判断数据库中是否有超级管理员,没有新建一个
+		boolean hasAdmin = employeeService.hasAdmin();
+		if (hasAdmin) {
+			return;
+		}
+
 	}
 
 }
