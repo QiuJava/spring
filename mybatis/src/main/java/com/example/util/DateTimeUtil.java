@@ -13,6 +13,10 @@ public class DateTimeUtil {
 	private DateTimeUtil() {
 	}
 
+	/**
+	 * 锁定间隔1分钟
+	 */
+	public static final long LOCK_INTERVAL = 60 * 1000;
 	public static final String DATATIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 	public static final String DATA_PATTERN = "yyyy-MM-dd";
 	public static final String MONTH_PATTERN = "yyyyMM";

@@ -25,7 +25,7 @@ public class EmployeeServiceImpl{
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Employee employee) {
-		return employeeMapper.insert(employee);
+		return employeeMapper.insertSelective(employee);
 	}
 
 	public Employee get(Long id) {
@@ -45,6 +45,11 @@ public class EmployeeServiceImpl{
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasAdmin() {
 		return employeeMapper.countBySuperAdmin() > 0;
+	}
+
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
+	public Employee getByUsername(String username) {
+		return employeeMapper.selectByUsername(username);
 	}
 
 }

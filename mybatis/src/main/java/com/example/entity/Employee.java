@@ -32,8 +32,10 @@ public class Employee implements UserDetails {
 	private Integer employeeType;
 	private String employeeNumber;
 	private String intro;
+	private Date lockTime;
 	private Date createTime;
 	private Date updateTime;
+	private List<Role> roleList;
 	private List<? extends GrantedAuthority> authorities;
 
 	public static final int NORMAL_STATUS = 0;
@@ -46,6 +48,8 @@ public class Employee implements UserDetails {
 	public static final int ADMIN_TYPE = 0;
 
 	public static final int MAX_PASSWORD_ERRORS = 5;
+	
+	public static final int PASSWORD_ERRORS_INIT = 0;
 
 	private static final long serialVersionUID = 1221985552224614692L;
 

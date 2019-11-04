@@ -37,10 +37,6 @@ spring:
     job-store-type: jdbc
     jdbc:
       initialize-schema: never
-  security:
-    user:
-      name: admin
-      password: 123456
       
 mybatis:
   configuration:
