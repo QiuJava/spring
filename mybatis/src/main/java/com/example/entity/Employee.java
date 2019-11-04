@@ -1,11 +1,15 @@
 package com.example.entity;
 
-import java.io.Serializable;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 员工
@@ -16,7 +20,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Employee implements Serializable {
+public class Employee implements UserDetails {
 	private Long id;
 	private String username;
 	private String password;
@@ -30,6 +34,7 @@ public class Employee implements Serializable {
 	private String intro;
 	private Date createTime;
 	private Date updateTime;
+	private List<? extends GrantedAuthority> authorities;
 
 	public static final int NORMAL_STATUS = 0;
 	public static final int LOCK_STATUS = 1;
@@ -40,6 +45,43 @@ public class Employee implements Serializable {
 
 	public static final int ADMIN_TYPE = 0;
 
+	public static final int MAX_PASSWORD_ERRORS = 5;
+
 	private static final long serialVersionUID = 1221985552224614692L;
+
+	@Override
+	public String getUsername() {
+		return username;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return status != INVALID_STATUS;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return status != LOCK_STATUS;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 }

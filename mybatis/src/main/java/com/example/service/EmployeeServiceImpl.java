@@ -18,7 +18,7 @@ import com.github.pagehelper.PageHelper;
  *
  */
 @Service
-public class EmployeeServiceImpl {
+public class EmployeeServiceImpl{
 
 	@Autowired
 	private EmployeeMapper employeeMapper;
@@ -46,4 +46,5 @@ public class EmployeeServiceImpl {
 	public boolean hasAdmin() {
 		return employeeMapper.countBySuperAdmin() > 0;
 	}
+
 }

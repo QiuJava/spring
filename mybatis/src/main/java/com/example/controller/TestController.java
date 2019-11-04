@@ -35,13 +35,25 @@ public class TestController {
 
 	@Autowired
 	private EmployeeServiceImpl employeeService;
+	
+	@GetMapping("/test")
+	public Result test(Employee employee) {
+		Result result = new Result();
+		result.setSucceed(true);
+		try {
+		} catch (Exception e) {
+			result.setSucceed(false);
+			log.error("系统异常", e);
+		}
+		return result;
+	}
 
 	@GetMapping("/addEmployee")
 	public Result addEmployee(Employee employee) {
 		Result result = new Result();
 		result.setSucceed(true);
 		try {
-			int save = employeeService.save(employee);
+			int save = employeeService.save(employee);// d571125c-5ece-457f-ac1f-4f0b00be9655
 			if (save < 1) {
 				result.setSucceed(false);
 			}

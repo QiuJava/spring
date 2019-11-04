@@ -1,7 +1,8 @@
-package com.example.listener;
+package com.example.config.listener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.example.service.EmployeeServiceImpl;
@@ -13,6 +14,7 @@ import com.example.service.EmployeeServiceImpl;
  * @date 2019年3月7日
  *
  */
+@Configuration
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired

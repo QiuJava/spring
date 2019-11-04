@@ -1,17 +1,19 @@
-package com.example.interceptor;
+package com.example.config.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 微信认证token检查拦截
+ * 拦截器测试
  * 
  * @author Qiu Jian
  */
+@Configuration
 @Slf4j
 public class MyHandlerInterceptor extends HandlerInterceptorAdapter {
 

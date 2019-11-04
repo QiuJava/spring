@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.example.interceptor.MyHandlerInterceptor;
+import com.example.config.interceptor.MyHandlerInterceptor;
 
 /**
  * mvc自定义
