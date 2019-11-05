@@ -99,7 +99,7 @@ public interface EmployeeMapper {
 			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "lock_time", property = "lockTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "id", property = "authorities", many = @Many(select = "com.example.mapper.PermissionMapper.selectByEmployeeId", fetchType = FetchType.EAGER)) })
+			@Result(column = "id", property = "authorities", many = @Many(select = "com.example.mapper.PermissionMapper.selectByEmployeeId", fetchType = FetchType.LAZY)) })
 	Employee selectContainAuthoritiesByUsername(String username);
 
 	@Update({ "UPDATE employee  ", "SET password_errors = #{passwordErrors,jdbcType=INTEGER}  ", "WHERE ",
