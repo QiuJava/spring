@@ -51,8 +51,8 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 		loginLog.setRemark(event.getException().getMessage());
 		loginLogService.save(loginLog);
 		employee.setPasswordErrors(employee.getPasswordErrors() + 1);
-		int passwordErrors = employee.getPasswordErrors();
-		if (passwordErrors >= Employee.MAX_PASSWORD_ERRORS && employee.getStatus() != Employee.LOCK_STATUS) {
+		if (employee.getPasswordErrors() >= Employee.MAX_PASSWORD_ERRORS
+				&& employee.getStatus() != Employee.LOCK_STATUS) {
 			// 进入锁定状态
 			employee.setStatus(Employee.LOCK_STATUS);
 			employee.setLockTime(date);

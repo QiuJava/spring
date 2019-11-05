@@ -46,9 +46,9 @@ public class JobManageServiceImpl {
 	 * 
 	 * @param jobDetailsQo
 	 * @return
-	 * @throws Exception
+	 * @throws SchedulerException
 	 */
-	public List<JobDetails> listByQo(JobDetailsQo jobDetailsQo) throws Exception {
+	public List<JobDetails> listByQo(JobDetailsQo jobDetailsQo) throws SchedulerException, LogicException {
 		List<JobDetails> jobDetailsList = new ArrayList<>();
 		String jobGroupName = jobDetailsQo.getJobGroupName();
 		// 没有默认查全部
@@ -63,8 +63,17 @@ public class JobManageServiceImpl {
 			jobDetailsList.addAll(listByJobGroupName);
 		}
 
+		Integer pageNum = jobDetailsQo.getPageNum();
+		if (pageNum == null || pageNum < 1) {
+			throw new LogicException("页数需大于0");
+		}
+		Integer pageSize = jobDetailsQo.getPageSize();
+		if (pageSize == null || pageSize < 0) {
+			throw new LogicException("一页数据条数不能小于0");
+		}
+
 		// 进行分页
-		return ListUtil.page(jobDetailsList, jobDetailsQo.getPageNum(), jobDetailsQo.getPageSize());
+		return ListUtil.page(jobDetailsList, pageNum, jobDetailsQo.getPageSize());
 
 	}
 
@@ -76,7 +85,7 @@ public class JobManageServiceImpl {
 	 * @throws ClassNotFoundException
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void addJob(JobDetails jobDetails) throws SchedulerException, ClassNotFoundException {
+	public void addJob(JobDetails jobDetails) throws SchedulerException, ClassNotFoundException, LogicException {
 		// job信息
 		String jobName = jobDetails.getJobName();
 		String jobGroup = jobDetails.getJobGroupName();
@@ -94,7 +103,7 @@ public class JobManageServiceImpl {
 		}
 
 		JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobKey).withDescription(jobDescription).build();
-		
+
 		// 创建触发器
 		TriggerBuilder<Trigger> newTrigger = TriggerBuilder.newTrigger();
 		newTrigger.withIdentity(triggerKey);
@@ -105,18 +114,30 @@ public class JobManageServiceImpl {
 		if (jobDetails.getTriggerEndTime() != null) {
 			newTrigger.endAt(jobDetails.getTriggerEndTime()).build();
 		}
-		
+
 		// 根据定时任务类型来设置不同的计划
 		int triggerType = jobDetails.getTriggerType();
 		if (triggerType == JobDetails.JOB_TYPE_CRON) {
+			String cronExpression = jobDetails.getCronExpression();
+			if (StrUtil.noText(cronExpression)) {
+				throw new LogicException("Cron表达式不能为空");
+			}
 			CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobDetails.getCronExpression())
 					.withMisfireHandlingInstructionDoNothing();
 
 			newTrigger.withSchedule(cronScheduleBuilder);
 
 		} else if (triggerType == JobDetails.JOB_TYPE_SIMPLE) {
-			SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.repeatSecondlyForTotalCount(
-					jobDetails.getRepeatCount(), Integer.valueOf(jobDetails.getRepeatInterval().toString()));
+			Long repeatInterval = jobDetails.getRepeatInterval();
+			if (repeatInterval == null) {
+				throw new LogicException("间隔秒数不能为空");
+			}
+			Integer repeatCount = jobDetails.getRepeatCount();
+			if (repeatCount == null) {
+				throw new LogicException("执行次数不能为空");
+			}
+			SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.repeatSecondlyForTotalCount(repeatCount,
+					Integer.valueOf(repeatInterval.toString()));
 			newTrigger.withSchedule(simpleScheduleBuilder);
 
 		}

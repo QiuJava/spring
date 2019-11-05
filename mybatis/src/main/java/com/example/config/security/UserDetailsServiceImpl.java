@@ -47,9 +47,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				employee.setStatus(Employee.NORMAL_STATUS);
 				employeeSerivce.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
 			} else {
-				long dimSs = date.getTime() - lockTime.getTime();
+				long differ = date.getTime() - lockTime.getTime();
 				StringBuilder builder = new StringBuilder();
-				builder.append("账户已锁定，请").append((DateTimeUtil.LOCK_INTERVAL - dimSs) / 1000).append("秒后再试");
+				builder.append("账户已锁定，请").append((DateTimeUtil.LOCK_INTERVAL - differ) / 1000).append("秒后再试");
 				throw new LockedException(builder.toString());
 			}
 		}
