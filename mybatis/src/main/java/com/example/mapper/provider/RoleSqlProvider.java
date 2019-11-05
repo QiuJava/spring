@@ -1,66 +1,65 @@
 package com.example.mapper.provider;
 
-import com.example.entity.Permission;
+import com.example.entity.Role;
 import org.apache.ibatis.jdbc.SQL;
 
 /**
- * 权限Sql供应
+ * 角色sql供应
  * 
  * @author Qiu Jian
  *
  */
-public class PermissionSqlProvider {
+public class RoleSqlProvider {
 
-	public String insertSelective(Permission record) {
+	public String insertSelective(Role record) {
 		SQL sql = new SQL();
-		sql.INSERT_INTO("permission");
+		sql.INSERT_INTO("role");
+
 		if (record.getId() != null) {
 			sql.VALUES("id", "#{id,jdbcType=BIGINT}");
 		}
-		if (record.getPermissionName() != null) {
-			sql.VALUES("permission_name", "#{permissionName,jdbcType=VARCHAR}");
+
+		if (record.getRoleName() != null) {
+			sql.VALUES("role_name", "#{roleName,jdbcType=VARCHAR}");
 		}
-		if (record.getAuthority() != null) {
-			sql.VALUES("authority", "#{authority,jdbcType=VARCHAR}");
-		}
+
 		if (record.getIntro() != null) {
 			sql.VALUES("intro", "#{intro,jdbcType=VARCHAR}");
 		}
+
 		if (record.getCreateTime() != null) {
 			sql.VALUES("create_time", "#{createTime,jdbcType=TIMESTAMP}");
 		}
+
 		if (record.getUpdateTime() != null) {
 			sql.VALUES("update_time", "#{updateTime,jdbcType=TIMESTAMP}");
 		}
-		if (record.getMenuId() != null) {
-			sql.VALUES("menu_id", "#{menuId,jdbcType=BIGINT}");
-		}
+
 		return sql.toString();
 	}
 
-	public String updateByPrimaryKeySelective(Permission record) {
+	public String updateByPrimaryKeySelective(Role record) {
 		SQL sql = new SQL();
-		sql.UPDATE("permission");
-		if (record.getPermissionName() != null) {
-			sql.SET("permission_name = #{permissionName,jdbcType=VARCHAR}");
+		sql.UPDATE("role");
+
+		if (record.getRoleName() != null) {
+			sql.SET("role_name = #{roleName,jdbcType=VARCHAR}");
 		}
-		if (record.getAuthority() != null) {
-			sql.SET("authority = #{authority,jdbcType=VARCHAR}");
-		}
+
 		if (record.getIntro() != null) {
 			sql.SET("intro = #{intro,jdbcType=VARCHAR}");
 		}
+
 		if (record.getCreateTime() != null) {
 			sql.SET("create_time = #{createTime,jdbcType=TIMESTAMP}");
 		}
+
 		if (record.getUpdateTime() != null) {
 			sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
 		}
-		if (record.getMenuId() != null) {
-			sql.SET("menu_id = #{menuId,jdbcType=BIGINT}");
-		}
+
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
+
 		return sql.toString();
 	}
-
 }

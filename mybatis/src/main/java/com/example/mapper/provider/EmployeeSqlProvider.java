@@ -3,6 +3,12 @@ package com.example.mapper.provider;
 import com.example.entity.Employee;
 import org.apache.ibatis.jdbc.SQL;
 
+/**
+ * 员工Sql供应
+ * 
+ * @author Qiu Jian
+ *
+ */
 public class EmployeeSqlProvider {
 
 	public String insertSelective(Employee record) {

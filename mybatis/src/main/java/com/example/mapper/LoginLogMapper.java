@@ -13,6 +13,12 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.type.JdbcType;
 
+/**
+ * 登录日志数据操作
+ * 
+ * @author Qiu Jian
+ *
+ */
 public interface LoginLogMapper {
 
 	@Delete({ "delete from login_log", "where id = #{id,jdbcType=BIGINT}" })

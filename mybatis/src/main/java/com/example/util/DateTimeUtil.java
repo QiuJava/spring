@@ -1,5 +1,6 @@
 package com.example.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -58,6 +59,11 @@ public class DateTimeUtil {
 	public static String getYearMonthStr(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat(MONTH_PATTERN, Locale.CHINA);
 		return format.format(date);
+	}
+	
+	public static Date strToDateByPattern(String dateStr,String pattern) throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.CHINA);
+		return format.parse(dateStr);
 	}
 
 }

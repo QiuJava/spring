@@ -29,5 +29,6 @@ public class Menu implements Serializable {
 	private List<Role> roleList;
 	private Date createTime;
 	private Date updateTime;
+	private Long parentId;
 
 }
