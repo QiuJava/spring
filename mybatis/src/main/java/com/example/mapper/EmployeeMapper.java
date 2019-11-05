@@ -2,18 +2,20 @@ package com.example.mapper;
 
 import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Many;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.mapping.FetchType;
+import org.apache.ibatis.type.JdbcType;
 
 import com.example.cache.MybatisSecondCache;
 import com.example.entity.Employee;
 import com.example.mapper.provider.EmployeeSqlProvider;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.type.JdbcType;
 
 /**
  * 员工数据操作
@@ -96,8 +98,9 @@ public interface EmployeeMapper {
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "lock_time", property = "lockTime", jdbcType = JdbcType.TIMESTAMP) })
-	Employee selectByUsername(String username);
+			@Result(column = "lock_time", property = "lockTime", jdbcType = JdbcType.TIMESTAMP),
+			@Result(column = "id", property = "authorities", many = @Many(select = "com.example.mapper.PermissionMapper.selectByEmployeeId", fetchType = FetchType.EAGER)) })
+	Employee selectContainAuthoritiesByUsername(String username);
 
 	@Update({ "UPDATE employee  ", "SET password_errors = #{passwordErrors,jdbcType=INTEGER}  ", "WHERE ",
 			"	id = #{id,jdbcType=BIGINT}" })
@@ -107,5 +110,16 @@ public interface EmployeeMapper {
 			"`status` = #{status,jdbcType=INTEGER}, ", "lock_time = #{lockTime,jdbcType=TIMESTAMP}  ", "WHERE ",
 			"	id = #{id,jdbcType=BIGINT}" })
 	int updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(Employee employee);
+
+	@Select({ "select", "id, password_errors, status ", "from employee",
+			"where username = #{username,jdbcType=VARCHAR}" })
+	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "password_errors", property = "passwordErrors", jdbcType = JdbcType.INTEGER),
+			@Result(column = "status", property = "status", jdbcType = JdbcType.INTEGER) })
+	Employee selectPasswordErrorsAndIdAndStatusByUsername(String username);
+
+	@Select({ "SELECT ", "	count( * )  ", "FROM ", "	`employee`  ", "WHERE ",
+			"	username = #{username,jdbcType=VARCHAR}" })
+	int countByUsername(String username);
 
 }

@@ -24,16 +24,16 @@ import com.example.util.DateTimeUtil;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private EmployeeServiceImpl employeeSerivce;
+	private EmployeeServiceImpl employeeService;
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Employee employee = employeeSerivce.getByUsername(username);
-		if (employee == null) {
+		boolean hasEmployee = employeeService.hasEmployeeByUsername(username);
+		if (!hasEmployee) {
 			throw new UsernameNotFoundException("用户名或密码错误");
 		}
-
+		Employee employee = employeeService.getContainAuthoritiesByUsername(username);
 		int status = employee.getStatus();
 		Date lockTime = employee.getLockTime();
 
@@ -45,7 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				employee.setLockTime(null);
 				employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
 				employee.setStatus(Employee.NORMAL_STATUS);
-				employeeSerivce.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
+				employeeService.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
 			} else {
 				long differ = date.getTime() - lockTime.getTime();
 				StringBuilder builder = new StringBuilder();
@@ -53,7 +53,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				throw new LockedException(builder.toString());
 			}
 		}
-		// 设置权限
 		return employee;
 	}
 

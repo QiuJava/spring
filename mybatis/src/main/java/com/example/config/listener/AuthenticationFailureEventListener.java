@@ -36,11 +36,12 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 		WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
 		String username = authentication.getPrincipal().toString();
 		// 如果登录名不是系统中的用户名则跳过
-		Employee employee = employeeService.getByUsername(username);
-		if (employee == null) {
+		boolean hasEmployee = employeeService.hasEmployeeByUsername(username);
+		if (!hasEmployee) {
 			return;
 		}
 
+		Employee employee = employeeService.getPasswordErrorsAndIdAndStatusByUsername(username);
 		LoginLog loginLog = new LoginLog();
 		loginLog.setLoginType(LoginLog.LOGIN_FAILURE_STATUS);
 		loginLog.setRemoteAddress(details.getRemoteAddress());

@@ -19,7 +19,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Permission implements GrantedAuthority {
-
 	private static final long serialVersionUID = 1L;
 
 	private Long id;

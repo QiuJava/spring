@@ -8,8 +8,6 @@ import com.example.annotation.DataSourceKey;
 import com.example.entity.Employee;
 import com.example.mapper.EmployeeMapper;
 import com.example.util.DataSourceUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 
 /**
  * 员工服务实现
@@ -28,28 +26,14 @@ public class EmployeeServiceImpl {
 		return employeeMapper.insertSelective(employee);
 	}
 
-	public Employee get(Long id) {
-		return employeeMapper.selectByPrimaryKey(id);
-	}
-
-	@Transactional(rollbackFor = RuntimeException.class)
-	public int update(Employee employee) {
-		return employeeMapper.updateByPrimaryKey(employee);
-	}
-
-	public Page<Employee> listPage(int pageNum, int pageSize) {
-		Page<Employee> startPage = PageHelper.startPage(pageNum, pageSize, true);
-		return startPage;
-	}
-
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasAdmin() {
 		return employeeMapper.countBySuperAdmin() > 0;
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public Employee getByUsername(String username) {
-		return employeeMapper.selectByUsername(username);
+	public Employee getContainAuthoritiesByUsername(String username) {
+		return employeeMapper.selectContainAuthoritiesByUsername(username);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -60,6 +44,14 @@ public class EmployeeServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(Employee employee) {
 		return employeeMapper.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
+	}
+
+	public Employee getPasswordErrorsAndIdAndStatusByUsername(String username) {
+		return employeeMapper.selectPasswordErrorsAndIdAndStatusByUsername(username);
+	}
+
+	public boolean hasEmployeeByUsername(String username) {
+		return employeeMapper.countByUsername(username) > 0;
 	}
 
 }
