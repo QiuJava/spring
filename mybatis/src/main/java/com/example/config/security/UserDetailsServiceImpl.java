@@ -42,10 +42,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			// 过了锁定区间 进行解锁操作
 			Date date = new Date();
 			if (date.getTime() > lockTime.getTime() + DateTimeUtil.LOCK_INTERVAL) {
-				employee.setLockTime(date);
+				employee.setLockTime(null);
 				employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
 				employee.setStatus(Employee.NORMAL_STATUS);
-				employeeSerivce.update(employee);
+				employeeSerivce.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
 			} else {
 				long dimSs = date.getTime() - lockTime.getTime();
 				StringBuilder builder = new StringBuilder();

@@ -14,7 +14,7 @@ import com.example.dto.JobKeyDto;
 import com.example.entity.Employee;
 import com.example.entity.JobDetails;
 import com.example.qo.JobDetailsQo;
-import com.example.service.JobManageService;
+import com.example.service.JobManageServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TestController {
 
 	@Autowired
-	private JobManageService jobManageService;
+	private JobManageServiceImpl jobManageService;
 
 	@GetMapping("/test")
 	public Result test(Employee employee) {

@@ -18,7 +18,7 @@ import com.github.pagehelper.PageHelper;
  *
  */
 @Service
-public class EmployeeServiceImpl{
+public class EmployeeServiceImpl {
 
 	@Autowired
 	private EmployeeMapper employeeMapper;
@@ -34,7 +34,7 @@ public class EmployeeServiceImpl{
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int update(Employee employee) {
-		return employeeMapper.updateByPrimaryKeySelective(employee);
+		return employeeMapper.updateByPrimaryKey(employee);
 	}
 
 	public Page<Employee> listPage(int pageNum, int pageSize) {
@@ -50,6 +50,16 @@ public class EmployeeServiceImpl{
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public Employee getByUsername(String username) {
 		return employeeMapper.selectByUsername(username);
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int updatePasswordErrorsByPrimaryKey(Employee employee) {
+		return employeeMapper.updatePasswordErrorsByPrimaryKey(employee);
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(Employee employee) {
+		return employeeMapper.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
 	}
 
 }

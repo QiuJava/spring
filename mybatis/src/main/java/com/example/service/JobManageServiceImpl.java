@@ -36,7 +36,7 @@ import com.example.util.StrUtil;
  *
  */
 @Service
-public class JobManageService {
+public class JobManageServiceImpl {
 
 	@Autowired
 	private Scheduler scheduler;

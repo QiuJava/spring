@@ -40,7 +40,7 @@ public class MybatisSecondCache implements Cache {
 	public void putObject(Object key, Object value) {
 		this.setRedisTemplate();
 		// 缓存时间设置为1天
-		redisTemplate.opsForValue().set(key.toString(), value, 1, TimeUnit.DAYS);
+		redisTemplate.opsForValue().set(key.toString(), value, 1, TimeUnit.MINUTES);
 	}
 
 	@Override
