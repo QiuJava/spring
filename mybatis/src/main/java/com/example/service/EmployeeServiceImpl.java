@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.annotation.DataSourceKey;
+import com.example.common.LogicException;
 import com.example.entity.Employee;
 import com.example.mapper.EmployeeMapper;
 import com.example.util.DataSourceUtil;
+import com.example.util.SecurityContextUtil;
 
 /**
  * 员工服务实现
@@ -68,6 +70,29 @@ public class EmployeeServiceImpl {
 		employee.setPassword(passwordEncoder.encode(employee.getEmployeeNumber() + Employee.INIT_PASSWORD_SUFFIX));
 		employee.setUpdateTime(new Date());
 		return employeeMapper.updatePasswordAndUpdateTimeByUsernameEmployeeNumber(employee);
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int changePassword(String username, String password, String newPassword) {
+		// 密码只能自己修改
+		Employee currentEmployee = SecurityContextUtil.getCurrentEmployee();
+		if (currentEmployee == null) {
+			throw new LogicException("请先登录");
+		}
+		String currentUsername = currentEmployee.getUsername();
+		if (!username.equals(currentUsername)) {
+			throw new LogicException("用户名不正确");
+		}
+
+		String currentPassword = currentEmployee.getPassword();
+		if (!passwordEncoder.matches(password, currentPassword)) {
+			throw new LogicException("原密码不正确");
+		}
+
+		// 进行修改操作
+		String encodePassword = passwordEncoder.encode(newPassword);
+		Date updateTime = new Date();
+		return employeeMapper.updatePasswordAndUpdateTimeByUsername(username, encodePassword, updateTime);
 	}
 
 }

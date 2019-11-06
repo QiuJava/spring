@@ -23,4 +23,7 @@ public class SecurityContextUtil {
 		return null;
 	}
 
+	public static void logout() {
+		SecurityContextHolder.clearContext();
+	}
 }

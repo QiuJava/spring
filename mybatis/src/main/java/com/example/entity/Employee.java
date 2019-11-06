@@ -51,7 +51,7 @@ public class Employee implements UserDetails {
 
 	public static final int PASSWORD_ERRORS_INIT = 0;
 
-	public static final String INIT_PASSWORD_SUFFIX = "@123";
+	public static final String INIT_PASSWORD_SUFFIX = "p123";
 
 	private static final long serialVersionUID = 1221985552224614692L;
 

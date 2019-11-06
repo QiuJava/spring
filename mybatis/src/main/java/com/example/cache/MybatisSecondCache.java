@@ -11,7 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import com.example.config.context.SpringContextHelper;
 
 /**
- * Mybatis二级缓存
+ * Mybatis二级缓存 注意:1.放session中的数据不适合用二级缓存
  *
  * @author Qiu Jian
  *
@@ -39,7 +39,6 @@ public class MybatisSecondCache implements Cache {
 	@Override
 	public void putObject(Object key, Object value) {
 		this.setRedisTemplate();
-		// 缓存时间设置为1天
 		redisTemplate.opsForValue().set(key.toString(), value, 1, TimeUnit.MINUTES);
 	}
 

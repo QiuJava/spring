@@ -1,9 +1,12 @@
 package com.example.mapper;
 
+import java.util.Date;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Many;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -127,5 +130,10 @@ public interface EmployeeMapper {
 			"update_time = #{updateTime,jdbcType=TIMESTAMP}  ", "WHERE ",
 			"	username = #{username,jdbcType=VARCHAR} AND employee_number=#{employeeNumber,jdbcType=VARCHAR}" })
 	int updatePasswordAndUpdateTimeByUsernameEmployeeNumber(Employee employee);
+
+	@Update({ "UPDATE `employee`  ", "SET `password` = #{password,jdbcType=VARCHAR}, ",
+			"update_time = #{updateTime,jdbcType=TIMESTAMP}  ", "WHERE ", "	username = #{username,jdbcType=VARCHAR}" })
+	int updatePasswordAndUpdateTimeByUsername(@Param("username") String username,
+			@Param("password") String encodePassword, @Param("updateTime") Date updateTime);
 
 }

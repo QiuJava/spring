@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.common.LogicException;
 import com.example.common.Result;
 import com.example.entity.Employee;
 import com.example.service.EmployeeServiceImpl;
@@ -30,7 +31,7 @@ public class EmployeeController {
 	private EmployeeServiceImpl employeeService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
+
 	@GetMapping("/addEmployee")
 	public Result addEmployee(Employee employee) {
 		String username = employee.getUsername();
@@ -158,6 +159,39 @@ public class EmployeeController {
 
 	@GetMapping("/changePassword")
 	public Result changePassword(String username, String password, String newPassword) {
+		if (StrUtil.noText(username)) {
+			return new Result(false, "用户名不能为空");
+		} else if (username.length() > 20) {
+			return new Result(false, "用户名过长");
+		} else if (StrUtil.isContainSpecialChar(username)) {
+			return new Result(false, "用户名不能含有特殊字符");
+		}
+
+		if (StrUtil.noText(password)) {
+			return new Result(false, "原密码不能为空");
+		} else if (!password.matches(StrUtil.PASSWORD_REGEX)) {
+			return new Result(false, "原密码格式不正确");
+		}
+
+		if (StrUtil.noText(newPassword)) {
+			return new Result(false, "原密码不能为空");
+		} else if (!newPassword.matches(StrUtil.PASSWORD_REGEX)) {
+			return new Result(false, "原密码格式不正确");
+		}
+
+		try {
+			int changePassword = employeeService.changePassword(username, password, newPassword);
+			if (changePassword < 1) {
+				return new Result(false, "修改失败");
+			}
+			// 修改成功逻辑
+			SecurityContextUtil.logout();
+		} catch (LogicException e) {
+			return new Result(false, e.getMessage());
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "修改失败");
+		}
 
 		return new Result(true, "修改成功");
 	}
