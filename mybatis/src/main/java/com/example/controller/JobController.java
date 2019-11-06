@@ -97,11 +97,10 @@ public class JobController {
 	@GetMapping("/listByQo")
 	public Result listByQo(JobDetailsQo qo) {
 		String jobGroupName = qo.getJobGroupName();
-		if (StrUtil.noText(jobGroupName)) {
-			return new Result(false, "任务组名称不能为空");
-		} else if (jobGroupName.length() > 190) {
+		if (StrUtil.hasText(jobGroupName) && jobGroupName.length() > 190) {
 			return new Result(false, "任务组名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
+		}
+		if (StrUtil.hasText(jobGroupName) && StrUtil.isContainSpecialChar(jobGroupName)) {
 			return new Result(false, "任务组名称不能含有特殊字符");
 		}
 		Result result = new Result(true, "查询成功");
