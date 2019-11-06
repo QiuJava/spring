@@ -37,17 +37,41 @@ public class JobController {
 
 	@GetMapping("/addJob")
 	public Result addJob(JobDetails jobDetails) {
-		if (StrUtil.noText(jobDetails.getJobClass())) {
+		String jobClass = jobDetails.getJobClass();
+		if (StrUtil.noText(jobClass)) {
 			return new Result(false, "任务类名不能为空");
+		} else if (jobClass.length() > 250) {
+			return new Result(false, "任务类名过长");
 		}
-		if (jobDetails.getTriggerType() == null) {
+
+		Integer triggerType = jobDetails.getTriggerType();
+		if (triggerType == null) {
 			return new Result(false, "触发器类型不能为空");
+		} else if (triggerType != JobDetails.JOB_TYPE_CRON && triggerType != JobDetails.JOB_TYPE_SIMPLE) {
+			return new Result(false, "触发器类型不正确");
 		}
-		if (StrUtil.noText(jobDetails.getJobName())) {
+
+		String jobName = jobDetails.getJobName();
+		if (StrUtil.noText(jobName)) {
 			return new Result(false, "任务名称不能为空");
+		} else if (jobName.length() > 190) {
+			return new Result(false, "任务名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobName)) {
+			return new Result(false, "任务名称不能含有特殊字符");
 		}
-		if (StrUtil.noText(jobDetails.getJobGroupName())) {
+
+		String jobGroupName = jobDetails.getJobGroupName();
+		if (StrUtil.noText(jobGroupName)) {
 			return new Result(false, "任务组名称不能为空");
+		} else if (jobGroupName.length() > 190) {
+			return new Result(false, "任务组名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
+			return new Result(false, "任务组名称不能含有特殊字符");
+		}
+
+		String jobDescription = jobDetails.getJobDescription();
+		if (StrUtil.hasText(jobDescription) && jobDescription.length() > 250) {
+			return new Result(false, "任务描述过长");
 		}
 		Result result = new Result(true, "添加成功");
 
@@ -72,6 +96,14 @@ public class JobController {
 
 	@GetMapping("/listByQo")
 	public Result listByQo(JobDetailsQo qo) {
+		String jobGroupName = qo.getJobGroupName();
+		if (StrUtil.noText(jobGroupName)) {
+			return new Result(false, "任务组名称不能为空");
+		} else if (jobGroupName.length() > 190) {
+			return new Result(false, "任务组名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
+			return new Result(false, "任务组名称不能含有特殊字符");
+		}
 		Result result = new Result(true, "查询成功");
 		try {
 			List<JobDetails> list = jobManageService.listByQo(qo);
@@ -89,11 +121,22 @@ public class JobController {
 
 	@GetMapping("/deleteJob")
 	public Result deleteJob(JobKeyDto jobKeyDo) {
-		if (StrUtil.noText(jobKeyDo.getJobName())) {
+		String jobName = jobKeyDo.getJobName();
+		if (StrUtil.noText(jobName)) {
 			return new Result(false, "任务名称不能为空");
+		} else if (jobName.length() > 190) {
+			return new Result(false, "任务名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobName)) {
+			return new Result(false, "任务名称不能含有特殊字符");
 		}
-		if (StrUtil.noText(jobKeyDo.getJobGroupName())) {
+
+		String jobGroupName = jobKeyDo.getJobGroupName();
+		if (StrUtil.noText(jobGroupName)) {
 			return new Result(false, "任务组名称不能为空");
+		} else if (jobGroupName.length() > 190) {
+			return new Result(false, "任务组名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
+			return new Result(false, "任务组名称不能含有特殊字符");
 		}
 		Result result = new Result(true);
 		try {
@@ -107,11 +150,22 @@ public class JobController {
 
 	@GetMapping("/pauseJob")
 	public Result pauseJob(JobKeyDto jobKeyDo) {
-		if (StrUtil.noText(jobKeyDo.getJobName())) {
+		String jobName = jobKeyDo.getJobName();
+		if (StrUtil.noText(jobName)) {
 			return new Result(false, "任务名称不能为空");
+		} else if (jobName.length() > 190) {
+			return new Result(false, "任务名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobName)) {
+			return new Result(false, "任务名称不能含有特殊字符");
 		}
-		if (StrUtil.noText(jobKeyDo.getJobGroupName())) {
+
+		String jobGroupName = jobKeyDo.getJobGroupName();
+		if (StrUtil.noText(jobGroupName)) {
 			return new Result(false, "任务组名称不能为空");
+		} else if (jobGroupName.length() > 190) {
+			return new Result(false, "任务组名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
+			return new Result(false, "任务组名称不能含有特殊字符");
 		}
 		Result result = new Result(true);
 		try {
@@ -125,11 +179,22 @@ public class JobController {
 
 	@GetMapping("/resumeJob")
 	public Result resumeJob(JobKeyDto jobKeyDo) {
-		if (StrUtil.noText(jobKeyDo.getJobName())) {
+		String jobName = jobKeyDo.getJobName();
+		if (StrUtil.noText(jobName)) {
 			return new Result(false, "任务名称不能为空");
+		} else if (jobName.length() > 190) {
+			return new Result(false, "任务名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobName)) {
+			return new Result(false, "任务名称不能含有特殊字符");
 		}
-		if (StrUtil.noText(jobKeyDo.getJobGroupName())) {
+
+		String jobGroupName = jobKeyDo.getJobGroupName();
+		if (StrUtil.noText(jobGroupName)) {
 			return new Result(false, "任务组名称不能为空");
+		} else if (jobGroupName.length() > 190) {
+			return new Result(false, "任务组名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
+			return new Result(false, "任务组名称不能含有特殊字符");
 		}
 		Result result = new Result(true);
 		try {

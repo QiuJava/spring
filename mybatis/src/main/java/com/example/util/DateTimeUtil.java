@@ -60,8 +60,16 @@ public class DateTimeUtil {
 		SimpleDateFormat format = new SimpleDateFormat(MONTH_PATTERN, Locale.CHINA);
 		return format.format(date);
 	}
-	
-	public static Date strToDateByPattern(String dateStr,String pattern) throws ParseException {
+
+	/**
+	 * 日期字符串转换为日期对象
+	 * 
+	 * @param dateStr
+	 * @param pattern
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date strToDateByPattern(String dateStr, String pattern) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.CHINA);
 		return format.parse(dateStr);
 	}

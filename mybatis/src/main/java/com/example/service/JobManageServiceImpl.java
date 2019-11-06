@@ -121,6 +121,8 @@ public class JobManageServiceImpl {
 			String cronExpression = jobDetails.getCronExpression();
 			if (StrUtil.noText(cronExpression)) {
 				throw new LogicException("Cron表达式不能为空");
+			} else if (cronExpression.length() > 120) {
+				throw new LogicException("Cron表达式过长");
 			}
 			CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobDetails.getCronExpression())
 					.withMisfireHandlingInstructionDoNothing();
@@ -131,10 +133,14 @@ public class JobManageServiceImpl {
 			Long repeatInterval = jobDetails.getRepeatInterval();
 			if (repeatInterval == null) {
 				throw new LogicException("间隔秒数不能为空");
+			} else if (repeatInterval.toString().length() > 12) {
+				throw new LogicException("间隔秒数过长");
 			}
 			Integer repeatCount = jobDetails.getRepeatCount();
 			if (repeatCount == null) {
 				throw new LogicException("执行次数不能为空");
+			} else if (repeatCount.toString().length() > 7) {
+				throw new LogicException("执行次数过长");
 			}
 			SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.repeatSecondlyForTotalCount(repeatCount,
 					Integer.valueOf(repeatInterval.toString()));

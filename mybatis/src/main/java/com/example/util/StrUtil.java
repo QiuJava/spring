@@ -46,6 +46,24 @@ public class StrUtil {
 	public static final String SPECIAL_CHAR_REGEX = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
 
 	/**
+	 * 是否包含特殊字符
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isContainSpecialChar(String str) {
+		char[] charArray = str.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			boolean isSpecialChar = new String(new char[] { c }).matches(StrUtil.SPECIAL_CHAR_REGEX);
+			if (isSpecialChar) {
+				return isSpecialChar;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * 判断是否是身份证号码
 	 * 
 	 * @param idCardNo
@@ -106,5 +124,5 @@ public class StrUtil {
 	public static boolean noText(String str) {
 		return str == null || str.trim().length() < 1;
 	}
-	
+
 }
