@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.common.LogicException;
 import com.example.common.Result;
-import com.example.dto.JobKeyDto;
 import com.example.entity.JobDetails;
 import com.example.qo.JobDetailsQo;
 import com.example.service.JobManageServiceImpl;
@@ -119,8 +118,8 @@ public class JobController {
 	}
 
 	@GetMapping("/deleteJob")
-	public Result deleteJob(JobKeyDto jobKeyDo) {
-		String jobName = jobKeyDo.getJobName();
+	public Result deleteJob(JobDetails jobDetails) {
+		String jobName = jobDetails.getJobName();
 		if (StrUtil.noText(jobName)) {
 			return new Result(false, "任务名称不能为空");
 		} else if (jobName.length() > 190) {
@@ -129,7 +128,7 @@ public class JobController {
 			return new Result(false, "任务名称不能含有特殊字符");
 		}
 
-		String jobGroupName = jobKeyDo.getJobGroupName();
+		String jobGroupName = jobDetails.getJobGroupName();
 		if (StrUtil.noText(jobGroupName)) {
 			return new Result(false, "任务组名称不能为空");
 		} else if (jobGroupName.length() > 190) {
@@ -139,7 +138,7 @@ public class JobController {
 		}
 		Result result = new Result(true);
 		try {
-			jobManageService.deleteJob(jobKeyDo);
+			jobManageService.deleteJob(jobDetails);
 		} catch (Exception e) {
 			result.setSucceed(false);
 			log.error("系统异常", e);
@@ -148,8 +147,8 @@ public class JobController {
 	}
 
 	@GetMapping("/pauseJob")
-	public Result pauseJob(JobKeyDto jobKeyDo) {
-		String jobName = jobKeyDo.getJobName();
+	public Result pauseJob(JobDetails jobDetails) {
+		String jobName = jobDetails.getJobName();
 		if (StrUtil.noText(jobName)) {
 			return new Result(false, "任务名称不能为空");
 		} else if (jobName.length() > 190) {
@@ -158,7 +157,7 @@ public class JobController {
 			return new Result(false, "任务名称不能含有特殊字符");
 		}
 
-		String jobGroupName = jobKeyDo.getJobGroupName();
+		String jobGroupName = jobDetails.getJobGroupName();
 		if (StrUtil.noText(jobGroupName)) {
 			return new Result(false, "任务组名称不能为空");
 		} else if (jobGroupName.length() > 190) {
@@ -168,7 +167,7 @@ public class JobController {
 		}
 		Result result = new Result(true);
 		try {
-			jobManageService.pauseJob(jobKeyDo);
+			jobManageService.pauseJob(jobDetails);
 		} catch (Exception e) {
 			result.setSucceed(false);
 			log.error("系统异常", e);
@@ -177,8 +176,8 @@ public class JobController {
 	}
 
 	@GetMapping("/resumeJob")
-	public Result resumeJob(JobKeyDto jobKeyDo) {
-		String jobName = jobKeyDo.getJobName();
+	public Result resumeJob(JobDetails jobDetails) {
+		String jobName = jobDetails.getJobName();
 		if (StrUtil.noText(jobName)) {
 			return new Result(false, "任务名称不能为空");
 		} else if (jobName.length() > 190) {
@@ -187,7 +186,7 @@ public class JobController {
 			return new Result(false, "任务名称不能含有特殊字符");
 		}
 
-		String jobGroupName = jobKeyDo.getJobGroupName();
+		String jobGroupName = jobDetails.getJobGroupName();
 		if (StrUtil.noText(jobGroupName)) {
 			return new Result(false, "任务组名称不能为空");
 		} else if (jobGroupName.length() > 190) {
@@ -197,7 +196,7 @@ public class JobController {
 		}
 		Result result = new Result(true);
 		try {
-			jobManageService.resumeJob(jobKeyDo);
+			jobManageService.resumeJob(jobDetails);
 		} catch (Exception e) {
 			result.setSucceed(false);
 			log.error("系统异常", e);

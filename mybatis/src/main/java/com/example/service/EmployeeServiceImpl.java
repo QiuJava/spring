@@ -1,6 +1,9 @@
 package com.example.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,8 @@ public class EmployeeServiceImpl {
 
 	@Autowired
 	private EmployeeMapper employeeMapper;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Employee employee) {
@@ -37,13 +42,13 @@ public class EmployeeServiceImpl {
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int updatePasswordErrorsByPrimaryKey(Employee employee) {
-		return employeeMapper.updatePasswordErrorsByPrimaryKey(employee);
+	public int updatePasswordErrorsAndUpdateTimeByPrimaryKey(Employee employee) {
+		return employeeMapper.updatePasswordErrorsAndUpdateTimeByPrimaryKey(employee);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(Employee employee) {
-		return employeeMapper.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
+	public int updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(Employee employee) {
+		return employeeMapper.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(employee);
 	}
 
 	public Employee getPasswordErrorsAndIdAndStatusByUsername(String username) {
@@ -52,6 +57,17 @@ public class EmployeeServiceImpl {
 
 	public boolean hasEmployeeByUsername(String username) {
 		return employeeMapper.countByUsername(username) > 0;
+	}
+
+	public boolean hasEmployeeByEmployeeNumber(String employeeNumber) {
+		return employeeMapper.countByEmployeeNumber(employeeNumber) > 0;
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int resetPassowrd(Employee employee) {
+		employee.setPassword(passwordEncoder.encode(employee.getEmployeeNumber() + Employee.INIT_PASSWORD_SUFFIX));
+		employee.setUpdateTime(new Date());
+		return employeeMapper.updatePasswordAndUpdateTimeByUsername(employee);
 	}
 
 }

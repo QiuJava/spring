@@ -51,7 +51,8 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 			employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
 			employee.setLockTime(null);
 			employee.setStatus(Employee.NORMAL_STATUS);
-			employeeService.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
+			employee.setUpdateTime(date);
+			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(employee);
 		}
 	}
 

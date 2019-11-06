@@ -44,6 +44,10 @@ public class StrUtil {
 	 * 特殊字符正则
 	 */
 	public static final String SPECIAL_CHAR_REGEX = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+	/**
+	 * 工号正则
+	 */
+	public static final String EMPLOYEE_NUMBER_REGEX = "[0-9]*{3,6}$";
 
 	/**
 	 * 是否包含特殊字符
@@ -62,7 +66,7 @@ public class StrUtil {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 判断是否是身份证号码
 	 * 

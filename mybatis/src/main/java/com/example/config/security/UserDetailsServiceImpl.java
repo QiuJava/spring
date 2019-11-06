@@ -45,7 +45,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				employee.setLockTime(null);
 				employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
 				employee.setStatus(Employee.NORMAL_STATUS);
-				employeeService.updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(employee);
+				employee.setUpdateTime(date);
+				employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(employee);
 			} else {
 				long differ = date.getTime() - lockTime.getTime();
 				StringBuilder builder = new StringBuilder();

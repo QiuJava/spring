@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.common.LogicException;
-import com.example.dto.JobKeyDto;
 import com.example.entity.JobDetails;
 import com.example.qo.JobDetailsQo;
 import com.example.util.ListUtil;
@@ -156,45 +155,45 @@ public class JobManageServiceImpl {
 	/**
 	 * 删除任务
 	 * 
-	 * @param jobKeyDo
+	 * @param jobDetails
 	 * @throws SchedulerException
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void deleteJob(JobKeyDto jobKeyDo) throws SchedulerException {
-		JobKey jobKey = new JobKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
+	public void deleteJob(JobDetails jobDetails) throws SchedulerException {
+		JobKey jobKey = new JobKey(jobDetails.getJobName(), jobDetails.getJobGroupName());
 		scheduler.deleteJob(jobKey);
 
-		TriggerKey triggerKey = new TriggerKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
+		TriggerKey triggerKey = new TriggerKey(jobDetails.getJobName(), jobDetails.getJobGroupName());
 		scheduler.unscheduleJob(triggerKey);
 	}
 
 	/**
 	 * 恢复任务
 	 * 
-	 * @param jobKeyDo
+	 * @param jobDetails
 	 * @throws SchedulerException
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void resumeJob(JobKeyDto jobKeyDo) throws SchedulerException {
-		JobKey jobKey = new JobKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
+	public void resumeJob(JobDetails jobDetails) throws SchedulerException {
+		JobKey jobKey = new JobKey(jobDetails.getJobName(), jobDetails.getJobGroupName());
 		scheduler.resumeJob(jobKey);
 
-		TriggerKey triggerKey = new TriggerKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
+		TriggerKey triggerKey = new TriggerKey(jobDetails.getJobName(), jobDetails.getJobGroupName());
 		scheduler.resumeTrigger(triggerKey);
 	}
 
 	/**
 	 * 暂停任务
 	 * 
-	 * @param jobKeyDo
+	 * @param jobDetails
 	 * @throws SchedulerException
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void pauseJob(JobKeyDto jobKeyDo) throws SchedulerException {
-		JobKey jobKey = new JobKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
+	public void pauseJob(JobDetails jobDetails) throws SchedulerException {
+		JobKey jobKey = new JobKey(jobDetails.getJobName(), jobDetails.getJobGroupName());
 		scheduler.pauseJob(jobKey);
 
-		TriggerKey triggerKey = new TriggerKey(jobKeyDo.getJobName(), jobKeyDo.getJobGroupName());
+		TriggerKey triggerKey = new TriggerKey(jobDetails.getJobName(), jobDetails.getJobGroupName());
 		scheduler.pauseTrigger(triggerKey);
 
 	}

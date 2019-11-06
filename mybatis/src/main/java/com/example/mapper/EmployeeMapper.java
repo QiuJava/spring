@@ -102,14 +102,14 @@ public interface EmployeeMapper {
 			@Result(column = "id", property = "authorities", many = @Many(select = "com.example.mapper.PermissionMapper.selectByEmployeeId", fetchType = FetchType.LAZY)) })
 	Employee selectContainAuthoritiesByUsername(String username);
 
-	@Update({ "UPDATE employee  ", "SET password_errors = #{passwordErrors,jdbcType=INTEGER}  ", "WHERE ",
-			"	id = #{id,jdbcType=BIGINT}" })
-	int updatePasswordErrorsByPrimaryKey(Employee employee);
+	@Update({ "UPDATE employee  ", "SET password_errors = #{passwordErrors,jdbcType=INTEGER},",
+			"update_time = #{updateTime,jdbcType=TIMESTAMP}", "WHERE ", "	id = #{id,jdbcType=BIGINT}" })
+	int updatePasswordErrorsAndUpdateTimeByPrimaryKey(Employee employee);
 
 	@Update({ "UPDATE employee  ", "SET password_errors = #{passwordErrors,jdbcType=INTEGER}, ",
-			"`status` = #{status,jdbcType=INTEGER}, ", "lock_time = #{lockTime,jdbcType=TIMESTAMP}  ", "WHERE ",
-			"	id = #{id,jdbcType=BIGINT}" })
-	int updatePasswordErrorsAndStatusAndLockTimeByPrimaryKey(Employee employee);
+			"`status` = #{status,jdbcType=INTEGER}, ", "lock_time = #{lockTime,jdbcType=TIMESTAMP},  ",
+			"update_time = #{updateTime,jdbcType=TIMESTAMP}", "WHERE ", "	id = #{id,jdbcType=BIGINT}" })
+	int updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(Employee employee);
 
 	@Select({ "select", "id, password_errors, status ", "from employee",
 			"where username = #{username,jdbcType=VARCHAR}" })
@@ -121,5 +121,11 @@ public interface EmployeeMapper {
 	@Select({ "SELECT ", "	count( * )  ", "FROM ", "	`employee`  ", "WHERE ",
 			"	username = #{username,jdbcType=VARCHAR}" })
 	int countByUsername(String username);
+
+	@Select({ "SELECT ", "	count( * )  ", "FROM ", "	`employee`  ", "WHERE ",
+			"	employee_number = #{employeeNumber,jdbcType=VARCHAR}" })
+	int countByEmployeeNumber(String employeeNumber);
+
+	int updatePasswordAndUpdateTimeByUsername(Employee employee);
 
 }
