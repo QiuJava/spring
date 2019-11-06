@@ -64,10 +64,10 @@ public class EmployeeServiceImpl {
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int resetPassowrd(Employee employee) {
+	public int resetPassword(Employee employee) {
 		employee.setPassword(passwordEncoder.encode(employee.getEmployeeNumber() + Employee.INIT_PASSWORD_SUFFIX));
 		employee.setUpdateTime(new Date());
-		return employeeMapper.updatePasswordAndUpdateTimeByUsername(employee);
+		return employeeMapper.updatePasswordAndUpdateTimeByUsernameEmployeeNumber(employee);
 	}
 
 }

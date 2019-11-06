@@ -30,10 +30,9 @@ public class EmployeeController {
 	private EmployeeServiceImpl employeeService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-
+	
 	@GetMapping("/addEmployee")
 	public Result addEmployee(Employee employee) {
-		Result result = new Result(true, "添加成功");
 		String username = employee.getUsername();
 		if (StrUtil.noText(username)) {
 			return new Result(false, "用户名不能为空");
@@ -106,6 +105,7 @@ public class EmployeeController {
 		employee.setCreateTime(date);
 		employee.setUpdateTime(date);
 
+		Result result = new Result(true, "添加成功");
 		try {
 			employeeService.save(employee);
 		} catch (Exception e) {
@@ -116,10 +116,8 @@ public class EmployeeController {
 		return result;
 	}
 
-	@GetMapping("/resetPassowrd")
-	public Result resetPassowrd(Employee employee) {
-		Result result = new Result(true, "重置成功");
-		Employee currentEmployee = SecurityContextUtil.getCurrentEmployee();
+	@GetMapping("/resetPassword")
+	public Result resetPassword(Employee employee) {
 		String username = employee.getUsername();
 		if (StrUtil.noText(username)) {
 			return new Result(false, "用户名不能为空");
@@ -128,27 +126,40 @@ public class EmployeeController {
 		} else if (StrUtil.isContainSpecialChar(username)) {
 			return new Result(false, "用户名不能含有特殊字符");
 		}
-		
+
 		String employeeNumber = employee.getEmployeeNumber();
 		if (StrUtil.noText(employeeNumber)) {
 			return new Result(false, "工号不能为空");
 		} else if (!employeeNumber.matches(StrUtil.EMPLOYEE_NUMBER_REGEX)) {
 			return new Result(false, "工号格式不正确");
 		}
+
+		Result result = new Result(true, "重置成功");
+		Employee currentEmployee = SecurityContextUtil.getCurrentEmployee();
 		try {
 			// 只有超级管理员才有重重置密码的权限
 			if (currentEmployee != null && currentEmployee.getSuperAdmin() == Employee.IS_ADMIN) {
 				// 重置
-				employeeService.resetPassowrd(employee);
+				int resetPassword = employeeService.resetPassword(employee);
+				if (resetPassword < 1) {
+					return new Result(false, "重置失败");
+				}
+			} else {
+				return new Result(false, "重置失败");
 			}
-			result.setSucceed(false);
-			result.setMsg("重置失败");
+
 		} catch (Exception e) {
 			result.setSucceed(false);
 			result.setMsg("重置失败");
 			log.error("系统异常", e);
 		}
 		return result;
+	}
+
+	@GetMapping("/changePassword")
+	public Result changePassword(String username, String password, String newPassword) {
+
+		return new Result(true, "修改成功");
 	}
 
 }

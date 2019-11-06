@@ -72,11 +72,11 @@ public class JobController {
 		if (StrUtil.hasText(jobDescription) && jobDescription.length() > 250) {
 			return new Result(false, "任务描述过长");
 		}
-		Result result = new Result(true, "添加成功");
 
 		Date date = new Date();
 		jobDetails.setTriggerStartTime(date);
 		jobDetails.setTriggerEndTime(DateUtils.addDays(date, 1));
+		Result result = new Result(true, "添加成功");
 		try {
 			jobManageService.addJob(jobDetails);
 		} catch (LogicException e) {
@@ -136,11 +136,12 @@ public class JobController {
 		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
 			return new Result(false, "任务组名称不能含有特殊字符");
 		}
-		Result result = new Result(true);
+		Result result = new Result(true, "删除任务成功");
 		try {
 			jobManageService.deleteJob(jobDetails);
 		} catch (Exception e) {
 			result.setSucceed(false);
+			result.setMsg("删除任务失败");
 			log.error("系统异常", e);
 		}
 		return result;
@@ -165,11 +166,12 @@ public class JobController {
 		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
 			return new Result(false, "任务组名称不能含有特殊字符");
 		}
-		Result result = new Result(true);
+		Result result = new Result(true, "暂停任务成功");
 		try {
 			jobManageService.pauseJob(jobDetails);
 		} catch (Exception e) {
 			result.setSucceed(false);
+			result.setMsg("暂停任务失败");
 			log.error("系统异常", e);
 		}
 		return result;
@@ -194,11 +196,12 @@ public class JobController {
 		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
 			return new Result(false, "任务组名称不能含有特殊字符");
 		}
-		Result result = new Result(true);
+		Result result = new Result(true, "重启任务成功");
 		try {
 			jobManageService.resumeJob(jobDetails);
 		} catch (Exception e) {
 			result.setSucceed(false);
+			result.setMsg("重启任务失败");
 			log.error("系统异常", e);
 		}
 		return result;
