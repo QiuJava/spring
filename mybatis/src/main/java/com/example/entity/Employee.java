@@ -51,7 +51,8 @@ public class Employee implements UserDetails {
 
 	public static final int PASSWORD_ERRORS_INIT = 0;
 
-	public static final String INIT_PASSWORD_SUFFIX = "p123";
+	public static final String INIT_PASSWORD_SUFFIX = "a123";
+	public static final String INIT_EMPLOYEE_NUMBER = "000";
 
 	private static final long serialVersionUID = 1221985552224614692L;
 
@@ -77,7 +78,7 @@ public class Employee implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return status != LOCK_STATUS;
+		return true;
 	}
 
 	@Override

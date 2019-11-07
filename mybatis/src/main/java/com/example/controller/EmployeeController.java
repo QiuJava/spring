@@ -12,6 +12,7 @@ import com.example.common.LogicException;
 import com.example.common.Result;
 import com.example.entity.Employee;
 import com.example.service.EmployeeServiceImpl;
+import com.example.service.email.EmailService;
 import com.example.util.SecurityContextUtil;
 import com.example.util.StrUtil;
 
@@ -31,36 +32,32 @@ public class EmployeeController {
 	private EmployeeServiceImpl employeeService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private EmailService emailService;
 
 	@GetMapping("/addEmployee")
 	public Result addEmployee(Employee employee) {
 		String username = employee.getUsername();
-		if (StrUtil.noText(username)) {
-			return new Result(false, "用户名不能为空");
-		} else if (username.length() > 20) {
-			return new Result(false, "用户名过长");
-		} else if (StrUtil.isContainSpecialChar(username)) {
-			return new Result(false, "用户名不能含有特殊字符");
+		Result verifyUsername = this.verifyUsername(username);
+		if (verifyUsername != null) {
+			return verifyUsername;
 		}
-		// 校验邮箱
 		String email = employee.getEmail();
-		if (StrUtil.hasText(email)) {
-			if (email.length() > 50) {
-				return new Result(false, "邮箱过长");
-			}
-			if (!email.matches(StrUtil.EMAIL_REGEX)) {
-				return new Result(false, "邮箱格式不正确");
-			}
+		Result verifyEmail = this.verifyEmail(email);
+		if (this.verifyEmail(email) != null) {
+			return verifyEmail;
 		}
-		// 校验昵称
+
 		String nickname = employee.getNickname();
-		if (StrUtil.hasText(nickname)) {
-			if (nickname.length() > 20) {
-				return new Result(false, "昵称过长");
-			}
-			if (StrUtil.isContainSpecialChar(nickname)) {
-				return new Result(false, "昵称不能含有特殊字符");
-			}
+		Result verifyNickname = this.verifyNickname(nickname);
+		if (verifyNickname != null) {
+			return verifyNickname;
+		}
+
+		String employeeNumber = employee.getEmployeeNumber();
+		Result verifyEmployeeNumber = this.verifyEmployeeNumber(employeeNumber);
+		if (verifyEmployeeNumber != null) {
+			return verifyEmployeeNumber;
 		}
 
 		Integer employeeType = employee.getEmployeeType();
@@ -68,13 +65,6 @@ public class EmployeeController {
 			return new Result(false, "员工类型不能不为空");
 		} else if (employeeType.toString().length() > 2) {
 			return new Result(false, "员工类型过长");
-		}
-
-		String employeeNumber = employee.getEmployeeNumber();
-		if (StrUtil.noText(employeeNumber)) {
-			return new Result(false, "工号不能为空");
-		} else if (!employeeNumber.matches(StrUtil.EMPLOYEE_NUMBER_REGEX)) {
-			return new Result(false, "工号格式不正确");
 		}
 
 		String intro = employee.getIntro();
@@ -120,19 +110,27 @@ public class EmployeeController {
 	@GetMapping("/resetPassword")
 	public Result resetPassword(Employee employee) {
 		String username = employee.getUsername();
-		if (StrUtil.noText(username)) {
-			return new Result(false, "用户名不能为空");
-		} else if (username.length() > 20) {
-			return new Result(false, "用户名过长");
-		} else if (StrUtil.isContainSpecialChar(username)) {
-			return new Result(false, "用户名不能含有特殊字符");
+		Result verifyUsername = this.verifyUsername(username);
+		if (verifyUsername != null) {
+			return verifyUsername;
 		}
 
 		String employeeNumber = employee.getEmployeeNumber();
-		if (StrUtil.noText(employeeNumber)) {
-			return new Result(false, "工号不能为空");
-		} else if (!employeeNumber.matches(StrUtil.EMPLOYEE_NUMBER_REGEX)) {
-			return new Result(false, "工号格式不正确");
+		Result verifyEmployeeNumber = this.verifyEmployeeNumber(employeeNumber);
+		if (verifyEmployeeNumber != null) {
+			return verifyEmployeeNumber;
+		}
+		String nickname = employee.getNickname();
+		Result verifyNickname = this.verifyNickname(nickname);
+		if (verifyNickname != null) {
+			return verifyNickname;
+		}
+
+		// 校验邮箱
+		String email = employee.getEmail();
+		Result verifyEmail = this.verifyEmail(email);
+		if (verifyEmail != null) {
+			return verifyEmail;
 		}
 
 		Result result = new Result(true, "重置成功");
@@ -154,17 +152,16 @@ public class EmployeeController {
 			result.setMsg("重置失败");
 			log.error("系统异常", e);
 		}
+		// 发送邮件
+		emailService.sendResetPasswordSuccessMail(employeeNumber, email, nickname);
 		return result;
 	}
 
 	@GetMapping("/changePassword")
 	public Result changePassword(String username, String password, String newPassword) {
-		if (StrUtil.noText(username)) {
-			return new Result(false, "用户名不能为空");
-		} else if (username.length() > 20) {
-			return new Result(false, "用户名过长");
-		} else if (StrUtil.isContainSpecialChar(username)) {
-			return new Result(false, "用户名不能含有特殊字符");
+		Result verifyUsername = this.verifyUsername(username);
+		if (verifyUsername != null) {
+			return verifyUsername;
 		}
 
 		if (StrUtil.noText(password)) {
@@ -174,9 +171,9 @@ public class EmployeeController {
 		}
 
 		if (StrUtil.noText(newPassword)) {
-			return new Result(false, "原密码不能为空");
+			return new Result(false, "新密码不能为空");
 		} else if (!newPassword.matches(StrUtil.PASSWORD_REGEX)) {
-			return new Result(false, "原密码格式不正确");
+			return new Result(false, "新密码格式不正确");
 		}
 
 		try {
@@ -184,16 +181,58 @@ public class EmployeeController {
 			if (changePassword < 1) {
 				return new Result(false, "修改失败");
 			}
-			// 修改成功逻辑
-			SecurityContextUtil.logout();
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "修改失败");
 		}
-
+		// 修改成功逻辑
+		SecurityContextUtil.logout();
 		return new Result(true, "修改成功");
 	}
 
+	private Result verifyEmployeeNumber(String employeeNumber) {
+		if (StrUtil.noText(employeeNumber)) {
+			return new Result(false, "工号不能为空");
+		} else if (StrUtil.isNotEmployeeNumber(employeeNumber)) {
+			return new Result(false, "工号格式不正确");
+		}
+		return null;
+	}
+
+	private Result verifyNickname(String nickname) {
+		if (StrUtil.noText(nickname)) {
+			return new Result(false, "昵称不能为空");
+		} else if (nickname.length() > 20) {
+			return new Result(false, "昵称过长");
+		} else if (StrUtil.isContainSpecialChar(nickname)) {
+			return new Result(false, "昵称不能含有特殊字符");
+		}
+		return null;
+	}
+
+	private Result verifyUsername(String username) {
+		if (StrUtil.noText(username)) {
+			return new Result(false, "用户名不能为空");
+		} else if (username.length() > 20) {
+			return new Result(false, "用户名过长");
+		} else if (StrUtil.isContainSpecialChar(username)) {
+			return new Result(false, "用户名不能含有特殊字符");
+		}
+		return null;
+	}
+
+	private Result verifyEmail(String email) {
+		if (StrUtil.noText(email)) {
+			return new Result(false, "邮箱不能为空");
+		} else if (email.length() > 50) {
+			return new Result(false, "邮箱过长");
+		} else if (!email.matches(StrUtil.EMAIL_REGEX)) {
+			return new Result(false, "邮箱格式不正确");
+		} else if (!email.endsWith("@qq.com")) {
+			return new Result(false, "暂时只支持qq邮箱");
+		}
+		return null;
+	}
 }

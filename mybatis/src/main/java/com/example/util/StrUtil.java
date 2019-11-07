@@ -44,10 +44,10 @@ public class StrUtil {
 	 * 特殊字符正则
 	 */
 	public static final String SPECIAL_CHAR_REGEX = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-	/**
-	 * 工号正则
-	 */
-	public static final String EMPLOYEE_NUMBER_REGEX = "[0-9]*{3,6}$";
+
+	public static boolean isNotEmployeeNumber(String str) {
+		return !str.matches(NUMBER_REGEX) || str.length() < 3 || str.length() > 6;
+	}
 
 	/**
 	 * 是否包含特殊字符

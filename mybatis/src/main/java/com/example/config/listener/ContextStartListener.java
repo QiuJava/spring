@@ -36,17 +36,16 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 		if (hasAdmin) {
 			return;
 		}
-
 		Employee employee = new Employee();
 		employee.setUsername("admin");
-		employee.setPassword(passwordEncoder.encode("123456"));
+		employee.setPassword(passwordEncoder.encode(Employee.INIT_EMPLOYEE_NUMBER + Employee.INIT_PASSWORD_SUFFIX));
 		employee.setEmail("719749187@qq.com");
 		employee.setNickname("超级管理员");
 		employee.setStatus(Employee.NORMAL_STATUS);
 		employee.setSuperAdmin(Employee.IS_ADMIN);
 		employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
 		employee.setEmployeeType(Employee.ADMIN_TYPE);
-		employee.setEmployeeNumber("000");
+		employee.setEmployeeNumber(Employee.INIT_EMPLOYEE_NUMBER);
 		Date date = new Date();
 		employee.setCreateTime(date);
 		employee.setUpdateTime(date);
