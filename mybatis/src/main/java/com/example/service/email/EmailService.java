@@ -37,7 +37,11 @@ public class EmailService {
 			mimeMessageHelper.setFrom(username, nickname);
 			mimeMessageHelper.setTo(email);
 			mimeMessageHelper.setSubject("密码重置成功");
-			mimeMessageHelper.setText("您的新密码：" + employeeNumber + Employee.INIT_PASSWORD_SUFFIX);
+			StringBuilder builder = new StringBuilder(50);
+			builder.append("您的新密码：");
+			builder.append(employeeNumber);
+			builder.append(Employee.INIT_PASSWORD_SUFFIX);
+			mimeMessageHelper.setText(builder.toString());
 		} catch (MessagingException | UnsupportedEncodingException e) {
 			log.error("邮件构建异常", e);
 			return;

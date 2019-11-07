@@ -23,6 +23,9 @@ public class PermissionSqlProvider {
 		if (record.getAuthority() != null) {
 			sql.VALUES("authority", "#{authority,jdbcType=VARCHAR}");
 		}
+		if (record.getUrl() != null) {
+			sql.VALUES("url", "#{url,jdbcType=VARCHAR}");
+		}
 		if (record.getIntro() != null) {
 			sql.VALUES("intro", "#{intro,jdbcType=VARCHAR}");
 		}
@@ -46,6 +49,9 @@ public class PermissionSqlProvider {
 		}
 		if (record.getAuthority() != null) {
 			sql.SET("authority = #{authority,jdbcType=VARCHAR}");
+		}
+		if (record.getUrl() != null) {
+			sql.SET("url = #{url,jdbcType=VARCHAR}");
 		}
 		if (record.getIntro() != null) {
 			sql.SET("intro = #{intro,jdbcType=VARCHAR}");

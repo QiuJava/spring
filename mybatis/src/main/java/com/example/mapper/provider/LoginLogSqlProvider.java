@@ -46,36 +46,4 @@ public class LoginLogSqlProvider {
 		return sql.toString();
 	}
 
-	public String updateByPrimaryKeySelective(LoginLog record) {
-		SQL sql = new SQL();
-		sql.UPDATE("login_log");
-
-		if (record.getRemoteAddress() != null) {
-			sql.SET("remote_address = #{remoteAddress,jdbcType=VARCHAR}");
-		}
-
-		if (record.getUsername() != null) {
-			sql.SET("username = #{username,jdbcType=VARCHAR}");
-		}
-
-		if (record.getLoginType() != null) {
-			sql.SET("login_type = #{loginType,jdbcType=INTEGER}");
-		}
-
-		if (record.getRemark() != null) {
-			sql.SET("remark = #{remark,jdbcType=VARCHAR}");
-		}
-
-		if (record.getCreateTime() != null) {
-			sql.SET("create_time = #{createTime,jdbcType=TIMESTAMP}");
-		}
-
-		if (record.getUpdateTime() != null) {
-			sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
-		}
-
-		sql.WHERE("id = #{id,jdbcType=BIGINT}");
-
-		return sql.toString();
-	}
 }

@@ -25,6 +25,7 @@ public class Permission implements GrantedAuthority {
 	private Long menuId;
 	private String permissionName;
 	private String authority;
+	private String url;
 	private String intro;
 	private List<Role> roleList;
 	private Date createTime;
