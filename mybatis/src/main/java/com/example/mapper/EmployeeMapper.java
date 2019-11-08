@@ -130,7 +130,12 @@ public interface EmployeeMapper {
 			"	id = #{id,jdbcType=BIGINT}" })
 	int updateByPrimaryKey(Employee record);
 
-	@Select({ "SELECT ", "	count( * )  ", "FROM ", "	`employee`  ", "WHERE ", "	super_admin = 1" })
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	`employee`  ", //
+			"WHERE ", //
+			"	super_admin = 1" })
 	int countBySuperAdmin();
 
 	@Select({ "SELECT ", //
