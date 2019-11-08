@@ -95,7 +95,7 @@ public class StrUtil {
 				// 前十七位加权因子
 				int[] idCardWi = { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 };
 				// 这是除以11后，可能产生的11位余数对应的验证码
-				String[] idCardY = { "1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2" };
+				String[] idCardYzm = { "1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2" };
 				int sum = 0;
 				for (int i = 0; i < idCardWi.length; i++) {
 					int current = Integer.parseInt(String.valueOf(charArray[i]));
@@ -104,7 +104,7 @@ public class StrUtil {
 				}
 				char idCardLast = charArray[17];
 				int idCardMod = sum % 11;
-				if (idCardY[idCardMod].toUpperCase().equals(String.valueOf(idCardLast).toUpperCase())) {
+				if (idCardYzm[idCardMod].toUpperCase().equals(String.valueOf(idCardLast).toUpperCase())) {
 					return true;
 				} else {
 					return false;

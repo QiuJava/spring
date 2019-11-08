@@ -29,7 +29,8 @@ public interface PermissionMapper {
 			"	id = #{id,jdbcType=BIGINT}" })
 	int deleteByPrimaryKey(Long id);
 
-	@Insert({ "INSERT INTO permission ( id, permission_name, authority, url, intro, create_time, update_time, menu_id ) ", //
+	@Insert({
+			"INSERT INTO permission ( id, permission_name, authority, url, intro, create_time, update_time, menu_id ) ", //
 			"VALUES ", //
 			"	( #{id,jdbcType=BIGINT} ", //
 			"	, #{permissionName,jdbcType=VARCHAR} ", //
@@ -101,5 +102,24 @@ public interface PermissionMapper {
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT) })
-	List<Permission> selectByEmployeeId(long employeeId);
+	List<Permission> selectByEmployeeId(Long employeeId);
+
+	@Select({ "SELECT ", //
+			"	permi_O.id AS id, ", //
+			"	permi_O.permission_name AS permission_name, ", //
+			"	permi_O.authority AS authority, ", //
+			"	permi_O.url AS url, ", //
+			"	permi_O.intro AS intro, ", //
+			"	permi_O.menu_id AS menu_id  ", //
+			"FROM ", //
+			"	permission permi_O ", //
+			"WHERE ", //
+			"	permi_O.menu_id = #{menuId,jdbcType=BIGINT}" })
+	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT) })
+	List<Permission> selectByMenuId(Long menuId);
 }

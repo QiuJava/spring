@@ -24,6 +24,7 @@ public class AffirmativeBased extends AbstractAccessDecisionManager {
 		super(decisionVoters);
 	}
 
+	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException {
 		if (authentication instanceof AnonymousAuthenticationToken) {

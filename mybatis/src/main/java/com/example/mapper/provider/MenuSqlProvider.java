@@ -11,6 +11,27 @@ import org.apache.ibatis.jdbc.SQL;
  */
 public class MenuSqlProvider {
 
+	public String selectByParentId(Long parentId) {
+
+		StringBuilder builder = new StringBuilder(100);
+		builder.append("id,");
+		builder.append("menu_name,");
+		builder.append("menu_code,");
+		builder.append("intro,");
+		builder.append("create_time,");
+		builder.append("update_time,");
+		builder.append("parent_id");
+		SQL sql = new SQL();
+		sql.SELECT(builder.toString());
+		sql.FROM("menu");
+		if (parentId == null) {
+			sql.WHERE("parent_id is null");
+		} else {
+			sql.WHERE("parent_id = #{parentId,jdbcType=BIGINT}");
+		}
+		return sql.toString();
+	}
+
 	public String insertSelective(Menu record) {
 		SQL sql = new SQL();
 		sql.INSERT_INTO("menu");

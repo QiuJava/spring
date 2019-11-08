@@ -51,21 +51,15 @@ public class JobController {
 		}
 
 		String jobName = jobDetails.getJobName();
-		if (StrUtil.noText(jobName)) {
-			return new Result(false, "任务名称不能为空");
-		} else if (jobName.length() > 190) {
-			return new Result(false, "任务名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobName)) {
-			return new Result(false, "任务名称不能含有特殊字符");
+		Result verifyJobName = this.verifyJobName(jobName);
+		if (verifyJobName != null) {
+			return verifyJobName;
 		}
 
 		String jobGroupName = jobDetails.getJobGroupName();
-		if (StrUtil.noText(jobGroupName)) {
-			return new Result(false, "任务组名称不能为空");
-		} else if (jobGroupName.length() > 190) {
-			return new Result(false, "任务组名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
-			return new Result(false, "任务组名称不能含有特殊字符");
+		Result verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
+		if (verifyJobGroupName != null) {
+			return verifyJobGroupName;
 		}
 
 		String jobDescription = jobDetails.getJobDescription();
@@ -120,21 +114,15 @@ public class JobController {
 	@GetMapping("/deleteJob")
 	public Result deleteJob(JobDetails jobDetails) {
 		String jobName = jobDetails.getJobName();
-		if (StrUtil.noText(jobName)) {
-			return new Result(false, "任务名称不能为空");
-		} else if (jobName.length() > 190) {
-			return new Result(false, "任务名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobName)) {
-			return new Result(false, "任务名称不能含有特殊字符");
+		Result verifyJobName = this.verifyJobName(jobName);
+		if (verifyJobName != null) {
+			return verifyJobName;
 		}
 
 		String jobGroupName = jobDetails.getJobGroupName();
-		if (StrUtil.noText(jobGroupName)) {
-			return new Result(false, "任务组名称不能为空");
-		} else if (jobGroupName.length() > 190) {
-			return new Result(false, "任务组名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
-			return new Result(false, "任务组名称不能含有特殊字符");
+		Result verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
+		if (verifyJobGroupName != null) {
+			return verifyJobGroupName;
 		}
 		Result result = new Result(true, "删除任务成功");
 		try {
@@ -150,21 +138,15 @@ public class JobController {
 	@GetMapping("/pauseJob")
 	public Result pauseJob(JobDetails jobDetails) {
 		String jobName = jobDetails.getJobName();
-		if (StrUtil.noText(jobName)) {
-			return new Result(false, "任务名称不能为空");
-		} else if (jobName.length() > 190) {
-			return new Result(false, "任务名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobName)) {
-			return new Result(false, "任务名称不能含有特殊字符");
+		Result verifyJobName = this.verifyJobName(jobName);
+		if (verifyJobName != null) {
+			return verifyJobName;
 		}
 
 		String jobGroupName = jobDetails.getJobGroupName();
-		if (StrUtil.noText(jobGroupName)) {
-			return new Result(false, "任务组名称不能为空");
-		} else if (jobGroupName.length() > 190) {
-			return new Result(false, "任务组名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
-			return new Result(false, "任务组名称不能含有特殊字符");
+		Result verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
+		if (verifyJobGroupName != null) {
+			return verifyJobGroupName;
 		}
 		Result result = new Result(true, "暂停任务成功");
 		try {
@@ -180,21 +162,14 @@ public class JobController {
 	@GetMapping("/resumeJob")
 	public Result resumeJob(JobDetails jobDetails) {
 		String jobName = jobDetails.getJobName();
-		if (StrUtil.noText(jobName)) {
-			return new Result(false, "任务名称不能为空");
-		} else if (jobName.length() > 190) {
-			return new Result(false, "任务名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobName)) {
-			return new Result(false, "任务名称不能含有特殊字符");
+		Result verifyJobName = this.verifyJobName(jobName);
+		if (verifyJobName != null) {
+			return verifyJobName;
 		}
-
 		String jobGroupName = jobDetails.getJobGroupName();
-		if (StrUtil.noText(jobGroupName)) {
-			return new Result(false, "任务组名称不能为空");
-		} else if (jobGroupName.length() > 190) {
-			return new Result(false, "任务组名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
-			return new Result(false, "任务组名称不能含有特殊字符");
+		Result verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
+		if (verifyJobGroupName != null) {
+			return verifyJobGroupName;
 		}
 		Result result = new Result(true, "重启任务成功");
 		try {
@@ -205,5 +180,27 @@ public class JobController {
 			log.error("系统异常", e);
 		}
 		return result;
+	}
+
+	private Result verifyJobGroupName(String jobGroupName) {
+		if (StrUtil.noText(jobGroupName)) {
+			return new Result(false, "任务组名称不能为空");
+		} else if (jobGroupName.length() > 190) {
+			return new Result(false, "任务组名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
+			return new Result(false, "任务组名称不能含有特殊字符");
+		}
+		return null;
+	}
+
+	private Result verifyJobName(String jobName) {
+		if (StrUtil.noText(jobName)) {
+			return new Result(false, "任务名称不能为空");
+		} else if (jobName.length() > 190) {
+			return new Result(false, "任务名称过长");
+		} else if (StrUtil.isContainSpecialChar(jobName)) {
+			return new Result(false, "任务名称不能含有特殊字符");
+		}
+		return null;
 	}
 }
