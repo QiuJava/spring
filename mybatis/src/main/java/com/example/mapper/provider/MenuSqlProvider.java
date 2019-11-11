@@ -16,7 +16,6 @@ public class MenuSqlProvider {
 		StringBuilder builder = new StringBuilder(100);
 		builder.append("id,");
 		builder.append("menu_name,");
-		builder.append("menu_code,");
 		builder.append("intro,");
 		builder.append("create_time,");
 		builder.append("update_time,");
@@ -44,10 +43,6 @@ public class MenuSqlProvider {
 			sql.VALUES("menu_name", "#{menuName,jdbcType=VARCHAR}");
 		}
 
-		if (record.getMenuCode() != null) {
-			sql.VALUES("menu_code", "#{menuCode,jdbcType=VARCHAR}");
-		}
-
 		if (record.getIntro() != null) {
 			sql.VALUES("intro", "#{intro,jdbcType=VARCHAR}");
 		}
@@ -73,10 +68,6 @@ public class MenuSqlProvider {
 
 		if (record.getMenuName() != null) {
 			sql.SET("menu_name = #{menuName,jdbcType=VARCHAR}");
-		}
-
-		if (record.getMenuCode() != null) {
-			sql.SET("menu_code = #{menuCode,jdbcType=VARCHAR}");
 		}
 
 		if (record.getIntro() != null) {

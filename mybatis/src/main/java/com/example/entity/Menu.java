@@ -22,7 +22,6 @@ public class Menu implements Serializable {
 
 	private Long id;
 	private String menuName;
-	private String menuCode;
 	private String intro;
 	private List<Permission> pemissionList;
 	private List<Menu> children;
