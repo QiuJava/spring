@@ -86,8 +86,6 @@ public interface MenuMapper {
 			"	menu_name, ", //
 			"	menu_code, ", //
 			"	intro, ", //
-			"	create_time, ", //
-			"	update_time, ", //
 			"	parent_id  ", //
 			"FROM ", //
 			"	menu  ", //
@@ -97,8 +95,6 @@ public interface MenuMapper {
 			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "menu_code", property = "menuCode", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "parent_id", property = "parentId", jdbcType = JdbcType.BIGINT),
 			@Result(column = "id", property = "pemissionList", many = @Many(select = "com.example.mapper.PermissionMapper.selectByMenuId", fetchType = FetchType.EAGER)),
 			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
@@ -109,8 +105,6 @@ public interface MenuMapper {
 			"	menu_name, ", //
 			"	menu_code, ", //
 			"	intro, ", //
-			"	create_time, ", //
-			"	update_time, ", //
 			"	parent_id  ", //
 			"FROM ", //
 			"	menu  ", //
@@ -120,8 +114,6 @@ public interface MenuMapper {
 			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "menu_code", property = "menuCode", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "parent_id", property = "parentId", jdbcType = JdbcType.BIGINT),
 			@Result(column = "id", property = "pemissionList", many = @Many(select = "com.example.mapper.PermissionMapper.selectByMenuId", fetchType = FetchType.EAGER)),
 			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })

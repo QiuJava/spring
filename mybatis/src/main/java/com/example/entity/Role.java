@@ -23,7 +23,6 @@ public class Role implements Serializable {
 	private Long id;
 	private String roleName;
 	private String intro;
-	private List<Menu> menuList;
 	private List<Permission> permissionList;
 	private List<Employee> employeeList;
 	private Date createTime;

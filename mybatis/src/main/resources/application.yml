@@ -1,9 +1,6 @@
 server:
   port: 8080
-  servlet:
-    session:
-      timeout: 180 #3分钟 单位秒
-      
+        
 datasource:
   master:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -12,7 +9,7 @@ datasource:
     password: 123456
   slaveOne:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/mybatis?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
         

@@ -36,4 +36,19 @@ public class Permission implements GrantedAuthority {
 		return authority;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Permission)) {
+			return false;
+		}
+		Permission p = (Permission) obj;
+		return this.id.equals(p.getId());
+	}
+
+	@Override
+	public int hashCode() {
+		String idString = this.id.toString();
+		return Integer.valueOf(idString) * 31;
+	}
+
 }

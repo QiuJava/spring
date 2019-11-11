@@ -36,6 +36,7 @@ public class Employee implements UserDetails {
 	private Date createTime;
 	private Date updateTime;
 	private List<Role> roleList;
+	private List<Menu> menuList;
 	private List<Permission> authorities;
 
 	public static final int NORMAL_STATUS = 0;
