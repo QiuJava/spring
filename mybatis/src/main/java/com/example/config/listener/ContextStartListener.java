@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.entity.Employee;
 import com.example.service.EmployeeServiceImpl;
@@ -37,6 +38,7 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Autowired
 	private ValueOperations<String, Object> valueOperations;
 
+	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		if (valueOperations.get(ALL_MENU_KEY) == null) {

@@ -33,12 +33,10 @@ public class EmployeeServiceImpl {
 		return employeeMapper.insertSelective(employee);
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasAdmin() {
 		return employeeMapper.countBySuperAdmin() > 0;
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public Employee getContainAuthoritiesByUsername(String username) {
 		return employeeMapper.selectContainAuthoritiesByUsername(username);
 	}
@@ -61,6 +59,7 @@ public class EmployeeServiceImpl {
 		return employeeMapper.countByUsername(username) > 0;
 	}
 
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasEmployeeByEmployeeNumber(String employeeNumber) {
 		return employeeMapper.countByEmployeeNumber(employeeNumber) > 0;
 	}
