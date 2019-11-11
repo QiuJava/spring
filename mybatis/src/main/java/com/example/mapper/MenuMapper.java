@@ -126,4 +126,5 @@ public interface MenuMapper {
 			@Result(column = "id", property = "pemissionList", many = @Many(select = "com.example.mapper.PermissionMapper.selectByMenuId", fetchType = FetchType.EAGER)),
 			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
 	List<Menu> selectByParentId(Long parentId);
+
 }

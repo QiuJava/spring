@@ -90,7 +90,9 @@ public class EmployeeController {
 		// 初始化
 		employee.setStatus(Employee.NORMAL_STATUS);
 		employee.setSuperAdmin(Employee.IS_NOT_ADMIN);
-		employee.setPassword(passwordEncoder.encode(employeeNumber + Employee.INIT_PASSWORD_SUFFIX));
+
+		employee.setPassword(passwordEncoder
+				.encode(new StringBuilder(20).append(employeeNumber).append(Employee.INIT_PASSWORD_SUFFIX)));
 		employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
 		Date date = new Date();
 		employee.setCreateTime(date);

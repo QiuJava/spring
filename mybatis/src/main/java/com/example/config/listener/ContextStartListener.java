@@ -29,7 +29,8 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		// 系统启动创建超级管理员
+
+		// 获取所有菜单
 
 		// 判断数据库中是否有超级管理员,没有新建一个
 		boolean hasAdmin = employeeService.hasAdmin();
@@ -38,7 +39,8 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 		}
 		Employee employee = new Employee();
 		employee.setUsername("admin");
-		employee.setPassword(passwordEncoder.encode(Employee.INIT_EMPLOYEE_NUMBER + Employee.INIT_PASSWORD_SUFFIX));
+		employee.setPassword(passwordEncoder.encode(
+				new StringBuilder(20).append(Employee.INIT_EMPLOYEE_NUMBER).append(Employee.INIT_PASSWORD_SUFFIX)));
 		employee.setEmail("719749187@qq.com");
 		employee.setNickname("超级管理员");
 		employee.setStatus(Employee.NORMAL_STATUS);
