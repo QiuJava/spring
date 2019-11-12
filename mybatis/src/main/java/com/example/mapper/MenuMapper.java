@@ -111,4 +111,12 @@ public interface MenuMapper {
 			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
 	List<Menu> selectByParentId(Long parentId);
 
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	menu  ", //
+			"WHERE ", //
+			"	menu_name = #{menuName,jdbcType=VARCHAR}" })
+	int countByMenuName(String menuName);
+
 }

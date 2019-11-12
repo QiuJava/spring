@@ -69,6 +69,12 @@ public class MenuController {
 			}
 		}
 
+		// 菜单名称不能重复
+		boolean hasMenuName = menuService.hasMenuName(menuName);
+		if (hasMenuName) {
+			return new Result(false, "菜单名已存在");
+		}
+
 		Date date = new Date();
 		menu.setCreateTime(date);
 		menu.setUpdateTime(date);

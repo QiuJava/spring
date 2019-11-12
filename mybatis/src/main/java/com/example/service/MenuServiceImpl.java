@@ -29,4 +29,8 @@ public class MenuServiceImpl {
 	public int save(Menu menu) {
 		return menuMapper.insertSelective(menu);
 	}
+
+	public boolean hasMenuName(String menuName) {
+		return menuMapper.countByMenuName(menuName) > 0;
+	}
 }
