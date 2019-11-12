@@ -119,4 +119,13 @@ public interface MenuMapper {
 			"	menu_name = #{menuName,jdbcType=VARCHAR}" })
 	int countByMenuName(String menuName);
 
+	@Select({ "SELECT ", //
+			"	menu_name ", //
+			"FROM ", //
+			"	menu  ", //
+			"WHERE ", //
+			"	id = #{id,jdbcType=BIGINT}" })
+	@Results({ @Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR), })
+	Menu selectMenuNameById(Long id);
+
 }

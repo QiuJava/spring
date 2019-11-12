@@ -36,4 +36,14 @@ public class MenuServiceImpl {
 	public boolean hasMenuName(String menuName) {
 		return menuMapper.countByMenuName(menuName) > 0;
 	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int update(Menu menu) {
+		return menuMapper.updateByPrimaryKeySelective(menu);
+	}
+
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
+	public Menu getMenuNameById(Long id) {
+		return menuMapper.selectMenuNameById(id);
+	}
 }

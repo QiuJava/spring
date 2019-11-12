@@ -90,7 +90,10 @@ public class PermissionController {
 					return new Result(false, "权限路径已存在");
 				}
 			}
-			permissionService.save(permission);
+			int save = permissionService.save(permission);
+			if (save < 1) {
+				return new Result(false, "添加失败");
+			}
 			// 重新设置菜单缓存
 			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
 		} catch (Exception e) {
@@ -160,7 +163,10 @@ public class PermissionController {
 					}
 				}
 			}
-			permissionService.update(permission);
+			int update = permissionService.update(permission);
+			if (update < 1) {
+				return new Result(false, "更新失败");
+			}
 			// 重新设置菜单缓存
 			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
 		} catch (Exception e) {

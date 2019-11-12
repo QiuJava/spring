@@ -86,13 +86,12 @@ public interface PermissionMapper {
 			"	id = #{id,jdbcType=BIGINT}" })
 	int updateByPrimaryKey(Permission record);
 
-	@Select({ "SELECT ", //
+	@Select({ "SELECT DISTINCT ", //
 			"	permi_O.id AS id, ", //
 			"	permi_O.permission_name AS permission_name, ", //
 			"	permi_O.authority AS authority, ", //
 			"	permi_O.url AS url, ", //
-			"	permi_O.intro AS intro, ", //
-			"	permi_O.menu_id AS menu_id  ", //
+			"	permi_O.intro AS intro ", //
 			"FROM ", //
 			"	permission permi_O ", //
 			"	JOIN role_permission role_permi_0 ON permi_O.id = role_permi_0.permission_id ", //
@@ -102,8 +101,7 @@ public interface PermissionMapper {
 			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT) })
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR) })
 	List<Permission> selectByEmployeeId(Long employeeId);
 
 	@Select({ "SELECT ", //
@@ -111,8 +109,7 @@ public interface PermissionMapper {
 			"	permi_O.permission_name AS permission_name, ", //
 			"	permi_O.authority AS authority, ", //
 			"	permi_O.url AS url, ", //
-			"	permi_O.intro AS intro, ", //
-			"	permi_O.menu_id AS menu_id  ", //
+			"	permi_O.intro AS intro ", //
 			"FROM ", //
 			"	permission permi_O ", //
 			"WHERE ", //
@@ -121,8 +118,7 @@ public interface PermissionMapper {
 			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT) })
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR) })
 	List<Permission> selectByMenuId(Long menuId);
 
 	@Select({ "SELECT ", //
