@@ -122,4 +122,28 @@ public interface PermissionMapper {
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT) })
 	List<Permission> selectByMenuId(Long menuId);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	permission  ", //
+			"WHERE ", //
+			"	permission_name = #{permissionName,jdbcType=VARCHAR}" })
+	int countByPermissionName(String permissionName);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	permission  ", //
+			"WHERE ", //
+			"	authority = #{authority,jdbcType=VARCHAR}" })
+	int countByAuthority(String authority);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	permission  ", //
+			"WHERE ", //
+			"	url = #{url,jdbcType=VARCHAR}" })
+	int countByUrl(String url);
 }

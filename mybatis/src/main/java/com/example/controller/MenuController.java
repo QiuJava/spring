@@ -51,12 +51,9 @@ public class MenuController {
 		}
 
 		String menuName = menu.getMenuName();
-		if (StrUtil.noText(menuName)) {
-			return new Result(false, "菜单名称不能为空");
-		} else if (menuName.length() > 20) {
-			return new Result(false, "菜单名称过长");
-		} else if (StrUtil.isContainSpecialChar(menuName)) {
-			return new Result(false, "菜单名称不能包含特殊字符");
+		Result verifyMenuName = this.verifyMenuName(menuName);
+		if (verifyMenuName != null) {
+			return verifyMenuName;
 		}
 
 		String intro = menu.getIntro();
@@ -69,21 +66,49 @@ public class MenuController {
 			}
 		}
 
-		// 菜单名称不能重复
-		boolean hasMenuName = menuService.hasMenuName(menuName);
-		if (hasMenuName) {
-			return new Result(false, "菜单名已存在");
-		}
-
 		Date date = new Date();
 		menu.setCreateTime(date);
 		menu.setUpdateTime(date);
 		try {
+
+			// 菜单名称不能重复
+			boolean hasMenuName = menuService.hasMenuName(menuName);
+			if (hasMenuName) {
+				return new Result(false, "菜单名称已存在");
+			}
 			menuService.save(menu);
+			// 重新设置菜单缓存
+			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "系统异常");
 		}
 		return new Result(true, "添加成功");
+	}
+
+	@GetMapping("/hasMenuName")
+	public Result hasMenuName(String menuName) {
+		Result verifyMenuName = this.verifyMenuName(menuName);
+		if (verifyMenuName != null) {
+			return verifyMenuName;
+		}
+		try {
+			boolean hasMenuName = menuService.hasMenuName(menuName);
+			return new Result(true, "获取成功", null, hasMenuName);
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "系统异常");
+		}
+	}
+
+	private Result verifyMenuName(String menuName) {
+		if (StrUtil.noText(menuName)) {
+			return new Result(false, "菜单名称不能为空");
+		} else if (menuName.length() > 20) {
+			return new Result(false, "菜单名称过长");
+		} else if (StrUtil.isContainSpecialChar(menuName)) {
+			return new Result(false, "菜单名称不能包含特殊字符");
+		}
+		return null;
 	}
 }

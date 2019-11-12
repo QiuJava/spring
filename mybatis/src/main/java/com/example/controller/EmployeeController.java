@@ -77,16 +77,6 @@ public class EmployeeController {
 			}
 		}
 
-		boolean hasEmployeeByUsername = employeeService.hasEmployeeByUsername(username);
-		if (hasEmployeeByUsername) {
-			return new Result(false, "用户名已存在");
-		}
-
-		boolean hasEmployeeByEmployeeNumber = employeeService.hasEmployeeByEmployeeNumber(employeeNumber);
-		if (hasEmployeeByEmployeeNumber) {
-			return new Result(false, "工号已存在");
-		}
-
 		// 初始化
 		employee.setStatus(Employee.NORMAL_STATUS);
 		employee.setSuperAdmin(Employee.IS_NOT_ADMIN);
@@ -100,6 +90,15 @@ public class EmployeeController {
 
 		Result result = new Result(true, "添加成功");
 		try {
+			boolean hasEmployeeByUsername = employeeService.hasEmployeeByUsername(username);
+			if (hasEmployeeByUsername) {
+				return new Result(false, "用户名已存在");
+			}
+
+			boolean hasEmployeeByEmployeeNumber = employeeService.hasEmployeeByEmployeeNumber(employeeNumber);
+			if (hasEmployeeByEmployeeNumber) {
+				return new Result(false, "工号已存在");
+			}
 			employeeService.save(employee);
 		} catch (Exception e) {
 			result.setSucceed(false);

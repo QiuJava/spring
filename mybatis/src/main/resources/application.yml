@@ -38,11 +38,7 @@ spring:
     host: smtp.qq.com
     username: 719748187@qq.com
     password: fpnqgibsoohybdgh
-    
-        
+          
 mybatis:
   configuration:
     cache-enabled: true #开启二级缓存
-    
-loan:    
-  serviceAddress: http://localhost:8082/api

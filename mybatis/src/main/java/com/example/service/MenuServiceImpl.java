@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.annotation.DataSourceKey;
 import com.example.entity.Menu;
 import com.example.mapper.MenuMapper;
+import com.example.util.DataSourceUtil;
 
 /**
  * 菜单服务
@@ -30,6 +32,7 @@ public class MenuServiceImpl {
 		return menuMapper.insertSelective(menu);
 	}
 
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasMenuName(String menuName) {
 		return menuMapper.countByMenuName(menuName) > 0;
 	}
