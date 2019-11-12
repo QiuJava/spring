@@ -5,9 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.annotation.DataSourceKey;
+import com.example.common.PageResult;
 import com.example.entity.Permission;
 import com.example.mapper.PermissionMapper;
+import com.example.qo.PermissionQo;
 import com.example.util.DataSourceUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 /**
  * 权限服务
@@ -55,6 +59,13 @@ public class PermissionServiceImpl {
 	public int deleteById(Long id) {
 		permissionMapper.deleteRolePermissionByPermissionId(id);
 		return permissionMapper.deleteByPrimaryKey(id);
+	}
+
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
+	public PageResult<Permission> listByQo(PermissionQo qo) {
+		Page<Permission> page = PageHelper.startPage(qo.getPageNum(), qo.getPageSize(), qo.getCount());
+		permissionMapper.selectByQo(qo);
+		return new PageResult<Permission>(page.getPageNum(), page.getPageSize(), page.getTotal(), page.getResult());
 	}
 
 }

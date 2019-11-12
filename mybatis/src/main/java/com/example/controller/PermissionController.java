@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.common.PageResult;
 import com.example.common.Result;
 import com.example.config.listener.ContextStartListener;
 import com.example.entity.Permission;
+import com.example.qo.PermissionQo;
 import com.example.service.MenuServiceImpl;
 import com.example.service.PermissionServiceImpl;
 import com.example.util.StrUtil;
@@ -186,6 +188,26 @@ public class PermissionController {
 			return new Result(false, "删除失败");
 		}
 		return new Result(true, "删除成功");
+	}
+
+	@GetMapping("/listByQo")
+	public Result listByQo(PermissionQo qo) {
+		if (qo.getCount() == null) {
+			return new Result(false, "是否统计不能为空");
+		}
+		if (qo.getPageNum() == null) {
+			return new Result(false, "页数不能为空");
+		}
+		if (qo.getPageSize() == null) {
+			return new Result(false, "一页条数不能为空");
+		}
+		try {
+			PageResult<Permission> pageResult = permissionService.listByQo(qo);
+			return new Result(true, "查询成功", null, pageResult);
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "查询失败");
+		}
 	}
 
 	@GetMapping("/hasPermissionName")

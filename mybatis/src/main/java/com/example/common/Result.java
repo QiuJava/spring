@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class Result {
 
-	private boolean succeed;
+	private Boolean succeed;
 	private String msg;
 	private Integer statusCode;
 	private Object data;
@@ -23,22 +23,22 @@ public class Result {
 	public Result() {
 	}
 
-	public Result(boolean succeed) {
+	public Result(Boolean succeed) {
 		this.succeed = succeed;
 	}
 
-	public Result(boolean succeed, String msg) {
+	public Result(Boolean succeed, String msg) {
 		this.succeed = succeed;
 		this.msg = msg;
 	}
 
-	public Result(boolean succeed, String msg, Integer statusCode) {
+	public Result(Boolean succeed, String msg, Integer statusCode) {
 		this.succeed = succeed;
 		this.msg = msg;
 		this.statusCode = statusCode;
 	}
 
-	public Result(boolean succeed, String msg, Integer statusCode, Object data) {
+	public Result(Boolean succeed, String msg, Integer statusCode, Object data) {
 		this.succeed = succeed;
 		this.msg = msg;
 		this.statusCode = statusCode;

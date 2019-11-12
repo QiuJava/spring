@@ -1,7 +1,10 @@
 package com.example.mapper.provider;
 
-import com.example.entity.Permission;
 import org.apache.ibatis.jdbc.SQL;
+
+import com.example.entity.Permission;
+import com.example.qo.PermissionQo;
+import com.example.util.StrUtil;
 
 /**
  * 权限Sql供应
@@ -66,6 +69,29 @@ public class PermissionSqlProvider {
 			sql.SET("menu_id = #{menuId,jdbcType=BIGINT}");
 		}
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
+		return sql.toString();
+	}
+
+	public String selectByQo(PermissionQo qo) {
+		SQL sql = new SQL();
+		StringBuilder builder = new StringBuilder();
+		builder.append("	id, ");
+		builder.append("	permission_name, ");
+		builder.append("	authority, ");
+		builder.append("	url, ");
+		builder.append("	intro, ");
+		builder.append("	create_time, ");
+		builder.append("	update_time, ");
+		builder.append("	menu_id  ");
+
+		sql.SELECT(builder.toString());
+		sql.FROM("permission");
+		if (StrUtil.hasText(qo.getPermissionName())) {
+			sql.WHERE("permission_name=#{permissionName,jdbcType=VARCHAR}");
+		}
+		if (StrUtil.hasText(qo.getAuthority())) {
+			sql.WHERE("authority=#{authority,jdbcType=VARCHAR}");
+		}
 		return sql.toString();
 	}
 

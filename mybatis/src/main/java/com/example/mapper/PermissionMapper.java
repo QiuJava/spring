@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import com.example.entity.Permission;
 import com.example.mapper.provider.PermissionSqlProvider;
+import com.example.qo.PermissionQo;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
@@ -153,4 +155,15 @@ public interface PermissionMapper {
 			"WHERE ", //
 			"	permission_id = #{id,jdbcType=BIGINT}" })
 	int deleteRolePermissionByPermissionId(Long id);
+
+	@SelectProvider(type = PermissionSqlProvider.class, method = "selectByQo")
+	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
+			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
+			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT) })
+	List<Permission> selectByQo(PermissionQo qo);
 }
