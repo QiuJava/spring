@@ -33,7 +33,7 @@ public class PermissionController {
 	@Autowired
 	private MenuServiceImpl menuService;
 	@Autowired
-	private ValueOperations<String,Object> valueOperations;
+	private ValueOperations<String, Object> valueOperations;
 
 	@GetMapping("/addPermission")
 	public Result addPermission(Permission permission) {
@@ -143,6 +143,79 @@ public class PermissionController {
 			log.error("系统异常", e);
 			return new Result(false, "系统异常");
 		}
+	}
+
+	@GetMapping("/updatePermission")
+	public Result updatePermission(Permission permission) {
+		Long id = permission.getId();
+		if (id == null) {
+			return new Result(false, "权限ID不能为空");
+		} else if (id.toString().length() > 20) {
+			return new Result(false, "权限ID过长");
+		}
+
+		String permissionName = permission.getPermissionName();
+		Result verifyPermissionName = this.verifyPermissionName(permissionName);
+		if (verifyPermissionName != null) {
+			return verifyPermissionName;
+		}
+
+		String authority = permission.getAuthority();
+		Result verifyAuthority = this.verifyAuthority(authority);
+		if (verifyAuthority != null) {
+			return verifyAuthority;
+		}
+
+		String url = permission.getUrl();
+		Result verifyUrl = this.verifyUrl(url);
+		if (verifyUrl != null) {
+			return verifyUrl;
+		}
+
+		String intro = permission.getIntro();
+		if (StrUtil.hasText(intro)) {
+			if (intro.length() > 255) {
+				return new Result(false, "权限描述过长");
+			}
+			if (StrUtil.isContainSpecialChar(intro)) {
+				return new Result(false, "权限描述不能包含特殊字符");
+			}
+		}
+
+		Date date = new Date();
+		permission.setUpdateTime(date);
+		try {
+			Permission oldPermission = permissionService.getById(id);
+			if (!permissionName.equals(oldPermission.getPermissionName())) {
+				boolean hasPermissionName = permissionService.hasPermissionName(permissionName);
+				if (hasPermissionName) {
+					return new Result(false, "权限名称已存在");
+				}
+			}
+
+			if (!authority.equals(oldPermission.getAuthority())) {
+				boolean hasAuthority = permissionService.hasAuthority(authority);
+				if (hasAuthority) {
+					return new Result(false, "权限编码已存在");
+				}
+			}
+
+			if (StrUtil.hasText(url)) {
+				if (!url.equals(oldPermission.getUrl())) {
+					boolean hasUrl = permissionService.hasUrl(url);
+					if (hasUrl) {
+						return new Result(false, "权限路径已存在");
+					}
+				}
+			}
+			permissionService.update(permission);
+			// 重新设置菜单缓存
+			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "系统异常");
+		}
+		return new Result(true, "更新成功");
 	}
 
 	private Result verifyPermissionName(String permissionName) {

@@ -2,6 +2,7 @@ package com.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.annotation.DataSourceKey;
 import com.example.entity.Permission;
@@ -20,6 +21,7 @@ public class PermissionServiceImpl {
 	@Autowired
 	private PermissionMapper permissionMapper;
 
+	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Permission permission) {
 		return permissionMapper.insertSelective(permission);
 	}
@@ -37,6 +39,16 @@ public class PermissionServiceImpl {
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasUrl(String url) {
 		return permissionMapper.countByUrl(url) > 0;
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int update(Permission permission) {
+		return permissionMapper.updateByPrimaryKeySelective(permission);
+	}
+
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
+	public Permission getById(Long id) {
+		return permissionMapper.selectByPrimaryKey(id);
 	}
 
 }
