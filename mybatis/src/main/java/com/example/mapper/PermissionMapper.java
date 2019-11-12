@@ -146,4 +146,11 @@ public interface PermissionMapper {
 			"WHERE ", //
 			"	url = #{url,jdbcType=VARCHAR}" })
 	int countByUrl(String url);
+
+	@Delete({ "DELETE  ", //
+			"FROM ", //
+			"	role_permission  ", //
+			"WHERE ", //
+			"	permission_id = #{id,jdbcType=BIGINT}" })
+	int deleteRolePermissionByPermissionId(Long id);
 }

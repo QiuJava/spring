@@ -64,11 +64,9 @@ public class PermissionController {
 
 		String intro = permission.getIntro();
 		if (StrUtil.hasText(intro)) {
-			if (intro.length() > 255) {
-				return new Result(false, "权限描述过长");
-			}
-			if (StrUtil.isContainSpecialChar(intro)) {
-				return new Result(false, "权限描述不能包含特殊字符");
+			Result verifyIntro = this.verifyIntro(intro);
+			if (verifyIntro != null) {
+				return verifyIntro;
 			}
 		}
 
@@ -95,63 +93,17 @@ public class PermissionController {
 			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "系统异常");
+			return new Result(false, "添加失败");
 		}
 		return new Result(true, "添加成功");
-	}
-
-	@GetMapping("/hasPermissionName")
-	public Result hasPermissionName(String permissionName) {
-		Result verifyPermissionName = this.verifyPermissionName(permissionName);
-		if (verifyPermissionName != null) {
-			return verifyPermissionName;
-		}
-		try {
-			boolean hasPermissionName = permissionService.hasPermissionName(permissionName);
-			return new Result(true, "获取成功", null, hasPermissionName);
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return new Result(false, "系统异常");
-		}
-	}
-
-	@GetMapping("/hasAuthority")
-	public Result hasAuthority(String authority) {
-		Result verifyAuthority = this.verifyAuthority(authority);
-		if (verifyAuthority != null) {
-			return verifyAuthority;
-		}
-		try {
-			boolean hasAuthority = permissionService.hasAuthority(authority);
-			return new Result(true, "获取成功", null, hasAuthority);
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return new Result(false, "系统异常");
-		}
-	}
-
-	@GetMapping("/hasUrl")
-	public Result hasUrl(String url) {
-		Result verifyUrl = this.verifyUrl(url);
-		if (verifyUrl != null) {
-			return verifyUrl;
-		}
-		try {
-			boolean hasUrl = permissionService.hasUrl(url);
-			return new Result(true, "获取成功", null, hasUrl);
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return new Result(false, "系统异常");
-		}
 	}
 
 	@GetMapping("/updatePermission")
 	public Result updatePermission(Permission permission) {
 		Long id = permission.getId();
-		if (id == null) {
-			return new Result(false, "权限ID不能为空");
-		} else if (id.toString().length() > 20) {
-			return new Result(false, "权限ID过长");
+		Result verifyId = this.verifyId(id);
+		if (verifyId != null) {
+			return verifyId;
 		}
 
 		String permissionName = permission.getPermissionName();
@@ -174,11 +126,9 @@ public class PermissionController {
 
 		String intro = permission.getIntro();
 		if (StrUtil.hasText(intro)) {
-			if (intro.length() > 255) {
-				return new Result(false, "权限描述过长");
-			}
-			if (StrUtil.isContainSpecialChar(intro)) {
-				return new Result(false, "权限描述不能包含特殊字符");
+			Result verifyIntro = this.verifyIntro(intro);
+			if (verifyIntro != null) {
+				return verifyIntro;
 			}
 		}
 
@@ -213,9 +163,74 @@ public class PermissionController {
 			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "系统异常");
+			return new Result(false, "更新失败");
 		}
 		return new Result(true, "更新成功");
+	}
+
+	@GetMapping("/deletePermission")
+	public Result deletePermission(Long id) {
+		Result verifyId = this.verifyId(id);
+		if (verifyId != null) {
+			return verifyId;
+		}
+		try {
+			int deleteById = permissionService.deleteById(id);
+			if (deleteById < 1) {
+				return new Result(false, "删除失败");
+			}
+			// 重新设置菜单缓存
+			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "删除失败");
+		}
+		return new Result(true, "删除成功");
+	}
+
+	@GetMapping("/hasPermissionName")
+	public Result hasPermissionName(String permissionName) {
+		Result verifyPermissionName = this.verifyPermissionName(permissionName);
+		if (verifyPermissionName != null) {
+			return verifyPermissionName;
+		}
+		try {
+			boolean hasPermissionName = permissionService.hasPermissionName(permissionName);
+			return new Result(true, "获取成功", null, hasPermissionName);
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "获取失败");
+		}
+	}
+
+	@GetMapping("/hasAuthority")
+	public Result hasAuthority(String authority) {
+		Result verifyAuthority = this.verifyAuthority(authority);
+		if (verifyAuthority != null) {
+			return verifyAuthority;
+		}
+		try {
+			boolean hasAuthority = permissionService.hasAuthority(authority);
+			return new Result(true, "获取成功", null, hasAuthority);
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "获取失败");
+		}
+	}
+
+	@GetMapping("/hasUrl")
+	public Result hasUrl(String url) {
+		Result verifyUrl = this.verifyUrl(url);
+		if (verifyUrl != null) {
+			return verifyUrl;
+		}
+		try {
+			boolean hasUrl = permissionService.hasUrl(url);
+			return new Result(true, "获取成功", null, hasUrl);
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "获取失败");
+		}
 	}
 
 	private Result verifyPermissionName(String permissionName) {
@@ -245,6 +260,25 @@ public class PermissionController {
 	private Result verifyUrl(String url) {
 		if (StrUtil.hasText(url) && url.length() > 100) {
 			return new Result(false, "权限路径编码过长");
+		}
+		return null;
+	}
+
+	private Result verifyId(Long id) {
+		if (id == null) {
+			return new Result(false, "权限ID不能为空");
+		} else if (id.toString().length() > 20) {
+			return new Result(false, "权限ID过长");
+		}
+		return null;
+	}
+
+	private Result verifyIntro(String intro) {
+		if (intro.length() > 255) {
+			return new Result(false, "权限描述过长");
+		}
+		if (StrUtil.isContainSpecialChar(intro)) {
+			return new Result(false, "权限描述不能包含特殊字符");
 		}
 		return null;
 	}

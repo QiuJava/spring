@@ -51,4 +51,10 @@ public class PermissionServiceImpl {
 		return permissionMapper.selectByPrimaryKey(id);
 	}
 
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int deleteById(Long id) {
+		permissionMapper.deleteRolePermissionByPermissionId(id);
+		return permissionMapper.deleteByPrimaryKey(id);
+	}
+
 }

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.example.config.interceptor.MyHandlerInterceptor;
+import com.example.config.interceptor.RequestLogHandlerInterceptor;
 
 /**
  * mvc自定义
@@ -17,10 +17,10 @@ import com.example.config.interceptor.MyHandlerInterceptor;
 public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Autowired
-	private MyHandlerInterceptor myHandlerInterceptor;
+	private RequestLogHandlerInterceptor requestLogHandlerInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(myHandlerInterceptor).addPathPatterns("/*");
+		registry.addInterceptor(requestLogHandlerInterceptor).addPathPatterns("/**");
 	}
 }
