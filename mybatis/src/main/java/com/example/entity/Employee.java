@@ -1,15 +1,10 @@
 package com.example.entity;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 员工
@@ -20,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @Setter
 @ToString
-public class Employee implements UserDetails {
+public class Employee {
 	private Long id;
 	private String username;
 	private String password;
@@ -35,9 +30,6 @@ public class Employee implements UserDetails {
 	private Date lockTime;
 	private Date createTime;
 	private Date updateTime;
-	private List<Role> roleList;
-	private List<Menu> menuList;
-	private List<Permission> authorities;
 
 	public static final int NORMAL_STATUS = 0;
 	public static final int LOCK_STATUS = 1;
@@ -54,42 +46,5 @@ public class Employee implements UserDetails {
 
 	public static final String INIT_PASSWORD_SUFFIX = "a123";
 	public static final String INIT_EMPLOYEE_NUMBER = "000";
-
-	private static final long serialVersionUID = 1221985552224614692L;
-
-	@Override
-	public String getUsername() {
-		return username;
-	}
-
-	@Override
-	public String getPassword() {
-		return password;
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return status != INVALID_STATUS;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
 
 }

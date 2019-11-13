@@ -15,6 +15,7 @@ import com.example.service.EmployeeServiceImpl;
 import com.example.service.email.EmailService;
 import com.example.util.SecurityContextUtil;
 import com.example.util.StrUtil;
+import com.example.vo.EmployeeVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -135,10 +136,10 @@ public class EmployeeController {
 		}
 
 		Result result = new Result(true, "重置成功");
-		Employee currentEmployee = SecurityContextUtil.getCurrentEmployee();
+		EmployeeVo currentEmployeeVo = SecurityContextUtil.getCurrentEmployeeVo();
 		try {
 			// 只有超级管理员才有重重置密码的权限
-			if (currentEmployee != null && currentEmployee.getSuperAdmin() == Employee.IS_ADMIN) {
+			if (currentEmployeeVo != null && currentEmployeeVo.getSuperAdmin() == Employee.IS_ADMIN) {
 				// 重置
 				int resetPassword = employeeService.resetPassword(employee);
 				if (resetPassword < 1) {

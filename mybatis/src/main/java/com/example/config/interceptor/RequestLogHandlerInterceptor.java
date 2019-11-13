@@ -24,13 +24,15 @@ public class RequestLogHandlerInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		HandlerMethod handlerMethod = (HandlerMethod) handler;
-		String className = handlerMethod.getBeanType().getName();
-		String methodName = handlerMethod.getMethod().getName();
-		StringBuilder builder = new StringBuilder();
-		builder.append(className).append(".").append(methodName);
-		log.info("请求者：{}，请求路径：{}，请求方法：{}，请求参数：{}", SecurityContextUtil.getCurrentEmployee().getUsername(),
-				request.getRequestURI(), builder.toString(), JSON.toJSONString(request.getParameterMap()));
+		if (handler instanceof HandlerMethod) {
+			HandlerMethod handlerMethod = (HandlerMethod) handler;
+			String className = handlerMethod.getBeanType().getName();
+			String methodName = handlerMethod.getMethod().getName();
+			StringBuilder builder = new StringBuilder();
+			builder.append(className).append(".").append(methodName);
+			log.info("请求者：{}，请求路径：{}，请求方法：{}，请求参数：{}", SecurityContextUtil.getCurrentEmployeeVo().getUsername(),
+					request.getRequestURI(), builder.toString(), JSON.toJSONString(request.getParameterMap()));
+		}
 		return true;
 	}
 

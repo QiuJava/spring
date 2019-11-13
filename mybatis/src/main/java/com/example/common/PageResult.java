@@ -3,11 +3,12 @@ package com.example.common;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 页
+ * 页结果
  * 
  * @author Qiu Jian
  *
@@ -15,6 +16,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@NoArgsConstructor
 public class PageResult<T> {
 	private Integer pageNum;
 	private Integer pageSize;

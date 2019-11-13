@@ -24,7 +24,7 @@ import com.example.service.MenuServiceImpl;
 @Configuration
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
 
-	public static final String ALL_MENU_KEY = "ALL_MENU_KEY";
+	public static final String ALL_MENU_TREE = "ALL_MENU_TREE";
 
 	@Autowired
 	private EmployeeServiceImpl employeeService;
@@ -41,9 +41,9 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		if (valueOperations.get(ALL_MENU_KEY) == null) {
+		if (valueOperations.get(ALL_MENU_TREE) == null) {
 			// 获取所有菜单 放入Redis缓存
-			valueOperations.set(ALL_MENU_KEY, menuService.listAll());
+			valueOperations.set(ALL_MENU_TREE, menuService.listAll());
 		}
 		// 判断数据库中是否有超级管理员,没有新建一个
 		boolean hasAdmin = employeeService.hasAdmin();

@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.dto.EmployeeLockDto;
+import com.example.dto.EmployeeLoginErrorDto;
 import com.example.entity.Employee;
 import com.example.entity.LoginLog;
 import com.example.service.EmployeeServiceImpl;
@@ -42,26 +44,34 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 		}
 
 		Employee employee = employeeService.getPasswordErrorsAndIdAndStatusByUsername(username);
+
+		int passwordErrors = employee.getPasswordErrors() + 1;
+		Date date = new Date();
+		if (passwordErrors >= Employee.MAX_PASSWORD_ERRORS && employee.getStatus() != Employee.LOCK_STATUS) {
+			// 进入锁定状态
+			EmployeeLockDto dto = new EmployeeLockDto();
+			dto.setId(employee.getId());
+			dto.setStatus(Employee.LOCK_STATUS);
+			dto.setLockTime(date);
+			dto.setUpdateTime(date);
+			dto.setPasswordErrors(passwordErrors);
+			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(dto);
+		} else {
+			EmployeeLoginErrorDto dto = new EmployeeLoginErrorDto();
+			dto.setId(employee.getId());
+			dto.setPasswordErrors(passwordErrors);
+			dto.setUpdateTime(date);
+			employeeService.updatePasswordErrorsAndUpdateTimeById(dto);
+		}
+
 		LoginLog loginLog = new LoginLog();
 		loginLog.setLoginType(LoginLog.LOGIN_FAILURE_STATUS);
 		loginLog.setRemoteAddress(details.getRemoteAddress());
-		Date date = new Date();
 		loginLog.setCreateTime(date);
 		loginLog.setUpdateTime(date);
 		loginLog.setUsername(username);
 		loginLog.setRemark(event.getException().getMessage());
 		loginLogService.save(loginLog);
-		employee.setPasswordErrors(employee.getPasswordErrors() + 1);
-		employee.setUpdateTime(date);
-		if (employee.getPasswordErrors() >= Employee.MAX_PASSWORD_ERRORS
-				&& employee.getStatus() != Employee.LOCK_STATUS) {
-			// 进入锁定状态
-			employee.setStatus(Employee.LOCK_STATUS);
-			employee.setLockTime(date);
-			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(employee);
-		} else {
-			employeeService.updatePasswordErrorsAndUpdateTimeByPrimaryKey(employee);
-		}
 	}
 
 }

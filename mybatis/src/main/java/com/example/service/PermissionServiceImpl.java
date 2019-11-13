@@ -68,4 +68,9 @@ public class PermissionServiceImpl {
 		return new PageResult<Permission>(page.getPageNum(), page.getPageSize(), page.getTotal(), page.getResult());
 	}
 
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int deleteByMenuId(Long menuId) {
+		return permissionMapper.deleteByMenuId(menuId);
+	}
+
 }

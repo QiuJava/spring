@@ -14,11 +14,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.config.listener.ContextStartListener;
+import com.example.dto.EmployeeLockDto;
 import com.example.entity.Employee;
-import com.example.entity.Menu;
-import com.example.entity.Permission;
 import com.example.service.EmployeeServiceImpl;
 import com.example.util.DateTimeUtil;
+import com.example.vo.EmployeeVo;
+import com.example.vo.MenuTreeVo;
+import com.example.vo.PermissionVo;
 
 /**
  * 用户明细服务实现
@@ -42,20 +44,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if (!hasEmployee) {
 			throw new UsernameNotFoundException("用户名或密码错误");
 		}
-		Employee employee = employeeService.getContainAuthoritiesByUsername(username);
-		int status = employee.getStatus();
-		Date lockTime = employee.getLockTime();
+
+		EmployeeVo employeeVo = employeeService.getEmployeeVoByUsername(username);
 
 		// 判断用户是否锁定 锁定状态抛出异常
-		if (Employee.LOCK_STATUS == status) {
+		if (Employee.LOCK_STATUS == employeeVo.getStatus()) {
+			Date lockTime = employeeVo.getLockTime();
 			// 过了锁定区间 进行解锁操作
 			Date date = new Date();
 			if (date.getTime() > lockTime.getTime() + DateTimeUtil.LOCK_INTERVAL) {
-				employee.setLockTime(null);
-				employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
-				employee.setStatus(Employee.NORMAL_STATUS);
-				employee.setUpdateTime(date);
-				employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(employee);
+				EmployeeLockDto dto = new EmployeeLockDto();
+				dto.setId(employeeVo.getId());
+				dto.setLockTime(null);
+				dto.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
+				dto.setStatus(Employee.NORMAL_STATUS);
+				dto.setUpdateTime(date);
+				employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(dto);
 			} else {
 				long differ = date.getTime() - lockTime.getTime();
 				StringBuilder builder = new StringBuilder();
@@ -64,33 +68,38 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 		}
 
-		List<Menu> menuList = (List<Menu>) valueOpertions.get(ContextStartListener.ALL_MENU_KEY);
-		if (menuList != null && menuList.size() > 0) {
-			this.menuTreeMatches(menuList, (List<Permission>) employee.getAuthorities());
-			employee.setMenuList(menuList);
+		List<MenuTreeVo> menuTreeVoList = (List<MenuTreeVo>) valueOpertions.get(ContextStartListener.ALL_MENU_TREE);
+		List<PermissionVo> authorities = (List<PermissionVo>) employeeVo.getAuthorities();
+		if (menuTreeVoList != null && authorities != null) {
+			this.menuTreeMatches(menuTreeVoList, authorities);
+			employeeVo.setMenuTreeVoList(menuTreeVoList);
 		}
-		return employee;
+
+		return employeeVo;
 	}
 
-	private void menuTreeMatches(List<Menu> menuList, List<Permission> authorities) {
-		for (Iterator<Menu> iterator = menuList.iterator(); iterator.hasNext();) {
-			Menu menu = (Menu) iterator.next();
-			List<Permission> pemissionList = menu.getPemissionList();
-			int mismatches = 0;
-			for (Permission permission : pemissionList) {
-				if (!authorities.contains(permission)) {
-					mismatches++;
-				}
+	private void menuTreeMatches(List<MenuTreeVo> menuTreeVoList, List<PermissionVo> authorities) {
+		for (Iterator<MenuTreeVo> iterator = menuTreeVoList.iterator(); iterator.hasNext();) {
+			MenuTreeVo menuTreeVo = (MenuTreeVo) iterator.next();
+			List<PermissionVo> pemissionVoList = menuTreeVo.getPermissionVoList();
+			if (pemissionVoList != null) {
+				int mismatches = 0;
+				for (PermissionVo permissionVo : pemissionVoList) {
+					if (!authorities.contains(permissionVo)) {
+						mismatches++;
+					}
 
+				}
+				if (mismatches == pemissionVoList.size()) {
+					iterator.remove();
+				}
+				// 开始找下级菜单
+				List<MenuTreeVo> children = menuTreeVo.getChildren();
+				if (children != null && children.size() > 0) {
+					this.menuTreeMatches(children, authorities);
+				}
 			}
-			if (mismatches == pemissionList.size()) {
-				iterator.remove();
-			}
-			// 开始找下级菜单
-			List<Menu> children = menu.getChildren();
-			if (children != null && children.size() > 0) {
-				this.menuTreeMatches(children, authorities);
-			}
+
 		}
 	}
 

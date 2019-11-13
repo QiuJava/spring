@@ -2,7 +2,6 @@ package com.example.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,9 +22,6 @@ public class Menu implements Serializable {
 	private Long id;
 	private String menuName;
 	private String intro;
-	private List<Permission> pemissionList;
-	private List<Menu> children;
-	private List<Role> roleList;
 	private Date createTime;
 	private Date updateTime;
 	private Long parentId;

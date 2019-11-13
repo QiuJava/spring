@@ -9,10 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
+import com.example.dto.EmployeeLockDto;
+import com.example.dto.EmployeeLoginErrorDto;
 import com.example.entity.Employee;
 import com.example.mapper.EmployeeMapper;
 import com.example.util.DataSourceUtil;
 import com.example.util.SecurityContextUtil;
+import com.example.vo.EmployeeVo;
 
 /**
  * 员工服务实现
@@ -37,18 +40,18 @@ public class EmployeeServiceImpl {
 		return employeeMapper.countBySuperAdmin() > 0;
 	}
 
-	public Employee getContainAuthoritiesByUsername(String username) {
-		return employeeMapper.selectContainAuthoritiesByUsername(username);
+	public EmployeeVo getEmployeeVoByUsername(String username) {
+		return employeeMapper.selectEmployeeVoByUsername(username);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int updatePasswordErrorsAndUpdateTimeByPrimaryKey(Employee employee) {
-		return employeeMapper.updatePasswordErrorsAndUpdateTimeByPrimaryKey(employee);
+	public int updatePasswordErrorsAndUpdateTimeById(EmployeeLoginErrorDto dto) {
+		return employeeMapper.updatePasswordErrorsAndUpdateTimeById(dto);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(Employee employee) {
-		return employeeMapper.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeByPrimaryKey(employee);
+	public int updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(EmployeeLockDto employeeUnlockDto) {
+		return employeeMapper.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employeeUnlockDto);
 	}
 
 	public Employee getPasswordErrorsAndIdAndStatusByUsername(String username) {
@@ -75,16 +78,16 @@ public class EmployeeServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int changePassword(String username, String password, String newPassword) {
 		// 密码只能自己修改
-		Employee currentEmployee = SecurityContextUtil.getCurrentEmployee();
-		if (currentEmployee == null) {
+		EmployeeVo currentEmployeeVo = SecurityContextUtil.getCurrentEmployeeVo();
+		if (currentEmployeeVo == null) {
 			throw new LogicException("请先登录");
 		}
-		String currentUsername = currentEmployee.getUsername();
+		String currentUsername = currentEmployeeVo.getUsername();
 		if (!username.equals(currentUsername)) {
 			throw new LogicException("用户名不正确");
 		}
 
-		String currentPassword = currentEmployee.getPassword();
+		String currentPassword = currentEmployeeVo.getPassword();
 		if (!passwordEncoder.matches(password, currentPassword)) {
 			throw new LogicException("原密码不正确");
 		}

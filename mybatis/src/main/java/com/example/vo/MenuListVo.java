@@ -1,6 +1,5 @@
-package com.example.entity;
+package com.example.vo;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Getter;
@@ -8,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 角色
+ * 菜单列表视图
  * 
  * @author Qiu Jian
  *
@@ -16,13 +15,12 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class Role implements Serializable {
-	private static final long serialVersionUID = 4899934804814955410L;
+public class MenuListVo {
 
-	private Long id;
-	private String roleName;
+	private String menuName;
 	private String intro;
 	private Date createTime;
 	private Date updateTime;
+	private String parentMenuName;
 
 }

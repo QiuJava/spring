@@ -1,9 +1,7 @@
 package com.example.entity;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Permission implements GrantedAuthority {
+public class Permission implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -27,28 +25,7 @@ public class Permission implements GrantedAuthority {
 	private String authority;
 	private String url;
 	private String intro;
-	private List<Role> roleList;
 	private Date createTime;
 	private Date updateTime;
-
-	@Override
-	public String getAuthority() {
-		return authority;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof Permission)) {
-			return false;
-		}
-		Permission p = (Permission) obj;
-		return this.id.equals(p.getId());
-	}
-
-	@Override
-	public int hashCode() {
-		String idString = this.id.toString();
-		return Integer.valueOf(idString) * 31;
-	}
 
 }

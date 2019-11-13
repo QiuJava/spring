@@ -95,7 +95,7 @@ public class PermissionController {
 				return new Result(false, "添加失败");
 			}
 			// 重新设置菜单缓存
-			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
+			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "添加失败");
@@ -168,7 +168,7 @@ public class PermissionController {
 				return new Result(false, "更新失败");
 			}
 			// 重新设置菜单缓存
-			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
+			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "更新失败");
@@ -188,7 +188,7 @@ public class PermissionController {
 				return new Result(false, "删除失败");
 			}
 			// 重新设置菜单缓存
-			valueOperations.set(ContextStartListener.ALL_MENU_KEY, menuService.listAll());
+			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "删除失败");
@@ -198,14 +198,9 @@ public class PermissionController {
 
 	@GetMapping("/listByQo")
 	public Result listByQo(PermissionQo qo) {
-		if (qo.getCount() == null) {
-			return new Result(false, "是否统计不能为空");
-		}
-		if (qo.getPageNum() == null) {
-			return new Result(false, "页数不能为空");
-		}
-		if (qo.getPageSize() == null) {
-			return new Result(false, "一页条数不能为空");
+		Result verify = qo.verify();
+		if (verify != null) {
+			return verify;
 		}
 		try {
 			PageResult<Permission> pageResult = permissionService.listByQo(qo);
