@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.FilterInvocation;
 
@@ -29,12 +29,14 @@ public class AffirmativeBased extends AbstractAccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException {
-		if (authentication instanceof AnonymousAuthenticationToken) {
+		if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
 			throw new AccessDeniedException("请先登录");
 		}
-		EmployeeVo employeeVo = (EmployeeVo) authentication.getPrincipal();
+
 		FilterInvocation filterInvocation = (FilterInvocation) object;
 		String requestUrl = filterInvocation.getRequest().getRequestURI();
+
+		EmployeeVo employeeVo = (EmployeeVo) authentication.getPrincipal();
 		// 超级管理员拥有所有权限 所有用户拥有首页权限
 		if (employeeVo.getSuperAdmin() == Employee.IS_ADMIN || "/".equals(requestUrl)) {
 			return;

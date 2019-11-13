@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.common.LogicException;
 import com.example.common.Result;
 import com.example.entity.Employee;
+import com.example.model.ResetPasswordModel;
 import com.example.service.EmployeeServiceImpl;
 import com.example.service.email.EmailService;
 import com.example.util.SecurityContextUtil;
 import com.example.util.StrUtil;
-import com.example.vo.EmployeeVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,7 +89,6 @@ public class EmployeeController {
 		employee.setCreateTime(date);
 		employee.setUpdateTime(date);
 
-		Result result = new Result(true, "添加成功");
 		try {
 			boolean hasEmployeeByUsername = employeeService.hasEmployeeByUsername(username);
 			if (hasEmployeeByUsername) {
@@ -100,48 +99,48 @@ public class EmployeeController {
 			if (hasEmployeeByEmployeeNumber) {
 				return new Result(false, "工号已存在");
 			}
-			employeeService.save(employee);
+			int save = employeeService.save(employee);
+			if (save < 1) {
+				return new Result(false, "添加失败");
+			}
 		} catch (Exception e) {
-			result.setSucceed(false);
-			result.setMsg("添加失败");
 			log.error("系统异常", e);
+			return new Result(false, "添加失败");
 		}
-		return result;
+		return new Result(true, "添加成功");
 	}
 
 	@GetMapping("/resetPassword")
-	public Result resetPassword(Employee employee) {
-		String username = employee.getUsername();
+	public Result resetPassword(ResetPasswordModel resetPasswordModel) {
+		String username = resetPasswordModel.getUsername();
 		Result verifyUsername = this.verifyUsername(username);
 		if (verifyUsername != null) {
 			return verifyUsername;
 		}
 
-		String employeeNumber = employee.getEmployeeNumber();
+		String employeeNumber = resetPasswordModel.getEmployeeNumber();
 		Result verifyEmployeeNumber = this.verifyEmployeeNumber(employeeNumber);
 		if (verifyEmployeeNumber != null) {
 			return verifyEmployeeNumber;
 		}
-		String nickname = employee.getNickname();
+		String nickname = resetPasswordModel.getNickname();
 		Result verifyNickname = this.verifyNickname(nickname);
 		if (verifyNickname != null) {
 			return verifyNickname;
 		}
 
 		// 校验邮箱
-		String email = employee.getEmail();
+		String email = resetPasswordModel.getEmail();
 		Result verifyEmail = this.verifyEmail(email);
 		if (verifyEmail != null) {
 			return verifyEmail;
 		}
 
-		Result result = new Result(true, "重置成功");
-		EmployeeVo currentEmployeeVo = SecurityContextUtil.getCurrentEmployeeVo();
 		try {
 			// 只有超级管理员才有重重置密码的权限
-			if (currentEmployeeVo != null && currentEmployeeVo.getSuperAdmin() == Employee.IS_ADMIN) {
+			if (SecurityContextUtil.getCurrentEmployeeVo().getSuperAdmin() == Employee.IS_ADMIN) {
 				// 重置
-				int resetPassword = employeeService.resetPassword(employee);
+				int resetPassword = employeeService.resetPassword(resetPasswordModel);
 				if (resetPassword < 1) {
 					return new Result(false, "重置失败");
 				}
@@ -150,13 +149,12 @@ public class EmployeeController {
 			}
 
 		} catch (Exception e) {
-			result.setSucceed(false);
-			result.setMsg("重置失败");
 			log.error("系统异常", e);
+			return new Result(false, "重置失败");
 		}
 		// 发送邮件
 		emailService.sendResetPasswordSuccessMail(employeeNumber, email, nickname);
-		return result;
+		return new Result(true, "重置成功");
 	}
 
 	@GetMapping("/changePassword")

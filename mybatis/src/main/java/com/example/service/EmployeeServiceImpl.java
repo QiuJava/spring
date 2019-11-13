@@ -9,10 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
+import com.example.dto.ChangePasswordDto;
 import com.example.dto.EmployeeLockDto;
 import com.example.dto.EmployeeLoginErrorDto;
 import com.example.entity.Employee;
 import com.example.mapper.EmployeeMapper;
+import com.example.model.ResetPasswordModel;
 import com.example.util.DataSourceUtil;
 import com.example.util.SecurityContextUtil;
 import com.example.vo.EmployeeVo;
@@ -68,11 +70,11 @@ public class EmployeeServiceImpl {
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int resetPassword(Employee employee) {
-		employee.setPassword(passwordEncoder.encode(
-				new StringBuilder(20).append(employee.getEmployeeNumber()).append(Employee.INIT_PASSWORD_SUFFIX)));
-		employee.setUpdateTime(new Date());
-		return employeeMapper.updatePasswordAndUpdateTimeByUsernameEmployeeNumber(employee);
+	public int resetPassword(ResetPasswordModel resetPasswordModel) {
+		resetPasswordModel.setPassword(passwordEncoder.encode(new StringBuilder(20)
+				.append(resetPasswordModel.getEmployeeNumber()).append(Employee.INIT_PASSWORD_SUFFIX)));
+		resetPasswordModel.setUpdateTime(new Date());
+		return employeeMapper.updatePasswordAndUpdateTimeByUsernameEmployeeNumber(resetPasswordModel);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -93,9 +95,11 @@ public class EmployeeServiceImpl {
 		}
 
 		// 进行修改操作
-		String encodePassword = passwordEncoder.encode(newPassword);
-		Date updateTime = new Date();
-		return employeeMapper.updatePasswordAndUpdateTimeByUsername(username, encodePassword, updateTime);
+		ChangePasswordDto changePasswordDto = new ChangePasswordDto();
+		changePasswordDto.setUsername(username);
+		changePasswordDto.setEncodePassword(passwordEncoder.encode(newPassword));
+		changePasswordDto.setUpdateTime(new Date());
+		return employeeMapper.updatePasswordAndUpdateTimeByUsername(changePasswordDto);
 	}
 
 }

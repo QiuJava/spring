@@ -23,15 +23,6 @@ public class DateTimeUtil {
 	public static final String MONTH_PATTERN = "yyyyMM";
 
 	/**
-	 * 获取当前时间
-	 * 
-	 * @return new Date()
-	 */
-	public static Date getNewDate() {
-		return new Date();
-	}
-
-	/**
 	 * 日期对象转换为 日期时间字符串
 	 * 
 	 * @return 1970-1-1 00:00:00
@@ -69,7 +60,7 @@ public class DateTimeUtil {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Date strToDateByPattern(String dateStr, String pattern) throws ParseException {
+	public static Date toDateByPattern(String dateStr, String pattern) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.CHINA);
 		return format.parse(dateStr);
 	}

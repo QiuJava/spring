@@ -1,5 +1,6 @@
 package com.example.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Getter;
@@ -15,8 +16,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class MenuListVo {
-
+public class MenuListVo implements Serializable {
+	private static final long serialVersionUID = 8802358866790936967L;
 	private String menuName;
 	private String intro;
 	private Date createTime;
