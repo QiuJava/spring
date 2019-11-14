@@ -45,6 +45,7 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 			// 获取所有菜单 放入Redis缓存
 			valueOperations.set(ALL_MENU_TREE, menuService.listAll());
 		}
+		
 		// 判断数据库中是否有超级管理员,没有新建一个
 		boolean hasAdmin = employeeService.hasAdmin();
 		if (hasAdmin) {

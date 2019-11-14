@@ -28,8 +28,10 @@ public class RequestLogHandlerInterceptor extends HandlerInterceptorAdapter {
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 			String className = handlerMethod.getBeanType().getName();
 			String methodName = handlerMethod.getMethod().getName();
+			
 			StringBuilder builder = new StringBuilder();
 			builder.append(className).append(".").append(methodName);
+			
 			log.info("请求者：{}，请求路径：{}，请求方法：{}，请求参数：{}", SecurityContextUtil.getCurrentEmployeeVo().getUsername(),
 					request.getRequestURI(), builder.toString(), JSON.toJSONString(request.getParameterMap()));
 		}

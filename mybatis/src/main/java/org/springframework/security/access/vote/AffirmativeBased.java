@@ -29,27 +29,24 @@ public class AffirmativeBased extends AbstractAccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException {
-		if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
-			throw new AccessDeniedException("请先登录");
-		}
+		if (authentication instanceof UsernamePasswordAuthenticationToken) {
+			FilterInvocation filterInvocation = (FilterInvocation) object;
+			String requestUrl = filterInvocation.getRequest().getRequestURI();
 
-		FilterInvocation filterInvocation = (FilterInvocation) object;
-		String requestUrl = filterInvocation.getRequest().getRequestURI();
-
-		EmployeeVo employeeVo = (EmployeeVo) authentication.getPrincipal();
-		// 超级管理员拥有所有权限 所有用户拥有首页权限
-		if (employeeVo.getSuperAdmin() == Employee.IS_ADMIN || "/".equals(requestUrl)) {
-			return;
-		}
-		@SuppressWarnings("unchecked")
-		List<PermissionVo> pemissionVoList = (List<PermissionVo>) employeeVo.getAuthorities();
-		for (PermissionVo permissionVo : pemissionVoList) {
-			// 拥有访问权限
-			if (requestUrl.equals(permissionVo.getUrl())) {
+			EmployeeVo employeeVo = (EmployeeVo) authentication.getPrincipal();
+			// 超级管理员拥有所有权限 所有用户拥有首页权限
+			if (employeeVo.getSuperAdmin() == Employee.IS_ADMIN || "/".equals(requestUrl)) {
 				return;
 			}
+			@SuppressWarnings("unchecked")
+			List<PermissionVo> pemissionVoList = (List<PermissionVo>) employeeVo.getAuthorities();
+			for (PermissionVo permissionVo : pemissionVoList) {
+				// 拥有访问权限
+				if (requestUrl.equals(permissionVo.getUrl())) {
+					return;
+				}
+			}
 		}
-
 		throw new AccessDeniedException("没有权限");
 	}
 }

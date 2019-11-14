@@ -12,8 +12,6 @@ import org.apache.ibatis.mapping.FetchType;
 import org.apache.ibatis.type.JdbcType;
 
 import com.example.dto.ChangePasswordDto;
-import com.example.dto.EmployeeLockDto;
-import com.example.dto.EmployeeLoginErrorDto;
 import com.example.entity.Employee;
 import com.example.mapper.provider.EmployeeSqlProvider;
 import com.example.model.ResetPasswordModel;
@@ -89,7 +87,7 @@ public interface EmployeeMapper {
 			"update_time = #{updateTime,jdbcType=TIMESTAMP} ", //
 			"WHERE ", //
 			"	id = #{id,jdbcType=BIGINT}" })
-	int updatePasswordErrorsAndUpdateTimeById(EmployeeLoginErrorDto dto);
+	int updatePasswordErrorsAndUpdateTimeById(Employee employee);
 
 	@Update({ "UPDATE employee  ", //
 			"SET password_errors = #{passwordErrors,jdbcType=INTEGER}, ", //
@@ -98,7 +96,7 @@ public interface EmployeeMapper {
 			"update_time = #{updateTime,jdbcType=TIMESTAMP} ", //
 			"WHERE ", //
 			"	id = #{id,jdbcType=BIGINT}" })
-	int updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(EmployeeLockDto employeeUnlockDto);
+	int updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(Employee employee);
 
 	@Select({ "SELECT ", //
 			"	id, ", //

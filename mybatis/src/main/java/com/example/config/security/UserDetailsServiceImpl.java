@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.config.listener.ContextStartListener;
-import com.example.dto.EmployeeLockDto;
 import com.example.entity.Employee;
 import com.example.service.EmployeeServiceImpl;
 import com.example.util.DateTimeUtil;
@@ -53,13 +52,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			// 过了锁定区间 进行解锁操作
 			Date date = new Date();
 			if (date.getTime() > lockTime.getTime() + DateTimeUtil.LOCK_INTERVAL) {
-				EmployeeLockDto dto = new EmployeeLockDto();
-				dto.setId(employeeVo.getId());
-				dto.setLockTime(null);
-				dto.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
-				dto.setStatus(Employee.NORMAL_STATUS);
-				dto.setUpdateTime(date);
-				employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(dto);
+				Employee employee = new Employee();
+				employee.setId(employeeVo.getId());
+				employee.setLockTime(null);
+				employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
+				employee.setStatus(Employee.NORMAL_STATUS);
+				employee.setUpdateTime(date);
+				employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
 			} else {
 				long differ = date.getTime() - lockTime.getTime();
 				StringBuilder builder = new StringBuilder();
@@ -68,6 +67,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 		}
 
+		// 登录用户的菜单
 		List<MenuTreeVo> menuTreeVoList = (List<MenuTreeVo>) valueOpertions.get(ContextStartListener.ALL_MENU_TREE);
 		List<PermissionVo> authorities = (List<PermissionVo>) employeeVo.getAuthorities();
 		if (menuTreeVoList != null && authorities != null) {
@@ -83,6 +83,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			MenuTreeVo menuTreeVo = (MenuTreeVo) iterator.next();
 			List<PermissionVo> pemissionVoList = menuTreeVo.getPermissionVoList();
 			if (pemissionVoList != null) {
+				// 不匹配次数
 				int mismatches = 0;
 				for (PermissionVo permissionVo : pemissionVoList) {
 					if (!authorities.contains(permissionVo)) {
@@ -90,16 +91,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					}
 
 				}
+				// 没有该菜单的权限去掉该菜单
 				if (mismatches == pemissionVoList.size()) {
 					iterator.remove();
 				}
-				// 开始找下级菜单
+
+				// 继续匹配下级菜单
 				List<MenuTreeVo> children = menuTreeVo.getChildren();
 				if (children != null && children.size() > 0) {
 					this.menuTreeMatches(children, authorities);
 				}
 			}
-
 		}
 	}
 

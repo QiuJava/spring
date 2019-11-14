@@ -33,7 +33,7 @@ public class HomeController {
 		try {
 			Date newestLoginTime = loginLogService.getNewestLoginTimeByUsername(username);
 			currentEmployeeVo.setNewestLoginTime(newestLoginTime);
-			return new Result(true, "首页", null, SecurityContextUtil.getCurrentEmployeeVo());
+			return new Result(true, "首页");
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "获取失败");

@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.dto.EmployeeLockDto;
 import com.example.entity.Employee;
 import com.example.entity.LoginLog;
 import com.example.service.EmployeeServiceImpl;
@@ -42,14 +41,13 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 		int passwordErrors = employeeVo.getPasswordErrors();
 		// 清空失败次数
 		if (passwordErrors > 0) {
-			EmployeeLockDto dto = new EmployeeLockDto();
-			dto.setId(employeeVo.getId());
-			dto.setLockTime(date);
-			dto.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
-			dto.setLockTime(null);
-			dto.setStatus(Employee.NORMAL_STATUS);
-			dto.setUpdateTime(date);
-			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(dto);
+			Employee employee = new Employee();
+			employee.setId(employeeVo.getId());
+			employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
+			employee.setLockTime(null);
+			employee.setStatus(Employee.NORMAL_STATUS);
+			employee.setUpdateTime(date);
+			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
 		}
 
 		LoginLog loginLog = new LoginLog();

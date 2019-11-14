@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
 import com.example.dto.ChangePasswordDto;
-import com.example.dto.EmployeeLockDto;
-import com.example.dto.EmployeeLoginErrorDto;
 import com.example.entity.Employee;
 import com.example.mapper.EmployeeMapper;
 import com.example.model.ResetPasswordModel;
@@ -47,13 +45,13 @@ public class EmployeeServiceImpl {
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int updatePasswordErrorsAndUpdateTimeById(EmployeeLoginErrorDto dto) {
-		return employeeMapper.updatePasswordErrorsAndUpdateTimeById(dto);
+	public int updatePasswordErrorsAndUpdateTimeById(Employee employee) {
+		return employeeMapper.updatePasswordErrorsAndUpdateTimeById(employee);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(EmployeeLockDto employeeUnlockDto) {
-		return employeeMapper.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employeeUnlockDto);
+	public int updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(Employee employee) {
+		return employeeMapper.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
 	}
 
 	public Employee getPasswordErrorsAndIdAndStatusByUsername(String username) {

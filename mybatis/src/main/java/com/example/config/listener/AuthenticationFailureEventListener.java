@@ -10,8 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.dto.EmployeeLockDto;
-import com.example.dto.EmployeeLoginErrorDto;
 import com.example.entity.Employee;
 import com.example.entity.LoginLog;
 import com.example.service.EmployeeServiceImpl;
@@ -47,21 +45,15 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 
 		int passwordErrors = employee.getPasswordErrors() + 1;
 		Date date = new Date();
+		employee.setPasswordErrors(passwordErrors);
+		employee.setUpdateTime(date);
 		if (passwordErrors >= Employee.MAX_PASSWORD_ERRORS && employee.getStatus() != Employee.LOCK_STATUS) {
-			// 进入锁定状态
-			EmployeeLockDto dto = new EmployeeLockDto();
-			dto.setId(employee.getId());
-			dto.setStatus(Employee.LOCK_STATUS);
-			dto.setLockTime(date);
-			dto.setUpdateTime(date);
-			dto.setPasswordErrors(passwordErrors);
-			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(dto);
+			// 进入锁定状态 设置锁定时间
+			employee.setStatus(Employee.LOCK_STATUS);
+			employee.setLockTime(date);
+			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
 		} else {
-			EmployeeLoginErrorDto dto = new EmployeeLoginErrorDto();
-			dto.setId(employee.getId());
-			dto.setPasswordErrors(passwordErrors);
-			dto.setUpdateTime(date);
-			employeeService.updatePasswordErrorsAndUpdateTimeById(dto);
+			employeeService.updatePasswordErrorsAndUpdateTimeById(employee);
 		}
 
 		LoginLog loginLog = new LoginLog();
