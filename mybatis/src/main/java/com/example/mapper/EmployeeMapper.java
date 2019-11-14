@@ -145,7 +145,7 @@ public interface EmployeeMapper {
 	@Update({ "UPDATE employee  ", //
 		"SET password_errors = 0 ", //
 		"WHERE ", //
-		"	`status` = 0 " })
+		"	`status` = 0 AND password_errors > 0 " })
 	int updateAllPasswordErrors();
 
 }

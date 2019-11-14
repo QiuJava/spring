@@ -3,6 +3,10 @@ package com.example.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.example.util.DateTimeUtil;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,7 +32,9 @@ public class JobDetails implements Serializable {
 	private String jobClass;
 	private String triggerState;
 	private String triggerDescription;
+	@DateTimeFormat(pattern = DateTimeUtil.DATATIME_PATTERN)
 	private Date triggerStartTime;
+	@DateTimeFormat(pattern = DateTimeUtil.DATATIME_PATTERN)
 	private Date triggerEndTime;
 	/**
 	 * 下次触发时间

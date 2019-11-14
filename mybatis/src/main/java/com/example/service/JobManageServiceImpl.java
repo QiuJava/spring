@@ -111,7 +111,7 @@ public class JobManageServiceImpl {
 			newTrigger.startAt(jobDetails.getTriggerStartTime());
 		}
 		if (jobDetails.getTriggerEndTime() != null) {
-			newTrigger.endAt(jobDetails.getTriggerEndTime()).build();
+			newTrigger.endAt(jobDetails.getTriggerEndTime());
 		}
 
 		// 根据定时任务类型来设置不同的计划
@@ -125,7 +125,6 @@ public class JobManageServiceImpl {
 			}
 			CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobDetails.getCronExpression())
 					.withMisfireHandlingInstructionDoNothing();
-
 			newTrigger.withSchedule(cronScheduleBuilder);
 
 		} else if (triggerType == JobDetails.JOB_TYPE_SIMPLE) {

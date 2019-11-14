@@ -1,10 +1,8 @@
 
 package com.example.controller;
 
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,24 +65,16 @@ public class JobController {
 			return new Result(false, "任务描述过长");
 		}
 
-		Date date = new Date();
-		jobDetails.setTriggerStartTime(date);
-		jobDetails.setTriggerEndTime(DateUtils.addDays(date, 1));
-		Result result = new Result(true, "添加成功");
 		try {
 			jobManageService.addJob(jobDetails);
+			return new Result(true, "添加成功");
 		} catch (LogicException e) {
-			result.setSucceed(false);
-			result.setMsg(e.getMessage());
+			return new Result(false, e.getMessage());
 		} catch (ClassNotFoundException e) {
-			result.setSucceed(false);
-			result.setMsg("任务类名错误");
+			return new Result(false, "任务类名错误");
 		} catch (Exception e) {
-			result.setSucceed(false);
-			result.setMsg("添加失败");
-			log.error("系统异常", e);
+			return new Result(false, "添加失败");
 		}
-		return result;
 	}
 
 	@GetMapping("/listByQo")
@@ -96,19 +86,15 @@ public class JobController {
 		if (StrUtil.hasText(jobGroupName) && StrUtil.isContainSpecialChar(jobGroupName)) {
 			return new Result(false, "任务组名称不能含有特殊字符");
 		}
-		Result result = new Result(true, "查询成功");
 		try {
 			List<JobDetails> list = jobManageService.listByQo(qo);
-			result.setData(list);
+			return new Result(true, "查询成功", null, list);
 		} catch (LogicException e) {
-			result.setSucceed(false);
-			result.setMsg(e.getMessage());
+			return new Result(false, e.getMessage());
 		} catch (Exception e) {
-			result.setSucceed(false);
-			result.setMsg("查询失败");
 			log.error("系统异常", e);
+			return new Result(false, "查询失败");
 		}
-		return result;
 	}
 
 	@GetMapping("/deleteJob")
@@ -124,15 +110,13 @@ public class JobController {
 		if (verifyJobGroupName != null) {
 			return verifyJobGroupName;
 		}
-		Result result = new Result(true, "删除任务成功");
 		try {
 			jobManageService.deleteJob(jobDetails);
+			return new Result(true, "删除任务成功");
 		} catch (Exception e) {
-			result.setSucceed(false);
-			result.setMsg("删除任务失败");
 			log.error("系统异常", e);
+			return new Result(false, "删除任务失败");
 		}
-		return result;
 	}
 
 	@GetMapping("/pauseJob")
@@ -148,15 +132,13 @@ public class JobController {
 		if (verifyJobGroupName != null) {
 			return verifyJobGroupName;
 		}
-		Result result = new Result(true, "暂停任务成功");
 		try {
 			jobManageService.pauseJob(jobDetails);
+			return new Result(true, "暂停任务成功");
 		} catch (Exception e) {
-			result.setSucceed(false);
-			result.setMsg("暂停任务失败");
 			log.error("系统异常", e);
+			return new Result(true, "暂停任务失败");
 		}
-		return result;
 	}
 
 	@GetMapping("/resumeJob")
@@ -171,15 +153,13 @@ public class JobController {
 		if (verifyJobGroupName != null) {
 			return verifyJobGroupName;
 		}
-		Result result = new Result(true, "重启任务成功");
 		try {
 			jobManageService.resumeJob(jobDetails);
+			return new Result(true, "重启任务成功");
 		} catch (Exception e) {
-			result.setSucceed(false);
-			result.setMsg("重启任务失败");
 			log.error("系统异常", e);
+			return new Result(false, "重启任务失败");
 		}
-		return result;
 	}
 
 	private Result verifyJobGroupName(String jobGroupName) {
