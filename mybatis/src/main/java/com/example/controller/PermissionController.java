@@ -141,6 +141,10 @@ public class PermissionController {
 		permission.setUpdateTime(date);
 		try {
 			Permission oldPermission = permissionService.getById(id);
+			if (oldPermission == null) {
+				return new Result(false, "更新失败");
+			}
+			
 			if (!permissionName.equals(oldPermission.getPermissionName())) {
 				boolean hasPermissionName = permissionService.hasPermissionName(permissionName);
 				if (hasPermissionName) {

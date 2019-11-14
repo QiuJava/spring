@@ -117,6 +117,10 @@ public class MenuController {
 		menu.setUpdateTime(date);
 		try {
 			String oldMenuName = menuService.getMenuNameById(id);
+			if (StrUtil.noText(oldMenuName)) {
+				return new Result(false, "更新失败");
+			}
+
 			if (!menuName.equals(oldMenuName)) {
 				// 菜单名称不能重复
 				boolean hasMenuName = menuService.hasMenuName(menuName);
