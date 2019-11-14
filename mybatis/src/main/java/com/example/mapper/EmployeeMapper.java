@@ -142,4 +142,10 @@ public interface EmployeeMapper {
 			"	username = #{username,jdbcType=VARCHAR}" })
 	int updatePasswordAndUpdateTimeByUsername(ChangePasswordDto changePasswordDto);
 
+	@Update({ "UPDATE employee  ", //
+		"SET password_errors = 0 ", //
+		"WHERE ", //
+		"	`status` = 0 " })
+	int updateAllPasswordErrors();
+
 }

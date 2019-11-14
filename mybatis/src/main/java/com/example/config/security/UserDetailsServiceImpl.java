@@ -89,7 +89,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					if (!authorities.contains(permissionVo)) {
 						mismatches++;
 					}
-
 				}
 				// 没有该菜单的权限去掉该菜单
 				if (mismatches == pemissionVoList.size()) {

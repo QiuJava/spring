@@ -100,4 +100,9 @@ public class EmployeeServiceImpl {
 		return employeeMapper.updatePasswordAndUpdateTimeByUsername(changePasswordDto);
 	}
 
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int passwordErrorsClear() {
+		return employeeMapper.updateAllPasswordErrors();
+	}
+
 }
