@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Getter;
@@ -16,8 +15,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class LoginLog implements Serializable {
-	private static final long serialVersionUID = 2535629589053325338L;
+public class LoginLog {
 
 	public static final int LOGIN_SUCCESS_STATUS = 1;
 	public static final int LOGIN_FAILURE_STATUS = 0;

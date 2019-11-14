@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,8 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class JobDetails implements Serializable {
-	private static final long serialVersionUID = 5920419573204731379L;
+public class JobDetails {
 
 	public static final int JOB_TYPE_CRON = 0;
 	public static final int JOB_TYPE_SIMPLE = 1;

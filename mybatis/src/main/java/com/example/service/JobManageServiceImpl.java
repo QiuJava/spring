@@ -62,17 +62,8 @@ public class JobManageServiceImpl {
 			jobDetailsList.addAll(listByJobGroupName);
 		}
 
-		Integer pageNum = jobDetailsQo.getPageNum();
-		if (pageNum == null || pageNum < 1) {
-			throw new LogicException("页数需大于0");
-		}
-		Integer pageSize = jobDetailsQo.getPageSize();
-		if (pageSize == null || pageSize < 0) {
-			throw new LogicException("一页数据条数不能小于0");
-		}
-
 		// 进行分页
-		return ListUtil.page(jobDetailsList, pageNum, jobDetailsQo.getPageSize());
+		return ListUtil.page(jobDetailsList, jobDetailsQo.getPageNum(), jobDetailsQo.getPageSize());
 
 	}
 

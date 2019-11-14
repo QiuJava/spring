@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Getter;
@@ -16,8 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Permission implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class Permission {
 
 	private Long id;
 	private Long menuId;

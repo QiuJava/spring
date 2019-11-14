@@ -162,6 +162,17 @@ public class MenuController {
 		if (verify != null) {
 			return verify;
 		}
+
+		String menuName = qo.getMenuName();
+		if (StrUtil.hasText(menuName) && menuName.length() > 20) {
+			return new Result(false, "菜单名称过长");
+		}
+
+		String parentMenuName = qo.getParentMenuName();
+		if (StrUtil.hasText(parentMenuName) && parentMenuName.length() > 20) {
+			return new Result(false, "上级菜单名称过长");
+		}
+
 		try {
 			PageResult<MenuListVo> pageResult = menuService.listByQo(qo);
 			return new Result(true, "查询成功", null, pageResult);

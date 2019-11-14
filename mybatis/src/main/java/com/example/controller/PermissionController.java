@@ -202,6 +202,17 @@ public class PermissionController {
 		if (verify != null) {
 			return verify;
 		}
+
+		String permissionName = qo.getPermissionName();
+		if (StrUtil.hasText(permissionName) && permissionName.length() > 20) {
+			return new Result(false, "权限名称过长");
+		}
+
+		String authority = qo.getAuthority();
+		if (StrUtil.hasText(authority) && authority.length() > 100) {
+			return new Result(false, "权限编码过长");
+		}
+
 		try {
 			PageResult<Permission> pageResult = permissionService.listByQo(qo);
 			return new Result(true, "查询成功", null, pageResult);

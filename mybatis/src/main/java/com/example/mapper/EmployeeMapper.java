@@ -14,7 +14,6 @@ import org.apache.ibatis.type.JdbcType;
 import com.example.dto.ChangePasswordDto;
 import com.example.entity.Employee;
 import com.example.mapper.provider.EmployeeSqlProvider;
-import com.example.model.ResetPasswordModel;
 import com.example.vo.EmployeeVo;
 
 /**
@@ -133,7 +132,7 @@ public interface EmployeeMapper {
 			"WHERE ", //
 			"	username = #{username,jdbcType=VARCHAR} ", //
 			"	AND employee_number = #{employeeNumber,jdbcType=VARCHAR}" })
-	int updatePasswordAndUpdateTimeByUsernameEmployeeNumber(ResetPasswordModel resetPasswordModel);
+	int updatePasswordAndUpdateTimeByUsernameEmployeeNumber(Employee employee);
 
 	@Update({ "UPDATE `employee`  ", //
 			"SET `password` = #{password,jdbcType=VARCHAR}, ", //
@@ -143,9 +142,9 @@ public interface EmployeeMapper {
 	int updatePasswordAndUpdateTimeByUsername(ChangePasswordDto changePasswordDto);
 
 	@Update({ "UPDATE employee  ", //
-		"SET password_errors = 0 ", //
-		"WHERE ", //
-		"	`status` = 0 AND password_errors > 0 " })
+			"SET password_errors = 0 ", //
+			"WHERE ", //
+			"	`status` = 0 AND password_errors > 0 " })
 	int updateAllPasswordErrors();
 
 }

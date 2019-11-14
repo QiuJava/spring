@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.common.LogicException;
 import com.example.common.Result;
 import com.example.entity.Employee;
-import com.example.model.ResetPasswordModel;
 import com.example.service.EmployeeServiceImpl;
 import com.example.service.email.EmailService;
 import com.example.util.SecurityContextUtil;
@@ -111,26 +110,26 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/resetPassword")
-	public Result resetPassword(ResetPasswordModel resetPasswordModel) {
-		String username = resetPasswordModel.getUsername();
+	public Result resetPassword(Employee employee) {
+		String username = employee.getUsername();
 		Result verifyUsername = this.verifyUsername(username);
 		if (verifyUsername != null) {
 			return verifyUsername;
 		}
 
-		String employeeNumber = resetPasswordModel.getEmployeeNumber();
+		String employeeNumber = employee.getEmployeeNumber();
 		Result verifyEmployeeNumber = this.verifyEmployeeNumber(employeeNumber);
 		if (verifyEmployeeNumber != null) {
 			return verifyEmployeeNumber;
 		}
-		String nickname = resetPasswordModel.getNickname();
+		String nickname = employee.getNickname();
 		Result verifyNickname = this.verifyNickname(nickname);
 		if (verifyNickname != null) {
 			return verifyNickname;
 		}
 
 		// 校验邮箱
-		String email = resetPasswordModel.getEmail();
+		String email = employee.getEmail();
 		Result verifyEmail = this.verifyEmail(email);
 		if (verifyEmail != null) {
 			return verifyEmail;
@@ -140,7 +139,7 @@ public class EmployeeController {
 			// 只有超级管理员才有重重置密码的权限
 			if (SecurityContextUtil.getCurrentEmployeeVo().getSuperAdmin() == Employee.IS_ADMIN) {
 				// 重置
-				int resetPassword = employeeService.resetPassword(resetPasswordModel);
+				int resetPassword = employeeService.resetPassword(employee);
 				if (resetPassword < 1) {
 					return new Result(false, "重置失败");
 				}
