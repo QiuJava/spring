@@ -1,5 +1,6 @@
 package com.example.mapper;
 
+import com.example.dto.AllotPermissionDto;
 import com.example.entity.Role;
 import com.example.mapper.provider.RoleSqlProvider;
 
@@ -87,4 +88,26 @@ public interface RoleMapper {
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "id", property = "menuList", many = @Many(select = "com.example.mapper.MenuMapper.selectByRoleId", fetchType = FetchType.EAGER)) })
 	List<Role> selectByEmployeeId(Long employeeId);
+
+	@Insert({ "INSERT role_permission ( role_id, permission_id ) ", //
+			"VALUES ", //
+			"	( #{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT} )" })
+	int insertRolePermission(AllotPermissionDto allotPermissionDto);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	role_permission  ", //
+			"WHERE ", //
+			"	role_id = #{roleId,jdbcType=BIGINT}  ", //
+			"	AND permission_id = #{permissionId,jdbcType=BIGINT} " })
+	long countRolePermissionByRoleIdAndPermissionId(AllotPermissionDto allotPermissionDto);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	role  ", //
+			"WHERE ", //
+			"	id = #{roleId,jdbcType=BIGINT}  " })
+	long countRoleById(Long roleId);
 }

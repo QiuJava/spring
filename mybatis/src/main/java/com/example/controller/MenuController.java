@@ -42,7 +42,7 @@ public class MenuController {
 			return new Result(true, "获取成功", null, valueOperations.get(ContextStartListener.ALL_MENU_TREE));
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "系统异常");
+			return new Result(false, "获取失败");
 		}
 	}
 

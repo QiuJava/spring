@@ -63,6 +63,8 @@ public interface PermissionMapper {
 	@Select({ "SELECT DISTINCT ", //
 			"	permi_O.id AS id, ", //
 			"	permi_O.authority AS authority, ", //
+			"	permi_O.permission_name AS permission_name, ", //
+			"	permi_O.intro AS intro, ", //
 			"	permi_O.url AS url ", //
 			"FROM ", //
 			"	permission permi_O ", //
@@ -75,6 +77,8 @@ public interface PermissionMapper {
 	@Select({ "SELECT ", //
 			"	id, ", //
 			"	authority, ", //
+			"	permission_name, ", //
+			"	intro, ", //
 			"	url ", //
 			"FROM ", //
 			"	permission ", //
@@ -82,6 +86,8 @@ public interface PermissionMapper {
 			"	menu_id = #{menuId,jdbcType=BIGINT}" })
 	@Results(value = { @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) }, id = "PermissionVoMap")
 	List<PermissionVo> selectPermissionVoByMenuId(Long menuId);
 
@@ -133,4 +139,12 @@ public interface PermissionMapper {
 			"WHERE ", //
 			"	menu_id = #{menuId,jdbcType=BIGINT}" })
 	int deleteByMenuId(Long menuId);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	permission  ", //
+			"WHERE ", //
+			"	id = #{permissionId,jdbcType=BIGINT}" })
+	long countByPermissionId(Long permissionId);
 }

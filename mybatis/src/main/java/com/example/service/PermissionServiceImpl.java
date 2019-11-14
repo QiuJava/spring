@@ -73,4 +73,8 @@ public class PermissionServiceImpl {
 		return permissionMapper.deleteByMenuId(menuId);
 	}
 
+	public boolean hasPermissionById(Long permissionId) {
+		return permissionMapper.countByPermissionId(permissionId) == 1;
+	}
+
 }

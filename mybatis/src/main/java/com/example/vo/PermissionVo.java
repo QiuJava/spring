@@ -20,6 +20,8 @@ public class PermissionVo implements GrantedAuthority {
 	private Long id;
 	private String authority;
 	private String url;
+	private String permissionName;
+	private String intro;
 
 	@Override
 	public boolean equals(Object obj) {
