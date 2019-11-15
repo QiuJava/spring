@@ -71,32 +71,37 @@ public class MenuController {
 		menu.setCreateTime(date);
 		menu.setUpdateTime(date);
 		try {
+			if (parentId != null) {
+				boolean hasById = menuService.hasById(parentId);
+				if (!hasById) {
+					return new Result(false, "上级菜单ID不存在");
+				}
+			}
 
 			// 菜单名称不能重复
-			boolean hasMenuName = menuService.hasMenuName(menuName);
-			if (hasMenuName) {
+			boolean hasByMenuName = menuService.hasByMenuName(menuName);
+			if (hasByMenuName) {
 				return new Result(false, "菜单名称已存在");
 			}
 			int save = menuService.save(menu);
-			if (save < 1) {
+			if (save != 1) {
 				return new Result(false, "添加失败");
 			}
 			// 重新设置菜单缓存
 			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
+			return new Result(true, "添加成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "添加失败");
 		}
-		return new Result(true, "添加成功");
 	}
 
 	@GetMapping("/updateMenu")
 	public Result updateMenu(Menu menu) {
 		Long id = menu.getId();
-		if (id == null) {
-			return new Result(false, "菜单ID不能为空");
-		} else if (id.toString().length() > 20) {
-			return new Result(false, "菜单ID过长");
+		Result verifyId = this.verifyId(id);
+		if (verifyId != null) {
+			return verifyId;
 		}
 
 		String menuName = menu.getMenuName();
@@ -118,27 +123,27 @@ public class MenuController {
 		try {
 			String oldMenuName = menuService.getMenuNameById(id);
 			if (StrUtil.noText(oldMenuName)) {
-				return new Result(false, "更新失败");
+				return new Result(false, "菜单ID不存在");
 			}
 
 			if (!menuName.equals(oldMenuName)) {
 				// 菜单名称不能重复
-				boolean hasMenuName = menuService.hasMenuName(menuName);
+				boolean hasMenuName = menuService.hasByMenuName(menuName);
 				if (hasMenuName) {
 					return new Result(false, "菜单名称已存在");
 				}
 			}
 			int update = menuService.update(menu);
-			if (update < 1) {
+			if (update != 1) {
 				return new Result(false, "更新失败");
 			}
 			// 重新设置菜单缓存
 			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
+			return new Result(true, "更新成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "更新失败");
 		}
-		return new Result(true, "更新成功");
 	}
 
 	@GetMapping("/deleteMenu")
@@ -149,15 +154,20 @@ public class MenuController {
 		}
 
 		try {
+			boolean hasById = menuService.hasById(id);
+			if (!hasById) {
+				return new Result(false, "菜单ID不存在");
+			}
+
 			int deleteById = menuService.deleteById(id);
-			if (deleteById < 1) {
+			if (deleteById != 1) {
 				return new Result(false, "删除失败");
 			}
+			return new Result(true, "删除成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "删除失败");
 		}
-		return new Result(true, "删除成功");
 	}
 
 	@GetMapping("/listByQo")
@@ -186,15 +196,15 @@ public class MenuController {
 		}
 	}
 
-	@GetMapping("/hasMenuName")
-	public Result hasMenuName(String menuName) {
+	@GetMapping("/hasByMenuName")
+	public Result hasByMenuName(String menuName) {
 		Result verifyMenuName = this.verifyMenuName(menuName);
 		if (verifyMenuName != null) {
 			return verifyMenuName;
 		}
 		try {
-			boolean hasMenuName = menuService.hasMenuName(menuName);
-			return new Result(true, "获取成功", null, hasMenuName);
+			boolean hasByMenuName = menuService.hasByMenuName(menuName);
+			return new Result(true, "获取成功", null, hasByMenuName);
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "系统异常");

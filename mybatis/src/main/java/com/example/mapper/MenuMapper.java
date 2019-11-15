@@ -72,4 +72,12 @@ public interface MenuMapper {
 			@Result(column = "parent_menu_name", property = "parentMenuName", jdbcType = JdbcType.BIGINT) })
 	List<MenuListVo> selectByQo(MenuQo qo);
 
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	menu  ", //
+			"WHERE ", //
+			"	id = #{menuId,jdbcType=BIGINT}" })
+	int countById(Long menuId);
+
 }

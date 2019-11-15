@@ -41,8 +41,8 @@ public class MenuServiceImpl {
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public boolean hasMenuName(String menuName) {
-		return menuMapper.countByMenuName(menuName) > 0;
+	public boolean hasByMenuName(String menuName) {
+		return menuMapper.countByMenuName(menuName) == 1;
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -66,5 +66,10 @@ public class MenuServiceImpl {
 		Page<MenuListVo> page = PageHelper.startPage(qo.getPageNum(), qo.getPageSize(), qo.getCount());
 		menuMapper.selectByQo(qo);
 		return new PageResult<MenuListVo>(page.getPageNum(), page.getPageSize(), page.getTotal(), page.getResult());
+	}
+
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
+	public boolean hasById(Long menuId) {
+		return menuMapper.countById(menuId) == 1;
 	}
 }

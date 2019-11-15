@@ -76,6 +76,11 @@ public class PermissionController {
 		permission.setCreateTime(date);
 		permission.setUpdateTime(date);
 		try {
+			boolean hasMenuBuId = menuService.hasById(menuId);
+			if (!hasMenuBuId) {
+				return new Result(false, "菜单ID不正确");
+			}
+
 			boolean hasPermissionName = permissionService.hasPermissionName(permissionName);
 			if (hasPermissionName) {
 				return new Result(false, "权限名称已存在");
@@ -91,7 +96,7 @@ public class PermissionController {
 				}
 			}
 			int save = permissionService.save(permission);
-			if (save < 1) {
+			if (save != 1) {
 				return new Result(false, "添加失败");
 			}
 			// 重新设置菜单缓存
@@ -144,7 +149,7 @@ public class PermissionController {
 			if (oldPermission == null) {
 				return new Result(false, "更新失败");
 			}
-			
+
 			if (!permissionName.equals(oldPermission.getPermissionName())) {
 				boolean hasPermissionName = permissionService.hasPermissionName(permissionName);
 				if (hasPermissionName) {
