@@ -61,8 +61,8 @@ public class RoleServiceImpl {
 		AllotPermissionDto allotPermissionDto = new AllotPermissionDto();
 		allotPermissionDto.setRoleId(roleId);
 		for (Long permissionId : permissionIdList) {
-			boolean hasPermissionById = permissionService.hasPermissionById(permissionId);
-			if (!hasPermissionById) {
+			boolean hasById = permissionService.hasById(permissionId);
+			if (!hasById) {
 				continue;
 			}
 			allotPermissionDto.setPermissionId(permissionId);

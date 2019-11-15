@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.annotation.DataSourceKey;
+import com.example.common.LogicException;
 import com.example.common.PageResult;
 import com.example.entity.Permission;
 import com.example.mapper.PermissionMapper;
 import com.example.qo.PermissionQo;
 import com.example.util.DataSourceUtil;
+import com.example.vo.PermissionListVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
@@ -27,27 +29,27 @@ public class PermissionServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Permission permission) {
-		return permissionMapper.insertSelective(permission);
+		return permissionMapper.insert(permission);
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public boolean hasPermissionName(String permissionName) {
-		return permissionMapper.countByPermissionName(permissionName) > 0;
+	public boolean hasByPermissionName(String permissionName) {
+		return permissionMapper.countByPermissionName(permissionName) == 1;
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public boolean hasAuthority(String authority) {
-		return permissionMapper.countByAuthority(authority) > 0;
+	public boolean hasByAuthority(String authority) {
+		return permissionMapper.countByAuthority(authority) == 1;
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public boolean hasUrl(String url) {
-		return permissionMapper.countByUrl(url) > 0;
+	public boolean hasByUrl(String url) {
+		return permissionMapper.countByUrl(url) == 1;
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int update(Permission permission) {
-		return permissionMapper.updateByPrimaryKeySelective(permission);
+		return permissionMapper.updateById(permission);
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
@@ -56,16 +58,23 @@ public class PermissionServiceImpl {
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int deleteById(Long id) {
-		permissionMapper.deleteRolePermissionByPermissionId(id);
-		return permissionMapper.deleteByPrimaryKey(id);
+	public int deleteById(Long id) throws LogicException {
+		long countRolePermissionByPermissionId = permissionMapper.countRolePermissionByPermissionId(id);
+		if (countRolePermissionByPermissionId > 0) {
+			int deleteRolePermissionByPermissionId = permissionMapper.deleteRolePermissionByPermissionId(id);
+			if (countRolePermissionByPermissionId != deleteRolePermissionByPermissionId) {
+				throw new LogicException("删除失败");
+			}
+		}
+		return permissionMapper.deleteById(id);
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public PageResult<Permission> listByQo(PermissionQo qo) {
-		Page<Permission> page = PageHelper.startPage(qo.getPageNum(), qo.getPageSize(), qo.getCount());
+	public PageResult<PermissionListVo> listByQo(PermissionQo qo) {
+		Page<PermissionListVo> page = PageHelper.startPage(qo.getPageNum(), qo.getPageSize(), qo.getCount());
 		permissionMapper.selectByQo(qo);
-		return new PageResult<Permission>(page.getPageNum(), page.getPageSize(), page.getTotal(), page.getResult());
+		return new PageResult<PermissionListVo>(page.getPageNum(), page.getPageSize(), page.getTotal(),
+				page.getResult());
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -73,8 +82,8 @@ public class PermissionServiceImpl {
 		return permissionMapper.deleteByMenuId(menuId);
 	}
 
-	public boolean hasPermissionById(Long permissionId) {
-		return permissionMapper.countByPermissionId(permissionId) == 1;
+	public boolean hasById(Long permissionId) {
+		return permissionMapper.countById(permissionId) == 1;
 	}
 
 }

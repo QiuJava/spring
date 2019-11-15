@@ -15,6 +15,7 @@ import org.apache.ibatis.type.JdbcType;
 import com.example.entity.Permission;
 import com.example.mapper.provider.PermissionSqlProvider;
 import com.example.qo.PermissionQo;
+import com.example.vo.PermissionListVo;
 import com.example.vo.PermissionVo;
 
 /**
@@ -29,10 +30,7 @@ public interface PermissionMapper {
 			"	permission  ", //
 			"WHERE ", //
 			"	id = #{id,jdbcType=BIGINT}" })
-	int deleteByPrimaryKey(Long id);
-
-	@InsertProvider(type = PermissionSqlProvider.class, method = "insertSelective")
-	int insertSelective(Permission record);
+	int deleteById(Long id);
 
 	@Select({ "SELECT ", //
 			"	id, ", //
@@ -56,9 +54,6 @@ public interface PermissionMapper {
 			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT) })
 	Permission selectByPrimaryKey(Long id);
-
-	@UpdateProvider(type = PermissionSqlProvider.class, method = "updateByPrimaryKeySelective")
-	int updateByPrimaryKeySelective(Permission record);
 
 	@Select({ "SELECT DISTINCT ", //
 			"	permi_O.id AS id, ", //
@@ -130,8 +125,8 @@ public interface PermissionMapper {
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT) })
-	List<Permission> selectByQo(PermissionQo qo);
+			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.BIGINT) })
+	List<PermissionListVo> selectByQo(PermissionQo qo);
 
 	@Delete({ "DELETE  ", //
 			"FROM ", //
@@ -145,6 +140,20 @@ public interface PermissionMapper {
 			"FROM ", //
 			"	permission  ", //
 			"WHERE ", //
-			"	id = #{permissionId,jdbcType=BIGINT}" })
-	long countByPermissionId(Long permissionId);
+			"	id = #{id,jdbcType=BIGINT}" })
+	long countById(Long id);
+
+	@InsertProvider(type = PermissionSqlProvider.class, method = "insert")
+	int insert(Permission permission);
+
+	@UpdateProvider(type = PermissionSqlProvider.class, method = "updateById")
+	int updateById(Permission permission);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	`role_permission`  ", //
+			"WHERE ", //
+			"	permission_id = #{id,jdbcType=BIGINT}" })
+	long countRolePermissionByPermissionId(Long id);
 }
