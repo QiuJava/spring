@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.common.LogicException;
 import com.example.common.PageResult;
 import com.example.common.Result;
 import com.example.config.listener.ContextStartListener;
@@ -132,6 +133,8 @@ public class MenuController {
 				if (hasMenuName) {
 					return new Result(false, "菜单名称已存在");
 				}
+			} else {
+				menu.setMenuName(null);
 			}
 			int update = menuService.update(menu);
 			if (update != 1) {
@@ -164,6 +167,8 @@ public class MenuController {
 				return new Result(false, "删除失败");
 			}
 			return new Result(true, "删除成功");
+		} catch (LogicException e) {
+			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "删除失败");

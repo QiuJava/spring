@@ -54,7 +54,7 @@ public class PermissionServiceImpl {
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public Permission getById(Long id) {
-		return permissionMapper.selectByPrimaryKey(id);
+		return permissionMapper.selectById(id);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -84,6 +84,10 @@ public class PermissionServiceImpl {
 
 	public boolean hasById(Long permissionId) {
 		return permissionMapper.countById(permissionId) == 1;
+	}
+
+	public long countByMenuId(Long menuId) {
+		return permissionMapper.countByMenuId(menuId);
 	}
 
 }

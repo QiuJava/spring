@@ -31,13 +31,13 @@ public interface MenuMapper {
 			"	menu  ", //
 			"WHERE ", //
 			"	id = #{id,jdbcType=BIGINT}" })
-	int deleteByPrimaryKey(Long id);
+	int deleteById(Long id);
 
-	@InsertProvider(type = MenuSqlProvider.class, method = "insertSelective")
-	int insertSelective(Menu record);
+	@InsertProvider(type = MenuSqlProvider.class, method = "insert")
+	int insert(Menu record);
 
-	@UpdateProvider(type = MenuSqlProvider.class, method = "updateByPrimaryKeySelective")
-	int updateByPrimaryKeySelective(Menu record);
+	@UpdateProvider(type = MenuSqlProvider.class, method = "updateById")
+	int updateById(Menu record);
 
 	@SelectProvider(type = MenuSqlProvider.class, method = "selectMenuTreeVoByParentId")
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),

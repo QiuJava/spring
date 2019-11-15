@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.annotation.DataSourceKey;
+import com.example.common.LogicException;
 import com.example.common.PageResult;
 import com.example.entity.Menu;
 import com.example.mapper.MenuMapper;
@@ -37,7 +38,7 @@ public class MenuServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Menu menu) {
-		return menuMapper.insertSelective(menu);
+		return menuMapper.insert(menu);
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
@@ -47,7 +48,7 @@ public class MenuServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int update(Menu menu) {
-		return menuMapper.updateByPrimaryKeySelective(menu);
+		return menuMapper.updateById(menu);
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
@@ -56,9 +57,15 @@ public class MenuServiceImpl {
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int deleteById(Long id) {
-		permissionService.deleteByMenuId(id);
-		return menuMapper.deleteByPrimaryKey(id);
+	public int deleteById(Long id) throws LogicException {
+		long countByMenuId = permissionService.countByMenuId(id);
+		if (countByMenuId > 0) {
+			int deleteByMenuId = permissionService.deleteByMenuId(id);
+			if (deleteByMenuId != countByMenuId) {
+				throw new LogicException("删除失败");
+			}
+		}
+		return menuMapper.deleteById(id);
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)

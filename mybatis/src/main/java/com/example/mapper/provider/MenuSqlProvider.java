@@ -47,63 +47,34 @@ public class MenuSqlProvider {
 		return sql.toString();
 	}
 
-	public String insertSelective(Menu record) {
+	public String insert(Menu record) {
 		SQL sql = new SQL();
 		sql.INSERT_INTO("menu");
-
-		if (record.getId() != null) {
-			sql.VALUES("id", "#{id,jdbcType=BIGINT}");
-		}
-
-		if (record.getMenuName() != null) {
-			sql.VALUES("menu_name", "#{menuName,jdbcType=VARCHAR}");
-		}
-
-		if (record.getIntro() != null) {
+		sql.VALUES("menu_name", "#{menuName,jdbcType=VARCHAR}");
+		if (StrUtil.hasText(record.getIntro())) {
 			sql.VALUES("intro", "#{intro,jdbcType=VARCHAR}");
 		}
-
-		if (record.getCreateTime() != null) {
-			sql.VALUES("create_time", "#{createTime,jdbcType=TIMESTAMP}");
-		}
-
-		if (record.getUpdateTime() != null) {
-			sql.VALUES("update_time", "#{updateTime,jdbcType=TIMESTAMP}");
-		}
-
 		if (record.getParentId() != null) {
 			sql.VALUES("parent_id", "#{parentId,jdbcType=BIGINT}");
 		}
+		sql.VALUES("create_time", "#{createTime,jdbcType=TIMESTAMP}");
+		sql.VALUES("update_time", "#{updateTime,jdbcType=TIMESTAMP}");
 
 		return sql.toString();
 	}
 
-	public String updateByPrimaryKeySelective(Menu record) {
+	public String updateById(Menu record) {
 		SQL sql = new SQL();
 		sql.UPDATE("menu");
 
 		if (record.getMenuName() != null) {
 			sql.SET("menu_name = #{menuName,jdbcType=VARCHAR}");
 		}
-
-		if (record.getIntro() != null) {
+		if (StrUtil.hasText(record.getIntro())) {
 			sql.SET("intro = #{intro,jdbcType=VARCHAR}");
 		}
-
-		if (record.getCreateTime() != null) {
-			sql.SET("create_time = #{createTime,jdbcType=TIMESTAMP}");
-		}
-
-		if (record.getUpdateTime() != null) {
-			sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
-		}
-
-		if (record.getParentId() != null) {
-			sql.SET("parent_id = #{parentId,jdbcType=BIGINT}");
-		}
-
+		sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
-
 		return sql.toString();
 	}
 }
