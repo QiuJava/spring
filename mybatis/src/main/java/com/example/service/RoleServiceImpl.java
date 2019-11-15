@@ -1,5 +1,8 @@
 package com.example.service;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,24 @@ public class RoleServiceImpl {
 			throw new LogicException("角色ID不存在");
 		}
 
+		List<Long> oldPermissionIdList = roleMapper.selectEmployeeIdByRoleId(roleId);
+		for (Iterator<Long> iterator = oldPermissionIdList.iterator(); iterator.hasNext();) {
+			Long oldId = (Long) iterator.next();
+			for (Long id : permissionIdList) {
+				if (oldId.equals(id)) {
+					iterator.remove();
+				}
+			}
+		}
+		
+		if (oldPermissionIdList.size() > 0) {
+			// 批量删除
+			int deleteByPermissionIdList =  roleMapper.deleteByPermissionIdList(oldPermissionIdList);
+			if (deleteByPermissionIdList != oldPermissionIdList.size()) {
+				throw new LogicException("分配失败");
+			}
+		}
+
 		AllotPermissionDto allotPermissionDto = new AllotPermissionDto();
 		allotPermissionDto.setRoleId(roleId);
 		for (Long permissionId : permissionIdList) {
@@ -43,13 +64,13 @@ public class RoleServiceImpl {
 				continue;
 			}
 			allotPermissionDto.setPermissionId(permissionId);
-			
+
 			// 判断角色权限关系是否存在
 			long count = roleMapper.countRolePermissionByRoleIdAndPermissionId(allotPermissionDto);
 			if (count > 0) {
 				continue;
 			}
-			
+
 			int insertRolePermission = roleMapper.insertRolePermission(allotPermissionDto);
 			if (insertRolePermission < 1) {
 				throw new LogicException("分配失败");

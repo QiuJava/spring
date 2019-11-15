@@ -1,6 +1,11 @@
 package com.example.mapper.provider;
 
 import com.example.entity.Role;
+import com.example.util.SqlUtil;
+
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
 
 /**
@@ -60,6 +65,13 @@ public class RoleSqlProvider {
 
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
 
+		return sql.toString();
+	}
+
+	public String deleteByPermissionIdList(Map<String, List<Long>> params) {
+		SQL sql = new SQL();
+		sql.DELETE_FROM("role_permission");
+		sql.WHERE(SqlUtil.inJoint("permission_id", "list", params.get("list")));
 		return sql.toString();
 	}
 }

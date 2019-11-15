@@ -7,6 +7,7 @@ import com.example.mapper.provider.RoleSqlProvider;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Many;
@@ -110,4 +111,15 @@ public interface RoleMapper {
 			"WHERE ", //
 			"	id = #{roleId,jdbcType=BIGINT}  " })
 	long countRoleById(Long roleId);
+
+	@Select({ "SELECT ", //
+			"	permission_id  ", //
+			"FROM ", //
+			"	role_permission  ", //
+			"WHERE ", //
+			"	role_id =1" })
+	List<Long> selectEmployeeIdByRoleId(Long roleId);
+
+	@DeleteProvider(type = RoleSqlProvider.class, method = "deleteByPermissionIdList")
+	int deleteByPermissionIdList(List<Long> oldPermissionIdList);
 }
