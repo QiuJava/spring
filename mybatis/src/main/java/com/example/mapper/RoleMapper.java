@@ -122,4 +122,20 @@ public interface RoleMapper {
 
 	@DeleteProvider(type = RoleSqlProvider.class, method = "deleteByPermissionIdList")
 	int deleteByPermissionIdList(List<Long> oldPermissionIdList);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	role  ", //
+			"WHERE ", //
+			"	role_name = #{roleName,jdbcType=VARCHAR}  " })
+	int countByRoleName(String roleName);
+
+	@Select({ "SELECT ", //
+			"	role_name  ", //
+			"FROM ", //
+			"	role  ", //
+			"WHERE ", //
+			"	id = #{id,jdbcType=BIGINT}  " })
+	String selectRoleNameById(Long id);
 }

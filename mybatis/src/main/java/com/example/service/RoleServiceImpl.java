@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
 import com.example.dto.AllotPermissionDto;
 import com.example.entity.Role;
 import com.example.mapper.RoleMapper;
+import com.example.util.DataSourceUtil;
 
 /**
  * 角色服务
@@ -47,10 +49,10 @@ public class RoleServiceImpl {
 				}
 			}
 		}
-		
+
 		if (oldPermissionIdList.size() > 0) {
 			// 批量删除
-			int deleteByPermissionIdList =  roleMapper.deleteByPermissionIdList(oldPermissionIdList);
+			int deleteByPermissionIdList = roleMapper.deleteByPermissionIdList(oldPermissionIdList);
 			if (deleteByPermissionIdList != oldPermissionIdList.size()) {
 				throw new LogicException("分配失败");
 			}
@@ -67,16 +69,31 @@ public class RoleServiceImpl {
 
 			// 判断角色权限关系是否存在
 			long count = roleMapper.countRolePermissionByRoleIdAndPermissionId(allotPermissionDto);
-			if (count > 0) {
+			if (count == 1) {
 				continue;
 			}
 
 			int insertRolePermission = roleMapper.insertRolePermission(allotPermissionDto);
-			if (insertRolePermission < 1) {
+			if (insertRolePermission != 1) {
 				throw new LogicException("分配失败");
 			}
 		}
 
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int updateById(Role role) {
+		return roleMapper.updateByPrimaryKeySelective(role);
+	}
+
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
+	public boolean hasRoleByRoleName(String roleName) {
+		return roleMapper.countByRoleName(roleName) == 1;
+	}
+
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
+	public String getRoleNameById(Long id) {
+		return roleMapper.selectRoleNameById(id);
 	}
 
 }
