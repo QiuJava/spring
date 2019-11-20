@@ -1,9 +1,5 @@
 package com.example.mapper;
 
-import com.example.dto.AllotPermissionDto;
-import com.example.entity.Role;
-import com.example.mapper.provider.RoleSqlProvider;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -14,10 +10,13 @@ import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.mapping.FetchType;
 import org.apache.ibatis.type.JdbcType;
+
+import com.example.dto.AllotPermissionDto;
+import com.example.entity.Role;
+import com.example.mapper.provider.RoleSqlProvider;
 
 /**
  * 角色数据操作
@@ -32,49 +31,13 @@ public interface RoleMapper {
 			"	role  ", //
 			"WHERE ", //
 			"	id = #{id,jdbcType=BIGINT}" })
-	int deleteByPrimaryKey(Long id);
+	int deleteById(Long id);
 
-	@Insert({ "INSERT INTO role ( id, role_name, intro, create_time, update_time ) ", //
-			"VALUES ", //
-			"	( #{id,jdbcType=BIGINT} ", //
-			"	, #{roleName,jdbcType=VARCHAR} ", //
-			"	, #{intro,jdbcType=VARCHAR} ", //
-			"	, #{createTime,jdbcType=TIMESTAMP} ", //
-			"	, #{updateTime,jdbcType=TIMESTAMP} ", //
-			"	)" })
+	@InsertProvider(type = RoleSqlProvider.class, method = "insert")
 	int insert(Role record);
 
-	@InsertProvider(type = RoleSqlProvider.class, method = "insertSelective")
-	int insertSelective(Role record);
-
-	@Select({ "SELECT ", //
-			"	id, ", //
-			"	role_name, ", //
-			"	intro, ", //
-			"	create_time, ", //
-			"	update_time  ", //
-			"FROM ", //
-			"	role  ", //
-			"WHERE ", //
-			"	id = #{id,jdbcType=BIGINT}" })
-	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
-			@Result(column = "role_name", property = "roleName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP) })
-	Role selectByPrimaryKey(Long id);
-
-	@UpdateProvider(type = RoleSqlProvider.class, method = "updateByPrimaryKeySelective")
-	int updateByPrimaryKeySelective(Role record);
-
-	@Update({ "UPDATE role  ", //
-			"SET role_name = #{roleName,jdbcType=VARCHAR}, ", //
-			"intro = #{intro,jdbcType=VARCHAR}, ", //
-			"create_time = #{createTime,jdbcType=TIMESTAMP}, ", //
-			"update_time = #{updateTime,jdbcType=TIMESTAMP} ", //
-			"WHERE ", //
-			"	id = #{id,jdbcType=BIGINT}" })
-	int updateByPrimaryKey(Role record);
+	@UpdateProvider(type = RoleSqlProvider.class, method = "updateById")
+	int updateById(Role record);
 
 	@Select({ "SELECT ", //
 			"	role_0.id AS id, ", //
@@ -110,7 +73,7 @@ public interface RoleMapper {
 			"	role  ", //
 			"WHERE ", //
 			"	id = #{roleId,jdbcType=BIGINT}  " })
-	long countRoleById(Long roleId);
+	long countById(Long roleId);
 
 	@Select({ "SELECT ", //
 			"	permission_id  ", //
@@ -118,10 +81,10 @@ public interface RoleMapper {
 			"	role_permission  ", //
 			"WHERE ", //
 			"	role_id =1" })
-	List<Long> selectEmployeeIdByRoleId(Long roleId);
+	List<Long> selectPermissionIdByRoleId(Long roleId);
 
-	@DeleteProvider(type = RoleSqlProvider.class, method = "deleteByPermissionIdList")
-	int deleteByPermissionIdList(List<Long> oldPermissionIdList);
+	@DeleteProvider(type = RoleSqlProvider.class, method = "deleteRolePermissionByPermissionIdList")
+	int deleteRolePermissionByPermissionIdList(List<Long> oldPermissionIdList);
 
 	@Select({ "SELECT ", //
 			"	count( * )  ", //
@@ -138,4 +101,19 @@ public interface RoleMapper {
 			"WHERE ", //
 			"	id = #{id,jdbcType=BIGINT}  " })
 	String selectRoleNameById(Long id);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	role_permission  ", //
+			"WHERE ", //
+			"	role_id = #{roleId,jdbcType=BIGINT}  " })
+	int countRolePermissionByRoleId(Long roleId);
+
+	@Delete({ "DELETE ", //
+			"FROM ", //
+			"	role_permission  ", //
+			"WHERE ", //
+			"	role_id = #{roleId,jdbcType=BIGINT}  " })
+	int deleteRolePermissionByRoleId(Long roleId);
 }

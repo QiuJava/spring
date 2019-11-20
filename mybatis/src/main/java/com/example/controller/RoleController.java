@@ -50,8 +50,8 @@ public class RoleController {
 		role.setUpdateTime(date);
 
 		try {
-			boolean hasRoleByRoleName = roleService.hasRoleByRoleName(roleName);
-			if (hasRoleByRoleName) {
+			boolean hasByRoleName = roleService.hasByRoleName(roleName);
+			if (hasByRoleName) {
 				return new Result(false, "角色名已存在");
 			}
 			int save = roleService.save(role);
@@ -119,10 +119,12 @@ public class RoleController {
 			}
 
 			if (!oldRoleName.equals(roleName)) {
-				boolean hasRoleByRoleName = roleService.hasRoleByRoleName(roleName);
-				if (hasRoleByRoleName) {
+				boolean hasByRoleName = roleService.hasByRoleName(roleName);
+				if (hasByRoleName) {
 					return new Result(false, "角色名已存在");
 				}
+			} else {
+				role.setRoleName(null);
 			}
 
 			int updateById = roleService.updateById(role);
@@ -135,6 +137,32 @@ public class RoleController {
 			return new Result(false, "更新失败");
 		}
 
+	}
+
+	@GetMapping("/deleteRole")
+	public Result deleteRole(Long id) {
+		Result verifyId = this.verifyId(id);
+		if (verifyId != null) {
+			return verifyId;
+		}
+
+		try {
+			boolean hasById = roleService.hasById(id);
+			if (!hasById) {
+				return new Result(false, "角色ID不存在");
+			}
+
+			int deleteById = roleService.deleteById(id);
+			if (deleteById != 1) {
+				return new Result(false, "删除失败");
+			}
+			return new Result(true, "删除成功");
+		} catch (LogicException e) {
+			return new Result(false, e.getMessage());
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result(false, "删除失败");
+		}
 	}
 
 	private Result verifyId(Long id) {

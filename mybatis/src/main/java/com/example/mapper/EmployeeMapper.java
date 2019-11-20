@@ -147,4 +147,19 @@ public interface EmployeeMapper {
 			"	`status` = 0 AND password_errors > 0 " })
 	int updateAllPasswordErrors();
 
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	`employee_role`  ", //
+			"WHERE ", //
+			"	role_id = #{roleId,jdbcType=BIGINT}" })
+	int countEmployeeRoleByRoleId(Long roleId);
+
+	@Delete({ "DELETE ", //
+			"FROM ", //
+			"	`employee_role`  ", //
+			"WHERE ", //
+			"	role_id = #{roleId,jdbcType=BIGINT}" })
+	int deleteEmployeeRoleByRoleId(Long roleId);
+
 }

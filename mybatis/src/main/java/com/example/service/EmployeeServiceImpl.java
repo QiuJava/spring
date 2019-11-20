@@ -104,4 +104,12 @@ public class EmployeeServiceImpl {
 		return employeeMapper.updateAllPasswordErrors();
 	}
 
+	public int countEmployeeRoleByRoleId(Long id) {
+		return employeeMapper.countEmployeeRoleByRoleId(id);
+	}
+
+	public int deleteEmployeeRoleByRoleId(Long id) {
+		return employeeMapper.deleteEmployeeRoleByRoleId(id);
+	}
+
 }

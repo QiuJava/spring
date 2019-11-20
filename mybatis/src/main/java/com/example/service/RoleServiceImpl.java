@@ -27,20 +27,22 @@ public class RoleServiceImpl {
 	private RoleMapper roleMapper;
 	@Autowired
 	private PermissionServiceImpl permissionService;
+	@Autowired
+	private EmployeeServiceImpl employeeService;
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Role role) {
-		return roleMapper.insertSelective(role);
+		return roleMapper.insert(role);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public void allotPermission(Long roleId, Long[] permissionIdList) throws LogicException {
-		long countRoleById = roleMapper.countRoleById(roleId);
-		if (countRoleById != 1) {
+		long countById = roleMapper.countById(roleId);
+		if (countById != 1) {
 			throw new LogicException("角色ID不存在");
 		}
 
-		List<Long> oldPermissionIdList = roleMapper.selectEmployeeIdByRoleId(roleId);
+		List<Long> oldPermissionIdList = roleMapper.selectPermissionIdByRoleId(roleId);
 		for (Iterator<Long> iterator = oldPermissionIdList.iterator(); iterator.hasNext();) {
 			Long oldId = (Long) iterator.next();
 			for (Long id : permissionIdList) {
@@ -52,8 +54,9 @@ public class RoleServiceImpl {
 
 		if (oldPermissionIdList.size() > 0) {
 			// 批量删除
-			int deleteByPermissionIdList = roleMapper.deleteByPermissionIdList(oldPermissionIdList);
-			if (deleteByPermissionIdList != oldPermissionIdList.size()) {
+			int deleteRolePermissionByPermissionIdList = roleMapper
+					.deleteRolePermissionByPermissionIdList(oldPermissionIdList);
+			if (deleteRolePermissionByPermissionIdList != oldPermissionIdList.size()) {
 				throw new LogicException("分配失败");
 			}
 		}
@@ -83,17 +86,43 @@ public class RoleServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int updateById(Role role) {
-		return roleMapper.updateByPrimaryKeySelective(role);
+		return roleMapper.updateById(role);
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public boolean hasRoleByRoleName(String roleName) {
+	public boolean hasByRoleName(String roleName) {
 		return roleMapper.countByRoleName(roleName) == 1;
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public String getRoleNameById(Long id) {
 		return roleMapper.selectRoleNameById(id);
+	}
+
+	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
+	public boolean hasById(Long id) {
+		return roleMapper.countById(id) == 1;
+	}
+
+	@Transactional(rollbackFor = RuntimeException.class)
+	public int deleteById(Long id) throws LogicException {
+		// 删除角色对应的权限关系和员工关系
+		int countRolePermissionByRoleId = roleMapper.countRolePermissionByRoleId(id);
+		if (countRolePermissionByRoleId > 0) {
+			int deleteRolePermissionByRoleId = roleMapper.deleteRolePermissionByRoleId(id);
+			if (countRolePermissionByRoleId != deleteRolePermissionByRoleId) {
+				throw new LogicException("删除失败");
+			}
+		}
+
+		int countEmployeeRoleByRoleId = employeeService.countEmployeeRoleByRoleId(id);
+		if (countEmployeeRoleByRoleId > 0) {
+			int deleteEmployeeRoleByRoleId = employeeService.deleteEmployeeRoleByRoleId(id);
+			if (deleteEmployeeRoleByRoleId != countEmployeeRoleByRoleId) {
+				throw new LogicException("删除失败");
+			}
+		}
+		return roleMapper.deleteById(id);
 	}
 
 }
