@@ -38,6 +38,8 @@ spring:
     host: smtp.qq.com
     username: 719748187@qq.com
     password: fpnqgibsoohybdgh
+  thymeleaf:
+    cache: false
           
 mybatis:
   configuration:

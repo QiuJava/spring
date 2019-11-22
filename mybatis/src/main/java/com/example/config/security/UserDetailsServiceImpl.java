@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.config.listener.ContextStartListener;
 import com.example.entity.Employee;
 import com.example.service.EmployeeServiceImpl;
+import com.example.service.MenuServiceImpl;
 import com.example.util.DateTimeUtil;
 import com.example.vo.EmployeeVo;
 import com.example.vo.MenuTreeVo;
@@ -34,6 +35,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private EmployeeServiceImpl employeeService;
 	@Autowired
 	private ValueOperations<String, Object> valueOpertions;
+	@Autowired
+	private MenuServiceImpl menuService;
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
@@ -68,7 +71,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 
 		// 登录用户的菜单
-		List<MenuTreeVo> menuTreeVoList = (List<MenuTreeVo>) valueOpertions.get(ContextStartListener.ALL_MENU_TREE);
+		List<MenuTreeVo> menuTreeVoList = menuService.listAll(); //(List<MenuTreeVo>) valueOpertions.get(ContextStartListener.ALL_MENU_TREE);
 		List<PermissionVo> authorities = (List<PermissionVo>) employeeVo.getAuthorities();
 		if (menuTreeVoList != null && authorities != null) {
 			this.menuTreeMatches(menuTreeVoList, authorities);

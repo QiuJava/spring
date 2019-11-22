@@ -37,7 +37,7 @@ public class MenuSqlProvider {
 		SQL sql = new SQL();
 		sql.SELECT(new String[] { "id", //
 				"menu_name", //
-				"intro" });
+				"url" });
 		sql.FROM("menu");
 		if (parentId == null) {
 			sql.WHERE("parent_id is null");

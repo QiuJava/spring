@@ -41,8 +41,8 @@ public interface MenuMapper {
 
 	@SelectProvider(type = MenuSqlProvider.class, method = "selectMenuTreeVoByParentId")
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
-			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "menu_name", property = "text", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "id", property = "permissionVoList", many = @Many(select = "com.example.mapper.PermissionMapper.selectPermissionVoByMenuId", fetchType = FetchType.EAGER)),
 			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectMenuTreeVoByParentId", fetchType = FetchType.EAGER)) })
 	List<MenuTreeVo> selectMenuTreeVoByParentId(Long parentId);

@@ -19,9 +19,19 @@ import lombok.ToString;
 public class MenuTreeVo implements Serializable {
 	private static final long serialVersionUID = -5849453039222592646L;
 	private Long id;
-	private String menuName;
-	private String intro;
+	private String text;
+	private String url;
 
 	private List<PermissionVo> permissionVoList;
 	private List<MenuTreeVo> children;
+
+	/**
+	 * 菜单节点状态
+	 * 
+	 * @return
+	 */
+	public String getState() {
+		return children != null && children.size() > 0 ? "closed" : "open";
+	}
+
 }

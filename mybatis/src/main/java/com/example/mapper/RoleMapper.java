@@ -6,13 +6,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Many;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.UpdateProvider;
-import org.apache.ibatis.mapping.FetchType;
-import org.apache.ibatis.type.JdbcType;
 
 import com.example.dto.AllotPermissionDto;
 import com.example.entity.Role;
@@ -38,20 +33,6 @@ public interface RoleMapper {
 
 	@UpdateProvider(type = RoleSqlProvider.class, method = "updateById")
 	int updateById(Role record);
-
-	@Select({ "SELECT ", //
-			"	role_0.id AS id, ", //
-			"	role_0.role_name AS role_name, ", //
-			"	role_0.intro AS intro  ", //
-			"FROM ", //
-			"	role role_0 ", //
-			"	JOIN employee_role emplo_role_0 ON role_0.id = emplo_role_0.employee_id  ", //
-			"	AND emplo_role_0.employee_id = #{employeeId,jdbcType=BIGINT}" })
-	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
-			@Result(column = "role_name", property = "roleName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "id", property = "menuList", many = @Many(select = "com.example.mapper.MenuMapper.selectByRoleId", fetchType = FetchType.EAGER)) })
-	List<Role> selectByEmployeeId(Long employeeId);
 
 	@Insert({ "INSERT role_permission ( role_id, permission_id ) ", //
 			"VALUES ", //
