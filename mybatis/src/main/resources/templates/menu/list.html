@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<title>后台管理系统</title>
+<link rel="stylesheet" type="text/css"
+	href="jquery-easyui-1.7.0/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="jquery-easyui-1.7.0/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="jquery-easyui-1.7.0/themes/icon.css" />
+<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript"
+	src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+
+<script type="text/javascript"
+	src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" th:inline="javascript">
+	function p(obj) {
+		console.info(obj);
+
+	}
+	
+	var token = [[${_csrf.token}]];
+	$(function() {
+		$('#menu-tg').treegrid({
+			url : '/menu/list',
+			idField : 'id',
+			treeField : 'menuName',
+			method : 'get',
+			rownumbers: true,
+			toolbar: '#menu-linkbutton-list',
+			columns : [ [ {
+				title : '菜单名称',
+				field : 'menuName',
+				width : 180,
+				editor : 'text'
+			}, {
+				field : 'url',
+				title : '菜单链接',
+				width : 150,
+				editor : 'text'
+			},{
+				field : 'intro',
+				title : '描述',
+				width : 150,
+				editor : 'text'
+			}, {
+				field : 'createTime',
+				title : '创建时间',
+				width : 150
+			}, {
+				field : 'updateTime',
+				title : '更新时间',
+				width : 150
+			} ] ]
+		});
+		
+	});
+	
+	
+	var	editingId;
+	
+	function addSon(){
+		if(editingId != undefined){
+			$('#menu-tg').treegrid('select', editingId);
+			return;
+		}
+		var row = $('#menu-tg').treegrid('getSelected');
+		if (row) {
+			editingId = 0;
+			$('#menu-tg').treegrid('append',{
+				parent: row.id,  
+				data: [{
+					id: editingId
+				}]
+			});
+			$('#menu-tg').treegrid('select', editingId);
+			$('#menu-tg').treegrid('beginEdit', editingId);
+		}else {
+			$.messager.alert('提示','请选择一条数据','info')
+		}
+	}
+	
+	
+	function edit() {
+		// 只能一条一条编辑
+		if (editingId != undefined){
+			$('#menu-tg').treegrid('select', editingId);
+			return;
+		}
+		
+		var row = $('#menu-tg').treegrid('getSelected');
+		if (row) {
+			editingId = row.id
+			$('#menu-tg').treegrid('beginEdit', editingId);
+		}else {
+			$.messager.alert('提示','请选择一条数据','info')
+		}
+	}
+	
+	function save() {
+		if (editingId != undefined) {
+			var menuTg = $('#menu-tg');
+			menuTg.treegrid('endEdit', editingId);
+			var row = menuTg.treegrid('getSelected');
+			if(editingId == 0){
+				p(row);
+				// 发送post请求进行更新
+				$.post("/menu/add?_csrf="+token,{
+					"menuName":row.menuName,"intro":row.intro,"url":row.url,"parentId":row._parentId	
+				},function(data){
+					if(data.succeed){
+						menuTg.treegrid('reload');
+						editingId = undefined;
+					}else {
+						$.messager.alert('提示',data.msg,'error');
+						menuTg.treegrid('beginEdit', editingId);
+					}
+				},'json');
+			}else {
+				// 发送post请求进行更新
+				$.post("/menu/update?_csrf="+token,{"id":row.id,
+					"menuName":row.menuName,"intro":row.intro,"url":row.url		
+				},function(data){
+					if(data.succeed){
+						menuTg.treegrid('reload');
+						editingId = undefined;
+					}else {
+						$.messager.alert('提示',data.msg,'error');
+						menuTg.treegrid('beginEdit', editingId);
+					}
+				},'json');
+			}
+			
+		}
+	}
+	
+	function remove(){
+		var row = $('#menu-tg').treegrid('getSelected');
+		if (row) {
+			$.post("/menu/remove?_csrf="+token,{"id":row.id	
+			},function(data){
+				if(data.succeed){
+					$('#menu-tg').treegrid('remove', row.id);
+					$('#menu-tg').treegrid('reload');
+				}else {
+					$.messager.alert('提示',data.msg,'error');
+				}
+			},'json');
+		}else {
+			$.messager.alert('提示','请选择一条数据','info')
+		}
+	}
+	
+	function cancel() {
+		if (editingId != undefined) {
+			if(editingId == 0){
+				$('#menu-tg').treegrid('remove', editingId);
+			}else {
+				$('#menu-tg').treegrid('cancelEdit', editingId);
+				editingId = undefined;
+			}
+		}
+	}
+	
+	function reload(){
+		$('#menu-tg').treegrid('reload');
+	}
+</script>
+</head>
+<body>
+	<div id="menu-linkbutton-list" >
+		<a id="addSon" href="#" class="easyui-linkbutton" onclick="addSon()"  data-options="iconCls:'icon-add',plain:true">添加子节点</a>
+		<a  id="edit" href="#" class="easyui-linkbutton" onclick="edit()"  data-options="iconCls:'icon-edit',plain:true">编辑</a>
+		<a  id="remove" href="#" class="easyui-linkbutton" onclick="remove()"  data-options="iconCls:'icon-remove',plain:true">删除</a>
+		<a id="save" href="#" class="easyui-linkbutton" onclick="save()"  data-options="iconCls:'icon-save',plain:true">保存</a>
+		 <a id="cancel" href="#" class="easyui-linkbutton" onclick="cancel()"  data-options="iconCls:'icon-cancel',plain:true">取消</a>
+		 <a id="reload" href="#" class="easyui-linkbutton" onclick="reload()"  data-options="iconCls:'icon-reload',plain:true">刷新</a>
+	</div>
+	<table id="menu-tg" title="菜单列表"  style="width: 1000px; height: 500px">
+
+	</table>
+</body>
+</html>

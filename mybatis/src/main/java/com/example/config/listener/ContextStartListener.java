@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.entity.Employee;
 import com.example.service.EmployeeServiceImpl;
-import com.example.service.MenuServiceImpl;
 
 /**
  * 应用启动监听
@@ -32,19 +30,9 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	@Autowired
-	private MenuServiceImpl menuService;
-
-	@Autowired
-	private ValueOperations<String, Object> valueOperations;
-
 	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		if (valueOperations.get(ALL_MENU_TREE) == null) {
-			// 获取所有菜单 放入Redis缓存
-			valueOperations.set(ALL_MENU_TREE, menuService.listAll());
-		}
 		
 		// 判断数据库中是否有超级管理员,没有新建一个
 		boolean hasAdmin = employeeService.hasAdmin();

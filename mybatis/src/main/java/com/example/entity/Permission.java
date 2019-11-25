@@ -2,6 +2,8 @@ package com.example.entity;
 
 import java.util.Date;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,8 +17,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Permission {
+public class Permission implements GrantedAuthority {
 
+	private static final long serialVersionUID = -8093648188829987622L;
 	private Long id;
 	private Long menuId;
 	private String permissionName;

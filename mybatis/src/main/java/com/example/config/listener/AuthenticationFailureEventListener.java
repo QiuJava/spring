@@ -35,18 +35,16 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 		Authentication authentication = event.getAuthentication();
 		WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
 		String username = authentication.getPrincipal().toString();
-		// 如果登录名不是系统中的用户名则跳过
-		boolean hasEmployee = employeeService.hasEmployeeByUsername(username);
-		if (!hasEmployee) {
-			return;
-		}
 
+		// 如果登录名不是系统中的用户名则跳过
 		Employee employee = employeeService.getPasswordErrorsAndIdAndStatusByUsername(username);
 
 		int passwordErrors = employee.getPasswordErrors() + 1;
+
 		Date date = new Date();
 		employee.setPasswordErrors(passwordErrors);
 		employee.setUpdateTime(date);
+
 		if (passwordErrors >= Employee.MAX_PASSWORD_ERRORS && employee.getStatus() != Employee.LOCK_STATUS) {
 			// 进入锁定状态 设置锁定时间
 			employee.setStatus(Employee.LOCK_STATUS);

@@ -101,8 +101,6 @@ public class PermissionController {
 			if (save != 1) {
 				return new Result(false, "添加失败");
 			}
-			// 重新设置菜单缓存
-			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "添加失败");
@@ -189,8 +187,6 @@ public class PermissionController {
 			if (update != 1) {
 				return new Result(false, "更新失败");
 			}
-			// 重新设置菜单缓存
-			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
 			return new Result(true, "更新成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
@@ -214,8 +210,6 @@ public class PermissionController {
 			if (deleteById != 1) {
 				return new Result(false, "删除失败");
 			}
-			// 重新设置菜单缓存
-			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
 			return new Result(true, "删除成功");
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());

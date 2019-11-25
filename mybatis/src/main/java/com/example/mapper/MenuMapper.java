@@ -14,10 +14,10 @@ import org.apache.ibatis.mapping.FetchType;
 import org.apache.ibatis.type.JdbcType;
 
 import com.example.entity.Menu;
+import com.example.entity.MenuTree;
 import com.example.mapper.provider.MenuSqlProvider;
 import com.example.qo.MenuQo;
 import com.example.vo.MenuListVo;
-import com.example.vo.MenuTreeVo;
 
 /**
  * 菜单数据操作
@@ -39,13 +39,12 @@ public interface MenuMapper {
 	@UpdateProvider(type = MenuSqlProvider.class, method = "updateById")
 	int updateById(Menu record);
 
-	@SelectProvider(type = MenuSqlProvider.class, method = "selectMenuTreeVoByParentId")
+	@SelectProvider(type = MenuSqlProvider.class, method = "selectMenuTreeByParentId")
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
 			@Result(column = "menu_name", property = "text", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "id", property = "permissionVoList", many = @Many(select = "com.example.mapper.PermissionMapper.selectPermissionVoByMenuId", fetchType = FetchType.EAGER)),
-			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectMenuTreeVoByParentId", fetchType = FetchType.EAGER)) })
-	List<MenuTreeVo> selectMenuTreeVoByParentId(Long parentId);
+			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectMenuTreeByParentId", fetchType = FetchType.EAGER)) })
+	List<MenuTree> selectMenuTreeByParentId(Long parentId);
 
 	@Select({ "SELECT ", //
 			"	count( * )  ", //
@@ -79,5 +78,31 @@ public interface MenuMapper {
 			"WHERE ", //
 			"	id = #{menuId,jdbcType=BIGINT}" })
 	int countById(Long menuId);
+
+	@SelectProvider(type = MenuSqlProvider.class, method = "selectByParentId")
+	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "parent_id", property = "parentId", jdbcType = JdbcType.BIGINT),
+			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
+			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
+			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
+	List<Menu> selectByParentId(Long parentId);
+
+	@Select({ "SELECT ", //
+			"	count( * )  ", //
+			"FROM ", //
+			"	menu  ", //
+			"WHERE ", //
+			"	parent_id = #{parentId,jdbcType=BIGINT}" })
+	long countByParentId(Long parentId);
+
+	@Delete({ "DELETE  ", //
+			"FROM ", //
+			"	menu  ", //
+			"WHERE ", //
+			"	parent_id = #{parentId,jdbcType=BIGINT}" })
+	int deleteByParentId(Long parentId);
 
 }

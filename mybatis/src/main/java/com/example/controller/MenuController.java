@@ -1,17 +1,17 @@
 package com.example.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.common.LogicException;
 import com.example.common.PageResult;
 import com.example.common.Result;
-import com.example.config.listener.ContextStartListener;
 import com.example.entity.Menu;
 import com.example.qo.MenuQo;
 import com.example.service.MenuServiceImpl;
@@ -26,28 +26,26 @@ import lombok.extern.slf4j.Slf4j;
  * @author Qiu Jian
  *
  */
-@RestController
-@RequestMapping("/menu")
+@Controller
 @Slf4j
 public class MenuController {
 
 	@Autowired
-	private ValueOperations<String, Object> valueOperations;
-
-	@Autowired
 	private MenuServiceImpl menuService;
 
-	@GetMapping("/menuTree")
-	public Result menuTree() {
-		try {
-			return new Result(true, "获取成功", null, valueOperations.get(ContextStartListener.ALL_MENU_TREE));
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return new Result(false, "获取失败");
-		}
+	@GetMapping("/menu")
+	public String menu() {
+		return "menu/list";
 	}
 
-	@GetMapping("/addMenu")
+	@GetMapping("/menu/list")
+	@ResponseBody
+	public List<Menu> menuList() {
+		return menuService.listByAll();
+	}
+
+	@PostMapping("/menu/add")
+	@ResponseBody
 	public Result addMenu(Menu menu) {
 		Long parentId = menu.getParentId();
 		if (parentId != null && parentId.toString().length() > 20) {
@@ -88,8 +86,6 @@ public class MenuController {
 			if (save != 1) {
 				return new Result(false, "添加失败");
 			}
-			// 重新设置菜单缓存
-			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
 			return new Result(true, "添加成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
@@ -97,7 +93,8 @@ public class MenuController {
 		}
 	}
 
-	@GetMapping("/updateMenu")
+	@PostMapping("/menu/update")
+	@ResponseBody
 	public Result updateMenu(Menu menu) {
 		Long id = menu.getId();
 		Result verifyId = this.verifyId(id);
@@ -140,8 +137,6 @@ public class MenuController {
 			if (update != 1) {
 				return new Result(false, "更新失败");
 			}
-			// 重新设置菜单缓存
-			valueOperations.set(ContextStartListener.ALL_MENU_TREE, menuService.listAll());
 			return new Result(true, "更新成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
@@ -149,7 +144,8 @@ public class MenuController {
 		}
 	}
 
-	@GetMapping("/deleteMenu")
+	@PostMapping("/menu/remove")
+	@ResponseBody
 	public Result deleteMenu(Long id) {
 		Result verifyId = this.verifyId(id);
 		if (verifyId != null) {

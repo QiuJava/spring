@@ -32,7 +32,7 @@ public class RequestLogHandlerInterceptor extends HandlerInterceptorAdapter {
 			StringBuilder builder = new StringBuilder();
 			builder.append(className).append(".").append(methodName);
 			
-			log.info("请求者：{}，请求路径：{}，请求方法：{}，请求参数：{}", SecurityContextUtil.getCurrentEmployeeVo().getUsername(),
+			log.info("请求者：{}，请求路径：{}，请求方法：{}，请求参数：{}", SecurityContextUtil.getCurrentEmployee().getUsername(),
 					request.getRequestURI(), builder.toString(), JSON.toJSONString(request.getParameterMap()));
 		}
 		return true;

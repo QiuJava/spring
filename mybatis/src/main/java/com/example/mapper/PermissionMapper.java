@@ -16,7 +16,6 @@ import com.example.entity.Permission;
 import com.example.mapper.provider.PermissionSqlProvider;
 import com.example.qo.PermissionQo;
 import com.example.vo.PermissionListVo;
-import com.example.vo.PermissionVo;
 
 /**
  * 权限数据操作
@@ -47,6 +46,7 @@ public interface PermissionMapper {
 
 	@Select({ "SELECT DISTINCT ", //
 			"	permi_O.id AS id, ", //
+			"	permi_O.menu_id AS menu_id, ", //
 			"	permi_O.authority AS authority, ", //
 			"	permi_O.permission_name AS permission_name, ", //
 			"	permi_O.intro AS intro, ", //
@@ -56,11 +56,12 @@ public interface PermissionMapper {
 			"	JOIN role_permission role_permi_0 ON permi_O.id = role_permi_0.permission_id ", //
 			"	JOIN employee_role emplo_role_0 ON role_permi_0.role_id  ", //
 			"	AND emplo_role_0.employee_id = #{employeeId,jdbcType=BIGINT}" })
-	@ResultMap({ "PermissionVoMap" })
-	List<PermissionVo> selectPermissionVoByEmployeeId(Long employeeId);
+	@ResultMap({ "PermissionMap" })
+	List<Permission> selectByEmployeeId(Long employeeId);
 
 	@Select({ "SELECT ", //
 			"	id, ", //
+			"	menu_id, ", //
 			"	authority, ", //
 			"	permission_name, ", //
 			"	intro, ", //
@@ -70,11 +71,12 @@ public interface PermissionMapper {
 			"WHERE ", //
 			"	menu_id = #{menuId,jdbcType=BIGINT}" })
 	@Results(value = { @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) }, id = "PermissionVoMap")
-	List<PermissionVo> selectPermissionVoByMenuId(Long menuId);
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) }, id = "PermissionMap")
+	List<Permission> selectByMenuId(Long menuId);
 
 	@Select({ "SELECT ", //
 			"	count( * )  ", //

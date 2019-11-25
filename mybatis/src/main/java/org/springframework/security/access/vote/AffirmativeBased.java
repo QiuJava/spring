@@ -11,8 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.FilterInvocation;
 
 import com.example.entity.Employee;
-import com.example.vo.EmployeeVo;
-import com.example.vo.PermissionVo;
+import com.example.entity.Permission;
 
 /**
  * 修改Securuty框架权限校验
@@ -33,16 +32,16 @@ public class AffirmativeBased extends AbstractAccessDecisionManager {
 			FilterInvocation filterInvocation = (FilterInvocation) object;
 			String requestUrl = filterInvocation.getRequest().getRequestURI();
 
-			EmployeeVo employeeVo = (EmployeeVo) authentication.getPrincipal();
+			Employee employee = (Employee) authentication.getPrincipal();
 			// 超级管理员拥有所有权限 所有用户拥有首页权限
-			if (employeeVo.getSuperAdmin() == Employee.IS_ADMIN || "/".equals(requestUrl)) {
+			if (employee.getSuperAdmin() == Employee.IS_ADMIN || "/".equals(requestUrl)) {
 				return;
 			}
 			@SuppressWarnings("unchecked")
-			List<PermissionVo> pemissionVoList = (List<PermissionVo>) employeeVo.getAuthorities();
-			for (PermissionVo permissionVo : pemissionVoList) {
+			List<Permission> pemissionList = (List<Permission>) employee.getAuthorities();
+			for (Permission permission : pemissionList) {
 				// 拥有访问权限
-				if (requestUrl.equals(permissionVo.getUrl())) {
+				if (requestUrl.equals(permission.getUrl())) {
 					return;
 				}
 			}

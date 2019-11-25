@@ -10,11 +10,11 @@ import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
 import com.example.common.PageResult;
 import com.example.entity.Menu;
+import com.example.entity.MenuTree;
 import com.example.mapper.MenuMapper;
 import com.example.qo.MenuQo;
 import com.example.util.DataSourceUtil;
 import com.example.vo.MenuListVo;
-import com.example.vo.MenuTreeVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
@@ -32,8 +32,8 @@ public class MenuServiceImpl {
 	@Autowired
 	private PermissionServiceImpl permissionService;
 
-	public List<MenuTreeVo> listAll() {
-		return menuMapper.selectMenuTreeVoByParentId(null);
+	public List<MenuTree> listMenuTreeByAll() {
+		return menuMapper.selectMenuTreeByParentId(null);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -65,6 +65,13 @@ public class MenuServiceImpl {
 				throw new LogicException("删除失败");
 			}
 		}
+		long countByParentId = menuMapper.countByParentId(id);
+		if (countByMenuId > 0) {
+			int deleteByParentId = menuMapper.deleteByParentId(id);
+			if (deleteByParentId != countByParentId) {
+				throw new LogicException("删除失败");
+			}
+		}
 		return menuMapper.deleteById(id);
 	}
 
@@ -79,4 +86,9 @@ public class MenuServiceImpl {
 	public boolean hasById(Long menuId) {
 		return menuMapper.countById(menuId) == 1;
 	}
+
+	public List<Menu> listByAll() {
+		return menuMapper.selectByParentId(null);
+	}
+
 }

@@ -89,7 +89,7 @@ public class EmployeeController {
 		employee.setUpdateTime(date);
 
 		try {
-			boolean hasEmployeeByUsername = employeeService.hasEmployeeByUsername(username);
+			boolean hasEmployeeByUsername = employeeService.hasByUsername(username);
 			if (hasEmployeeByUsername) {
 				return new Result(false, "用户名已存在");
 			}
@@ -137,7 +137,7 @@ public class EmployeeController {
 
 		try {
 			// 只有超级管理员才有重重置密码的权限
-			if (SecurityContextUtil.getCurrentEmployeeVo().getSuperAdmin() == Employee.IS_ADMIN) {
+			if (SecurityContextUtil.getCurrentEmployee().getSuperAdmin() == Employee.IS_ADMIN) {
 				// 重置
 				int resetPassword = employeeService.resetPassword(employee);
 				if (resetPassword < 1) {

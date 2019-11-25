@@ -14,7 +14,6 @@ import com.example.entity.Employee;
 import com.example.mapper.EmployeeMapper;
 import com.example.util.DataSourceUtil;
 import com.example.util.SecurityContextUtil;
-import com.example.vo.EmployeeVo;
 
 /**
  * 员工服务实现
@@ -39,8 +38,8 @@ public class EmployeeServiceImpl {
 		return employeeMapper.countBySuperAdmin() > 0;
 	}
 
-	public EmployeeVo getEmployeeVoByUsername(String username) {
-		return employeeMapper.selectEmployeeVoByUsername(username);
+	public Employee getByUsername(String username) {
+		return employeeMapper.selectByUsername(username);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -57,8 +56,8 @@ public class EmployeeServiceImpl {
 		return employeeMapper.selectPasswordErrorsAndIdAndStatusByUsername(username);
 	}
 
-	public boolean hasEmployeeByUsername(String username) {
-		return employeeMapper.countByUsername(username) > 0;
+	public boolean hasByUsername(String username) {
+		return employeeMapper.countByUsername(username) == 1;
 	}
 
 	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
@@ -77,16 +76,16 @@ public class EmployeeServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int changePassword(String username, String password, String newPassword) {
 		// 密码只能自己修改
-		EmployeeVo currentEmployeeVo = SecurityContextUtil.getCurrentEmployeeVo();
-		if (currentEmployeeVo == null) {
+		Employee currentEmployee = SecurityContextUtil.getCurrentEmployee();
+		if (currentEmployee == null) {
 			throw new LogicException("请先登录");
 		}
-		String currentUsername = currentEmployeeVo.getUsername();
+		String currentUsername = currentEmployee.getUsername();
 		if (!username.equals(currentUsername)) {
 			throw new LogicException("用户名不正确");
 		}
 
-		String currentPassword = currentEmployeeVo.getPassword();
+		String currentPassword = currentEmployee.getPassword();
 		if (!passwordEncoder.matches(password, currentPassword)) {
 			throw new LogicException("原密码不正确");
 		}

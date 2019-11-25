@@ -14,7 +14,6 @@ import com.example.entity.Employee;
 import com.example.entity.LoginLog;
 import com.example.service.EmployeeServiceImpl;
 import com.example.service.LoginLogServiceImpl;
-import com.example.vo.EmployeeVo;
 
 /**
  * 认证成功事件监听
@@ -35,14 +34,12 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 	public void onApplicationEvent(AuthenticationSuccessEvent event) {
 		Authentication authentication = event.getAuthentication();
 		WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
-		EmployeeVo employeeVo = (EmployeeVo) authentication.getPrincipal();
+		Employee employee = (Employee) authentication.getPrincipal();
 
 		Date date = new Date();
-		int passwordErrors = employeeVo.getPasswordErrors();
+		int passwordErrors = employee.getPasswordErrors();
 		// 清空失败次数
 		if (passwordErrors > 0) {
-			Employee employee = new Employee();
-			employee.setId(employeeVo.getId());
 			employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
 			employee.setLockTime(null);
 			employee.setStatus(Employee.NORMAL_STATUS);
@@ -55,7 +52,7 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 		loginLog.setRemoteAddress(details.getRemoteAddress());
 		loginLog.setCreateTime(date);
 		loginLog.setUpdateTime(date);
-		loginLog.setUsername(employeeVo.getUsername());
+		loginLog.setUsername(employee.getUsername());
 		loginLogService.save(loginLog);
 	}
 

@@ -3,7 +3,7 @@ package com.example.util;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.vo.EmployeeVo;
+import com.example.entity.Employee;
 
 /**
  * 安全上下文工具
@@ -15,10 +15,10 @@ public class SecurityContextUtil {
 	private SecurityContextUtil() {
 	}
 
-	public static EmployeeVo getCurrentEmployeeVo() {
+	public static Employee getCurrentEmployee() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()) {
-			return (EmployeeVo) authentication.getPrincipal();
+			return (Employee) authentication.getPrincipal();
 		}
 		return null;
 	}
