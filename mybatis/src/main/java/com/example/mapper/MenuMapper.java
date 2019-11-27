@@ -17,7 +17,6 @@ import com.example.entity.Menu;
 import com.example.entity.MenuTree;
 import com.example.mapper.provider.MenuSqlProvider;
 import com.example.qo.MenuQo;
-import com.example.vo.MenuListVo;
 
 /**
  * 菜单数据操作
@@ -62,15 +61,6 @@ public interface MenuMapper {
 			"	id = #{id,jdbcType=BIGINT}" })
 	String selectMenuNameById(Long id);
 
-	@SelectProvider(type = MenuSqlProvider.class, method = "selectByQo")
-	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
-			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "parent_menu_name", property = "parentMenuName", jdbcType = JdbcType.BIGINT) })
-	List<MenuListVo> selectByQo(MenuQo qo);
-
 	@Select({ "SELECT ", //
 			"	count( * )  ", //
 			"FROM ", //
@@ -104,5 +94,16 @@ public interface MenuMapper {
 			"WHERE ", //
 			"	parent_id = #{parentId,jdbcType=BIGINT}" })
 	int deleteByParentId(Long parentId);
+
+	@SelectProvider(type = MenuSqlProvider.class, method = "selectByQo")
+	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "parent_id", property = "parentId", jdbcType = JdbcType.BIGINT),
+			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
+			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
+			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
+	List<Menu> selectByQo(MenuQo qo);
 
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8" />
@@ -54,10 +55,63 @@
 				field : 'updateTime',
 				title : '更新时间',
 				width : 150
-			} ] ]
+			}, {
+				field : 'action',
+				title : '操作',
+				width : 150,
+				formatter:function(value,row,index){
+					if (row.editing){
+						var s = '<a href="#" onclick="saveRow('+row.id+')">保存</a> ';
+						var c = '<a href="#" onclick="cancelRow('+row.id+')">取消</a>';
+						return s+c;
+					} else {
+						var e = '<a href="#" onclick="editRow('+row.id+')">编辑</a> ';
+						var d = '<a href="#" onclick="deleteRow('+row.id+')">删除</a>';
+						return e+d;
+					}
+				}
+			}] ],
+			onBeforeEdit:function(row){
+				row.editing = true;
+				updateActions(row);
+			},
+			onAfterEdit:function(row,changes){
+				row.editing = false;
+				updateActions(row);
+			},
+			onCancelEdit:function(row){
+				row.editing = false;
+				updateActions(row);
+			}
 		});
 		
 	});
+	
+	function updateActions(row){
+		$('#menu-tg').treegrid('update',{
+			id: row.id,
+			row:row
+		});
+	}
+	
+	function editRow(id){
+		$('#menu-tg').treegrid('beginEdit', id);
+	}
+	
+	function saveRow(id){
+		$('#menu-tg').treegrid('endEdit', id);
+		var row = $('#menu-tg').treegrid('find',id);
+		// 发送post请求进行更新
+		$.post("/menu/update?_csrf="+token,{"id":row.id,
+			"menuName":row.menuName,"intro":row.intro,"url":row.url		
+		},function(data){
+			if(data.succeed){
+				$.messager.alert('提示',data.msg,'info');
+			}else {
+				$.messager.alert('提示',data.msg,'error');
+			}
+		},'json');
+	}
 	
 	
 	var	editingId;
@@ -72,6 +126,27 @@
 			editingId = 0;
 			$('#menu-tg').treegrid('append',{
 				parent: row.id,  
+				data: [{
+					id: editingId
+				}]
+			});
+			$('#menu-tg').treegrid('select', editingId);
+			$('#menu-tg').treegrid('beginEdit', editingId);
+		}else {
+			$.messager.alert('提示','请选择一条数据','info')
+		}
+	}
+	
+	function add(){
+		if(editingId != undefined){
+			$('#menu-tg').treegrid('select', editingId);
+			return;
+		}
+		var row = $('#menu-tg').treegrid('getSelected');
+		if (row) {
+			editingId = 0;
+			$('#menu-tg').treegrid('append',{
+				parent: row.parentId,  
 				data: [{
 					id: editingId
 				}]
@@ -106,7 +181,6 @@
 			menuTg.treegrid('endEdit', editingId);
 			var row = menuTg.treegrid('getSelected');
 			if(editingId == 0){
-				p(row);
 				// 发送post请求进行更新
 				$.post("/menu/add?_csrf="+token,{
 					"menuName":row.menuName,"intro":row.intro,"url":row.url,"parentId":row._parentId	
@@ -154,7 +228,17 @@
 		}
 	}
 	
-	function cancel() {
+	function doSearch(){
+		$('#menu-tg').treegrid('load',{
+			menuName: $('#menuName').val()
+		});
+	}
+	
+	function clearCondition(){
+		$('#menuName').val("");
+	}
+	
+	function undo() {
 		if (editingId != undefined) {
 			if(editingId == 0){
 				$('#menu-tg').treegrid('remove', editingId);
@@ -171,15 +255,33 @@
 </script>
 </head>
 <body>
-	<div id="menu-linkbutton-list" >
-		<a id="addSon" href="#" class="easyui-linkbutton" onclick="addSon()"  data-options="iconCls:'icon-add',plain:true">添加子节点</a>
-		<a  id="edit" href="#" class="easyui-linkbutton" onclick="edit()"  data-options="iconCls:'icon-edit',plain:true">编辑</a>
-		<a  id="remove" href="#" class="easyui-linkbutton" onclick="remove()"  data-options="iconCls:'icon-remove',plain:true">删除</a>
-		<a id="save" href="#" class="easyui-linkbutton" onclick="save()"  data-options="iconCls:'icon-save',plain:true">保存</a>
-		 <a id="cancel" href="#" class="easyui-linkbutton" onclick="cancel()"  data-options="iconCls:'icon-cancel',plain:true">取消</a>
-		 <a id="reload" href="#" class="easyui-linkbutton" onclick="reload()"  data-options="iconCls:'icon-reload',plain:true">刷新</a>
+
+	<div id="menu-linkbutton-list">
+		<div>
+			<span>菜单名称:</span> <input id="menuName" name="menuName" /> <a
+				href="#" class="easyui-linkbutton"
+				data-options="iconCls:'icon-search',plain:true" onclick="doSearch()">查询</a>
+			<a href="#" class="easyui-linkbutton"
+				data-options="iconCls:'icon-clear',plain:true"
+				onclick="clearCondition()">清空</a>
+		</div>
+		<a id="addSon" href="#" class="easyui-linkbutton" onclick="addSon()"
+			data-options="iconCls:'icon-add',plain:true">添加子菜单</a> <a id="add"
+			href="#" class="easyui-linkbutton" onclick="add()"
+			data-options="iconCls:'icon-add',plain:true">插入菜单</a> <a id="edit"
+			href="#" class="easyui-linkbutton" onclick="edit()"
+			data-options="iconCls:'icon-edit',plain:true"
+			sec:authorize="hasRole('aaa')">编辑</a> <a id="remove" href="#"
+			class="easyui-linkbutton" onclick="remove()"
+			data-options="iconCls:'icon-remove',plain:true">删除</a> <a id="save"
+			href="#" class="easyui-linkbutton" onclick="save()"
+			data-options="iconCls:'icon-save',plain:true">保存</a> <a id="cancel"
+			href="#" class="easyui-linkbutton" onclick="undo()"
+			data-options="iconCls:'icon-undo',plain:true">取消</a> <a id="reload"
+			href="#" class="easyui-linkbutton" onclick="reload()"
+			data-options="iconCls:'icon-reload',plain:true">刷新</a>
 	</div>
-	<table id="menu-tg" title="菜单列表"  style="width: 1000px; height: 500px">
+	<table id="menu-tg" title="菜单列表" style="width: 1000px; height: 500px">
 
 	</table>
 </body>

@@ -1,22 +1,18 @@
 package com.example.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
-import com.example.common.PageResult;
 import com.example.entity.Menu;
 import com.example.entity.MenuTree;
 import com.example.mapper.MenuMapper;
 import com.example.qo.MenuQo;
-import com.example.util.DataSourceUtil;
-import com.example.vo.MenuListVo;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.example.util.StrUtil;
 
 /**
  * 菜单服务
@@ -38,26 +34,61 @@ public class MenuServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Menu menu) {
+		String menuName = menu.getMenuName();
+		Long parentId = menu.getParentId();
+
+		Date date = new Date();
+		menu.setCreateTime(date);
+		menu.setUpdateTime(date);
+		if (parentId != null) {
+			boolean hasById = this.hasById(parentId);
+			if (!hasById) {
+				throw new LogicException("上级菜单ID不存在");
+			}
+		}
+		// 菜单名称不能重复
+		boolean hasByMenuName = this.hasByMenuName(menuName);
+		if (hasByMenuName) {
+			throw new LogicException("菜单名称已存在");
+		}
+
 		return menuMapper.insert(menu);
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasByMenuName(String menuName) {
 		return menuMapper.countByMenuName(menuName) == 1;
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int update(Menu menu) {
+		Date date = new Date();
+		menu.setUpdateTime(date);
+		String oldMenuName = this.getMenuNameById(menu.getId());
+		if (StrUtil.noText(oldMenuName)) {
+			throw new LogicException("菜单ID不存在");
+		}
+
+		String menuName = menu.getMenuName();
+		if (!menuName.equals(oldMenuName)) {
+			// 菜单名称不能重复
+			boolean hasMenuName = this.hasByMenuName(menuName);
+			if (hasMenuName) {
+				throw new LogicException("菜单名称已存在");
+			}
+		} else {
+			menu.setMenuName(null);
+		}
+
 		return menuMapper.updateById(menu);
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public String getMenuNameById(Long id) {
 		return menuMapper.selectMenuNameById(id);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int deleteById(Long id) throws LogicException {
+		// 删除角色分配的权限
 		long countByMenuId = permissionService.countByMenuId(id);
 		if (countByMenuId > 0) {
 			int deleteByMenuId = permissionService.deleteByMenuId(id);
@@ -65,8 +96,9 @@ public class MenuServiceImpl {
 				throw new LogicException("删除失败");
 			}
 		}
+		// 删除下级菜单
 		long countByParentId = menuMapper.countByParentId(id);
-		if (countByMenuId > 0) {
+		if (countByParentId > 0) {
 			int deleteByParentId = menuMapper.deleteByParentId(id);
 			if (deleteByParentId != countByParentId) {
 				throw new LogicException("删除失败");
@@ -75,20 +107,16 @@ public class MenuServiceImpl {
 		return menuMapper.deleteById(id);
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public PageResult<MenuListVo> listByQo(MenuQo qo) {
-		Page<MenuListVo> page = PageHelper.startPage(qo.getPageNum(), qo.getPageSize(), qo.getCount());
-		menuMapper.selectByQo(qo);
-		return new PageResult<MenuListVo>(page.getPageNum(), page.getPageSize(), page.getTotal(), page.getResult());
-	}
-
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasById(Long menuId) {
 		return menuMapper.countById(menuId) == 1;
 	}
 
 	public List<Menu> listByAll() {
 		return menuMapper.selectByParentId(null);
+	}
+
+	public List<Menu> listByQo(MenuQo qo) {
+		return menuMapper.selectByQo(qo);
 	}
 
 }

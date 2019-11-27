@@ -15,8 +15,6 @@ import com.example.service.LoginLogServiceImpl;
 import com.example.service.MenuServiceImpl;
 import com.example.util.SecurityContextUtil;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 首页控制器
  * 
@@ -24,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Controller
-@Slf4j
 public class HomeController {
 
 	@Autowired
@@ -38,29 +35,24 @@ public class HomeController {
 		Employee currentEmployee = SecurityContextUtil.getCurrentEmployee();
 		String username = currentEmployee.getUsername();
 		List<Permission> authorities = (List<Permission>) currentEmployee.getAuthorities();
-		try {
-			
-			Date newestLoginTime = loginLogService.getNewestLoginTimeByUsername(username);
-			currentEmployee.setNewestLoginTime(newestLoginTime);
-			
-			List<MenuTree> menuTreeList = menuService.listMenuTreeByAll();
-			if (currentEmployee.getSuperAdmin().equals(Employee.IS_NOT_ADMIN)) {
-				this.menuTreeMatches(menuTreeList,authorities);
-			}
-			currentEmployee.setMenuTreeList(menuTreeList);
-			return "home";
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return "error";
-		}
 
+		Date newestLoginTime = loginLogService.getNewestLoginTimeByUsername(username);
+		currentEmployee.setNewestLoginTime(newestLoginTime);
+
+		// 登录用户的菜单
+		List<MenuTree> menuTreeList = menuService.listMenuTreeByAll();
+		if (currentEmployee.getSuperAdmin().equals(Employee.IS_NOT_ADMIN)) {
+			this.menuTreeMatches(menuTreeList, authorities);
+		}
+		currentEmployee.setMenuTreeList(menuTreeList);
+		return "home";
 	}
-	
+
 	private void menuTreeMatches(List<MenuTree> menuTreeList, List<Permission> authorities) {
 		for (Iterator<MenuTree> iterator = menuTreeList.iterator(); iterator.hasNext();) {
 			MenuTree menuTree = iterator.next();
 			Long menuId = menuTree.getId();
-			
+
 			boolean contain = false;
 			for (Permission permission : authorities) {
 				if (permission.getMenuId().equals(menuId)) {
@@ -68,14 +60,14 @@ public class HomeController {
 					break;
 				}
 			}
-			
+
 			if (contain) {
 				// 继续匹配下级菜单
 				List<MenuTree> children = menuTree.getChildren();
 				if (children != null && children.size() > 0) {
 					this.menuTreeMatches(children, authorities);
 				}
-			}else {
+			} else {
 				iterator.remove();
 			}
 		}

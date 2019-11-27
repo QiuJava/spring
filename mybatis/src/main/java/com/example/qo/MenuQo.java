@@ -13,8 +13,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MenuQo extends BaseQo {
+public class MenuQo {
 
 	private String menuName;
-	private String parentMenuName;
+	private Long parentId;
 }

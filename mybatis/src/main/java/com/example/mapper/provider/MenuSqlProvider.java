@@ -16,19 +16,23 @@ public class MenuSqlProvider {
 
 	public String selectByQo(MenuQo qo) {
 		SQL sql = new SQL();
-		sql.SELECT(new String[] { "menu_0.id AS id ", //
-				"	menu_0.menu_name AS menu_name ", //
-				"	menu_0.intro AS intro ", //
-				"	menu_0.create_time AS create_time ", //
-				"	menu_0.update_time AS update_time ", //
-				"	parent_menu_0.menu_name AS parent_menu_name " });
-		sql.FROM("menu menu_0");
-		sql.LEFT_OUTER_JOIN("menu parent_menu_0 ON parent_menu_0.id = menu_0.parent_id");
+		sql.SELECT(new String[] { "id", //
+				"menu_name", //
+				"intro", //
+				"create_time", //
+				"update_time", //
+				"parent_id", //
+				"url" });
+		sql.FROM("menu");
+		
 		if (StrUtil.hasText(qo.getMenuName())) {
-			sql.WHERE("menu_0.menu_name = #{menuName,jdbcType=VARCHAR}");
-		}
-		if (StrUtil.hasText(qo.getParentMenuName())) {
-			sql.WHERE("parent_menu_0.menu_name = #{parentMenuName,jdbcType=VARCHAR}");
+			sql.WHERE("menu_name = #{menuName,jdbcType=VARCHAR}");
+		}else {
+			if (qo.getParentId() == null) {
+				sql.WHERE("parent_id is null");
+			} else {
+				sql.WHERE("parent_id = #{parentId,jdbcType=BIGINT}");
+			}
 		}
 		return sql.toString();
 	}
@@ -46,7 +50,7 @@ public class MenuSqlProvider {
 		}
 		return sql.toString();
 	}
-	
+
 	public String selectByParentId(Long parentId) {
 		SQL sql = new SQL();
 		sql.SELECT(new String[] { "id", //
