@@ -15,7 +15,6 @@ import org.apache.ibatis.type.JdbcType;
 import com.example.entity.Permission;
 import com.example.mapper.provider.PermissionSqlProvider;
 import com.example.qo.PermissionQo;
-import com.example.vo.PermissionListVo;
 
 /**
  * 权限数据操作
@@ -114,11 +113,8 @@ public interface PermissionMapper {
 			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.BIGINT) })
-	List<PermissionListVo> selectByQo(PermissionQo qo);
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR)})
+	List<Permission> selectByQo(PermissionQo qo);
 
 	@Delete({ "DELETE  ", //
 			"FROM ", //

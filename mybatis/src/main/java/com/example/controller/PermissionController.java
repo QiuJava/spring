@@ -1,16 +1,16 @@
 package com.example.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.common.LogicException;
 import com.example.common.Result;
-import com.example.config.listener.ContextStartListener;
 import com.example.entity.Permission;
 import com.example.qo.PermissionQo;
 import com.example.service.MenuServiceImpl;
@@ -25,8 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Qiu Jian
  *
  */
-@RestController
-@RequestMapping("/permission")
+@Controller
 @Slf4j
 public class PermissionController {
 
@@ -34,10 +33,9 @@ public class PermissionController {
 	private PermissionServiceImpl permissionService;
 	@Autowired
 	private MenuServiceImpl menuService;
-	@Autowired
-	private ValueOperations<String, Object> valueOperations;
 
-	@GetMapping("/addPermission")
+	@PostMapping("/permission/add")
+	@ResponseBody
 	public Result addPermission(Permission permission) {
 		Long menuId = permission.getMenuId();
 		if (menuId == null) {
@@ -108,7 +106,8 @@ public class PermissionController {
 		return new Result(true, "添加成功");
 	}
 
-	@GetMapping("/updatePermission")
+	@PostMapping("/permission/update")
+	@ResponseBody
 	public Result updatePermission(Permission permission) {
 		Long id = permission.getId();
 		Result verifyId = this.verifyId(id);
@@ -194,8 +193,9 @@ public class PermissionController {
 		}
 	}
 
-	@GetMapping("/deletePermission")
-	public Result deletePermission(Long id) {
+	@PostMapping("/permission/remove")
+	@ResponseBody
+	public Result removePermission(Long id) {
 		Result verifyId = this.verifyId(id);
 		if (verifyId != null) {
 			return verifyId;
@@ -219,12 +219,9 @@ public class PermissionController {
 		}
 	}
 
-	@GetMapping("/listByQo")
+	@GetMapping("/permission/listByQo")
+	@ResponseBody
 	public Result listByQo(PermissionQo qo) {
-		Result verify = qo.verify();
-		if (verify != null) {
-			return verify;
-		}
 
 		String permissionName = qo.getPermissionName();
 		if (StrUtil.hasText(permissionName)) {
@@ -242,62 +239,12 @@ public class PermissionController {
 			}
 		}
 
-		String menuName = qo.getMenuName();
-		if (StrUtil.hasText(menuName)) {
-			if (menuName.length() > 20) {
-				return new Result(false, "菜单名称过长");
-			} else if (StrUtil.isContainSpecialChar(menuName)) {
-				return new Result(false, "菜单名称不能包含特殊字符");
-			}
-		}
-
 		try {
-			return new Result(true, "查询成功", null, permissionService.listByQo(qo));
+			List<Permission> listByQo = permissionService.listByQo(qo);
+			return new Result(true, "查询成功", null, listByQo);
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "查询失败");
-		}
-	}
-
-	@GetMapping("/hasByPermissionName")
-	public Result hasByPermissionName(String permissionName) {
-		Result verifyPermissionName = this.verifyPermissionName(permissionName);
-		if (verifyPermissionName != null) {
-			return verifyPermissionName;
-		}
-		try {
-			return new Result(true, "获取成功", null, permissionService.hasByPermissionName(permissionName));
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return new Result(false, "获取失败");
-		}
-	}
-
-	@GetMapping("/hasByAuthority")
-	public Result hasByAuthority(String authority) {
-		Result verifyAuthority = this.verifyAuthority(authority);
-		if (verifyAuthority != null) {
-			return verifyAuthority;
-		}
-		try {
-			return new Result(true, "获取成功", null, permissionService.hasByAuthority(authority));
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return new Result(false, "获取失败");
-		}
-	}
-
-	@GetMapping("/hasByUrl")
-	public Result hasByUrl(String url) {
-		Result verifyUrl = this.verifyUrl(url);
-		if (verifyUrl != null) {
-			return verifyUrl;
-		}
-		try {
-			return new Result(true, "获取成功", null, permissionService.hasByUrl(url));
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return new Result(false, "获取失败");
 		}
 	}
 

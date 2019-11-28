@@ -13,8 +13,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class PermissionQo extends BaseQo {
+public class PermissionQo {
 	private String permissionName;
 	private String authority;
-	private String menuName;
+	private Long menuId;
 }

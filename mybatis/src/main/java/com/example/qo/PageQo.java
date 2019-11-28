@@ -15,7 +15,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class BaseQo {
+public class PageQo {
 	private Integer pageNum;
 	private Integer pageSize;
 	private Boolean count;

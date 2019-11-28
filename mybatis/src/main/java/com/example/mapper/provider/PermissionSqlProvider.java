@@ -22,9 +22,8 @@ public class PermissionSqlProvider {
 				"permi_0.authority AS authority", //
 				"permi_0.url AS url", //
 				"permi_0.intro AS intro", //
-				"menu_0.menu_name AS menu_name", //
-				"permi_0.create_time AS create_time", //
-				"permi_0.update_time AS update_time " });
+				"menu_0.id AS menu_id" //
+		});
 		sql.FROM("permission permi_0");
 		sql.JOIN("menu menu_0 ON menu_0.id = permi_0.menu_id");
 		if (StrUtil.hasText(qo.getPermissionName())) {
@@ -33,8 +32,8 @@ public class PermissionSqlProvider {
 		if (StrUtil.hasText(qo.getAuthority())) {
 			sql.WHERE("permi_0.authority=#{authority,jdbcType=VARCHAR}");
 		}
-		if (StrUtil.hasText(qo.getMenuName())) {
-			sql.WHERE("menu_0.menu_name=#{menuName,jdbcType=VARCHAR}");
+		if (qo.getMenuId() != null) {
+			sql.WHERE("menu_0.id=#{menuId,jdbcType=VARCHAR}");
 		}
 		return sql.toString();
 	}

@@ -1,19 +1,17 @@
 package com.example.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
-import com.example.common.PageResult;
 import com.example.entity.Permission;
 import com.example.mapper.PermissionMapper;
 import com.example.qo.PermissionQo;
 import com.example.util.DataSourceUtil;
-import com.example.vo.PermissionListVo;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 
 /**
  * 权限服务
@@ -69,12 +67,8 @@ public class PermissionServiceImpl {
 		return permissionMapper.deleteById(id);
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
-	public PageResult<PermissionListVo> listByQo(PermissionQo qo) {
-		Page<PermissionListVo> page = PageHelper.startPage(qo.getPageNum(), qo.getPageSize(), qo.getCount());
-		permissionMapper.selectByQo(qo);
-		return new PageResult<PermissionListVo>(page.getPageNum(), page.getPageSize(), page.getTotal(),
-				page.getResult());
+	public List<Permission> listByQo(PermissionQo qo) {
+		return permissionMapper.selectByQo(qo);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
