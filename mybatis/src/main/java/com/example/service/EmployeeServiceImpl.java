@@ -7,12 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
 import com.example.dto.ChangePasswordDto;
 import com.example.entity.Employee;
 import com.example.mapper.EmployeeMapper;
-import com.example.util.DataSourceUtil;
 import com.example.util.SecurityContextUtil;
 
 /**
@@ -60,7 +58,6 @@ public class EmployeeServiceImpl {
 		return employeeMapper.countByUsername(username) == 1;
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasEmployeeByEmployeeNumber(String employeeNumber) {
 		return employeeMapper.countByEmployeeNumber(employeeNumber) > 0;
 	}

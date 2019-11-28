@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.example.common.LogicException;
 import com.example.common.Result;
 import com.example.entity.Permission;
 import com.example.qo.PermissionQo;
-import com.example.service.MenuServiceImpl;
 import com.example.service.PermissionServiceImpl;
 import com.example.util.StrUtil;
 
@@ -31,8 +29,6 @@ public class PermissionController {
 
 	@Autowired
 	private PermissionServiceImpl permissionService;
-	@Autowired
-	private MenuServiceImpl menuService;
 
 	@PostMapping("/permission/add")
 	@ResponseBody
@@ -72,33 +68,13 @@ public class PermissionController {
 			}
 		}
 
-		Date date = new Date();
-		permission.setCreateTime(date);
-		permission.setUpdateTime(date);
 		try {
-			boolean hasById = menuService.hasById(menuId);
-			if (!hasById) {
-				return new Result(false, "菜单ID不存在");
-			}
-
-			boolean hasByPermissionName = permissionService.hasByPermissionName(permissionName);
-			if (hasByPermissionName) {
-				return new Result(false, "权限名称已存在");
-			}
-			boolean hasByAuthority = permissionService.hasByAuthority(authority);
-			if (hasByAuthority) {
-				return new Result(false, "权限编码已存在");
-			}
-			if (StrUtil.hasText(url)) {
-				boolean hasByUrl = permissionService.hasByUrl(url);
-				if (hasByUrl) {
-					return new Result(false, "权限路径已存在");
-				}
-			}
 			int save = permissionService.save(permission);
 			if (save != 1) {
 				return new Result(false, "添加失败");
 			}
+		} catch (LogicException e) {
+			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "添加失败");
@@ -109,20 +85,17 @@ public class PermissionController {
 	@PostMapping("/permission/update")
 	@ResponseBody
 	public Result updatePermission(Permission permission) {
-		Long id = permission.getId();
-		Result verifyId = this.verifyId(id);
+		Result verifyId = this.verifyId(permission.getId());
 		if (verifyId != null) {
 			return verifyId;
 		}
 
-		String permissionName = permission.getPermissionName();
-		Result verifyPermissionName = this.verifyPermissionName(permissionName);
+		Result verifyPermissionName = this.verifyPermissionName(permission.getPermissionName());
 		if (verifyPermissionName != null) {
 			return verifyPermissionName;
 		}
 
-		String authority = permission.getAuthority();
-		Result verifyAuthority = this.verifyAuthority(authority);
+		Result verifyAuthority = this.verifyAuthority(permission.getAuthority());
 		if (verifyAuthority != null) {
 			return verifyAuthority;
 		}
@@ -143,50 +116,15 @@ public class PermissionController {
 			}
 		}
 
-		Date date = new Date();
-		permission.setUpdateTime(date);
 		try {
-			Permission oldPermission = permissionService.getById(id);
-			if (oldPermission == null) {
-				return new Result(false, "权限ID不存在");
-			}
-
-			if (!permissionName.equals(oldPermission.getPermissionName())) {
-				boolean hasByPermissionName = permissionService.hasByPermissionName(permissionName);
-				if (hasByPermissionName) {
-					return new Result(false, "权限名称已存在");
-				}
-			} else {
-				// 不更新权限名称
-				permission.setPermissionName(null);
-			}
-
-			if (!authority.equals(oldPermission.getAuthority())) {
-				boolean hasByAuthority = permissionService.hasByAuthority(authority);
-				if (hasByAuthority) {
-					return new Result(false, "权限编码已存在");
-				}
-			} else {
-				// 不更新权限编码
-				permission.setAuthority(null);
-			}
-
-			if (StrUtil.hasText(url)) {
-				if (!url.equals(oldPermission.getUrl())) {
-					boolean hasByUrl = permissionService.hasByUrl(url);
-					if (hasByUrl) {
-						return new Result(false, "权限路径已存在");
-					}
-				} else {
-					permission.setUrl(null);
-				}
-			}
 
 			int update = permissionService.update(permission);
 			if (update != 1) {
 				return new Result(false, "更新失败");
 			}
 			return new Result(true, "更新成功");
+		} catch (LogicException e) {
+			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "更新失败");
@@ -201,11 +139,6 @@ public class PermissionController {
 			return verifyId;
 		}
 		try {
-			boolean hasById = permissionService.hasById(id);
-			if (!hasById) {
-				return new Result(false, "权限ID不存在");
-			}
-
 			int deleteById = permissionService.deleteById(id);
 			if (deleteById != 1) {
 				return new Result(false, "删除失败");

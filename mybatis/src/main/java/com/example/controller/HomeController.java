@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.entity.Employee;
 import com.example.entity.MenuTree;
 import com.example.entity.Permission;
+import com.example.qo.PermissionQo;
 import com.example.service.LoginLogServiceImpl;
 import com.example.service.MenuServiceImpl;
+import com.example.service.PermissionServiceImpl;
 import com.example.util.SecurityContextUtil;
 
 /**
@@ -28,6 +30,8 @@ public class HomeController {
 	private LoginLogServiceImpl loginLogService;
 	@Autowired
 	private MenuServiceImpl menuService;
+	@Autowired
+	private PermissionServiceImpl permissionService;
 
 	@GetMapping("/")
 	@SuppressWarnings("unchecked")
@@ -43,6 +47,10 @@ public class HomeController {
 		List<MenuTree> menuTreeList = menuService.listMenuTreeByAll();
 		if (currentEmployee.getSuperAdmin().equals(Employee.IS_NOT_ADMIN)) {
 			this.menuTreeMatches(menuTreeList, authorities);
+		}else {
+			// 超级管理员拥有全部权限
+			List<Permission> listByQo = permissionService.listByQo(new PermissionQo());
+			currentEmployee.setAuthorities(listByQo);
 		}
 		currentEmployee.setMenuTreeList(menuTreeList);
 		return "home";

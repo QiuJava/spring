@@ -7,12 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.annotation.DataSourceKey;
 import com.example.common.LogicException;
 import com.example.dto.AllotPermissionDto;
 import com.example.entity.Role;
 import com.example.mapper.RoleMapper;
-import com.example.util.DataSourceUtil;
 
 /**
  * 角色服务
@@ -89,17 +87,14 @@ public class RoleServiceImpl {
 		return roleMapper.updateById(role);
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasByRoleName(String roleName) {
 		return roleMapper.countByRoleName(roleName) == 1;
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public String getRoleNameById(Long id) {
 		return roleMapper.selectRoleNameById(id);
 	}
 
-	@DataSourceKey(DataSourceUtil.SLAVE_ONE_DATASOURCE_KEY)
 	public boolean hasById(Long id) {
 		return roleMapper.countById(id) == 1;
 	}

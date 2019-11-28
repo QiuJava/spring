@@ -25,7 +25,7 @@
 	var token = [[${_csrf.token}]];
 	// 不为-1就是编辑状态
 	var editingId = -1;
-	
+
 	function addSon() {
 	    if (editingId != -1) {
 	        $('#menu-tg').treegrid('select', editingId);
@@ -105,6 +105,7 @@
 	            },
 	            function(data) {
 	                if (data.succeed) {
+	                    $('#menu-tg').treegrid('unselect', editingId);
 	                    editingId = -1;
 	                    $('#menu-tg').treegrid('reload');
 	                } else {
@@ -123,6 +124,8 @@
 	            },
 	            function(data) {
 	                if (data.succeed) {
+	                    $('#menu-tg').treegrid('unselect', editingId);
+	                    // 结束编辑
 	                    editingId = -1;
 	                    $('#menu-tg').treegrid('reload');
 	                } else {
@@ -139,6 +142,9 @@
 	function remove() {
 	    var row = $('#menu-tg').treegrid('getSelected');
 	    if (row) {
+	        if (editingId != -1) {
+	            return;
+	        }
 	        $.post("/menu/remove?_csrf=" + token, {
 	            "id": row.id
 	        },
@@ -163,6 +169,7 @@
 	    if (editingId != -1) {
 	        editingId = -1;
 	    }
+	    $('#menu-tg').treegrid('unselectAll');
 	}
 	
 	function clearCondition() {
@@ -175,6 +182,7 @@
 	            $('#menu-tg').treegrid('remove', editingId);
 	        } else {
 	            $('#menu-tg').treegrid('cancelEdit', editingId);
+	            $('#menu-tg').treegrid('unselect', editingId);
 	        }
 	        editingId = -1;
 	    }
@@ -184,6 +192,7 @@
 	    if (editingId != -1) {
 	        editingId = -1;
 	    }
+	    $('#menu-tg').treegrid('unselectAll');
 	    $('#menu-tg').treegrid('load');
 	}
 	
@@ -191,12 +200,12 @@
 	// 权限索引 不为-1时就是编辑状态
 	var permissionIndex = -1;
 	function permissionManage() {
-	    undo();
 	    if (editingId != -1) {
-	        editingId = -1;
+	        return;
 	    }
 	    var row = $('#menu-tg').treegrid('getSelected');
 	    if (row) {
+	        $('#permission-datagrid').datagrid('unselectAll');
 	        permissionSearch();
 	        $('#permission-dialog').dialog('setTitle', row.menuName);
 	        $('#permission-dialog').dialog('open');
@@ -224,8 +233,8 @@
 	    },
 	    'json');
 	    // 编辑或者新增时点击查询进行初始化
-	    if(permissionIndex != -1){
-		    permissionIndex = -1;
+	    if (permissionIndex != -1) {
+	        permissionIndex = -1;
 	    }
 	}
 	
@@ -250,21 +259,21 @@
 	}
 	
 	function editPermission() {
-		if(permissionIndex == -1){
-			var row = $('#permission-datagrid').datagrid('getSelected');
-		    if (row) {
-			    var rowId = row.id;
-			    var index = $('#permission-datagrid').datagrid('getRowIndex', rowId);
-		        permissionIndex = index;
-		        $('#permission-datagrid').datagrid('selectRow', permissionIndex);
-		        $('#permission-datagrid').datagrid('beginEdit', permissionIndex);
-		    } else {
-		        $.messager.alert('提示', '请选择一条数据', 'info');
-		    }
-		} else {
+	    if (permissionIndex == -1) {
+	        var row = $('#permission-datagrid').datagrid('getSelected');
+	        if (row) {
+	            var rowId = row.id;
+	            var index = $('#permission-datagrid').datagrid('getRowIndex', rowId);
+	            permissionIndex = index;
+	            $('#permission-datagrid').datagrid('selectRow', permissionIndex);
+	            $('#permission-datagrid').datagrid('beginEdit', permissionIndex);
+	        } else {
+	            $.messager.alert('提示', '请选择一条数据', 'info');
+	        }
+	    } else {
 	        $('#permission-datagrid').datagrid('selectRow', permissionIndex);
 	    }
-	    
+	
 	}
 	
 	function savePermission() {
@@ -286,6 +295,7 @@
 	            },
 	            function(data) {
 	                if (data.succeed) {
+	                    $('#permission-datagrid').datagrid('unselectRow', permissionIndex);
 	                    permissionSearch();
 	                } else {
 	                    $.messager.alert('提示', data.msg, 'error');
@@ -304,6 +314,7 @@
 	            },
 	            function(data) {
 	                if (data.succeed) {
+	                    $('#permission-datagrid').datagrid('unselectRow', permissionIndex);
 	                    permissionSearch();
 	                } else {
 	                    $.messager.alert('提示', data.msg, 'error');
@@ -317,39 +328,44 @@
 	}
 	
 	function undoPermission() {
-        var row = $('#permission-datagrid').datagrid('getSelected');
-        if(row){
-        	var rowId = row.id;
-            if(rowId != null){
-            	$('#permission-datagrid').datagrid('cancelEdit', permissionIndex);
-            }else {
-            	$('#permission-datagrid').datagrid('deleteRow', permissionIndex);
-            }
-        }
-    	permissionIndex = -1;
+	    var row = $('#permission-datagrid').datagrid('getSelected');
+	    if (row) {
+	        var rowId = row.id;
+	        if (rowId != null) {
+	            $('#permission-datagrid').datagrid('cancelEdit', permissionIndex);
+	            $('#permission-datagrid').datagrid('unselectRow', permissionIndex);
+	        } else {
+	            $('#permission-datagrid').datagrid('deleteRow', permissionIndex);
+	        }
+	    }
+	    permissionIndex = -1;
 	}
 	
-	function removePermission(){
-		var row = $('#permission-datagrid').datagrid('getSelected');
-		if(row){
-		    $.post("/permission/remove?_csrf=" + token, {
-                "id": row.id
-            },
-            function(data) {
-                if (data.succeed) {
-                    permissionSearch();
-                } else {
-                    $.messager.alert('提示', data.msg, 'error');
-                }
-            },
-            'json');
-		}else {
-			$.messager.alert('提示', '请选择一条数据', 'info');
-		}
+	function removePermission() {
+	    var row = $('#permission-datagrid').datagrid('getSelected');
+	    if (row) {
+	        if (permissionIndex != -1) {
+	            return;
+	        }
+	        $.post("/permission/remove?_csrf=" + token, {
+	            "id": row.id
+	        },
+	        function(data) {
+	            if (data.succeed) {
+	                permissionSearch();
+	            } else {
+	                $.messager.alert('提示', data.msg, 'error');
+	            }
+	        },
+	        'json');
+	    } else {
+	        $.messager.alert('提示', '请选择一条数据', 'info');
+	    }
 	}
 	
-	function reloadPermission(){
-		permissionSearch();
+	function reloadPermission() {
+	    $('#permission-datagrid').datagrid('unselectAll');
+	    permissionSearch();
 	}
 	
 </script>
@@ -359,7 +375,14 @@
 
 	<div id="permission-dialog" class="easyui-dialog"
 		style="width: 800px; height: 500px"
-		data-options="closed:true,modal:true">
+		data-options="
+			closed:true,
+			modal:true,
+			onClose:function(){
+				$('#menu-tg').treegrid('unselectAll');
+			},
+			iconCls:'icon-tip'
+		">
 
 		<table id="permission-datagrid" class="easyui-datagrid"
 			style="width: 800px; height: 500px"
@@ -369,11 +392,13 @@
 				fitColumns: true,
 				singleSelect: true,
 				idField: 'id',
-				toolbar: '#permission-list-buttons'
+				toolbar: '#permission-list-buttons',
+				border:false,
+				fitColumns:true
 			">
 			<thead>
 				<tr>
-					<th data-options="field:'permissionName',width:150,editor:'text'">权限名称</th>
+					<th data-options="field:'permissionName',width:120,editor:'text'">权限名称</th>
 					<th data-options="field:'authority',width:150,editor:'text'">权限编码</th>
 					<th data-options="field:'url',width:150,editor:'text'">权限路径</th>
 					<th data-options="field:'intro',width:150,editor:'text'">描述</th>
@@ -389,7 +414,6 @@
 		</div>
 
 		<div id="permission-search">
-
 			<a href="#" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true"
 				onclick="permissionSearch()">查询</a> <a href="#"
@@ -407,7 +431,7 @@
 				onclick="editPermission()">编辑</a> <a href="#"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-remove',plain:true"
-				onclick="removePermission()">删除</a> <a id="reload" href="#"
+				onclick="removePermission()">删除</a> <a href="#"
 				class="easyui-linkbutton" onclick="reloadPermission()"
 				data-options="iconCls:'icon-reload',plain:true">刷新</a>
 		</div>
@@ -425,7 +449,6 @@
 				iconCls: 'icon-ok',
 				rownumbers: true,
 				animate: true,
-				collapsible: true,
 				fitColumns: true,
 				url:  '/menu/list',
 				method: 'get',
