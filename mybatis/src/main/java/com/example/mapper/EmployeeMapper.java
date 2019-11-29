@@ -134,7 +134,7 @@ public interface EmployeeMapper {
 	int updatePasswordAndUpdateTimeByUsernameEmployeeNumber(Employee employee);
 
 	@Update({ "UPDATE `employee`  ", //
-			"SET `password` = #{password,jdbcType=VARCHAR}, ", //
+			"SET `password` = #{encodePassword,jdbcType=VARCHAR}, ", //
 			"update_time = #{updateTime,jdbcType=TIMESTAMP} ", //
 			"WHERE ", //
 			"	username = #{username,jdbcType=VARCHAR}" })

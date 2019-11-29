@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
 <head>
 <meta charset="UTF-8" />
 <title>后台管理系统</title>
@@ -48,16 +48,92 @@
 	        }
 	    });
 	});
+	
+	var token = [[${_csrf.token}]];
+	var usernameStr = [[${session.SPRING_SECURITY_CONTEXT.authentication.name}]];
+	function changePassword() {
+	    $('#changePassword-dialog').dialog('setTitle', '修改密码');
+	    $('#changePassword-dialog').dialog('open');
+	}
+	
+	function submitForm() {
+	    $('#changePassword-form').form('submit', {
+	        url: "/employee/changePassword?_csrf=" + token,
+	        onSubmit: function(param) {
+	            param.username = usernameStr;
+	            var isValid = $(this).form('validate');
+	            return isValid;
+	        },
+	        success: function(data) {
+	        	// json字符串转为对象
+	            var dataObject = eval('(' + data + ')');
+	            if (dataObject.succeed) {
+	                $('#changePassword-dialog').dialog('close');
+	                clearForm();
+	                $.messager.alert('提示', dataObject.msg, 'info',
+	                function() {
+	                    window.location.href = "/";
+	                });
+	            } else {
+	                $.messager.alert('提示', dataObject.msg, 'error');
+	            }
+	        }
+	    });
+	}
 
+	function clearForm() {
+	    $('#changePassword-form').form('clear');
+	}
   </script>
 </head>
 <body>
 	<div class="easyui-layout" style="width: 1400px; height: 800px;">
 		<!-- 首页页头 -->
-		<div data-options="region:'north'" style="height: 50px">
-			后台管理系统 <span>欢迎:[[${session.SPRING_SECURITY_CONTEXT.authentication.name}]]([[${session.SPRING_SECURITY_CONTEXT.authentication.principal.nickname}]])</span>
-			最近登录时间： <span>[[${#dates.format(session.SPRING_SECURITY_CONTEXT.authentication.principal.newestLoginTime,'yyyy-MM-dd
-				HH:mm:ss')}]]</span> <a href="/logout">注销</a>
+		<div data-options="region:'north'" style="height: 80px">
+			<div>后台管理系统</div>
+			<div>
+			 	<a href="#" class="easyui-linkbutton"
+				data-options="iconCls:'icon-man',plain:true"></a>
+				<span sec:authentication="name"></span>
+				(<span sec:authentication="principal.nickname"></span>)
+				最近登录时间：[[${#dates.format(session.SPRING_SECURITY_CONTEXT.authentication.principal.newestLoginTime,'yyyy-MM-dd
+				HH:mm:ss')}]] 
+				
+				<a href="/logout" class="easyui-linkbutton"
+				data-options="iconCls:'icon-back',plain:true">注销</a><a href="#"
+				class="easyui-linkbutton"
+				data-options="iconCls:'icon-edit',plain:true"
+				onclick="changePassword()">修改密码</a>
+			</div>
+			
+			<!-- 修改密码表单 -->
+			<div id="changePassword-dialog" class="easyui-dialog"
+				style="width: 300px; height: 200px"
+			data-options="
+			closed:true,
+			modal:true,
+			onClose:function(){
+				
+			},
+			iconCls:'icon-tip'
+		">
+				<form id="changePassword-form" method="post">
+			    	<table cellpadding="2">
+			    		<tr>
+			    			<td>原密码:</td>
+			    			<td><input class="easyui-passwordbox" id="password" name="password" data-options="required:true"/></td>
+			    		</tr>
+			    		<tr>
+			    			<td>新密码:</td>
+			    			<td><input class="easyui-passwordbox" id="newPassword" name="newPassword" data-options="required:true"/></td>
+			    		</tr>
+			    	</table>
+			    </form>
+			    <div style="text-align:center;padding:5px">
+			    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">确认</a>
+			    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a>
+			    </div>
+			</div>
 		</div>
 		<!-- 首页页尾 -->
 		<div data-options="region:'south',split:true" style="height: 50px;">

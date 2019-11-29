@@ -4,9 +4,10 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.common.LogicException;
 import com.example.common.Result;
@@ -24,8 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Qiu Jian
  *
  */
-@RestController
-@RequestMapping("/employee")
+@Controller
 @Slf4j
 public class EmployeeController {
 	@Autowired
@@ -156,7 +156,8 @@ public class EmployeeController {
 		return new Result(true, "重置成功");
 	}
 
-	@GetMapping("/changePassword")
+	@PostMapping("/employee/changePassword")
+	@ResponseBody
 	public Result changePassword(String username, String password, String newPassword) {
 		Result verifyUsername = this.verifyUsername(username);
 		if (verifyUsername != null) {
@@ -180,15 +181,15 @@ public class EmployeeController {
 			if (changePassword < 1) {
 				return new Result(false, "修改失败");
 			}
+			// 修改成功逻辑
+			SecurityContextUtil.logout();
+			return new Result(true, "修改成功");
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "修改失败");
 		}
-		// 修改成功逻辑
-		SecurityContextUtil.logout();
-		return new Result(true, "修改成功");
 	}
 
 	private Result verifyEmployeeNumber(String employeeNumber) {
