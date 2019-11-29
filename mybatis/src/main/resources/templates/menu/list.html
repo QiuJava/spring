@@ -94,6 +94,7 @@
 	function save() {
 	    if (editingId != -1) {
 	        $('#menu-tg').treegrid('endEdit', editingId);
+	        $('#menu-tg').treegrid('select', editingId);
 	        var row = $('#menu-tg').treegrid('getSelected');
 	        if (editingId == 0) {
 	            // 发送post请求进行新增
@@ -279,6 +280,7 @@
 	function savePermission() {
 	    if (permissionIndex != -1) {
 	        $('#permission-datagrid').datagrid('endEdit', permissionIndex);
+	        $('#permission-datagrid').datagrid('selectRow', permissionIndex);
 	
 	        var row = $('#permission-datagrid').datagrid('getSelected');
 	        var rowId = row.id;
