@@ -32,7 +32,7 @@ public class MenuController {
 
 	@GetMapping("/menu")
 	public String menu() {
-		return "menu/list";
+		return "menu_list";
 	}
 
 	@GetMapping("/menu/list")

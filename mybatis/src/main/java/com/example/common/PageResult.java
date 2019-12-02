@@ -18,17 +18,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class PageResult<T> {
-	private Integer pageNum;
-	private Integer pageSize;
 	private Long total;
-	private List<T> list;
+	private List<T> rows;
 
-	public PageResult(Integer pageNum, Integer pageSize, Long total, List<T> list) {
+	public PageResult(Long total, List<T> rows) {
 		super();
-		this.pageNum = pageNum;
-		this.pageSize = pageSize;
 		this.total = total;
-		this.list = list;
+		this.rows = rows;
 	}
 
 }

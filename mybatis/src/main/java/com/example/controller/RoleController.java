@@ -3,15 +3,20 @@ package com.example.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.common.LogicException;
+import com.example.common.PageResult;
 import com.example.common.Result;
 import com.example.entity.Role;
+import com.example.qo.RoleQo;
 import com.example.service.RoleServiceImpl;
 import com.example.util.StrUtil;
+import com.github.pagehelper.Page;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,15 +26,33 @@ import lombok.extern.slf4j.Slf4j;
  * @author Qiu Jian
  *
  */
-@RestController
-@RequestMapping("/role")
+@Controller
 @Slf4j
 public class RoleController {
 
 	@Autowired
 	private RoleServiceImpl roleService;
 
-	@GetMapping("/addRole")
+	@GetMapping("/role")
+	public String role() {
+		return "role_list";
+	}
+
+	@GetMapping("/role/listByQo")
+	@ResponseBody
+	public PageResult<Role> listByQo(RoleQo roleQo) {
+		Page<Role> page = roleService.listByQo(roleQo);
+		return new PageResult<>(page.getTotal(), page.getResult());
+	}
+
+	@GetMapping("/role/form")
+	public String roleForm(Model model, Long index) {
+		model.addAttribute("index", index);
+		return "role_form";
+	}
+
+	@PostMapping("/role/add")
+	@ResponseBody
 	public Result addRole(Role role) {
 		String roleName = role.getRoleName();
 		Result verifyRoleName = this.verifyRoleName(roleName);
@@ -56,7 +79,7 @@ public class RoleController {
 			}
 			int save = roleService.save(role);
 			if (save != 1) {
-				return new Result(false, "添加失败");
+				return new Result(false, "添加失败", null, role);
 			}
 			return new Result(true, "添加成功");
 		} catch (Exception e) {
@@ -89,7 +112,8 @@ public class RoleController {
 
 	}
 
-	@GetMapping("/updateRole")
+	@PostMapping("/role/update")
+	@ResponseBody
 	public Result updateRole(Role role) {
 		Long id = role.getId();
 		Result verifyId = this.verifyId(id);
@@ -123,15 +147,13 @@ public class RoleController {
 				if (hasByRoleName) {
 					return new Result(false, "角色名已存在");
 				}
-			} else {
-				role.setRoleName(null);
 			}
 
 			int updateById = roleService.updateById(role);
 			if (updateById != 1) {
 				return new Result(false, "更新失败");
 			}
-			return new Result(true, "更新成功");
+			return new Result(true, "更新成功", null, role);
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "更新失败");

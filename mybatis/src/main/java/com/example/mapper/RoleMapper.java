@@ -6,12 +6,17 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.type.JdbcType;
 
 import com.example.dto.AllotPermissionDto;
 import com.example.entity.Role;
 import com.example.mapper.provider.RoleSqlProvider;
+import com.example.qo.RoleQo;
 
 /**
  * 角色数据操作
@@ -97,4 +102,10 @@ public interface RoleMapper {
 			"WHERE ", //
 			"	role_id = #{roleId,jdbcType=BIGINT}  " })
 	int deleteRolePermissionByRoleId(Long roleId);
+
+	@SelectProvider(type = RoleSqlProvider.class, method = "selectByQo")
+	@Results({ @Result(column = "id", jdbcType = JdbcType.BIGINT, property = "id", id = true),
+			@Result(column = "role_name", jdbcType = JdbcType.VARCHAR, property = "roleName"),
+			@Result(column = "intro", jdbcType = JdbcType.VARCHAR, property = "intro") })
+	List<Role> selectByQo(RoleQo roleQo);
 }

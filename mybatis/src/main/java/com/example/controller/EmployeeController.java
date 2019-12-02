@@ -178,7 +178,7 @@ public class EmployeeController {
 
 		try {
 			int changePassword = employeeService.changePassword(username, password, newPassword);
-			if (changePassword < 1) {
+			if (changePassword != 1) {
 				return new Result(false, "修改失败");
 			}
 			// 修改成功逻辑

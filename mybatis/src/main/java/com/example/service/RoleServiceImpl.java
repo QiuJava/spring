@@ -11,6 +11,9 @@ import com.example.common.LogicException;
 import com.example.dto.AllotPermissionDto;
 import com.example.entity.Role;
 import com.example.mapper.RoleMapper;
+import com.example.qo.RoleQo;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 /**
  * 角色服务
@@ -118,6 +121,12 @@ public class RoleServiceImpl {
 			}
 		}
 		return roleMapper.deleteById(id);
+	}
+
+	public Page<Role> listByQo(RoleQo roleQo) {
+		Page<Role> page = PageHelper.startPage(roleQo.getPage(), roleQo.getRows(), roleQo.getCount());
+		roleMapper.selectByQo(roleQo);
+		return page;
 	}
 
 }
