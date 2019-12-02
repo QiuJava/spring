@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -34,6 +35,7 @@ public interface RoleMapper {
 	int deleteById(Long id);
 
 	@InsertProvider(type = RoleSqlProvider.class, method = "insert")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(Role record);
 
 	@UpdateProvider(type = RoleSqlProvider.class, method = "updateById")

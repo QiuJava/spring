@@ -16,8 +16,8 @@
 <script type="text/javascript"
 	src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript"
-	src="jquery-easyui-1.7.0/datagrid-detailview.js"></script>	
-	
+	src="jquery-easyui-1.7.0/datagrid-detailview.js"></script>
+
 <script type="text/javascript" th:inline="javascript">
 	function p(obj) {
 	    console.info(obj);
@@ -65,7 +65,6 @@
 			success: function(data){
 				data = eval('('+data+')');
 				data.isNewRecord = false;
-				p(data);
 				$('#role-dg').datagrid('collapseRow',index);
 				$('#role-dg').datagrid('updateRow',{
 					index: index,
@@ -84,23 +83,52 @@
 		}
 	}
 	
+	function destroyItem(){
+		var row = $('#role-dg').datagrid('getSelected');
+		if (row){
+			$.messager.confirm('确认','确认删除这个角色吗?',function(r){
+				if (r){
+					var index = $('#role-dg').datagrid('getRowIndex',row);
+					$.post('/role/delete?_csrf='+ token,{id:row.id},function(){
+						$('#role-dg').datagrid('deleteRow',index);
+					});
+				}
+			});
+		}
+	}
+	
+	function newItem(){
+		$('#role-dg').datagrid('appendRow',{isNewRecord:true});
+		var index = $('#role-dg').datagrid('getRows').length - 1;
+		$('#role-dg').datagrid('expandRow', index);
+		$('#role-dg').datagrid('selectRow', index);
+	}
+	
 </script>
 </head>
 <body>
-	<table id="role-dg" title="角色列表" style="width:550px;height:250px"
-			url="/role/listByQo" method="get"
-			toolbar="#toolbar"
-			fitColumns="true" singleSelect="true">
+	<table id="role-dg" title="角色列表" style="width: 550px; height: 450px"
+		data-options="
+				iconCls: 'icon-ok',
+				fitColumns: true,
+				url:  '/role/listByQo',
+				method: 'get',
+				toolbar: '#role-toolbar',
+				singleSelect: true
+			">
 		<thead>
 			<tr>
-				<th field="roleName" width="50">角色名称</th>
-				<th field="intro" width="50">角色描述</th>
+				<th data-options="field:'roleName'" width="50">角色名称</th>
+				<th data-options="field:'intro'" width="50">角色描述</th>
 			</tr>
 		</thead>
 	</table>
-	<div id="toolbar">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newItem()">新增角色</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyItem()">删除</a>
+	<div id="role-toolbar">
+		<a href="#" class="easyui-linkbutton"
+			data-options="iconCls:'icon-add',plain:true" onclick="newItem()">新增角色</a>
+		<a href="#" class="easyui-linkbutton"
+			data-options="iconCls:'icon-remove',plain:true"
+			onclick="destroyItem()">删除</a>
 	</div>
 </body>
 </html>

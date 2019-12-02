@@ -79,9 +79,9 @@ public class RoleController {
 			}
 			int save = roleService.save(role);
 			if (save != 1) {
-				return new Result(false, "添加失败", null, role);
+				return new Result(false, "添加失败");
 			}
-			return new Result(true, "添加成功");
+			return new Result(true, "添加成功", null, role);
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "添加失败");
@@ -161,7 +161,8 @@ public class RoleController {
 
 	}
 
-	@GetMapping("/deleteRole")
+	@PostMapping("/role/delete")
+	@ResponseBody
 	public Result deleteRole(Long id) {
 		Result verifyId = this.verifyId(id);
 		if (verifyId != null) {
