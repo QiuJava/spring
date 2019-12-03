@@ -24,10 +24,10 @@ public class MenuSqlProvider {
 				"parent_id", //
 				"url" });
 		sql.FROM("menu");
-		
+
 		if (StrUtil.hasText(qo.getMenuName())) {
 			sql.WHERE("menu_name = #{menuName,jdbcType=VARCHAR}");
-		}else {
+		} else {
 			if (qo.getParentId() == null) {
 				sql.WHERE("parent_id is null");
 			} else {
@@ -42,6 +42,19 @@ public class MenuSqlProvider {
 		sql.SELECT(new String[] { "id", //
 				"menu_name", //
 				"url" });
+		sql.FROM("menu");
+		if (parentId == null) {
+			sql.WHERE("parent_id is null");
+		} else {
+			sql.WHERE("parent_id = #{parentId,jdbcType=BIGINT}");
+		}
+		return sql.toString();
+	}
+
+	public String selectMenuTreeVoByParentId(Long parentId) {
+		SQL sql = new SQL();
+		sql.SELECT(new String[] { "id", //
+				"menu_name" });
 		sql.FROM("menu");
 		if (parentId == null) {
 			sql.WHERE("parent_id is null");

@@ -96,7 +96,7 @@
 				data-options="iconCls:'icon-man',plain:true"></a>
 				<span sec:authentication="name"></span>
 				(<span sec:authentication="principal.nickname"></span>)
-				最近登录时间：[[${#dates.format(session.SPRING_SECURITY_CONTEXT.authentication.principal.newestLoginTime,'yyyy-MM-dd
+				最近登录时间：[[${#dates.format(newestLoginTime,'yyyy-MM-dd
 				HH:mm:ss')}]] 
 				
 				<a href="/logout" class="easyui-linkbutton"

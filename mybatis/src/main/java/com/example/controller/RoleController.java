@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +14,10 @@ import com.example.common.PageResult;
 import com.example.common.Result;
 import com.example.entity.Role;
 import com.example.qo.RoleQo;
+import com.example.service.MenuServiceImpl;
 import com.example.service.RoleServiceImpl;
 import com.example.util.StrUtil;
+import com.example.vo.MenuTreeVo;
 import com.github.pagehelper.Page;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +35,18 @@ public class RoleController {
 	@Autowired
 	private RoleServiceImpl roleService;
 
+	@Autowired
+	private MenuServiceImpl menuService;
+
 	@GetMapping("/role")
 	public String role() {
 		return "role_list";
+	}
+
+	@GetMapping("/role/menuTree")
+	@ResponseBody
+	public List<MenuTreeVo> menuTree() {
+		return menuService.listMenuTreeVoByAll();
 	}
 
 	@GetMapping("/role/listByQo")
@@ -54,8 +65,7 @@ public class RoleController {
 	@PostMapping("/role/add")
 	@ResponseBody
 	public Result addRole(Role role) {
-		String roleName = role.getRoleName();
-		Result verifyRoleName = this.verifyRoleName(roleName);
+		Result verifyRoleName = this.verifyRoleName(role.getRoleName());
 		if (verifyRoleName != null) {
 			return verifyRoleName;
 		}
@@ -68,20 +78,14 @@ public class RoleController {
 			}
 		}
 
-		Date date = new Date();
-		role.setCreateTime(date);
-		role.setUpdateTime(date);
-
 		try {
-			boolean hasByRoleName = roleService.hasByRoleName(roleName);
-			if (hasByRoleName) {
-				return new Result(false, "角色名已存在");
-			}
 			int save = roleService.save(role);
 			if (save != 1) {
 				return new Result(false, "添加失败");
 			}
 			return new Result(true, "添加成功", null, role);
+		} catch (LogicException e) {
+			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "添加失败");
@@ -115,45 +119,32 @@ public class RoleController {
 	@PostMapping("/role/update")
 	@ResponseBody
 	public Result updateRole(Role role) {
-		Long id = role.getId();
-		Result verifyId = this.verifyId(id);
+		Result verifyId = this.verifyId(role.getId());
 		if (verifyId != null) {
 			return verifyId;
 		}
 
-		String roleName = role.getRoleName();
-		Result verifyRoleName = this.verifyRoleName(roleName);
+		Result verifyRoleName = this.verifyRoleName(role.getRoleName());
 		if (verifyRoleName != null) {
 			return verifyRoleName;
 		}
 
 		String intro = role.getIntro();
 		if (StrUtil.hasText(intro)) {
-			Result verifyIntro = this.verifyIntro(role.getIntro());
+			Result verifyIntro = this.verifyIntro(intro);
 			if (verifyIntro != null) {
 				return verifyIntro;
 			}
 		}
 
-		role.setUpdateTime(new Date());
 		try {
-			String oldRoleName = roleService.getRoleNameById(id);
-			if (StrUtil.noText(oldRoleName)) {
-				return new Result(false, "角色ID不正确");
-			}
-
-			if (!oldRoleName.equals(roleName)) {
-				boolean hasByRoleName = roleService.hasByRoleName(roleName);
-				if (hasByRoleName) {
-					return new Result(false, "角色名已存在");
-				}
-			}
-
 			int updateById = roleService.updateById(role);
 			if (updateById != 1) {
 				return new Result(false, "更新失败");
 			}
 			return new Result(true, "更新成功", null, role);
+		} catch (LogicException e) {
+			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "更新失败");
@@ -170,11 +161,6 @@ public class RoleController {
 		}
 
 		try {
-			boolean hasById = roleService.hasById(id);
-			if (!hasById) {
-				return new Result(false, "角色ID不存在");
-			}
-
 			int deleteById = roleService.deleteById(id);
 			if (deleteById != 1) {
 				return new Result(false, "删除失败");

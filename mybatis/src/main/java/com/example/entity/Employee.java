@@ -36,11 +36,9 @@ public class Employee implements UserDetails {
 	private Date lockTime;
 	private Date createTime;
 	private Date updateTime;
-	
+
 	private List<Permission> authorities;
-	
-	private Date newestLoginTime;
-	
+
 	private List<MenuTree> menuTreeList;
 
 	public static final int NORMAL_STATUS = 0;
@@ -58,7 +56,7 @@ public class Employee implements UserDetails {
 
 	public static final String INIT_PASSWORD_SUFFIX = "a123";
 	public static final String INIT_EMPLOYEE_NUMBER = "000";
-	
+
 	@Override
 	public String getUsername() {
 		return username;

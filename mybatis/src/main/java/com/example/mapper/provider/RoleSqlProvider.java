@@ -57,7 +57,7 @@ public class RoleSqlProvider {
 		sql.SELECT("id","role_name","intro");
 		sql.FROM("role");
 		if (StrUtil.hasText(roleQo.getRoleName())) {
-			sql.WHERE("role_name=#{roleName,jdbcType=VARCHAR}}");
+			sql.WHERE("role_name=#{roleName,jdbcType=VARCHAR}");
 		}
 		return sql.toString();
 	}

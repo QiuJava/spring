@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import com.example.dto.AllotPermissionDto;
 import com.example.entity.Role;
 import com.example.mapper.RoleMapper;
 import com.example.qo.RoleQo;
+import com.example.util.StrUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
@@ -32,7 +34,14 @@ public class RoleServiceImpl {
 	private EmployeeServiceImpl employeeService;
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int save(Role role) {
+	public int save(Role role) throws LogicException {
+		Date date = new Date();
+		role.setCreateTime(date);
+		role.setUpdateTime(date);
+		boolean hasByRoleName = this.hasByRoleName(role.getRoleName());
+		if (hasByRoleName) {
+			throw new LogicException("角色名已存在");
+		}
 		return roleMapper.insert(role);
 	}
 
@@ -87,6 +96,21 @@ public class RoleServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int updateById(Role role) {
+		String roleName = role.getRoleName();
+
+		role.setUpdateTime(new Date());
+		String oldRoleName = this.getRoleNameById(role.getId());
+		if (StrUtil.noText(oldRoleName)) {
+			throw new LogicException("角色ID不正确");
+		}
+
+		if (!oldRoleName.equals(roleName)) {
+			boolean hasByRoleName = this.hasByRoleName(roleName);
+			if (hasByRoleName) {
+				throw new LogicException("角色名已存在");
+			}
+		}
+
 		return roleMapper.updateById(role);
 	}
 
@@ -104,6 +128,10 @@ public class RoleServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int deleteById(Long id) throws LogicException {
+		boolean hasById = this.hasById(id);
+		if (!hasById) {
+			throw new LogicException("角色ID不存在");
+		}
 		// 删除角色对应的权限关系和员工关系
 		int countRolePermissionByRoleId = roleMapper.countRolePermissionByRoleId(id);
 		if (countRolePermissionByRoleId > 0) {

@@ -28,80 +28,107 @@
 	// 不为-1就是编辑状态
 	var editingId = -1;
 	
-	$(function(){
-		$('#role-dg').datagrid({
-			pagination:true,
-			view: detailview,
-			detailFormatter:function(index,row){
-				return '<div class="ddv"></div>';
-			},
-			onExpandRow: function(index,row){
-				var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');
-				ddv.panel({
-					border:false,
-					cache:true,
-					href:'/role/form?index='+index,
-					onLoad:function(){
-						$('#role-dg').datagrid('fixDetailRowHeight',index);
-						$('#role-dg').datagrid('selectRow',index);
-						$('#role-dg').datagrid('getRowDetail',index).find('form').form('load',row);
-					}
-				});
-				$('#role-dg').datagrid('fixDetailRowHeight',index);
-			}
-		});
-		
+	$(function() {
+	    $('#role-dg').datagrid({
+	        pagination: true,
+	        view: detailview,
+	        detailFormatter: function(index, row) {
+	            return '<div class="ddv"></div>';
+	        },
+	        onExpandRow: function(index, row) {
+	            var ddv = $(this).datagrid('getRowDetail', index).find('div.ddv');
+	            ddv.panel({
+	                border: false,
+	                cache: true,
+	                href: '/role/form?index=' + index,
+	                onLoad: function() {
+	                    $('#role-dg').datagrid('fixDetailRowHeight', index);
+	                    $('#role-dg').datagrid('selectRow', index);
+	                    $('#role-dg').datagrid('getRowDetail', index).find('form').form('load', row);
+	                }
+	            });
+	            $('#role-dg').datagrid('fixDetailRowHeight', index);
+	        }
+	    });
+
 	});
-	
-	
-	function saveItem(index){
-		var row = $('#role-dg').datagrid('getRows')[index];
-		var url = row.isNewRecord ? '/role/add?_csrf='+ token: '/role/update?id='+row.id+'&_csrf='+ token;
-		$('#role-dg').datagrid('getRowDetail',index).find('form').form('submit',{
-			url: url,
-			onSubmit: function(){
-				return $(this).form('validate');
-			},
-			success: function(data){
-				data = eval('('+data+')');
-				data.isNewRecord = false;
-				$('#role-dg').datagrid('collapseRow',index);
-				$('#role-dg').datagrid('updateRow',{
-					index: index,
-					row: data.data
-				});
-			}
-		});
+
+	function saveItem(index) {
+	    var row = $('#role-dg').datagrid('getRows')[index];
+	    var url = row.isNewRecord ? '/role/add?_csrf=' + token: '/role/update?id=' + row.id + '&_csrf=' + token;
+	    $('#role-dg').datagrid('getRowDetail', index).find('form').form('submit', {
+	        url: url,
+	        onSubmit: function() {
+	            return $(this).form('validate');
+	        },
+	        success: function(data) {
+	            data = eval('(' + data + ')');
+	            data.isNewRecord = false;
+	            $('#role-dg').datagrid('collapseRow', index);
+	            $('#role-dg').datagrid('updateRow', {
+	                index: index,
+	                row: data.data
+	            });
+	        }
+	    });
+	}
+
+	function cancelItem(index) {
+	    var row = $('#role-dg').datagrid('getRows')[index];
+	    if (row.isNewRecord) {
+	        $('#role-dg').datagrid('deleteRow', index);
+	    } else {
+	        $('#role-dg').datagrid('collapseRow', index);
+	    }
+	}
+
+	function destroyItem() {
+	    var row = $('#role-dg').datagrid('getSelected');
+	    if (row) {
+	        $.messager.confirm('确认', '确认删除这个角色吗?',
+	        function(r) {
+	            if (r) {
+	                var index = $('#role-dg').datagrid('getRowIndex', row);
+	                $.post('/role/delete?_csrf=' + token, {
+	                    id: row.id
+	                },
+	                function() {
+	                    $('#role-dg').datagrid('deleteRow', index);
+	                });
+	            }
+	        });
+	    }
+	}
+
+	function newItem() {
+	    $('#role-dg').datagrid('appendRow', {
+	        isNewRecord: true
+	    });
+	    var index = $('#role-dg').datagrid('getRows').length - 1;
+	    $('#role-dg').datagrid('expandRow', index);
+	    $('#role-dg').datagrid('selectRow', index);
 	}
 	
-	function cancelItem(index){
-		var row = $('#role-dg').datagrid('getRows')[index];
-		if (row.isNewRecord){
-			$('#role-dg').datagrid('deleteRow',index);
-		} else {
-			$('#role-dg').datagrid('collapseRow',index);
-		}
+	function roleSearch(){
+		 $('#role-dg').datagrid('load',{"roleName":$('#roleName').val()});
 	}
 	
-	function destroyItem(){
-		var row = $('#role-dg').datagrid('getSelected');
-		if (row){
-			$.messager.confirm('确认','确认删除这个角色吗?',function(r){
-				if (r){
-					var index = $('#role-dg').datagrid('getRowIndex',row);
-					$.post('/role/delete?_csrf='+ token,{id:row.id},function(){
-						$('#role-dg').datagrid('deleteRow',index);
-					});
-				}
-			});
-		}
+	function clearRoleCondition(){
+		$('#roleName').val('');
 	}
 	
-	function newItem(){
-		$('#role-dg').datagrid('appendRow',{isNewRecord:true});
-		var index = $('#role-dg').datagrid('getRows').length - 1;
-		$('#role-dg').datagrid('expandRow', index);
-		$('#role-dg').datagrid('selectRow', index);
+	function allotPermission(){
+		var row = $('#role-dg').treegrid('getSelected');
+	    if (row) {
+	        $('#allotPermission-dialog').dialog('setTitle', row.roleName);
+	        $('#allotPermission-dialog').dialog('open');
+	    } else {
+	        $.messager.alert('提示', '请选择一条数据', 'info');
+	    }
+	}
+	
+	function cancelAllot(){
+		$('#allotPermission-dialog').dialog('close');
 	}
 	
 </script>
@@ -124,11 +151,45 @@
 		</thead>
 	</table>
 	<div id="role-toolbar">
+		<div id="roleSearchInputs">
+			<span>角色名称:</span> <input id="roleName" name="roleName" />
+			<a href="#" class="easyui-linkbutton"
+				data-options="iconCls:'icon-search',plain:true"
+				onclick="roleSearch()">查询</a> <a href="#"
+				class="easyui-linkbutton"
+				data-options="iconCls:'icon-clear',plain:true"
+				onclick="clearRoleCondition()">清空</a>
+		</div>
+		
 		<a href="#" class="easyui-linkbutton"
 			data-options="iconCls:'icon-add',plain:true" onclick="newItem()">新增角色</a>
 		<a href="#" class="easyui-linkbutton"
 			data-options="iconCls:'icon-remove',plain:true"
 			onclick="destroyItem()">删除</a>
+		<a href="#" class="easyui-linkbutton"
+			data-options="iconCls:'icon-add',plain:true"
+			onclick="allotPermission()">分配权限</a>
 	</div>
+	
+	<!-- 权限分配弹框 -->
+	<div id="allotPermission-dialog" class="easyui-dialog" title="分配权限" style="width:800px;height:500px;padding:10px"
+			data-options="
+				closed:true,
+				modal:true,
+				iconCls: 'icon-save',
+				buttons:'#allotPermission-buttons'
+			">
+			
+			
+			
+	</div>
+	
+	<div id="allotPermission-buttons">
+		<a href="#" class="easyui-linkbutton"
+			data-options="iconCls:'icon-ok'" onclick="allot()">分配</a>
+		<a href="#" class="easyui-linkbutton"
+			onclick="cancelAllot()">取消</a>
+	</div>
+	
 </body>
 </html>

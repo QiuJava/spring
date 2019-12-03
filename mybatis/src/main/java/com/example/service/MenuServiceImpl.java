@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import com.example.entity.Menu;
 import com.example.entity.MenuTree;
 import com.example.mapper.MenuMapper;
 import com.example.qo.MenuQo;
+import com.example.util.SecurityContextUtil;
 import com.example.util.StrUtil;
+import com.example.vo.MenuTreeVo;
 
 /**
  * 菜单服务
@@ -117,6 +120,42 @@ public class MenuServiceImpl {
 
 	public List<Menu> listByQo(MenuQo qo) {
 		return menuMapper.selectByQo(qo);
+	}
+
+	public List<MenuTreeVo> listMenuTreeVoByAll() {
+		List<MenuTreeVo> menuTreeVoList = menuMapper.selectMenuTreeVoByParentId(null);
+
+		// 获取当前用户所有的菜单ID
+		List<MenuTree> currentmenuTreeList = SecurityContextUtil.getCurrentEmployee().getMenuTreeList();
+		List<Long> menuTreeIdList = new ArrayList<>();
+		this.setMenuTreeIdList(currentmenuTreeList, menuTreeIdList);
+
+		// 设置是否选中
+		this.setMenuTreeVoListChecked(menuTreeVoList, menuTreeIdList);
+		return menuTreeVoList;
+	}
+
+	private void setMenuTreeVoListChecked(List<MenuTreeVo> menuTreeVoList, List<Long> menuTreeIdList) {
+		for (MenuTreeVo menuTreeVo : menuTreeVoList) {
+			Long id = menuTreeVo.getId();
+			if (menuTreeIdList.contains(id)) {
+				menuTreeVo.setChecked(true);
+			}
+			List<MenuTreeVo> children = menuTreeVo.getChildren();
+			if (children.size() > 0) {
+				setMenuTreeVoListChecked(children, menuTreeIdList);
+			}
+		}
+	}
+
+	private void setMenuTreeIdList(List<MenuTree> currentmenuTreeList, List<Long> menuTreeIdList) {
+		for (MenuTree menuTree : currentmenuTreeList) {
+			menuTreeIdList.add(menuTree.getId());
+			List<MenuTree> children = menuTree.getChildren();
+			if (children.size() > 0) {
+				setMenuTreeIdList(children, menuTreeIdList);
+			}
+		}
 	}
 
 }

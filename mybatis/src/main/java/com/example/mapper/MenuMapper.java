@@ -17,6 +17,7 @@ import com.example.entity.Menu;
 import com.example.entity.MenuTree;
 import com.example.mapper.provider.MenuSqlProvider;
 import com.example.qo.MenuQo;
+import com.example.vo.MenuTreeVo;
 
 /**
  * 菜单数据操作
@@ -105,5 +106,11 @@ public interface MenuMapper {
 			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
 	List<Menu> selectByQo(MenuQo qo);
+
+	@SelectProvider(type = MenuSqlProvider.class, method = "selectMenuTreeVoByParentId")
+	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "menu_name", property = "text", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectMenuTreeVoByParentId", fetchType = FetchType.EAGER)) })
+	List<MenuTreeVo> selectMenuTreeVoByParentId(Long parentId);
 
 }
