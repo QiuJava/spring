@@ -50,7 +50,10 @@
 	            $('#role-dg').datagrid('fixDetailRowHeight', index);
 	        }
 	    });
-
+		
+	    $("#menuTree").tree({
+	    	
+	    }); 
 	});
 
 	function saveItem(index) {
@@ -120,7 +123,14 @@
 	function allotPermission(){
 		var row = $('#role-dg').treegrid('getSelected');
 	    if (row) {
-	        $('#allotPermission-dialog').dialog('setTitle', row.roleName);
+	    	 $('#menuTree').tree({
+	    		 url:"/role/menuTree?roleId="+row.id,
+	    		 method:'get',
+	    		 onSelect : function(node){
+	    			 createPermissionCheckBox(node.id);	    		 
+	    		 }
+	    	 });
+    	   	$('#allotPermission-dialog').dialog('setTitle', row.roleName);
 	        $('#allotPermission-dialog').dialog('open');
 	    } else {
 	        $.messager.alert('提示', '请选择一条数据', 'info');
@@ -130,6 +140,22 @@
 	function cancelAllot(){
 		$('#allotPermission-dialog').dialog('close');
 	}
+	
+	function createPermissionCheckBox(menuId){ 
+		$.get("/permission/listByQo",
+			{"menuId":menuId},
+			function(result) { 
+		        var listHtml = ''; 
+		        $.each(result.data,function(index) {    
+		        	var permission = result.data[index];
+		        	listHtml += '<input type="checkbox" name="permissionId" value="'+permission.id+'">'+permission.permissionName;
+		        });      
+		        $("#permissionCheckBoxDiv").html(listHtml); 
+		    },
+		  'json');     
+
+	}
+
 	
 </script>
 </head>
@@ -179,8 +205,15 @@
 				iconCls: 'icon-save',
 				buttons:'#allotPermission-buttons'
 			">
-			
-			
+			<input class="easyui-checkbox" id="allSelect" name="allSelect" value="0" data-options="label:'全选'">
+			<form id="permissionIdForm" >
+				<div id="permissionCheckBoxDiv">
+				
+				</div>
+			</form>
+			<ul id="menuTree" class="easyui-tree" data-options="animate:true,checkbox:true"
+			 style="width:400px;">
+			</ul>	
 			
 	</div>
 	

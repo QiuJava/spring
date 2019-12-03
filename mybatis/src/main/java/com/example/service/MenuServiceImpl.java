@@ -1,6 +1,5 @@
 package com.example.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import com.example.entity.Menu;
 import com.example.entity.MenuTree;
 import com.example.mapper.MenuMapper;
 import com.example.qo.MenuQo;
-import com.example.util.SecurityContextUtil;
 import com.example.util.StrUtil;
 import com.example.vo.MenuTreeVo;
 
@@ -122,13 +120,11 @@ public class MenuServiceImpl {
 		return menuMapper.selectByQo(qo);
 	}
 
-	public List<MenuTreeVo> listMenuTreeVoByAll() {
+	public List<MenuTreeVo> listMenuTreeVoByAll(Long roleId) {
 		List<MenuTreeVo> menuTreeVoList = menuMapper.selectMenuTreeVoByParentId(null);
 
-		// 获取当前用户所有的菜单ID
-		List<MenuTree> currentmenuTreeList = SecurityContextUtil.getCurrentEmployee().getMenuTreeList();
-		List<Long> menuTreeIdList = new ArrayList<>();
-		this.setMenuTreeIdList(currentmenuTreeList, menuTreeIdList);
+		// 获取当前角色所有的菜单ID
+		List<Long> menuTreeIdList = menuMapper.selectMenuTreeByRoleId(roleId);
 
 		// 设置是否选中
 		this.setMenuTreeVoListChecked(menuTreeVoList, menuTreeIdList);
@@ -144,16 +140,6 @@ public class MenuServiceImpl {
 			List<MenuTreeVo> children = menuTreeVo.getChildren();
 			if (children.size() > 0) {
 				setMenuTreeVoListChecked(children, menuTreeIdList);
-			}
-		}
-	}
-
-	private void setMenuTreeIdList(List<MenuTree> currentmenuTreeList, List<Long> menuTreeIdList) {
-		for (MenuTree menuTree : currentmenuTreeList) {
-			menuTreeIdList.add(menuTree.getId());
-			List<MenuTree> children = menuTree.getChildren();
-			if (children.size() > 0) {
-				setMenuTreeIdList(children, menuTreeIdList);
 			}
 		}
 	}

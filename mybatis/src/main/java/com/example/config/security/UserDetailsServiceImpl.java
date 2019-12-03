@@ -1,5 +1,6 @@
 package com.example.config.security;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -67,10 +68,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		@SuppressWarnings("unchecked")
 		List<Permission> authorities = (List<Permission>) employee.getAuthorities();
+		List<Long> menuIdList = new ArrayList<>();
+		for (Permission permission : authorities) {
+			menuIdList.add(permission.getMenuId());
+		}
+
 		// 登录用户的菜单
 		List<MenuTree> menuTreeList = menuService.listMenuTreeByAll();
 		if (employee.getSuperAdmin().equals(Employee.IS_NOT_ADMIN)) {
-			this.menuTreeMatches(menuTreeList, authorities);
+			this.menuTreeMatches(menuTreeList, menuIdList);
 		} else {
 			// 超级管理员拥有全部权限
 			List<Permission> listByQo = permissionService.listByQo(new PermissionQo());
@@ -80,29 +86,43 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return employee;
 	}
 
-	private void menuTreeMatches(List<MenuTree> menuTreeList, List<Permission> authorities) {
+	private void menuTreeMatches(List<MenuTree> menuTreeList, List<Long> menuIdList) {
 		for (Iterator<MenuTree> iterator = menuTreeList.iterator(); iterator.hasNext();) {
 			MenuTree menuTree = iterator.next();
 			Long menuId = menuTree.getId();
 
 			boolean contain = false;
-			for (Permission permission : authorities) {
-				if (permission.getMenuId().equals(menuId)) {
-					contain = true;
-					break;
-				}
+			if (menuIdList.contains(menuId)) {
+				contain = true;
 			}
 
+			List<MenuTree> children = menuTree.getChildren();
 			if (contain) {
 				// 继续匹配下级菜单
-				List<MenuTree> children = menuTree.getChildren();
-				if (children != null && children.size() > 0) {
-					this.menuTreeMatches(children, authorities);
-				}
+				this.menuTreeMatches(children, menuIdList);
 			} else {
-				iterator.remove();
+				// 如果有下级菜单的权限则不删除
+				boolean hasMenuPermission = this.hasMenuPermission(children, menuIdList);
+				if (!hasMenuPermission) {
+					iterator.remove();
+				}else {
+					// 继续匹配下级菜单
+					this.menuTreeMatches(children, menuIdList);
+				}
 			}
 		}
+	}
+
+	private boolean hasMenuPermission(List<MenuTree> children, List<Long> menuIdList) {
+		for (MenuTree menuTree : children) {
+			Long id = menuTree.getId();
+			if (menuIdList.contains(id)) {
+				return true;
+			}else {
+				return hasMenuPermission(menuTree.getChildren(),menuIdList);
+			}
+		}
+		return false;
 	}
 
 }

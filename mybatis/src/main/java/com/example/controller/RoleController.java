@@ -45,8 +45,8 @@ public class RoleController {
 
 	@GetMapping("/role/menuTree")
 	@ResponseBody
-	public List<MenuTreeVo> menuTree() {
-		return menuService.listMenuTreeVoByAll();
+	public List<MenuTreeVo> menuTree(Long roleId) {
+		return menuService.listMenuTreeVoByAll(roleId);
 	}
 
 	@GetMapping("/role/listByQo")
