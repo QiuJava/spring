@@ -12,7 +12,6 @@ import com.example.entity.Menu;
 import com.example.entity.MenuTree;
 import com.example.mapper.MenuMapper;
 import com.example.qo.MenuQo;
-import com.example.util.StrUtil;
 import com.example.vo.MenuTreeVo;
 
 /**
@@ -36,17 +35,10 @@ public class MenuServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Menu menu) {
 		String menuName = menu.getMenuName();
-		Long parentId = menu.getParentId();
 
 		Date date = new Date();
 		menu.setCreateTime(date);
 		menu.setUpdateTime(date);
-		if (parentId != null) {
-			boolean hasById = this.hasById(parentId);
-			if (!hasById) {
-				throw new LogicException("上级菜单ID不存在");
-			}
-		}
 		// 菜单名称不能重复
 		boolean hasByMenuName = this.hasByMenuName(menuName);
 		if (hasByMenuName) {
@@ -64,11 +56,7 @@ public class MenuServiceImpl {
 	public int update(Menu menu) {
 		Date date = new Date();
 		menu.setUpdateTime(date);
-		String oldMenuName = this.getMenuNameById(menu.getId());
-		if (StrUtil.noText(oldMenuName)) {
-			throw new LogicException("菜单ID不存在");
-		}
-
+		String oldMenuName = menuMapper.selectMenuNameById(menu.getId());
 		String menuName = menu.getMenuName();
 		if (!menuName.equals(oldMenuName)) {
 			// 菜单名称不能重复
@@ -83,33 +71,14 @@ public class MenuServiceImpl {
 		return menuMapper.updateById(menu);
 	}
 
-	public String getMenuNameById(Long id) {
-		return menuMapper.selectMenuNameById(id);
-	}
-
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int deleteById(Long id) throws LogicException {
 		// 删除角色分配的权限
-		long countByMenuId = permissionService.countByMenuId(id);
-		if (countByMenuId > 0) {
-			int deleteByMenuId = permissionService.deleteByMenuId(id);
-			if (deleteByMenuId != countByMenuId) {
-				throw new LogicException("删除失败");
-			}
-		}
+		permissionService.deleteByMenuId(id);
 		// 删除下级菜单
-		long countByParentId = menuMapper.countByParentId(id);
-		if (countByParentId > 0) {
-			int deleteByParentId = menuMapper.deleteByParentId(id);
-			if (deleteByParentId != countByParentId) {
-				throw new LogicException("删除失败");
-			}
-		}
-		return menuMapper.deleteById(id);
-	}
+		menuMapper.deleteByParentId(id);
 
-	public boolean hasById(Long menuId) {
-		return menuMapper.countById(menuId) == 1;
+		return menuMapper.deleteById(id);
 	}
 
 	public List<Menu> listByAll() {

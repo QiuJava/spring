@@ -103,13 +103,13 @@ public class MenuSqlProvider {
 		SQL sql = new SQL();
 		sql.UPDATE("menu");
 
-		if (record.getMenuName() != null) {
+		if (StrUtil.hasText(record.getMenuName())) {
 			sql.SET("menu_name = #{menuName,jdbcType=VARCHAR}");
 		}
-		sql.SET("intro = #{intro,jdbcType=VARCHAR}");
 		if (StrUtil.hasText(record.getUrl())) {
 			sql.SET("url = #{url,jdbcType=VARCHAR}");
 		}
+		sql.SET("intro = #{intro,jdbcType=VARCHAR}");
 		sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
 		return sql.toString();

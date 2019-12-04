@@ -121,10 +121,6 @@ public class PermissionServiceImpl {
 		return permissionMapper.deleteByMenuId(menuId);
 	}
 
-	public long countByMenuId(Long menuId) {
-		return permissionMapper.countByMenuId(menuId);
-	}
-
 	public List<PermissionCheckboxVo> listPermissionCheckboxVoByMenuId(Long menuId, Long roleId) {
 
 		List<PermissionCheckboxVo> selectPermissionCheckboxVoByMenuId = permissionMapper

@@ -62,14 +62,6 @@ public interface MenuMapper {
 			"	id = #{id,jdbcType=BIGINT}" })
 	String selectMenuNameById(Long id);
 
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	menu  ", //
-			"WHERE ", //
-			"	id = #{menuId,jdbcType=BIGINT}" })
-	int countById(Long menuId);
-
 	@SelectProvider(type = MenuSqlProvider.class, method = "selectByParentId")
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
 			@Result(column = "parent_id", property = "parentId", jdbcType = JdbcType.BIGINT),
@@ -80,14 +72,6 @@ public interface MenuMapper {
 			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
 	List<Menu> selectByParentId(Long parentId);
-
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	menu  ", //
-			"WHERE ", //
-			"	parent_id = #{parentId,jdbcType=BIGINT}" })
-	long countByParentId(Long parentId);
 
 	@Delete({ "DELETE  ", //
 			"FROM ", //

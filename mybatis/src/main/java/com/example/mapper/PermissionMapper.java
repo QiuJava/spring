@@ -107,18 +107,30 @@ public interface PermissionMapper {
 	int updateById(Permission permission);
 
 	@Select({ "SELECT ", //
-			"	count( * )  ", //
+			"	permission_id  ", //
 			"FROM ", //
-			"	permission  ", //
+			"	`role_permission`  ", //
 			"WHERE ", //
-			"	menu_id = #{menuId,jdbcType=BIGINT}" })
-	long countByMenuId(Long menuId);
-
-	@Select({ "SELECT ", //
-		"	permission_id  ", //
-		"FROM ", //
-		"	`role_permission`  ", //
-		"WHERE ", //
-		"	role_id = #{roleId,jdbcType=BIGINT}" })
+			"	role_id = #{roleId,jdbcType=BIGINT}" })
 	List<Long> selectIdByRoleId(Long roleId);
+
+	@Select({ "SELECT DISTINCT ", //
+			"	permi_O.id AS id, ", //
+			"	permi_O.menu_id AS menu_id, ", //
+			"	permi_O.authority AS authority, ", //
+			"	permi_O.permission_name AS permission_name, ", //
+			"	permi_O.intro AS intro, ", //
+			"	permi_O.url AS url ", //
+			"FROM ", //
+			"	permission permi_O ", //
+			"	JOIN role_permission role_permi_0 ON permi_O.id = role_permi_0.permission_id ", //
+			"	JOIN employee_role emplo_role_0 ON role_permi_0.role_id  ", //
+			"	AND emplo_role_0.employee_id = #{employeeId,jdbcType=BIGINT}" })
+	@Results(value = { @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT),
+			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) })
+	List<Permission> selectByEmployeeId(Long employeeId);
 }
