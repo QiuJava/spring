@@ -79,10 +79,7 @@ public class RoleController {
 		}
 
 		try {
-			int save = roleService.save(role);
-			if (save != 1) {
-				return new Result(false, "添加失败");
-			}
+			roleService.save(role);
 			return new Result(true, "添加成功", null, role);
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
@@ -93,22 +90,17 @@ public class RoleController {
 
 	}
 
-	@GetMapping("/allotPermission")
-	public Result allotPermission(Long roleId, Long[] permissionIdList) {
+	@PostMapping("/role/allotPermission")
+	@ResponseBody
+	public Result allotPermission(Long roleId, Long[] permissionIdList, Long menuId) {
 		Result verifyId = this.verifyId(roleId);
 		if (verifyId != null) {
 			return verifyId;
 		}
 
-		if (permissionIdList == null || permissionIdList.length == 0) {
-			return new Result(false, "权限ID组不能为空");
-		}
-
 		try {
-			roleService.allotPermission(roleId, permissionIdList);
+			roleService.allotPermission(roleId, permissionIdList, menuId);
 			return new Result(true, "分配成功");
-		} catch (LogicException e) {
-			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "分配失败");
@@ -161,13 +153,8 @@ public class RoleController {
 		}
 
 		try {
-			int deleteById = roleService.deleteById(id);
-			if (deleteById != 1) {
-				return new Result(false, "删除失败");
-			}
+			roleService.deleteById(id);
 			return new Result(true, "删除成功");
-		} catch (LogicException e) {
-			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "删除失败");

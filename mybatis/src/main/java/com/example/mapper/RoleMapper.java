@@ -3,7 +3,6 @@ package com.example.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Options;
@@ -15,6 +14,7 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
 import com.example.dto.AllotPermissionDto;
+import com.example.dto.InitPermissionDto;
 import com.example.entity.Role;
 import com.example.mapper.provider.RoleSqlProvider;
 import com.example.qo.RoleQo;
@@ -49,34 +49,6 @@ public interface RoleMapper {
 	@Select({ "SELECT ", //
 			"	count( * )  ", //
 			"FROM ", //
-			"	role_permission  ", //
-			"WHERE ", //
-			"	role_id = #{roleId,jdbcType=BIGINT}  ", //
-			"	AND permission_id = #{permissionId,jdbcType=BIGINT} " })
-	long countRolePermissionByRoleIdAndPermissionId(AllotPermissionDto allotPermissionDto);
-
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	role  ", //
-			"WHERE ", //
-			"	id = #{roleId,jdbcType=BIGINT}  " })
-	long countById(Long roleId);
-
-	@Select({ "SELECT ", //
-			"	permission_id  ", //
-			"FROM ", //
-			"	role_permission  ", //
-			"WHERE ", //
-			"	role_id =1" })
-	List<Long> selectPermissionIdByRoleId(Long roleId);
-
-	@DeleteProvider(type = RoleSqlProvider.class, method = "deleteRolePermissionByPermissionIdList")
-	int deleteRolePermissionByPermissionIdList(List<Long> oldPermissionIdList);
-
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
 			"	role  ", //
 			"WHERE ", //
 			"	role_name = #{roleName,jdbcType=VARCHAR}  " })
@@ -90,14 +62,6 @@ public interface RoleMapper {
 			"	id = #{id,jdbcType=BIGINT}  " })
 	String selectRoleNameById(Long id);
 
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	role_permission  ", //
-			"WHERE ", //
-			"	role_id = #{roleId,jdbcType=BIGINT}  " })
-	int countRolePermissionByRoleId(Long roleId);
-
 	@Delete({ "DELETE ", //
 			"FROM ", //
 			"	role_permission  ", //
@@ -110,4 +74,12 @@ public interface RoleMapper {
 			@Result(column = "role_name", jdbcType = JdbcType.VARCHAR, property = "roleName"),
 			@Result(column = "intro", jdbcType = JdbcType.VARCHAR, property = "intro") })
 	List<Role> selectByQo(RoleQo roleQo);
+
+	@Delete({ "DELETE  ", //
+			"FROM ", //
+			"	role_permission  ", //
+			"WHERE ", //
+			"	role_id = #{roleId,jdbcType=BIGINT}  ", //
+			"	AND permission_id IN ( SELECT id FROM permission WHERE menu_id = #{menuId,jdbcType=BIGINT} )" })
+	int deleteRolePermissionByRoleIdAndMenuId(InitPermissionDto initPermissionDto);
 }

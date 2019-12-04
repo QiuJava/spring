@@ -14,6 +14,7 @@ import com.example.entity.Permission;
 import com.example.qo.PermissionQo;
 import com.example.service.PermissionServiceImpl;
 import com.example.util.StrUtil;
+import com.example.vo.PermissionCheckboxVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -151,7 +152,13 @@ public class PermissionController {
 			return new Result(false, "删除失败");
 		}
 	}
-
+	
+	@GetMapping("/permission/listByMenuId")
+	@ResponseBody
+	public List<PermissionCheckboxVo> listByMenuId(Long menuId,Long roleId){
+		return permissionService.listPermissionCheckboxVoByMenuId(menuId,roleId);
+	}
+	
 	@GetMapping("/permission/listByQo")
 	@ResponseBody
 	public Result listByQo(PermissionQo qo) {

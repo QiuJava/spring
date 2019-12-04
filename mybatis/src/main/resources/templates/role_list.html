@@ -27,7 +27,7 @@
 	var token = [[${_csrf.token}]];
 	// 不为-1就是编辑状态
 	var editingId = -1;
-	
+
 	$(function() {
 	    $('#role-dg').datagrid({
 	        pagination: true,
@@ -50,12 +50,9 @@
 	            $('#role-dg').datagrid('fixDetailRowHeight', index);
 	        }
 	    });
-		
-	    $("#menuTree").tree({
-	    	
-	    }); 
+	
 	});
-
+	
 	function saveItem(index) {
 	    var row = $('#role-dg').datagrid('getRows')[index];
 	    var url = row.isNewRecord ? '/role/add?_csrf=' + token: '/role/update?id=' + row.id + '&_csrf=' + token;
@@ -66,16 +63,15 @@
 	        },
 	        success: function(data) {
 	            data = eval('(' + data + ')');
-	            data.isNewRecord = false;
-	            $('#role-dg').datagrid('collapseRow', index);
-	            $('#role-dg').datagrid('updateRow', {
-	                index: index,
-	                row: data.data
-	            });
+	            if (data.succeed) {
+	                $('#role-dg').datagrid('reload');
+	            } else {
+	                $.messager.alert('提示', data.msg, 'error');
+	            }
 	        }
 	    });
 	}
-
+	
 	function cancelItem(index) {
 	    var row = $('#role-dg').datagrid('getRows')[index];
 	    if (row.isNewRecord) {
@@ -84,7 +80,7 @@
 	        $('#role-dg').datagrid('collapseRow', index);
 	    }
 	}
-
+	
 	function destroyItem() {
 	    var row = $('#role-dg').datagrid('getSelected');
 	    if (row) {
@@ -95,14 +91,18 @@
 	                $.post('/role/delete?_csrf=' + token, {
 	                    id: row.id
 	                },
-	                function() {
-	                    $('#role-dg').datagrid('deleteRow', index);
+	                function(data) {
+	                    if (data.succeed) {
+	                        $('#role-dg').datagrid('deleteRow', index);
+	                    } else {
+	                        $.messager.alert('提示', data.msg, 'error');
+	                    }
 	                });
 	            }
 	        });
 	    }
 	}
-
+	
 	function newItem() {
 	    $('#role-dg').datagrid('appendRow', {
 	        isNewRecord: true
@@ -112,48 +112,114 @@
 	    $('#role-dg').datagrid('selectRow', index);
 	}
 	
-	function roleSearch(){
-		 $('#role-dg').datagrid('load',{"roleName":$('#roleName').val()});
+	function roleSearch() {
+	    $('#role-dg').datagrid('load', {
+	        "roleName": $('#roleName').val()
+	    });
 	}
 	
-	function clearRoleCondition(){
-		$('#roleName').val('');
+	function clearRoleCondition() {
+	    $('#roleName').val('');
 	}
 	
-	function allotPermission(){
-		var row = $('#role-dg').treegrid('getSelected');
+	function allotPermission() {
+	    var row = $('#role-dg').datagrid('getSelected');
 	    if (row) {
-	    	 $('#menuTree').tree({
-	    		 url:"/role/menuTree?roleId="+row.id,
-	    		 method:'get',
-	    		 onSelect : function(node){
-	    			 createPermissionCheckBox(node.id);	    		 
-	    		 }
-	    	 });
-    	   	$('#allotPermission-dialog').dialog('setTitle', row.roleName);
+	        $('#menuTree').tree({
+	            url: "/role/menuTree?roleId=" + row.id,
+	            method: 'get',
+	            onSelect: function(node) {
+	                createPermissionCheckBox(node.id, row.id);
+	            }
+	        });
+	        $('#allSelect').checkbox({
+	            onChange: function(checked) {
+	                var checkboxList = document.getElementsByName("permissionId");
+	                if (checked) {
+	                    for (var i = 0; i < checkboxList.length; i++) {
+	                        var permissionCheckbox = checkboxList[i];
+	                        permissionCheckbox.checked = true;
+	                    }
+	                } else {
+	                    for (var i = 0; i < checkboxList.length; i++) {
+	                        var permissionCheckbox = checkboxList[i];
+	                        permissionCheckbox.checked = false;
+	                    }
+	                }
+	            }
+	        });
+	
+	        $('#allotPermission-dialog').dialog('setTitle', row.roleName);
 	        $('#allotPermission-dialog').dialog('open');
 	    } else {
 	        $.messager.alert('提示', '请选择一条数据', 'info');
 	    }
 	}
 	
-	function cancelAllot(){
-		$('#allotPermission-dialog').dialog('close');
+	function cancelAllot() {
+	    $('#allotPermission-dialog').dialog('close');
 	}
 	
-	function createPermissionCheckBox(menuId){ 
-		$.get("/permission/listByQo",
-			{"menuId":menuId},
-			function(result) { 
-		        var listHtml = ''; 
-		        $.each(result.data,function(index) {    
-		        	var permission = result.data[index];
-		        	listHtml += '<input type="checkbox" name="permissionId" value="'+permission.id+'">'+permission.permissionName;
-		        });      
-		        $("#permissionCheckBoxDiv").html(listHtml); 
-		    },
-		  'json');     
-
+	function createPermissionCheckBox(menuId, roleId) { $.get("/permission/listByMenuId", {
+	        "menuId": menuId,
+	        "roleId": roleId
+	    },
+	    function(data) { 
+	        var listHtml = ''; 
+	        $.each(data,function(index) {    
+	            var permission = data[index];
+	            var checkStr = '';
+	            if (permission.checked) {
+	                checkStr = 'checked="checked"';
+	            }
+	            listHtml +=  '<input type="checkbox" name="permissionId" ' + checkStr + ' value="' + permission.permissionId + '">' + permission.permissionName;
+	        });      
+	        $("#permissionCheckBoxDiv").html(listHtml); 
+	    },
+	    'json');     
+	
+	}
+	
+	function allot() {
+	    // 分配成功进行弹框 弹框关闭刷新菜单树和清空权限复选框
+	    var row = $('#role-dg').datagrid('getSelected');
+	    var node = $('#menuTree').tree('getSelected');
+	    if (!node) {
+	        $.messager.alert('提示', '请选择一行', 'info');
+	        return;
+	    }
+	    $('#permissionIdForm').form('submit', {
+	        url: "/role/allotPermission?_csrf=" + token,
+	        onSubmit: function(param) {
+	            var checkboxList = document.getElementsByName("permissionId");
+	            var permissionIdList = '';
+	            for (var i = 0; i < checkboxList.length; i++) {
+	                var permissionCheckbox = checkboxList[i];
+	                if (permissionCheckbox.checked) {
+	                    permissionIdList += permissionCheckbox.value;
+	                    permissionIdList += ',';
+	                }
+	            }
+	            if (permissionIdList != '') {
+	                permissionIdList = permissionIdList.substring(0, permissionIdList.length - 1);
+	            }
+	            param.roleId = row.id;
+	            param.permissionIdList = permissionIdList;
+	            param.menuId = node.id;
+	        },
+	        success: function(data) {
+	            var data = eval('(' + data + ')');
+	            if (data.succeed) {
+	                $.messager.alert('提示', data.msg, 'info',
+	                function() {
+	                    $('#menuTree').tree('reload');
+	                    $("#permissionCheckBoxDiv").html(''); $('#allSelect').checkbox('uncheck');
+	                });
+	            } else {
+	                $.messager.alert('提示', data.msg, 'error');
+	            }
+	        }
+	    });
 	}
 
 	
@@ -203,10 +269,14 @@
 				closed:true,
 				modal:true,
 				iconCls: 'icon-save',
-				buttons:'#allotPermission-buttons'
+				buttons:'#allotPermission-buttons',
+				onClose:function(){
+					$('#permissionCheckBoxDiv').html(''); 
+					$('#allSelect').checkbox('uncheck');
+				}
 			">
-			<input class="easyui-checkbox" id="allSelect" name="allSelect" value="0" data-options="label:'全选'">
-			<form id="permissionIdForm" >
+			<input class="easyui-checkbox" id="allSelect" name="allSelect"data-options="label:'全选'">
+			<form id="permissionIdForm" method="post" >
 				<div id="permissionCheckBoxDiv">
 				
 				</div>

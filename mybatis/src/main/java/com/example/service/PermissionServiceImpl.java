@@ -12,6 +12,7 @@ import com.example.entity.Permission;
 import com.example.mapper.PermissionMapper;
 import com.example.qo.PermissionQo;
 import com.example.util.StrUtil;
+import com.example.vo.PermissionCheckboxVo;
 
 /**
  * 权限服务
@@ -150,6 +151,20 @@ public class PermissionServiceImpl {
 
 	public long countByMenuId(Long menuId) {
 		return permissionMapper.countByMenuId(menuId);
+	}
+
+	public List<PermissionCheckboxVo> listPermissionCheckboxVoByMenuId(Long menuId,Long roleId) {
+		
+		List<PermissionCheckboxVo> selectPermissionCheckboxVoByMenuId = permissionMapper.selectPermissionCheckboxVoByMenuId(menuId);
+		List<Long> currentRolePermissionIdList = permissionMapper.selectIdByRoleId(roleId);
+		for (PermissionCheckboxVo permissionCheckboxVo : selectPermissionCheckboxVoByMenuId) {
+			Long permissionId = permissionCheckboxVo.getPermissionId();
+			if (currentRolePermissionIdList.contains(permissionId)) {
+				permissionCheckboxVo.setChecked(true);
+			}
+		}
+		
+		return selectPermissionCheckboxVoByMenuId;
 	}
 
 }

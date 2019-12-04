@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -15,6 +14,7 @@ import org.apache.ibatis.type.JdbcType;
 import com.example.entity.Permission;
 import com.example.mapper.provider.PermissionSqlProvider;
 import com.example.qo.PermissionQo;
+import com.example.vo.PermissionCheckboxVo;
 
 /**
  * 权限数据操作
@@ -55,27 +55,24 @@ public interface PermissionMapper {
 			"	JOIN role_permission role_permi_0 ON permi_O.id = role_permi_0.permission_id ", //
 			"	JOIN employee_role emplo_role_0 ON role_permi_0.role_id  ", //
 			"	AND emplo_role_0.employee_id = #{employeeId,jdbcType=BIGINT}" })
-	@ResultMap({ "PermissionMap" })
-	List<Permission> selectByEmployeeId(Long employeeId);
-
-	@Select({ "SELECT ", //
-			"	id, ", //
-			"	menu_id, ", //
-			"	authority, ", //
-			"	permission_name, ", //
-			"	intro, ", //
-			"	url ", //
-			"FROM ", //
-			"	permission ", //
-			"WHERE ", //
-			"	menu_id = #{menuId,jdbcType=BIGINT}" })
 	@Results(value = { @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
 			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) }, id = "PermissionMap")
-	List<Permission> selectByMenuId(Long menuId);
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) })
+	List<Permission> selectByEmployeeId(Long employeeId);
+
+	@Select({ "SELECT ", //
+			"	id, ", //
+			"	permission_name ", //
+			"FROM ", //
+			"	permission ", //
+			"WHERE ", //
+			"	menu_id = #{menuId,jdbcType=BIGINT}" })
+	@Results(value = { @Result(column = "id", property = "permissionId", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR) })
+	List<PermissionCheckboxVo> selectPermissionCheckboxVoByMenuId(Long menuId);
 
 	@Select({ "SELECT ", //
 			"	count( * )  ", //
@@ -113,7 +110,7 @@ public interface PermissionMapper {
 			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR)})
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR) })
 	List<Permission> selectByQo(PermissionQo qo);
 
 	@Delete({ "DELETE  ", //
@@ -152,4 +149,12 @@ public interface PermissionMapper {
 			"WHERE ", //
 			"	menu_id = #{menuId,jdbcType=BIGINT}" })
 	long countByMenuId(Long menuId);
+
+	@Select({ "SELECT ", //
+		"	permission_id  ", //
+		"FROM ", //
+		"	`role_permission`  ", //
+		"WHERE ", //
+		"	role_id = #{roleId,jdbcType=BIGINT}" })
+	List<Long> selectIdByRoleId(Long roleId);
 }

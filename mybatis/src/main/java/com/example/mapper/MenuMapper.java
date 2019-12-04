@@ -114,11 +114,10 @@ public interface MenuMapper {
 	List<MenuTreeVo> selectMenuTreeVoByParentId(Long parentId);
 
 	@Select({"SELECT ", // 
-			"	menu_0.id  ", // 
+			"	DISTINCT permis_1.menu_id  ", // 
 			"FROM ", // 
 			"	role_permission role_permis_0 ", // 
 			"	JOIN permission permis_1 ON permis_1.id = role_permis_0.permission_id ", // 
-			"	JOIN menu menu_0 ON permis_1.url = menu_0.url   ", // 
 			"	AND role_permis_0.role_id = #{roleId,jdbcType=BIGINT}"})
 	List<Long> selectMenuTreeByRoleId(Long roleId);
 
