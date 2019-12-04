@@ -43,26 +43,6 @@ public interface PermissionMapper {
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) })
 	Permission selectById(Long id);
 
-	@Select({ "SELECT DISTINCT ", //
-			"	permi_O.id AS id, ", //
-			"	permi_O.menu_id AS menu_id, ", //
-			"	permi_O.authority AS authority, ", //
-			"	permi_O.permission_name AS permission_name, ", //
-			"	permi_O.intro AS intro, ", //
-			"	permi_O.url AS url ", //
-			"FROM ", //
-			"	permission permi_O ", //
-			"	JOIN role_permission role_permi_0 ON permi_O.id = role_permi_0.permission_id ", //
-			"	JOIN employee_role emplo_role_0 ON role_permi_0.role_id  ", //
-			"	AND emplo_role_0.employee_id = #{employeeId,jdbcType=BIGINT}" })
-	@Results(value = { @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
-			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT),
-			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) })
-	List<Permission> selectByEmployeeId(Long employeeId);
-
 	@Select({ "SELECT ", //
 			"	id, ", //
 			"	permission_name ", //
@@ -120,27 +100,11 @@ public interface PermissionMapper {
 			"	menu_id = #{menuId,jdbcType=BIGINT}" })
 	int deleteByMenuId(Long menuId);
 
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	permission  ", //
-			"WHERE ", //
-			"	id = #{id,jdbcType=BIGINT}" })
-	long countById(Long id);
-
 	@InsertProvider(type = PermissionSqlProvider.class, method = "insert")
 	int insert(Permission permission);
 
 	@UpdateProvider(type = PermissionSqlProvider.class, method = "updateById")
 	int updateById(Permission permission);
-
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	`role_permission`  ", //
-			"WHERE ", //
-			"	permission_id = #{id,jdbcType=BIGINT}" })
-	long countRolePermissionByPermissionId(Long id);
 
 	@Select({ "SELECT ", //
 			"	count( * )  ", //

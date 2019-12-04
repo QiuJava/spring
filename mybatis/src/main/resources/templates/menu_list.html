@@ -205,6 +205,10 @@
 	        return;
 	    }
 	    var row = $('#menu-tg').treegrid('getSelected');
+	    var children = $('#menu-tg').treegrid('getChildren',row.id);
+	    if(children.length > 0){
+	    	return;
+	    }
 	    if (row) {
 	        $('#permission-datagrid').datagrid('unselectAll');
 	        permissionSearch();

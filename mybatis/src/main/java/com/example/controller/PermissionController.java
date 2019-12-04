@@ -70,17 +70,14 @@ public class PermissionController {
 		}
 
 		try {
-			int save = permissionService.save(permission);
-			if (save != 1) {
-				return new Result(false, "添加失败");
-			}
+			permissionService.save(permission);
+			return new Result(true, "添加成功");
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "添加失败");
 		}
-		return new Result(true, "添加成功");
 	}
 
 	@PostMapping("/permission/update")
@@ -140,10 +137,7 @@ public class PermissionController {
 			return verifyId;
 		}
 		try {
-			int deleteById = permissionService.deleteById(id);
-			if (deleteById != 1) {
-				return new Result(false, "删除失败");
-			}
+			permissionService.deleteById(id);
 			return new Result(true, "删除成功");
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());

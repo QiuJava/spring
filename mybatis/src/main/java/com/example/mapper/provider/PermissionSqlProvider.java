@@ -46,10 +46,10 @@ public class PermissionSqlProvider {
 		sql.VALUES("menu_id", "#{menuId,jdbcType=BIGINT}");
 		sql.VALUES("create_time", "#{createTime,jdbcType=TIMESTAMP}");
 		sql.VALUES("update_time", "#{updateTime,jdbcType=TIMESTAMP}");
-		if (permission.getUrl() != null) {
+		if (StrUtil.hasText(permission.getUrl())) {
 			sql.VALUES("url", "#{url,jdbcType=VARCHAR}");
 		}
-		if (permission.getIntro() != null) {
+		if (StrUtil.hasText(permission.getIntro())) {
 			sql.VALUES("intro", "#{intro,jdbcType=VARCHAR}");
 		}
 		return sql.toString();
@@ -58,18 +58,14 @@ public class PermissionSqlProvider {
 	public String updateById(Permission permission) {
 		SQL sql = new SQL();
 		sql.UPDATE("permission");
-		if (permission.getPermissionName() != null) {
+		if (StrUtil.hasText(permission.getPermissionName())) {
 			sql.SET("permission_name=#{permissionName,jdbcType=VARCHAR}");
 		}
-		if (permission.getAuthority() != null) {
+		if (StrUtil.hasText(permission.getAuthority())) {
 			sql.SET("authority=#{authority,jdbcType=VARCHAR}");
 		}
-		if (StrUtil.hasText(permission.getUrl())) {
-			sql.SET("url=#{url,jdbcType=VARCHAR}");
-		}
-		if (StrUtil.hasText(permission.getIntro())) {
-			sql.SET("intro=#{intro,jdbcType=VARCHAR}");
-		}
+		sql.SET("url=#{url,jdbcType=VARCHAR}");
+		sql.SET("intro=#{intro,jdbcType=VARCHAR}");
 		sql.SET("update_time=#{updateTime,jdbcType=TIMESTAMP}");
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
 		return sql.toString();

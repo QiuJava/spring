@@ -69,6 +69,8 @@ public class RoleServiceImpl {
 			if (hasByRoleName) {
 				throw new LogicException("角色名已存在");
 			}
+		}else {
+			role.setRoleName(null);
 		}
 
 		return roleMapper.updateById(role);

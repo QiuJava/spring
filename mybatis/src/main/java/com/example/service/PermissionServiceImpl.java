@@ -26,19 +26,11 @@ public class PermissionServiceImpl {
 	@Autowired
 	private PermissionMapper permissionMapper;
 
-	@Autowired
-	private MenuServiceImpl menuService;
-
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Permission permission) throws LogicException {
 		Date date = new Date();
 		permission.setCreateTime(date);
 		permission.setUpdateTime(date);
-
-		boolean hasById = menuService.hasById(permission.getMenuId());
-		if (!hasById) {
-			throw new LogicException("菜单ID不存在");
-		}
 
 		boolean hasByPermissionName = this.hasByPermissionName(permission.getPermissionName());
 		if (hasByPermissionName) {
@@ -57,7 +49,6 @@ public class PermissionServiceImpl {
 				throw new LogicException("权限路径已存在");
 			}
 		}
-
 		return permissionMapper.insert(permission);
 	}
 
@@ -77,10 +68,7 @@ public class PermissionServiceImpl {
 	public int update(Permission permission) throws LogicException {
 		permission.setUpdateTime(new Date());
 
-		Permission oldPermission = this.getById(permission.getId());
-		if (oldPermission == null) {
-			throw new LogicException("权限ID不存在");
-		}
+		Permission oldPermission = permissionMapper.selectById(permission.getId());
 
 		String permissionName = permission.getPermissionName();
 		if (!permissionName.equals(oldPermission.getPermissionName())) {
@@ -112,27 +100,15 @@ public class PermissionServiceImpl {
 				if (hasByUrl) {
 					throw new LogicException("权限路径已存在");
 				}
-			} else {
-				permission.setUrl(null);
 			}
 		}
 
 		return permissionMapper.updateById(permission);
 	}
 
-	public Permission getById(Long id) {
-		return permissionMapper.selectById(id);
-	}
-
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int deleteById(Long id) throws LogicException {
-		long countRolePermissionByPermissionId = permissionMapper.countRolePermissionByPermissionId(id);
-		if (countRolePermissionByPermissionId > 0) {
-			int deleteRolePermissionByPermissionId = permissionMapper.deleteRolePermissionByPermissionId(id);
-			if (countRolePermissionByPermissionId != deleteRolePermissionByPermissionId) {
-				throw new LogicException("删除失败");
-			}
-		}
+		permissionMapper.deleteRolePermissionByPermissionId(id);
 		return permissionMapper.deleteById(id);
 	}
 
@@ -145,17 +121,14 @@ public class PermissionServiceImpl {
 		return permissionMapper.deleteByMenuId(menuId);
 	}
 
-	public boolean hasById(Long permissionId) {
-		return permissionMapper.countById(permissionId) == 1;
-	}
-
 	public long countByMenuId(Long menuId) {
 		return permissionMapper.countByMenuId(menuId);
 	}
 
-	public List<PermissionCheckboxVo> listPermissionCheckboxVoByMenuId(Long menuId,Long roleId) {
-		
-		List<PermissionCheckboxVo> selectPermissionCheckboxVoByMenuId = permissionMapper.selectPermissionCheckboxVoByMenuId(menuId);
+	public List<PermissionCheckboxVo> listPermissionCheckboxVoByMenuId(Long menuId, Long roleId) {
+
+		List<PermissionCheckboxVo> selectPermissionCheckboxVoByMenuId = permissionMapper
+				.selectPermissionCheckboxVoByMenuId(menuId);
 		List<Long> currentRolePermissionIdList = permissionMapper.selectIdByRoleId(roleId);
 		for (PermissionCheckboxVo permissionCheckboxVo : selectPermissionCheckboxVoByMenuId) {
 			Long permissionId = permissionCheckboxVo.getPermissionId();
@@ -163,7 +136,7 @@ public class PermissionServiceImpl {
 				permissionCheckboxVo.setChecked(true);
 			}
 		}
-		
+
 		return selectPermissionCheckboxVoByMenuId;
 	}
 
