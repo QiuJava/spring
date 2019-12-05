@@ -38,6 +38,9 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 
 		// 如果登录名不是系统中的用户名则跳过
 		Employee employee = employeeService.getPasswordErrorsAndIdAndStatusByUsername(username);
+		if (employee == null) {
+			return;
+		}
 
 		int passwordErrors = employee.getPasswordErrors() + 1;
 

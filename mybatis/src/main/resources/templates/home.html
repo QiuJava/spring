@@ -69,7 +69,6 @@
 	            var dataObject = eval('(' + data + ')');
 	            if (dataObject.succeed) {
 	                $('#changePassword-dialog').dialog('close');
-	                clearForm();
 	                $.messager.alert('提示', dataObject.msg, 'info',
 	                function() {
 	                    window.location.href = "/";
@@ -113,7 +112,7 @@
 			closed:true,
 			modal:true,
 			onClose:function(){
-				
+				$('#changePassword-form').form('clear');
 			},
 			iconCls:'icon-tip'
 		">
