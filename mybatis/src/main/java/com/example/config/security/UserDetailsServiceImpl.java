@@ -35,7 +35,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("用户名或密码错误");
 		}
 
-		// 判断用户是否锁定 锁定状态抛出异常
+		if (employee.getPasswordErrors() + 1 >= Employee.MAX_PASSWORD_ERRORS
+				&& employee.getStatus() != Employee.LOCK_STATUS) {
+			StringBuilder builder = new StringBuilder();
+			builder.append("账户已锁定，请").append(DateTimeUtil.LOCK_INTERVAL / 1000).append("秒后再试");
+			throw new LockedException(builder.toString());
+		}
+
 		if (Employee.LOCK_STATUS == employee.getStatus()) {
 			Date lockTime = employee.getLockTime();
 			// 过了锁定区间 进行解锁操作
@@ -55,6 +61,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		return employee;
 	}
-
 
 }

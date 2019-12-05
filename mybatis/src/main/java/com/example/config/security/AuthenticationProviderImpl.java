@@ -62,8 +62,7 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 	public boolean supports(Class<?> authentication) {
 		return true;
 	}
-	
-	
+
 	private void setMenuTreeAndPermission(UserDetails userDetails) {
 		Employee employee = (Employee) userDetails;
 
