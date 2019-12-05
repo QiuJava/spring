@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.entity.Employee;
@@ -21,6 +21,7 @@ import com.example.entity.Permission;
 import com.example.qo.PermissionQo;
 import com.example.service.MenuServiceImpl;
 import com.example.service.PermissionServiceImpl;
+import com.example.util.DateTimeUtil;
 
 /**
  * 认证供应实现
@@ -42,20 +43,26 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
+		Employee employee = userDetailsService.loadUserByUsername(authentication.getName());
 
-		if (userDetails.isAccountNonExpired()) {
+		if (!employee.isAccountNonExpired()) {
 			throw new AccountExpiredException("用户名或密码错误");
 		}
 
 		String credentials = authentication.getCredentials().toString();
-		if (!passwordEncoder.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
+		if (!passwordEncoder.matches(credentials, employee.getPassword())) {
+			if (employee.getPasswordErrors() + 1 >= Employee.MAX_PASSWORD_ERRORS
+					&& employee.getStatus() != Employee.LOCK_STATUS) {
+				StringBuilder builder = new StringBuilder();
+				builder.append("账户已锁定，请").append(DateTimeUtil.LOCK_INTERVAL / 1000).append("秒后再试");
+				throw new LockedException(builder.toString());
+			}
 			throw new BadCredentialsException("用户名或密码错误");
 		}
 
-		this.setMenuTreeAndPermission(userDetails);
+		this.setMenuTreeAndPermission(employee);
 
-		return new UsernamePasswordAuthenticationToken(userDetails, credentials, userDetails.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(employee, credentials, employee.getAuthorities());
 	}
 
 	@Override
@@ -63,11 +70,9 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		return true;
 	}
 
-	private void setMenuTreeAndPermission(UserDetails userDetails) {
-		Employee employee = (Employee) userDetails;
+	private void setMenuTreeAndPermission(Employee employee) {
 
-		@SuppressWarnings("unchecked")
-		List<Permission> authorities = (List<Permission>) employee.getAuthorities();
+		List<Permission> authorities = employee.getAuthorities();
 		List<Long> menuIdList = new ArrayList<>();
 		for (Permission permission : authorities) {
 			menuIdList.add(permission.getMenuId());

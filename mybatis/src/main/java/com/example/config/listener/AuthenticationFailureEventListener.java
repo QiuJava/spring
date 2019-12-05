@@ -42,29 +42,29 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 			return;
 		}
 
-		int passwordErrors = employee.getPasswordErrors() + 1;
+		if (employee.getStatus() != Employee.LOCK_STATUS) {
+			Date date = new Date();
+			int passwordErrors = employee.getPasswordErrors() + 1;
 
-		Date date = new Date();
-		employee.setPasswordErrors(passwordErrors);
-		employee.setUpdateTime(date);
+			employee.setPasswordErrors(passwordErrors);
+			employee.setUpdateTime(date);
+			if (passwordErrors >= Employee.MAX_PASSWORD_ERRORS) {
+				// 进入锁定状态 设置锁定时间
+				employee.setStatus(Employee.LOCK_STATUS);
+				employee.setLockTime(date);
+				employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
+			} else {
+				employeeService.updatePasswordErrorsAndUpdateTimeById(employee);
+			}
 
-		if (passwordErrors >= Employee.MAX_PASSWORD_ERRORS && employee.getStatus() != Employee.LOCK_STATUS) {
-			// 进入锁定状态 设置锁定时间
-			employee.setStatus(Employee.LOCK_STATUS);
-			employee.setLockTime(date);
-			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
-		} else {
-			employeeService.updatePasswordErrorsAndUpdateTimeById(employee);
+			LoginLog loginLog = new LoginLog();
+			loginLog.setLoginType(LoginLog.LOGIN_FAILURE_STATUS);
+			loginLog.setRemoteAddress(details.getRemoteAddress());
+			loginLog.setCreateTime(date);
+			loginLog.setUpdateTime(date);
+			loginLog.setUsername(username);
+			loginLog.setRemark(event.getException().getMessage());
+			loginLogService.save(loginLog);
 		}
-
-		LoginLog loginLog = new LoginLog();
-		loginLog.setLoginType(LoginLog.LOGIN_FAILURE_STATUS);
-		loginLog.setRemoteAddress(details.getRemoteAddress());
-		loginLog.setCreateTime(date);
-		loginLog.setUpdateTime(date);
-		loginLog.setUsername(username);
-		loginLog.setRemark(event.getException().getMessage());
-		loginLogService.save(loginLog);
 	}
-
 }

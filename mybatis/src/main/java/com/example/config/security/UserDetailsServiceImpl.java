@@ -5,7 +5,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,18 +27,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public Employee loadUserByUsername(String username) throws UsernameNotFoundException {
 		Employee employee = employeeService.getByUsername(username);
 
 		if (employee == null) {
 			throw new UsernameNotFoundException("用户名或密码错误");
-		}
-
-		if (employee.getPasswordErrors() + 1 >= Employee.MAX_PASSWORD_ERRORS
-				&& employee.getStatus() != Employee.LOCK_STATUS) {
-			StringBuilder builder = new StringBuilder();
-			builder.append("账户已锁定，请").append(DateTimeUtil.LOCK_INTERVAL / 1000).append("秒后再试");
-			throw new LockedException(builder.toString());
 		}
 
 		if (Employee.LOCK_STATUS == employee.getStatus()) {

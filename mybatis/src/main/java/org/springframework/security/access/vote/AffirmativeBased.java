@@ -37,8 +37,7 @@ public class AffirmativeBased extends AbstractAccessDecisionManager {
 			if (employee.getSuperAdmin() == Employee.IS_ADMIN || "/".equals(requestUrl)) {
 				return;
 			}
-			@SuppressWarnings("unchecked")
-			List<Permission> pemissionList = (List<Permission>) employee.getAuthorities();
+			List<Permission> pemissionList = employee.getAuthorities();
 			for (Permission permission : pemissionList) {
 				// 拥有访问权限
 				if (requestUrl.equals(permission.getUrl())) {
