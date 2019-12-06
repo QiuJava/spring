@@ -133,4 +133,12 @@ public interface PermissionMapper {
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) })
 	List<Permission> selectByEmployeeId(Long employeeId);
+
+	@Select({ "SELECT ", //
+		"	authority  ", //
+		"FROM ", //
+		"	permission  ", //
+		"WHERE ", //
+		"	url = #{url,jdbcType=VARCHAR}" })
+	String selectAuthorityByUrl(String url);
 }

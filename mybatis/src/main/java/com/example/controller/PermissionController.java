@@ -146,13 +146,13 @@ public class PermissionController {
 			return new Result(false, "删除失败");
 		}
 	}
-	
+
 	@GetMapping("/permission/listByMenuId")
 	@ResponseBody
-	public List<PermissionCheckboxVo> listByMenuId(Long menuId,Long roleId){
-		return permissionService.listPermissionCheckboxVoByMenuId(menuId,roleId);
+	public List<PermissionCheckboxVo> listByMenuId(Long menuId, Long roleId) {
+		return permissionService.listPermissionCheckboxVoByMenuId(menuId, roleId);
 	}
-	
+
 	@GetMapping("/permission/listByQo")
 	@ResponseBody
 	public Result listByQo(PermissionQo qo) {
@@ -200,8 +200,6 @@ public class PermissionController {
 			return new Result(false, "权限编码过长");
 		} else if (StrUtil.isContainSpecialChar(authority)) {
 			return new Result(false, "权限编码不能包含特殊字符");
-		} else if (!authority.startsWith("ROLE_")) {
-			return new Result(false, "权限编码格式不正确");
 		}
 		return null;
 	}

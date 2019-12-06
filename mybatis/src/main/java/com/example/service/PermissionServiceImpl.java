@@ -136,4 +136,8 @@ public class PermissionServiceImpl {
 		return selectPermissionCheckboxVoByMenuId;
 	}
 
+	public String getAuthorityByUrl(String requestUrl) {
+		return permissionMapper.selectAuthorityByUrl(requestUrl);
+	}
+
 }
