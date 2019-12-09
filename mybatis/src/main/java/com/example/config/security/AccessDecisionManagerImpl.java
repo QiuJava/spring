@@ -10,8 +10,6 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.example.entity.Employee;
-
 /**
  * 自定义访问决策
  * 
@@ -24,10 +22,6 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		Employee employee =  (Employee)authentication.getPrincipal();
-		if (employee.getSuperAdmin() == Employee.IS_ADMIN) {
-			return ;
-		}
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
 			for (ConfigAttribute attr : configAttributes) {
