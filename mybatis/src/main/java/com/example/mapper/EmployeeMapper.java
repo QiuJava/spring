@@ -1,11 +1,14 @@
 package com.example.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.mapping.FetchType;
@@ -14,6 +17,7 @@ import org.apache.ibatis.type.JdbcType;
 import com.example.dto.ChangePasswordDto;
 import com.example.entity.Employee;
 import com.example.mapper.provider.EmployeeSqlProvider;
+import com.example.qo.EmployeeQo;
 
 /**
  * 员工数据操作
@@ -160,5 +164,16 @@ public interface EmployeeMapper {
 			"WHERE ", //
 			"	role_id = #{roleId,jdbcType=BIGINT}" })
 	int deleteEmployeeRoleByRoleId(Long roleId);
+
+	@SelectProvider(type = EmployeeSqlProvider.class, method = "selectByListByQo")
+	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+			@Result(column = "username", property = "username", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "email", property = "email", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "nickname", property = "nickname", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "status", property = "status", jdbcType = JdbcType.INTEGER),
+			@Result(column = "employee_type", property = "employeeType", jdbcType = JdbcType.INTEGER),
+			@Result(column = "employee_number", property = "employeeNumber", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR) })
+	List<Employee> selectByListByQo(EmployeeQo employeeQo);
 
 }

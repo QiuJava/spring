@@ -18,7 +18,7 @@ public class PageQo {
 	private Integer rows;
 	private Boolean count;
 
-	public boolean getCount() {
+	public Boolean getCount() {
 		return count == null ? true : count;
 	}
 }

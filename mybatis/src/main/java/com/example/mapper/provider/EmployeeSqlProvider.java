@@ -1,6 +1,8 @@
 package com.example.mapper.provider;
 
 import com.example.entity.Employee;
+import com.example.qo.EmployeeQo;
+
 import org.apache.ibatis.jdbc.SQL;
 
 /**
@@ -132,6 +134,20 @@ public class EmployeeSqlProvider {
 
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
 
+		return sql.toString();
+	}
+
+	public String selectByListByQo(EmployeeQo employeeQo) {
+		SQL sql = new SQL();
+		sql.SELECT(new String[] { "	id ", //
+				"	username ", //
+				"	email ", //
+				"	nickname ", //
+				"	`status` ", //
+				"	employee_type ", //
+				"	employee_number", //
+				"   intro " });
+		sql.FROM("employee");
 		return sql.toString();
 	}
 }

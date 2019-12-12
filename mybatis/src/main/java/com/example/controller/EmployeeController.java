@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.common.LogicException;
+import com.example.common.PageResult;
 import com.example.common.Result;
 import com.example.entity.Employee;
+import com.example.qo.EmployeeQo;
 import com.example.service.EmployeeServiceImpl;
 import com.example.service.email.EmailService;
 import com.example.util.SecurityContextUtil;
 import com.example.util.StrUtil;
+import com.github.pagehelper.Page;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +37,18 @@ public class EmployeeController {
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private EmailService emailService;
+
+	@GetMapping("/employee")
+	public String employee() {
+		return "employee_list";
+	}
+
+	@GetMapping("/employee/listByQo")
+	@ResponseBody
+	public PageResult<Employee> listByQo(EmployeeQo employeeQo) {
+		Page<Employee> page = employeeService.listByQo(employeeQo);
+		return new PageResult<>(page.getTotal(), page.getResult());
+	}
 
 	@GetMapping("/addEmployee")
 	public Result addEmployee(Employee employee) {

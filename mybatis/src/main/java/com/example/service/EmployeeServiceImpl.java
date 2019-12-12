@@ -11,7 +11,10 @@ import com.example.common.LogicException;
 import com.example.dto.ChangePasswordDto;
 import com.example.entity.Employee;
 import com.example.mapper.EmployeeMapper;
+import com.example.qo.EmployeeQo;
 import com.example.util.SecurityContextUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 /**
  * 员工服务实现
@@ -106,6 +109,12 @@ public class EmployeeServiceImpl {
 
 	public int deleteEmployeeRoleByRoleId(Long id) {
 		return employeeMapper.deleteEmployeeRoleByRoleId(id);
+	}
+
+	public Page<Employee> listByQo(EmployeeQo employeeQo) {
+		Page<Employee> page = PageHelper.startPage(employeeQo.getPage(), employeeQo.getRows(), employeeQo.getCount());
+		employeeMapper.selectByListByQo(employeeQo);
+		return page;
 	}
 
 }
