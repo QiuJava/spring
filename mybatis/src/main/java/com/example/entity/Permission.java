@@ -28,5 +28,10 @@ public class Permission implements GrantedAuthority {
 	private String intro;
 	private Date createTime;
 	private Date updateTime;
+	
+	@Override
+	public String getAuthority() {
+		return authority;
+	}
 
 }

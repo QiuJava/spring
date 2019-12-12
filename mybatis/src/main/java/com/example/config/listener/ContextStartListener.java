@@ -23,7 +23,6 @@ import com.example.service.PermissionServiceImpl;
  * 应用启动监听
  * 
  * @author Qiujian
- * @date 2019年3月7日
  *
  */
 @Configuration
@@ -48,7 +47,7 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 		Object object = valueOperations.get(PEMISSION_MAP);
 		if (object == null) {
 			List<Permission> listByQo = permissionService.listByQo(new PermissionQo());
-			Map<String, String> map = new HashMap<>();
+			Map<String, String> map = new HashMap<>(listByQo.size());
 			listByQo.forEach(permission -> {
 				map.put(permission.getUrl(), permission.getAuthority());
 			});
