@@ -14,7 +14,6 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import com.example.config.listener.ContextStartListener;
 import com.example.util.StrUtil;
 
-
 /**
  * 安全数据源过滤装置
  * 
@@ -22,8 +21,9 @@ import com.example.util.StrUtil;
  *
  */
 @Configuration
+@SuppressWarnings("unchecked")
 public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocationSecurityMetadataSource {
-	
+
 	@Autowired
 	private ValueOperations<String, Object> valueOperations;
 
@@ -31,10 +31,9 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		FilterInvocation filterInvocation = (FilterInvocation) object;
 		String requestUrl = filterInvocation.getRequest().getRequestURI();
-		@SuppressWarnings("unchecked")
-		Map<String,String> map = (Map<String,String>)valueOperations.get(ContextStartListener.PEMISSION_MAP);
+		Map<String, String> map = (Map<String, String>) valueOperations.get(ContextStartListener.PEMISSION_MAP);
 		String authority = map.get(requestUrl);
-		if(StrUtil.hasText(authority)) {
+		if (StrUtil.hasText(authority)) {
 			return SecurityConfig.createList(authority);
 		}
 		return null;
@@ -42,7 +41,9 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		return null;
+		Map<String, String> map = (Map<String, String>) valueOperations.get(ContextStartListener.PEMISSION_MAP);
+		Collection<String> values = map.values();
+		return SecurityConfig.createList(values.toArray(new String[values.size()]));
 	}
 
 	@Override
