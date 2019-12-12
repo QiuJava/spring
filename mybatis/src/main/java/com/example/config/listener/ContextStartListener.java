@@ -1,21 +1,15 @@
 package com.example.config.listener;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.entity.Employee;
-import com.example.entity.Permission;
-import com.example.qo.PermissionQo;
 import com.example.service.EmployeeServiceImpl;
 import com.example.service.PermissionServiceImpl;
 
@@ -27,33 +21,24 @@ import com.example.service.PermissionServiceImpl;
  */
 @Configuration
 public class ContextStartListener implements ApplicationListener<ContextRefreshedEvent> {
-
+	
 	public static final String PEMISSION_MAP = "PEMISSION_MAP";
 
 	@Autowired
 	private EmployeeServiceImpl employeeService;
+	
 	@Autowired
 	private PermissionServiceImpl permissionService;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	@Autowired
-	private ValueOperations<String, Object> valueOperations;
-
 	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		Object object = valueOperations.get(PEMISSION_MAP);
-		if (object == null) {
-			List<Permission> listByQo = permissionService.listByQo(new PermissionQo());
-			Map<String, String> map = new HashMap<>(listByQo.size());
-			listByQo.forEach(permission -> {
-				map.put(permission.getUrl(), permission.getAuthority());
-			});
-			valueOperations.set(PEMISSION_MAP, map);
-		}
-
+		
+		permissionService.settingPermissionMap();
+		
 		// 判断数据库中是否有超级管理员,没有新建一个
 		boolean hasAdmin = employeeService.hasAdmin();
 		if (hasAdmin) {

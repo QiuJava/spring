@@ -1,13 +1,17 @@
 package com.example.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.common.LogicException;
+import com.example.config.listener.ContextStartListener;
 import com.example.entity.Permission;
 import com.example.mapper.PermissionMapper;
 import com.example.qo.PermissionQo;
@@ -25,6 +29,9 @@ public class PermissionServiceImpl {
 
 	@Autowired
 	private PermissionMapper permissionMapper;
+
+	@Autowired
+	private ValueOperations<String, Object> valueOperations;
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Permission permission) throws LogicException {
@@ -138,6 +145,15 @@ public class PermissionServiceImpl {
 
 	public String getAuthorityByUrl(String requestUrl) {
 		return permissionMapper.selectAuthorityByUrl(requestUrl);
+	}
+
+	public void settingPermissionMap() {
+		List<Permission> listByQo = this.listByQo(new PermissionQo());
+		Map<String, String> map = new HashMap<>(listByQo.size());
+		listByQo.forEach(permission -> {
+			map.put(permission.getUrl(), permission.getAuthority());
+		});
+		valueOperations.set(ContextStartListener.PEMISSION_MAP, map);
 	}
 
 }

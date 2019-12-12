@@ -71,6 +71,7 @@ public class PermissionController {
 
 		try {
 			permissionService.save(permission);
+			permissionService.settingPermissionMap();
 			return new Result(true, "添加成功");
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
@@ -120,6 +121,7 @@ public class PermissionController {
 			if (update != 1) {
 				return new Result(false, "更新失败");
 			}
+			permissionService.settingPermissionMap();
 			return new Result(true, "更新成功");
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
@@ -138,6 +140,7 @@ public class PermissionController {
 		}
 		try {
 			permissionService.deleteById(id);
+			permissionService.settingPermissionMap();
 			return new Result(true, "删除成功");
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
