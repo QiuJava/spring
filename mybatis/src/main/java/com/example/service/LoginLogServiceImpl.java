@@ -23,7 +23,7 @@ public class LoginLogServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(LoginLog loginLog) {
-		return loginLogMapper.insertSelective(loginLog);
+		return loginLogMapper.insert(loginLog);
 	}
 
 	public Date getNewestLoginTimeByUsername(String username) {

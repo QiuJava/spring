@@ -24,12 +24,22 @@
 	}
 	var token = [[${_csrf.token}]];
 	
-	$(function(){
-		
-		
-		
-	});
+	var statusObj = {0:"正常",1:"锁定",2:"失效"};
+	var employeeObj = {0:"管理"};
 
+	function employeeSearch(){
+		$("#employee-dg").datagrid("load",{
+			"username":$("#username").val(),
+			"employeeNumber":$("#employeeNumber").val(),
+			"employeeType":$("#employeeType").val()
+		});
+	}
+	
+	function clearEmployeeCondition(){
+		$('#username').textbox('clear');
+		$('#employeeNumber').textbox('clear');
+		$('#employeeType').combobox('setValue','');
+	}
 	
 </script>
 </head>
@@ -51,10 +61,13 @@
 				<th data-options="field:'nickname'" width="80">昵称</th>
 				<th data-options="field:'status',
 				formatter: function(value,row,index){
-					return value;
+					return statusObj[value];
 				}" 
 				width="50">状态</th>
-				<th data-options="field:'employeeType'" width="50">员工类型</th>
+				<th data-options="field:'employeeType',
+				formatter: function(value,row,index){
+					return employeeObj[value];
+				}" width="50">员工类型</th>
 				<th data-options="field:'employeeNumber'" width="50">工号</th>
 				<th data-options="field:'intro'" width="150">简介</th>
 			</tr>
@@ -63,13 +76,26 @@
 	
 	<div id="employee-toolbar">
 		<div id="employeeSearchInputs">
-			<span>登录名称:</span> <input id="username" name="username" />
+			<span>登录名称:</span> <input class="easyui-textbox" id="username" name="username" />
+			<span>工号:</span> <input class="easyui-textbox" id="employeeNumber" name="employeeNumber" />
+			<span>员工类型:</span> <input id="employeeType" class="easyui-combobox" name="employeeType"
+    		data-options="valueField:'value',textField:'name',data:
+					[{
+						name: '全部',
+						value: ''
+					},{
+						name: '管理',
+						value: '0'
+					}]"/>
+		</div>
+		<div id="employeeSearchButton">
 			<a href="#" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true"
 				onclick="employeeSearch()">查询</a> <a href="#"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-clear',plain:true"
 				onclick="clearEmployeeCondition()">清空</a>
+		
 		</div>
 		
 		<a href="#" class="easyui-linkbutton"

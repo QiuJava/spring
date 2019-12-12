@@ -2,6 +2,7 @@ package com.example.mapper.provider;
 
 import com.example.entity.Employee;
 import com.example.qo.EmployeeQo;
+import com.example.util.StrUtil;
 
 import org.apache.ibatis.jdbc.SQL;
 
@@ -148,6 +149,19 @@ public class EmployeeSqlProvider {
 				"	employee_number", //
 				"   intro " });
 		sql.FROM("employee");
+
+		if (StrUtil.hasText(employeeQo.getUsername())) {
+			sql.WHERE("username = #{username,jdbcType=VARCHAR}");
+		}
+		
+		if (StrUtil.hasText(employeeQo.getEmployeeNumber())) {
+			sql.WHERE("employee_number = #{employeeNumber,jdbcType=VARCHAR}");
+		}
+		
+		if (employeeQo.getEmployeeType() != null) {
+			sql.WHERE("employee_type = #{employeeType,jdbcType=INTEGER}");
+		}
+
 		return sql.toString();
 	}
 }

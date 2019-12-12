@@ -16,8 +16,8 @@ import com.example.mapper.provider.LoginLogSqlProvider;
  */
 public interface LoginLogMapper {
 
-	@InsertProvider(type = LoginLogSqlProvider.class, method = "insertSelective")
-	int insertSelective(LoginLog record);
+	@InsertProvider(type = LoginLogSqlProvider.class, method = "insert")
+	int insert(LoginLog record);
 
 	@Select({ "SELECT ", //
 			"	create_time  ", //
