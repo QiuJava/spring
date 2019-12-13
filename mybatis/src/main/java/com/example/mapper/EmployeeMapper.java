@@ -176,4 +176,12 @@ public interface EmployeeMapper {
 			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR) })
 	List<Employee> selectByListByQo(EmployeeQo employeeQo);
 
+	@Select({ "SELECT ", //
+		"	count( * )  ", //
+		"FROM ", //
+		"	`employee`  ", //
+		"WHERE ", //
+		"	email = #{email,jdbcType=VARCHAR}" })
+	int countByEmail(String email);
+
 }

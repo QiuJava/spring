@@ -86,7 +86,7 @@ public class EmployeeServiceImpl {
 		}
 
 		String currentPassword = currentEmployee.getPassword();
-		if (!passwordEncoder.matches(password, currentPassword)) {
+		if (!passwordEncoder.matches(password, currentPassword)) {                                                                                                                                                                   
 			throw new LogicException("原密码不正确");
 		}
 
@@ -115,6 +115,10 @@ public class EmployeeServiceImpl {
 		Page<Employee> page = PageHelper.startPage(employeeQo.getPage(), employeeQo.getRows(), employeeQo.getCount());
 		employeeMapper.selectByListByQo(employeeQo);
 		return page;
+	}
+
+	public boolean hasByEmail(String email) {
+		return employeeMapper.countByEmail(email) == 1;
 	}
 
 }

@@ -50,18 +50,21 @@ public class EmployeeController {
 		return new PageResult<>(page.getTotal(), page.getResult());
 	}
 
-	@GetMapping("/addEmployee")
+	@PostMapping("/employee/verifyEmail")
+	@ResponseBody
+	public boolean verifyEmail(String email) {
+		if (!email.endsWith("@qq.com")) {
+			return false;
+		}
+		// 邮箱不能重复
+		return !employeeService.hasByEmail(email);
+	}
+	
+	
+	@PostMapping("/employee/add")
+	@ResponseBody
 	public Result addEmployee(Employee employee) {
 		String username = employee.getUsername();
-		Result verifyUsername = this.verifyUsername(username);
-		if (verifyUsername != null) {
-			return verifyUsername;
-		}
-		String email = employee.getEmail();
-		Result verifyEmail = this.verifyEmail(email);
-		if (this.verifyEmail(email) != null) {
-			return verifyEmail;
-		}
 
 		String nickname = employee.getNickname();
 		Result verifyNickname = this.verifyNickname(nickname);
@@ -73,13 +76,6 @@ public class EmployeeController {
 		Result verifyEmployeeNumber = this.verifyEmployeeNumber(employeeNumber);
 		if (verifyEmployeeNumber != null) {
 			return verifyEmployeeNumber;
-		}
-
-		Integer employeeType = employee.getEmployeeType();
-		if (employeeType == null) {
-			return new Result(false, "员工类型不能不为空");
-		} else if (employeeType.toString().length() > 2) {
-			return new Result(false, "员工类型过长");
 		}
 
 		String intro = employee.getIntro();
@@ -126,11 +122,6 @@ public class EmployeeController {
 
 	@GetMapping("/resetPassword")
 	public Result resetPassword(Employee employee) {
-		String username = employee.getUsername();
-		Result verifyUsername = this.verifyUsername(username);
-		if (verifyUsername != null) {
-			return verifyUsername;
-		}
 
 		String employeeNumber = employee.getEmployeeNumber();
 		Result verifyEmployeeNumber = this.verifyEmployeeNumber(employeeNumber);
@@ -145,10 +136,6 @@ public class EmployeeController {
 
 		// 校验邮箱
 		String email = employee.getEmail();
-		Result verifyEmail = this.verifyEmail(email);
-		if (verifyEmail != null) {
-			return verifyEmail;
-		}
 
 		try {
 			// 只有超级管理员才有重重置密码的权限
@@ -174,10 +161,6 @@ public class EmployeeController {
 	@PostMapping("/employee/changePassword")
 	@ResponseBody
 	public Result changePassword(String username, String password, String newPassword) {
-		Result verifyUsername = this.verifyUsername(username);
-		if (verifyUsername != null) {
-			return verifyUsername;
-		}
 
 		if (StrUtil.noText(password)) {
 			return new Result(false, "原密码不能为空");
@@ -217,37 +200,19 @@ public class EmployeeController {
 	}
 
 	private Result verifyNickname(String nickname) {
-		if (StrUtil.noText(nickname)) {
-			return new Result(false, "昵称不能为空");
-		} else if (nickname.length() > 20) {
-			return new Result(false, "昵称过长");
-		} else if (StrUtil.isContainSpecialChar(nickname)) {
+		if (StrUtil.isContainSpecialChar(nickname)) {
 			return new Result(false, "昵称不能含有特殊字符");
 		}
 		return null;
 	}
 
-	private Result verifyUsername(String username) {
-		if (StrUtil.noText(username)) {
-			return new Result(false, "用户名不能为空");
-		} else if (username.length() > 20) {
-			return new Result(false, "用户名过长");
-		} else if (StrUtil.isContainSpecialChar(username)) {
-			return new Result(false, "用户名不能含有特殊字符");
+	@PostMapping("/employee/verifyUsername")
+	@ResponseBody
+	public boolean verifyUsername(String username) {
+		if (StrUtil.isContainSpecialChar(username)) {
+			return false;
 		}
-		return null;
+		return !employeeService.hasByUsername(username);
 	}
 
-	private Result verifyEmail(String email) {
-		if (StrUtil.noText(email)) {
-			return new Result(false, "邮箱不能为空");
-		} else if (email.length() > 50) {
-			return new Result(false, "邮箱过长");
-		} else if (!email.matches(StrUtil.EMAIL_REGEX)) {
-			return new Result(false, "邮箱格式不正确");
-		} else if (!email.endsWith("@qq.com")) {
-			return new Result(false, "暂时只支持qq邮箱");
-		}
-		return null;
-	}
 }
