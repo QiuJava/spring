@@ -34,10 +34,6 @@ public class RoleServiceImpl {
 		Date date = new Date();
 		role.setCreateTime(date);
 		role.setUpdateTime(date);
-		boolean hasByRoleName = this.hasByRoleName(role.getRoleName());
-		if (hasByRoleName) {
-			throw new LogicException("角色名已存在");
-		}
 		return roleMapper.insert(role);
 	}
 
@@ -60,19 +56,7 @@ public class RoleServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int updateById(Role role) {
-		String roleName = role.getRoleName();
-
 		role.setUpdateTime(new Date());
-		String oldRoleName = roleMapper.selectRoleNameById(role.getId());
-		if (!oldRoleName.equals(roleName)) {
-			boolean hasByRoleName = this.hasByRoleName(roleName);
-			if (hasByRoleName) {
-				throw new LogicException("角色名已存在");
-			}
-		}else {
-			role.setRoleName(null);
-		}
-
 		return roleMapper.updateById(role);
 	}
 
@@ -92,6 +76,10 @@ public class RoleServiceImpl {
 		Page<Role> page = PageHelper.startPage(roleQo.getPage(), roleQo.getRows(), roleQo.getCount());
 		roleMapper.selectByQo(roleQo);
 		return page;
+	}
+
+	public String getRoleNameById(Long id) {
+		return roleMapper.selectRoleNameById(id);
 	}
 
 }

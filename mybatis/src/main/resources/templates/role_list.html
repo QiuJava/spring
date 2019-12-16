@@ -33,27 +33,37 @@
 	        },
 	        onExpandRow: function(index, row) {
 	            var ddv = $(this).datagrid('getRowDetail', index).find('div.ddv');
+	           	var rows =  $(this).datagrid('getRows');
+	           	// 销毁其它明细
+				$.each(rows, function(i, n){
+					if(index != i){
+						$('#role-dg').datagrid('collapseRow', i);
+						$('#role-dg').datagrid('refreshRow', i);
+					}
+				});	           	
+	            var roleId = row.id;
+	            if(!roleId){
+	            	roleId = 0;
+	            }
 	            ddv.panel({
 	                border: false,
 	                cache: true,
-	                href: '/role/form?index=' + index,
+	                href: '/role/form?index=' + index + '&id='+ roleId,
 	                onLoad: function() {
 	                    $('#role-dg').datagrid('fixDetailRowHeight', index);
 	                    $('#role-dg').datagrid('selectRow', index);
 	                    $('#role-dg').datagrid('getRowDetail', index).find('form').form('load', row);
 	                }
 	            });
-	            $('#role-dg').datagrid('fixDetailRowHeight', index);
 	        }
 	    });
-	
 	});
 	
 	function saveItem(index) {
 	    var row = $('#role-dg').datagrid('getRows')[index];
-	    var url = row.isNewRecord ? '/role/add?_csrf=' + token: '/role/update?id=' + row.id + '&_csrf=' + token;
+	    var url = row.isNewRecord ? '/role/add?_csrf=': '/role/update?&_csrf=';
 	    $('#role-dg').datagrid('getRowDetail', index).find('form').form('submit', {
-	        url: url,
+	        url: url+token,
 	        onSubmit: function() {
 	            return $(this).form('validate');
 	        },
@@ -115,7 +125,7 @@
 	}
 	
 	function clearRoleCondition() {
-	    $('#roleName').val('');
+	    $('#roleName').textbox('clear');
 	}
 	
 	function allotPermission() {
@@ -126,22 +136,43 @@
 	            method: 'get',
 	            onSelect: function(node) {
 	                createPermissionCheckBox(node.id, row.id);
+	            },
+	            onCheck: function(node,checked){
+	            	if(checked){
+	            		$.get("/permission/listByMenuId", {
+	            	        "menuId": node.id,
+	            	        "roleId": row.id
+	            	    },
+	            	    function(data) { 
+	            	        var listHtml = ''; 
+	            	        $.each(data,function(index) {    
+	            	            var permission = data[index];
+	            	            var checkStr = '';
+	            	            if (permission.checked) {
+	            	                checkStr = 'checked="checked"';
+	            	            }
+	            	            listHtml +=  '<input type="checkbox" name="permissionId" ' + checkStr + ' value="' + permission.permissionId + '">' + permission.permissionName;
+	            	        });      
+	            	        $("#permissionCheckBoxDiv").html(listHtml); 
+	            	        var checkboxList = document.getElementsByName("permissionId");
+	    	                
+	    	                $.each(checkboxList,function(index,item){
+	    	                	item.checked = checked;
+	                    	});
+	            	    },
+	            	    'json');    
+	            	}else {
+	            		$('#permissionCheckBoxDiv').html(''); 
+	            	}
 	            }
 	        });
 	        $('#allSelect').checkbox({
 	            onChange: function(checked) {
 	                var checkboxList = document.getElementsByName("permissionId");
-	                if (checked) {
-	                    for (var i = 0; i < checkboxList.length; i++) {
-	                        var permissionCheckbox = checkboxList[i];
-	                        permissionCheckbox.checked = true;
-	                    }
-	                } else {
-	                    for (var i = 0; i < checkboxList.length; i++) {
-	                        var permissionCheckbox = checkboxList[i];
-	                        permissionCheckbox.checked = false;
-	                    }
-	                }
+	                
+	                $.each(checkboxList,function(index,item){
+	                	item.checked = checked;
+                	});
 	            }
 	        });
 	
@@ -156,7 +187,8 @@
 	    $('#allotPermission-dialog').dialog('close');
 	}
 	
-	function createPermissionCheckBox(menuId, roleId) { $.get("/permission/listByMenuId", {
+	function createPermissionCheckBox(menuId, roleId) { 
+		$.get("/permission/listByMenuId", {
 	        "menuId": menuId,
 	        "roleId": roleId
 	    },
@@ -181,8 +213,11 @@
 	    var row = $('#role-dg').datagrid('getSelected');
 	    var node = $('#menuTree').tree('getSelected');
 	    if (!node) {
-	        $.messager.alert('提示', '请选择一行', 'info');
-	        return;
+	    	node = $('#menuTree').tree('getChecked');
+	    	if(!node){
+		        $.messager.alert('提示', '请选择一行', 'info');
+		        return;
+	    	}
 	    }
 	    $('#permissionIdForm').form('submit', {
 	        url: "/role/allotPermission?_csrf=" + token,
@@ -240,7 +275,7 @@
 	</table>
 	<div id="role-toolbar">
 		<div id="roleSearchInputs">
-			<span>角色名称:</span> <input id="roleName" name="roleName" />
+			<span>角色名称:</span> <input id="roleName" name="roleName" class="easyui-textbox" data-options="validType:'length[0,20]'"/>
 			<a href="#" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true"
 				onclick="roleSearch()">查询</a> <a href="#"

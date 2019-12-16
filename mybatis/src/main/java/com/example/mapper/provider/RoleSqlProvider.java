@@ -33,12 +33,8 @@ public class RoleSqlProvider {
 	public String updateById(Role record) {
 		SQL sql = new SQL();
 		sql.UPDATE("role");
-		if (record.getRoleName() != null) {
-			sql.SET("role_name = #{roleName,jdbcType=VARCHAR}");
-		}
-		if (record.getIntro() != null) {
-			sql.SET("intro = #{intro,jdbcType=VARCHAR}");
-		}
+		sql.SET("role_name = #{roleName,jdbcType=VARCHAR}");
+		sql.SET("intro = #{intro,jdbcType=VARCHAR}");
 		sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
 
@@ -51,10 +47,10 @@ public class RoleSqlProvider {
 		sql.WHERE(SqlUtil.inJoint("permission_id", "list", params.get("list")));
 		return sql.toString();
 	}
-	
+
 	public String selectByQo(RoleQo roleQo) {
 		SQL sql = new SQL();
-		sql.SELECT("id","role_name","intro");
+		sql.SELECT("id", "role_name", "intro");
 		sql.FROM("role");
 		if (StrUtil.hasText(roleQo.getRoleName())) {
 			sql.WHERE("role_name=#{roleName,jdbcType=VARCHAR}");
