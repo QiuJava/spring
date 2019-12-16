@@ -32,6 +32,17 @@ public class EmployeeServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Employee employee) {
+		String employeeNumber = employee.getEmployeeNumber();
+		// 初始化
+		employee.setStatus(Employee.NORMAL_STATUS);
+		employee.setSuperAdmin(Employee.IS_NOT_ADMIN);
+
+		employee.setPassword(passwordEncoder
+				.encode(new StringBuilder(20).append(employeeNumber).append(Employee.INIT_PASSWORD_SUFFIX)));
+		employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
+		Date date = new Date();
+		employee.setCreateTime(date);
+		employee.setUpdateTime(date);
 		return employeeMapper.insertSelective(employee);
 	}
 
@@ -61,8 +72,8 @@ public class EmployeeServiceImpl {
 		return employeeMapper.countByUsername(username) == 1;
 	}
 
-	public boolean hasEmployeeByEmployeeNumber(String employeeNumber) {
-		return employeeMapper.countByEmployeeNumber(employeeNumber) > 0;
+	public boolean hasByEmployeeNumber(String employeeNumber) {
+		return employeeMapper.countByEmployeeNumber(employeeNumber) == 1;
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -76,20 +87,10 @@ public class EmployeeServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int changePassword(String username, String password, String newPassword) {
 		// 密码只能自己修改
-		Employee currentEmployee = SecurityContextUtil.getCurrentEmployee();
-		if (currentEmployee == null) {
-			throw new LogicException("请先登录");
-		}
-		String currentUsername = currentEmployee.getUsername();
-		if (!username.equals(currentUsername)) {
-			throw new LogicException("用户名不正确");
-		}
-
-		String currentPassword = currentEmployee.getPassword();
-		if (!passwordEncoder.matches(password, currentPassword)) {                                                                                                                                                                   
+		String currentPassword = SecurityContextUtil.getCurrentEmployee().getPassword();
+		if (!passwordEncoder.matches(password, currentPassword)) {
 			throw new LogicException("原密码不正确");
 		}
-
 		// 进行修改操作
 		ChangePasswordDto changePasswordDto = new ChangePasswordDto();
 		changePasswordDto.setUsername(username);
@@ -101,10 +102,6 @@ public class EmployeeServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int passwordErrorsClear() {
 		return employeeMapper.updateAllPasswordErrors();
-	}
-
-	public int countEmployeeRoleByRoleId(Long id) {
-		return employeeMapper.countEmployeeRoleByRoleId(id);
 	}
 
 	public int deleteEmployeeRoleByRoleId(Long id) {
@@ -119,6 +116,10 @@ public class EmployeeServiceImpl {
 
 	public boolean hasByEmail(String email) {
 		return employeeMapper.countByEmail(email) == 1;
+	}
+
+	public boolean hasByNickname(String nickname) {
+		return employeeMapper.countByNickname(nickname) == 1;
 	}
 
 }

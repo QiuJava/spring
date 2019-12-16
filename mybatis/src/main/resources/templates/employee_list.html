@@ -38,7 +38,7 @@
 	}
 	
 	function add(){
-		
+		$('#employee-dialog').dialog('open');
 	}
 	
 	function save(){
@@ -49,6 +49,13 @@
 			},
 		 	success: function(data){
 				var data = eval('(' + data + ')'); 
+				if (data.succeed){
+					$.messager.alert('提示', data.msg, 'info',function(){
+						$("#add-form").form("clear");
+					});
+				}else {
+					$.messager.alert('提示', data.msg, 'error');
+				}
 		    }
 		});
 	}
@@ -56,7 +63,6 @@
 	function clearForm(){
 		$("#add-form").form("clear");
 	}
-	
 	
 	$(function(){
 		$("#email").textbox({
@@ -66,6 +72,15 @@
 		$("#usernameInput").textbox({
 			required:true,
 			validType:['length[2,20]','remote["/employee/verifyUsername?_csrf='+token+'","username"]']
+		});
+		$("#nickname").textbox({
+			required:true,
+			validType:['length[2,20]','remote["/employee/verifyNickname?_csrf='+token+'","nickname"]']
+		});
+		$("#employeeNumberInput").numberbox({
+			required:true,
+			validType:['length[3,6]','remote["/employee/verifyEmployeeNumber?_csrf='+token+'","employeeNumber"]'],
+			min:0
 		});
 	});
 	
@@ -109,7 +124,7 @@
 	<div id="employee-toolbar">
 		<div id="employeeSearchInputs">
 			<span>登录名称:</span> <input class="easyui-textbox" id="username"
-				name="username" /> <span>工号:</span> <input class="easyui-textbox"
+				name="username" /> <span>工号:</span> <input class="easyui-numberbox"
 				id="employeeNumber" name="employeeNumber" /> <span>员工类型:</span> <input
 				id="employeeType" class="easyui-combobox" name="employeeType"
 				data-options="valueField:'value',textField:'name',data:
@@ -134,7 +149,7 @@
 		<a href="#" class="easyui-linkbutton"
 			data-options="iconCls:'icon-add',plain:true" onclick="add()">新增员工</a>
 		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-edit',plain:true" onclick="add()">编辑员工</a>
+			data-options="iconCls:'icon-edit',plain:true" onclick="edit()">编辑</a>
 		<a href="#" class="easyui-linkbutton"
 			data-options="iconCls:'icon-remove',plain:true" onclick="remove()">删除</a>
 		<a href="#" class="easyui-linkbutton"
@@ -143,7 +158,12 @@
 
 	<div id="employee-dialog" class="easyui-dialog" title="新增员工"
 		style="width: 500px; height: 500px;"
-		data-options="iconCls:'icon-add',resizable:true,modal:true">
+		data-options="iconCls:'icon-add',resizable:true,modal:true,closed:true,
+				onClose:function(){
+					$('#add-form').form('clear'); 
+					employeeSearch();
+				}
+		">
 		<form id="add-form" method="post">
 			<table cellpadding="2">
 				<tr>
@@ -156,27 +176,21 @@
 				</tr>
 				<tr>
 					<td>昵称:</td>
-					<td><input class="easyui-textbox" name="nickname"
-						data-options="required:true,validType:'length[2,20]'" /></td>
+					<td><input id="nickname" name="nickname" /></td>
 				</tr>
 				<tr>
 					<td>员工类型:</td>
 					<td><input class="easyui-combobox" name="employeeType"
-						data-options="valueField:'value',textField:'name',required:true,data:
-					[{
-						name: '管理',
-						value: '0'
-					}]" /></td>
+						data-options="valueField:'value',textField:'name',required:true,url:'/dictEntry/employeeTypeList',method:'get'" /></td>
 				</tr>
 				<tr>
 					<td>工号:</td>
-					<td><input class="easyui-textbox" name="employeeNumber"
-						data-options="required:true" /></td>
+					<td><input id="employeeNumberInput" name="employeeNumber" /></td>
 				</tr>
 				<tr>
 					<td>描述:</td>
-					<td><textarea form="add-form" rows="4" cols="25" name="intro"
-							id="intro"></textarea></td>
+					<td><textarea maxlength="255" form="add-form" rows="4"
+							cols="25" name="intro" id="intro"></textarea></td>
 				</tr>
 			</table>
 		</form>

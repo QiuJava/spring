@@ -13,12 +13,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Result {
+public class Result<T> {
 
 	private Boolean succeed;
 	private String msg;
-	private Integer statusCode;
-	private Object data;
+	private T data;
 
 	public Result() {
 	}
@@ -32,16 +31,9 @@ public class Result {
 		this.msg = msg;
 	}
 
-	public Result(Boolean succeed, String msg, Integer statusCode) {
+	public Result(Boolean succeed, String msg, T data) {
 		this.succeed = succeed;
 		this.msg = msg;
-		this.statusCode = statusCode;
-	}
-
-	public Result(Boolean succeed, String msg, Integer statusCode, Object data) {
-		this.succeed = succeed;
-		this.msg = msg;
-		this.statusCode = statusCode;
 		this.data = data;
 	}
 }

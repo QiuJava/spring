@@ -94,7 +94,7 @@ public class JobController {
 		}
 		try {
 			List<JobDetails> list = jobManageService.listByQo(qo);
-			return new Result(true, "查询成功", null, list);
+			return new Result(true, "查询成功", list);
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
 		} catch (Exception e) {

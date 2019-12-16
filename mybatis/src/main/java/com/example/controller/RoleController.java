@@ -80,7 +80,7 @@ public class RoleController {
 
 		try {
 			roleService.save(role);
-			return new Result(true, "添加成功", null, role);
+			return new Result(true, "添加成功", role);
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
 		} catch (Exception e) {
@@ -134,7 +134,7 @@ public class RoleController {
 			if (updateById != 1) {
 				return new Result(false, "更新失败");
 			}
-			return new Result(true, "更新成功", null, role);
+			return new Result(true, "更新成功", role);
 		} catch (LogicException e) {
 			return new Result(false, e.getMessage());
 		} catch (Exception e) {

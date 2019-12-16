@@ -178,7 +178,7 @@ public class PermissionController {
 
 		try {
 			List<Permission> listByQo = permissionService.listByQo(qo);
-			return new Result(true, "查询成功", null, listByQo);
+			return new Result(true, "查询成功", listByQo);
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result(false, "查询失败");

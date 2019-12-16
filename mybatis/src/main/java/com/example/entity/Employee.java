@@ -52,8 +52,8 @@ public class Employee implements UserDetails {
 
 	public static final int PASSWORD_ERRORS_INIT = 0;
 
-	public static final String INIT_PASSWORD_SUFFIX = "a123";
-	public static final String INIT_EMPLOYEE_NUMBER = "000";
+	public static final String INIT_PASSWORD_SUFFIX = "000";
+	public static final String INIT_EMPLOYEE_NUMBER = "100";
 
 	@Override
 	public String getUsername() {

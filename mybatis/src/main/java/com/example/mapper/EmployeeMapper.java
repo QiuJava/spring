@@ -184,4 +184,12 @@ public interface EmployeeMapper {
 		"	email = #{email,jdbcType=VARCHAR}" })
 	int countByEmail(String email);
 
+	@Select({ "SELECT ", //
+		"	count( * )  ", //
+		"FROM ", //
+		"	`employee`  ", //
+		"WHERE ", //
+		"	nickname = #{nickname,jdbcType=VARCHAR}" })
+	int countByNickname(String nickname);
+
 }
