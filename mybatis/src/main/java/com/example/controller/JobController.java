@@ -80,11 +80,6 @@ public class JobController {
 	@GetMapping("/listByQo")
 	public Result listByQo(JobDetailsQo qo) {
 
-		Result verify = qo.verify();
-		if (verify != null) {
-			return verify;
-		}
-
 		String jobGroupName = qo.getJobGroupName();
 		if (StrUtil.hasText(jobGroupName) && jobGroupName.length() > 190) {
 			return new Result(false, "任务组名称过长");

@@ -38,6 +38,8 @@ public class Employee implements UserDetails {
 	private List<Permission> authorities;
 
 	private List<MenuTree> menuTreeList;
+	
+	private Date newestLoginTime;
 
 	public static final int NORMAL_STATUS = 0;
 	public static final int LOCK_STATUS = 1;

@@ -1,49 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
-<head>
-<meta charset="UTF-8">
-<title>后台管理系统</title>
-
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/icon.css" />
-<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
-
-</head>
-<body>
-	<script type="text/javascript" th:inline="javascript">
-		var token = [[${_csrf.token}]];
-		$(function () {
-			$("#roleNameInput").textbox({
-				required:true,
-				validType:['length[2,20]','remote["/role/verifyRoleName?_csrf='+token+'&id='+[[${id}]]+'","roleName"]']
-			});
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>后台管理系统</title> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css" /> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css" /> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script> 
+ </head> 
+ <body> 
+  <script type="text/javascript" th:inline="javascript">
+	var token = [[${_csrf.token}]];
+	$(function () {
+		$("#roleNameInput").textbox({
+			required:true,
+			validType:['length[2,20]','remote["/role/verifyRoleName?_csrf='+token+'&id='+[[${id}]]+'","roleName"]']
 		});
-	</script>
-	<form method="post">
-		<input name="id" type="hidden" />
-		<table class="dv-table"
-			style="width: 100%; background: #fafafa; padding: 5px; margin-top: 5px;">
-			<tr>
-				<td>角色名称</td>
-				<td><input id="roleNameInput" name="roleName"></input></td>
-				<td>角色描述</td>
-				<td><input name="intro" class="easyui-textbox"
-					data-options="validType:'length[0,50]'"></input></td>
-			</tr>
-		</table>
-		<div style="padding: 5px 0; text-align: right; padding-right: 30px">
-			<a href="#" class="easyui-linkbutton" iconCls="icon-save"
-				plain="true" th:onclick="'javascript:saveItem('+${index}+')'">保存</a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-cancel"
-				plain="true" th:onclick="'javascript:cancelItem('+${index}+')'">取消</a>
-		</div>
-	</form>
-</body>
+	});
+  </script> 
+  <form method="post"> 
+   <input name="id" type="hidden" /> 
+   <table class="dv-table" style="width: 100%; background: #fafafa; padding: 5px; margin-top: 5px;"> 
+    <tbody>
+     <tr> 
+      <td>角色名称</td> 
+      <td><input id="roleNameInput" name="roleName" /></td> 
+      <td>角色描述</td> 
+      <td><input name="intro" class="easyui-textbox" data-options="validType:'length[0,50]'" /></td> 
+     </tr> 
+    </tbody>
+   </table> 
+   <div style="padding: 5px 0; text-align: right; padding-right: 30px"> 
+    <a href="#" class="easyui-linkbutton" iconcls="icon-save" plain="true" th:onclick="'javascript:saveItem('+${index}+')'">保存</a> 
+    <a href="#" class="easyui-linkbutton" iconcls="icon-cancel" plain="true" th:onclick="'javascript:cancelItem('+${index}+')'">取消</a> 
+   </div> 
+  </form>  
+ </body>
 </html>

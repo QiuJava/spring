@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
-<head>
-<meta charset="UTF-8">
-<title>后台管理系统</title>
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/icon.css" />
-<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/datagrid-detailview.js"></script>
-
-<script type="text/javascript" th:inline="javascript">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>后台管理系统</title> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css" /> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css" /> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/datagrid-detailview.js"></script> 
+  <script type="text/javascript" th:inline="javascript">
 	function p(obj) {
 	    console.info(obj);
 	
@@ -262,76 +255,57 @@
 	}
 
 	
-</script>
-</head>
-<body>
-	<table id="role-dg" title="角色列表" style="width: 550px; height: 450px"
-		data-options="
+  </script> 
+ </head> 
+ <body> 
+  <table id="role-dg" title="角色列表" style="width: 550px; height: 450px" data-options="
 				iconCls: 'icon-ok',
 				fitColumns: true,
 				url:  '/role/listByQo',
 				method: 'get',
 				toolbar: '#role-toolbar',
 				singleSelect: true
-			">
-		<thead>
-			<tr>
-				<th data-options="field:'roleName'" width="50">角色名称</th>
-				<th data-options="field:'intro'" width="50">角色描述</th>
-			</tr>
-		</thead>
-	</table>
-	<div id="role-toolbar">
-		<div id="roleSearchInputs">
-			<span>角色名称:</span> <input id="roleName" name="roleName" class="easyui-textbox" data-options="validType:'length[0,20]'"/>
-			<a href="#" class="easyui-linkbutton"
-				data-options="iconCls:'icon-search',plain:true"
-				onclick="roleSearch()">查询</a> <a href="#"
-				class="easyui-linkbutton"
-				data-options="iconCls:'icon-clear',plain:true"
-				onclick="clearRoleCondition()">清空</a>
-		</div>
-		
-		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-add',plain:true" onclick="newItem()">新增角色</a>
-		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-remove',plain:true"
-			onclick="destroyItem()">删除</a>
-		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-add',plain:true"
-			onclick="allotPermission()">分配权限</a>
-	</div>
-	
-	<!-- 权限分配弹框 -->
-	<div id="allotPermission-dialog" class="easyui-dialog" title="分配权限" style="width:800px;height:500px;padding:10px"
-			data-options="
+			"> 
+   <thead> 
+    <tr> 
+     <th data-options="field:'roleName'" width="50">角色名称</th> 
+     <th data-options="field:'intro'" width="50">角色描述</th> 
+    </tr> 
+   </thead> 
+  </table> 
+  <div id="role-toolbar"> 
+   <div id="roleSearchInputs"> 
+    <span>角色名称:</span> 
+    <input id="roleName" name="roleName" class="easyui-textbox" data-options="validType:'length[0,20]'" /> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="roleSearch()">查询</a> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true" onclick="clearRoleCondition()">清空</a> 
+   </div> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="newItem()">新增角色</a> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="destroyItem()">删除</a> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="allotPermission()">分配权限</a> 
+  </div> 
+  <!-- 权限分配弹框 --> 
+  <div id="allotPermission-dialog" class="easyui-dialog" title="分配权限" style="width:800px;height:500px;padding:10px" data-options="
 				closed:true,
 				modal:true,
 				iconCls: 'icon-save',
 				buttons:'#allotPermission-buttons',
 				onClose:function(){
-					$('#permissionCheckBoxDiv').html(''); 
+					$('#permissionCheckBoxDiv').html('');&nbsp;
 					$('#allSelect').checkbox('uncheck');
 				}
-			">
-			<input class="easyui-checkbox" id="allSelect" name="allSelect"data-options="label:'全选'">
-			<form id="permissionIdForm" method="post" >
-				<div id="permissionCheckBoxDiv">
-				
-				</div>
-			</form>
-			<ul id="menuTree" class="easyui-tree" data-options="animate:true,checkbox:true"
-			 style="width:400px;">
-			</ul>	
-			
-	</div>
-	
-	<div id="allotPermission-buttons">
-		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-ok'" onclick="allot()">分配</a>
-		<a href="#" class="easyui-linkbutton"
-			onclick="cancelAllot()">取消</a>
-	</div>
-	
-</body>
+			"> 
+   <input class="easyui-checkbox" id="allSelect" name="allSelect" data-options="label:'全选'" /> 
+   <form id="permissionIdForm" method="post"> 
+    <div id="permissionCheckBoxDiv"> 
+    </div> 
+   </form> 
+   <ul id="menuTree" class="easyui-tree" data-options="animate:true,checkbox:true" style="width:400px;"> 
+   </ul> 
+  </div> 
+  <div id="allotPermission-buttons"> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="allot()">分配</a> 
+   <a href="#" class="easyui-linkbutton" onclick="cancelAllot()">取消</a> 
+  </div>  
+ </body>
 </html>

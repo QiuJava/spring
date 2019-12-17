@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
-<head>
-<meta charset="UTF-8" />
-<title>后台管理系统</title>
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/icon.css" />
-<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
-
-<script type="text/javascript" th:inline="javascript">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>后台管理系统</title> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css" /> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css" /> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script> 
+  <script type="text/javascript" th:inline="javascript">
 	function p(obj) {
 	    console.info(obj);
 	
@@ -372,25 +366,18 @@
 	    permissionSearch();
 	}
 	
-</script>
-
-</head>
-<body>
-
-	<div id="permission-dialog" class="easyui-dialog"
-		style="width: 800px; height: 500px"
-		data-options="
+  </script> 
+ </head> 
+ <body> 
+  <div id="permission-dialog" class="easyui-dialog" style="width: 800px; height: 500px" data-options="
 			closed:true,
 			modal:true,
 			onClose:function(){
 				$('#menu-tg').treegrid('unselectAll');
 			},
 			iconCls:'icon-tip'
-		">
-
-		<table id="permission-datagrid" class="easyui-datagrid"
-			style="width: 800px; height: 500px"
-			data-options="
+		"> 
+   <table id="permission-datagrid" class="easyui-datagrid" style="width: 800px; height: 500px" data-options="
 				rownumbers: true,
 				animate: true,
 				fitColumns: true,
@@ -398,57 +385,40 @@
 				idField: 'id',
 				toolbar: '#permission-list-buttons',
 				border:false,
-			">
-			<thead>
-				<tr>
-					<th data-options="field:'permissionName',width:120,editor:'text'">权限名称</th>
-					<th data-options="field:'authority',width:150,editor:'text'">权限编码</th>
-					<th data-options="field:'url',width:150,editor:'text'">权限路径</th>
-					<th data-options="field:'intro',width:150,editor:'text'">描述</th>
-				</tr>
-			</thead>
-		</table>
-	</div>
-
-	<div id="permission-list-buttons">
-		<div id="permissionSearchInputs">
-			<span>权限名称:</span> <input id="permissionName" name="permissionName" />
-			<span>权限编号:</span> <input id="authority" name="authority" />
-		</div>
-
-		<div id="permission-search">
-			<a href="#" class="easyui-linkbutton"
-				data-options="iconCls:'icon-search',plain:true"
-				onclick="permissionSearch()">查询</a> <a href="#"
-				class="easyui-linkbutton"
-				data-options="iconCls:'icon-clear',plain:true"
-				onclick="clearPermissionCondition()">清空</a>
-		</div>
-
-		<div id="permission-operation">
-			<a href="#" class="easyui-linkbutton"
-				data-options="iconCls:'icon-add',plain:true"
-				onclick="addPermission()">添加权限</a> <a href="#"
-				class="easyui-linkbutton"
-				data-options="iconCls:'icon-edit',plain:true"
-				onclick="editPermission()">编辑</a> <a href="#"
-				class="easyui-linkbutton"
-				data-options="iconCls:'icon-remove',plain:true"
-				onclick="removePermission()">删除</a> <a href="#"
-				class="easyui-linkbutton" onclick="reloadPermission()"
-				data-options="iconCls:'icon-reload',plain:true">刷新</a>
-		</div>
-		<div>
-			<a id="save" href="#" class="easyui-linkbutton"
-				onclick="savePermission()"
-				data-options="iconCls:'icon-save',plain:true">保存</a> <a id="cancel"
-				href="#" class="easyui-linkbutton" onclick="undoPermission()"
-				data-options="iconCls:'icon-undo',plain:true">取消</a>
-		</div>
-	</div>
-	<table id="menu-tg" class="easyui-treegrid" title="菜单列表"
-		style="width: 1000px; height: 500px"
-		data-options="
+			"> 
+    <thead> 
+     <tr> 
+      <th data-options="field:'permissionName',width:120,editor:'text'">权限名称</th> 
+      <th data-options="field:'authority',width:150,editor:'text'">权限编码</th> 
+      <th data-options="field:'url',width:150,editor:'text'">权限路径</th> 
+      <th data-options="field:'intro',width:150,editor:'text'">描述</th> 
+     </tr> 
+    </thead> 
+   </table> 
+  </div> 
+  <div id="permission-list-buttons"> 
+   <div id="permissionSearchInputs"> 
+    <span>权限名称:</span> 
+    <input id="permissionName" name="permissionName" /> 
+    <span>权限编号:</span> 
+    <input id="authority" name="authority" /> 
+   </div> 
+   <div id="permission-search"> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="permissionSearch()">查询</a> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true" onclick="clearPermissionCondition()">清空</a> 
+   </div> 
+   <div id="permission-operation"> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addPermission()">添加权限</a> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editPermission()">编辑</a> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removePermission()">删除</a> 
+    <a href="#" class="easyui-linkbutton" onclick="reloadPermission()" data-options="iconCls:'icon-reload',plain:true">刷新</a> 
+   </div> 
+   <div> 
+    <a id="save" href="#" class="easyui-linkbutton" onclick="savePermission()" data-options="iconCls:'icon-save',plain:true">保存</a> 
+    <a id="cancel" href="#" class="easyui-linkbutton" onclick="undoPermission()" data-options="iconCls:'icon-undo',plain:true">取消</a> 
+   </div> 
+  </div> 
+  <table id="menu-tg" class="easyui-treegrid" title="菜单列表" style="width: 1000px; height: 500px" data-options="
 				iconCls: 'icon-ok',
 				rownumbers: true,
 				animate: true,
@@ -458,50 +428,36 @@
 				idField: 'id',
 				treeField: 'menuName',
 				toolbar: '#menu-linkbutton-list'
-			">
-		<thead>
-			<tr>
-				<th data-options="field:'menuName',width:180,editor:'text'">菜单名称</th>
-				<th data-options="field:'url',width:150,editor:'text'">菜单链接</th>
-				<th data-options="field:'intro',width:150,editor:'text'">描述</th>
-				<th data-options="field:'createTime',width:150">创建时间</th>
-				<th data-options="field:'updateTime',width:150">更新时间</th>
-			</tr>
-		</thead>
-	</table>
-
-	<div id="menu-linkbutton-list">
-		<div id="doSearch">
-			<span>菜单名称:</span> <input id="menuName" name="menuName" /> <a
-				href="#" class="easyui-linkbutton"
-				data-options="iconCls:'icon-search',plain:true" onclick="doSearch()">查询</a>
-			<a href="#" class="easyui-linkbutton"
-				data-options="iconCls:'icon-clear',plain:true"
-				onclick="clearCondition()">清空</a>
-		</div>
-		<div id="opertion">
-			<a id="addSon" href="#" class="easyui-linkbutton" onclick="addSon()"
-				data-options="iconCls:'icon-add',plain:true">添加子菜单</a> <a id="add"
-				href="#" class="easyui-linkbutton" onclick="add()"
-				data-options="iconCls:'icon-add',plain:true">添加菜单</a> <a id="edit"
-				href="#" class="easyui-linkbutton" onclick="edit()"
-				data-options="iconCls:'icon-edit',plain:true">编辑</a> <a id="remove"
-				href="#" class="easyui-linkbutton" onclick="remove()"
-				data-options="iconCls:'icon-remove',plain:true">删除</a> <a
-				id="remove" href="#" class="easyui-linkbutton"
-				onclick="permissionManage()"
-				data-options="iconCls:'icon-add',plain:true">菜单权限</a> <a id="reload"
-				href="#" class="easyui-linkbutton" onclick="reload()"
-				data-options="iconCls:'icon-reload',plain:true">刷新</a>
-		</div>
-		<div>
-			<a id="save" href="#" class="easyui-linkbutton" onclick="save()"
-				data-options="iconCls:'icon-save',plain:true">保存</a> <a id="cancel"
-				href="#" class="easyui-linkbutton" onclick="undo()"
-				data-options="iconCls:'icon-undo',plain:true">取消</a>
-		</div>
-
-	</div>
-
-</body>
+			"> 
+   <thead> 
+    <tr> 
+     <th data-options="field:'menuName',width:180,editor:'text'">菜单名称</th> 
+     <th data-options="field:'url',width:150,editor:'text'">菜单链接</th> 
+     <th data-options="field:'intro',width:150,editor:'text'">描述</th> 
+     <th data-options="field:'createTime',width:150">创建时间</th> 
+     <th data-options="field:'updateTime',width:150">更新时间</th> 
+    </tr> 
+   </thead> 
+  </table> 
+  <div id="menu-linkbutton-list"> 
+   <div id="doSearch"> 
+    <span>菜单名称:</span> 
+    <input id="menuName" name="menuName" /> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="doSearch()">查询</a> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true" onclick="clearCondition()">清空</a> 
+   </div> 
+   <div id="opertion"> 
+    <a id="addSon" href="#" class="easyui-linkbutton" onclick="addSon()" data-options="iconCls:'icon-add',plain:true">添加子菜单</a> 
+    <a id="add" href="#" class="easyui-linkbutton" onclick="add()" data-options="iconCls:'icon-add',plain:true">添加菜单</a> 
+    <a id="edit" href="#" class="easyui-linkbutton" onclick="edit()" data-options="iconCls:'icon-edit',plain:true">编辑</a> 
+    <a id="remove" href="#" class="easyui-linkbutton" onclick="remove()" data-options="iconCls:'icon-remove',plain:true">删除</a> 
+    <a id="remove" href="#" class="easyui-linkbutton" onclick="permissionManage()" data-options="iconCls:'icon-add',plain:true">菜单权限</a> 
+    <a id="reload" href="#" class="easyui-linkbutton" onclick="reload()" data-options="iconCls:'icon-reload',plain:true">刷新</a> 
+   </div> 
+   <div> 
+    <a id="save" href="#" class="easyui-linkbutton" onclick="save()" data-options="iconCls:'icon-save',plain:true">保存</a> 
+    <a id="cancel" href="#" class="easyui-linkbutton" onclick="undo()" data-options="iconCls:'icon-undo',plain:true">取消</a> 
+   </div> 
+  </div>  
+ </body>
 </html>

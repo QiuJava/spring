@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
-<head>
-<meta charset="UTF-8" />
-<title>后台管理系统</title>
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/icon.css" />
-<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" th:inline="javascript">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>后台管理系统</title> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css" /> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css" /> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script> 
+  <script type="text/javascript" th:inline="javascript">
 	function p(obj) {
 	    console.info(obj);
 	}
@@ -81,69 +77,64 @@
 	function clearForm() {
 	    $('#changePassword-form').form('clear');
 	}
-  </script>
-</head>
-<body>
-	<div class="easyui-layout" style="width: 1400px; height: 800px;">
-		<!-- 首页页头 -->
-		<div data-options="region:'north'" style="height: 80px">
-			<div>后台管理系统</div>
-			<div>
-			 	<a href="#" class="easyui-linkbutton"
-				data-options="iconCls:'icon-man',plain:true"></a>
-				<span sec:authentication="name"></span>
-				(<span sec:authentication="principal.nickname"></span>)
-				最近登录时间：[[${#dates.format(newestLoginTime,'yyyy-MM-dd
-				HH:mm:ss')}]] 
-				
-				<a href="/logout" class="easyui-linkbutton"
-				data-options="iconCls:'icon-back',plain:true">注销</a><a href="#"
-				class="easyui-linkbutton"
-				data-options="iconCls:'icon-edit',plain:true"
-				onclick="changePassword()" sec:authorize="hasAuthority('CHANGE_PASSWORD')" >修改密码</a>
-			</div>
-			
-			<!-- 修改密码表单 -->
-			<div id="changePassword-dialog" class="easyui-dialog"
-				style="width: 300px; height: 200px"
-			data-options="
-			closed:true,
-			modal:true,
-			onClose:function(){
-				$('#changePassword-form').form('clear');
-			},
-			iconCls:'icon-tip'
-		">
-				<form id="changePassword-form" method="post">
-			    	<table cellpadding="2">
-			    		<tr>
-			    			<td>原密码:</td>
-			    			<td><input class="easyui-passwordbox" id="password" name="password" data-options="required:true,validType:'length[6,16]'"/></td>
-			    		</tr>
-			    		<tr>
-			    			<td>新密码:</td>
-			    			<td><input class="easyui-passwordbox" id="newPassword" name="newPassword" data-options="required:true,validType:'length[6,16]'"/></td>
-			    		</tr>
-			    	</table>
-			    </form>
-			    <div style="text-align:center;padding:5px">
-			    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">确认</a>
-			    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a>
-			    </div>
-			</div>
-		</div>
-		<!-- 首页页尾 -->
-		<div data-options="region:'south',split:true" style="height: 50px;">
-			QiuJian @版权所有 123</div>
-		<div data-options="region:'west',split:true" title="菜单导航"
-			style="width: 300px;">
-			<ul id="menu-tree"></ul>
-		</div>
-		<!-- 工作页 -->
-		<div data-options="region:'center'">
-			<div id="center_tabs" class="easyui-tabs" data-options="fit:true">
-			</div>
-		</div>
-	</div>
-</body>
+  </script> 
+ </head> 
+ <body> 
+  <div class="easyui-layout" style="width: 1400px; height: 800px;"> 
+   <!-- 首页页头 --> 
+   <div data-options="region:'north'" style="height: 80px"> 
+    <div>
+      后台管理系统 
+    </div> 
+    <div> 
+     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-man',plain:true"> </a> 
+     <span sec:authentication="name"> </span> ( 
+     <span sec:authentication="principal.nickname"> </span> ) 最近登录时间：[[${#dates.format(session.SPRING_SECURITY_CONTEXT.authentication.principal.newestLoginTime,'yyyy-MM-dd HH:mm:ss')}]] 
+     <a href="/logout" class="easyui-linkbutton" data-options="iconCls:'icon-back',plain:true"> 注销 </a> 
+     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="changePassword()" sec:authorize="hasAuthority('CHANGE_PASSWORD')"> 修改密码 </a> 
+    </div> 
+    <!-- 修改密码表单 --> 
+    <div id="changePassword-dialog" class="easyui-dialog" style="width: 300px; height: 200px" data-options="
+            closed:true,
+            modal:true,
+            onClose:function(){
+            $('#changePassword-form').form('clear');
+            },
+            iconCls:'icon-tip'
+            "> 
+     <form id="changePassword-form" method="post"> 
+      <table cellpadding="2"> 
+       <tbody> 
+        <tr> 
+         <td> 原密码: </td> 
+         <td> <input class="easyui-passwordbox" id="password" name="password" data-options="required:true,validType:'length[6,16]'" /> </td> 
+        </tr> 
+        <tr> 
+         <td> 新密码: </td> 
+         <td> <input class="easyui-passwordbox" id="newPassword" name="newPassword" data-options="required:true,validType:'length[6,16]'" /> </td> 
+        </tr> 
+       </tbody> 
+      </table> 
+     </form> 
+     <div style="text-align:center;padding:5px"> 
+      <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()"> 确认 </a> 
+      <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()"> 清空 </a> 
+     </div> 
+    </div> 
+   </div> 
+   <!-- 首页页尾 --> 
+   <div data-options="region:'south',split:true" style="height: 50px;">
+     QiuJian @版权所有 123 
+   </div> 
+   <div data-options="region:'west',split:true" title="菜单导航" style="width: 300px;"> 
+    <ul id="menu-tree"> 
+    </ul> 
+   </div> 
+   <!-- 工作页 --> 
+   <div data-options="region:'center'"> 
+    <div id="center_tabs" class="easyui-tabs" data-options="fit:true"> 
+    </div> 
+   </div> 
+  </div>  
+ </body>
 </html>

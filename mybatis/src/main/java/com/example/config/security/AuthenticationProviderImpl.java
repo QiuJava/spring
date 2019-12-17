@@ -19,6 +19,7 @@ import com.example.entity.Employee;
 import com.example.entity.MenuTree;
 import com.example.entity.Permission;
 import com.example.qo.PermissionQo;
+import com.example.service.LoginLogServiceImpl;
 import com.example.service.MenuServiceImpl;
 import com.example.service.PermissionServiceImpl;
 import com.example.util.DateTimeUtil;
@@ -40,6 +41,8 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 	private MenuServiceImpl menuService;
 	@Autowired
 	private PermissionServiceImpl permissionService;
+	@Autowired
+	private LoginLogServiceImpl loginLogService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -61,6 +64,8 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		}
 
 		this.setMenuTreeAndPermission(employee);
+		
+		employee.setNewestLoginTime(loginLogService.getNewestLoginTimeByUsername(employee.getUsername()));
 
 		return new UsernamePasswordAuthenticationToken(employee, credentials, employee.getAuthorities());
 	}

@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
-<head>
-<meta charset="UTF-8">
-<title>后台管理系统</title>
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.7.0/themes/icon.css" />
-<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-
-<script type="text/javascript"
-	src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
-
-<script type="text/javascript" th:inline="javascript">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>后台管理系统</title> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css" /> 
+  <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css" /> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script> 
+  <script type="text/javascript" src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script> 
+  <script type="text/javascript" th:inline="javascript">
 	function p(obj) {
 	    console.info(obj);
 	}
@@ -84,12 +78,10 @@
 		});
 	});
 	
-</script>
-</head>
-<body>
-	<table id="employee-dg" class="easyui-datagrid" title="员工列表"
-		style="width: 800px; height: 600px"
-		data-options="
+  </script> 
+ </head> 
+ <body> 
+  <table id="employee-dg" class="easyui-datagrid" title="员工列表" style="width: 800px; height: 600px" data-options="
 				iconCls: 'icon-ok',
 				fitColumns: true,
 				url:  '/employee/listByQo',
@@ -97,108 +89,90 @@
 				toolbar: '#employee-toolbar',
 				singleSelect: true,
 				pagination: true
-			">
-		<thead>
-			<tr>
-				<th data-options="field:'username'" width="80">登录名</th>
-				<th data-options="field:'email'" width="150">邮箱</th>
-				<th data-options="field:'nickname'" width="80">昵称</th>
-				<th
-					data-options="field:'status',
+			"> 
+   <thead> 
+    <tr> 
+     <th data-options="field:'username'" width="80">登录名</th> 
+     <th data-options="field:'email'" width="150">邮箱</th> 
+     <th data-options="field:'nickname'" width="80">昵称</th> 
+     <th data-options="field:'status',
 				formatter: function(value,row,index){
 					return statusObj[value];
-				}"
-					width="50">状态</th>
-				<th
-					data-options="field:'employeeType',
+				}" width="50">状态</th> 
+     <th data-options="field:'employeeType',
 				formatter: function(value,row,index){
 					return employeeObj[value];
-				}"
-					width="50">员工类型</th>
-				<th data-options="field:'employeeNumber'" width="50">工号</th>
-				<th data-options="field:'intro'" width="150">简介</th>
-			</tr>
-		</thead>
-	</table>
-
-	<div id="employee-toolbar">
-		<div id="employeeSearchInputs">
-			<span>登录名称:</span> <input class="easyui-textbox" id="username"
-				name="username" /> <span>工号:</span> <input class="easyui-numberbox"
-				id="employeeNumber" name="employeeNumber" /> <span>员工类型:</span> <input
-				id="employeeType" class="easyui-combobox" name="employeeType"
-				data-options="valueField:'value',textField:'name',data:
+				}" width="50">员工类型</th> 
+     <th data-options="field:'employeeNumber'" width="50">工号</th> 
+     <th data-options="field:'intro'" width="150">简介</th> 
+    </tr> 
+   </thead> 
+  </table> 
+  <div id="employee-toolbar"> 
+   <div id="employeeSearchInputs"> 
+    <span>登录名称:</span> 
+    <input class="easyui-textbox" id="username" name="username" /> 
+    <span>工号:</span> 
+    <input class="easyui-numberbox" id="employeeNumber" name="employeeNumber" /> 
+    <span>员工类型:</span> 
+    <input id="employeeType" class="easyui-combobox" name="employeeType" data-options="valueField:'value',textField:'name',data:
 					[{
 						name: '全部',
 						value: ''
 					},{
 						name: '管理',
 						value: '0'
-					}]" />
-		</div>
-		<div id="employeeSearchButton">
-			<a href="#" class="easyui-linkbutton"
-				data-options="iconCls:'icon-search',plain:true"
-				onclick="employeeSearch()">查询</a> <a href="#"
-				class="easyui-linkbutton"
-				data-options="iconCls:'icon-clear',plain:true"
-				onclick="clearEmployeeCondition()">清空</a>
-
-		</div>
-
-		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-add',plain:true" onclick="add()">新增员工</a>
-		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-edit',plain:true" onclick="edit()">编辑</a>
-		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-remove',plain:true" onclick="remove()">删除</a>
-		<a href="#" class="easyui-linkbutton"
-			data-options="iconCls:'icon-add',plain:true" onclick="allotRole()">分配角色</a>
-	</div>
-
-	<div id="employee-dialog" class="easyui-dialog" title="新增员工"
-		style="width: 500px; height: 500px;"
-		data-options="iconCls:'icon-add',resizable:true,modal:true,closed:true,
+					}]" /> 
+   </div> 
+   <div id="employeeSearchButton"> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="employeeSearch()">查询</a> 
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true" onclick="clearEmployeeCondition()">清空</a> 
+   </div> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="add()">新增员工</a> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="edit()">编辑</a> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="remove()">删除</a> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="allotRole()">分配角色</a> 
+  </div> 
+  <div id="employee-dialog" class="easyui-dialog" title="新增员工" style="width: 500px; height: 500px;" data-options="iconCls:'icon-add',resizable:true,modal:true,closed:true,
 				onClose:function(){
-					$('#add-form').form('clear'); 
+					$('#add-form').form('clear');&nbsp;
 					employeeSearch();
 				}
-		">
-		<form id="add-form" method="post">
-			<table cellpadding="2">
-				<tr>
-					<td>登录名:</td>
-					<td><input id="usernameInput" name="username" /></td>
-				</tr>
-				<tr>
-					<td>邮箱:</td>
-					<td><input id="email" name="email" /></td>
-				</tr>
-				<tr>
-					<td>昵称:</td>
-					<td><input id="nickname" name="nickname" /></td>
-				</tr>
-				<tr>
-					<td>员工类型:</td>
-					<td><input class="easyui-combobox" name="employeeType"
-						data-options="valueField:'value',textField:'name',required:true,url:'/dictEntry/employeeTypeList',method:'get'" /></td>
-				</tr>
-				<tr>
-					<td>工号:</td>
-					<td><input id="employeeNumberInput" name="employeeNumber" /></td>
-				</tr>
-				<tr>
-					<td>描述:</td>
-					<td><textarea maxlength="255" form="add-form" rows="4"
-							cols="25" name="intro" id="intro"></textarea></td>
-				</tr>
-			</table>
-		</form>
-		<div style="text-align: center; padding: 5px">
-			<a href="javascript:void(0)" class="easyui-linkbutton"
-				onclick="save()">保存</a> <a href="javascript:void(0)"
-				class="easyui-linkbutton" onclick="clearForm()">清空</a>
-		</div>
-	</div>
-</body>
+		"> 
+   <form id="add-form" method="post"> 
+    <table cellpadding="2"> 
+     <tbody>
+      <tr> 
+       <td>登录名:</td> 
+       <td><input id="usernameInput" name="username" /></td> 
+      </tr> 
+      <tr> 
+       <td>邮箱:</td> 
+       <td><input id="email" name="email" /></td> 
+      </tr> 
+      <tr> 
+       <td>昵称:</td> 
+       <td><input id="nickname" name="nickname" /></td> 
+      </tr> 
+      <tr> 
+       <td>员工类型:</td> 
+       <td><input class="easyui-combobox" name="employeeType" data-options="valueField:'value',textField:'name',required:true,url:'/dictEntry/employeeTypeList',method:'get'" /></td> 
+      </tr> 
+      <tr> 
+       <td>工号:</td> 
+       <td><input id="employeeNumberInput" name="employeeNumber" /></td> 
+      </tr> 
+      <tr> 
+       <td>描述:</td> 
+       <td><textarea maxlength="255" form="add-form" rows="4" cols="25" name="intro" id="intro"></textarea></td> 
+      </tr> 
+     </tbody>
+    </table> 
+   </form> 
+   <div style="text-align: center; padding: 5px"> 
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()">保存</a> 
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a> 
+   </div> 
+  </div>  
+ </body>
 </html>
