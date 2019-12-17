@@ -17,62 +17,21 @@ public class EmployeeSqlProvider {
 	public String insertSelective(Employee record) {
 		SQL sql = new SQL();
 		sql.INSERT_INTO("employee");
+		sql.VALUES("username", "#{username,jdbcType=VARCHAR}");
+		sql.VALUES("password", "#{password,jdbcType=VARCHAR}");
+		sql.VALUES("email", "#{email,jdbcType=VARCHAR}");
+		sql.VALUES("nickname", "#{nickname,jdbcType=VARCHAR}");
+		sql.VALUES("password_errors", "#{passwordErrors,jdbcType=INTEGER}");
+		sql.VALUES("status", "#{status,jdbcType=INTEGER}");
+		sql.VALUES("super_admin", "#{superAdmin,jdbcType=INTEGER}");
+		sql.VALUES("employee_type", "#{employeeType,jdbcType=INTEGER}");
+		sql.VALUES("employee_number", "#{employeeNumber,jdbcType=VARCHAR}");
 
-		if (record.getId() != null) {
-			sql.VALUES("id", "#{id,jdbcType=BIGINT}");
-		}
-
-		if (record.getUsername() != null) {
-			sql.VALUES("username", "#{username,jdbcType=VARCHAR}");
-		}
-
-		if (record.getPassword() != null) {
-			sql.VALUES("password", "#{password,jdbcType=VARCHAR}");
-		}
-
-		if (record.getEmail() != null) {
-			sql.VALUES("email", "#{email,jdbcType=VARCHAR}");
-		}
-
-		if (record.getNickname() != null) {
-			sql.VALUES("nickname", "#{nickname,jdbcType=VARCHAR}");
-		}
-
-		if (record.getPasswordErrors() != null) {
-			sql.VALUES("password_errors", "#{passwordErrors,jdbcType=INTEGER}");
-		}
-
-		if (record.getStatus() != null) {
-			sql.VALUES("status", "#{status,jdbcType=INTEGER}");
-		}
-
-		if (record.getSuperAdmin() != null) {
-			sql.VALUES("super_admin", "#{superAdmin,jdbcType=INTEGER}");
-		}
-
-		if (record.getEmployeeType() != null) {
-			sql.VALUES("employee_type", "#{employeeType,jdbcType=INTEGER}");
-		}
-
-		if (record.getEmployeeNumber() != null) {
-			sql.VALUES("employee_number", "#{employeeNumber,jdbcType=VARCHAR}");
-		}
-
-		if (record.getIntro() != null) {
+		if (StrUtil.hasText(record.getIntro())) {
 			sql.VALUES("intro", "#{intro,jdbcType=VARCHAR}");
 		}
-
-		if (record.getCreateTime() != null) {
-			sql.VALUES("create_time", "#{createTime,jdbcType=TIMESTAMP}");
-		}
-
-		if (record.getUpdateTime() != null) {
-			sql.VALUES("update_time", "#{updateTime,jdbcType=TIMESTAMP}");
-		}
-
-		if (record.getLockTime() != null) {
-			sql.VALUES("lock_time", "#{lockTime,jdbcType=TIMESTAMP}");
-		}
+		sql.VALUES("create_time", "#{createTime,jdbcType=TIMESTAMP}");
+		sql.VALUES("update_time", "#{updateTime,jdbcType=TIMESTAMP}");
 
 		return sql.toString();
 	}
@@ -153,11 +112,11 @@ public class EmployeeSqlProvider {
 		if (StrUtil.hasText(employeeQo.getUsername())) {
 			sql.WHERE("username = #{username,jdbcType=VARCHAR}");
 		}
-		
+
 		if (StrUtil.hasText(employeeQo.getEmployeeNumber())) {
 			sql.WHERE("employee_number = #{employeeNumber,jdbcType=VARCHAR}");
 		}
-		
+
 		if (employeeQo.getEmployeeType() != null) {
 			sql.WHERE("employee_type = #{employeeType,jdbcType=INTEGER}");
 		}
