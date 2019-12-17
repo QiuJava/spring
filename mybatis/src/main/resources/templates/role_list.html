@@ -144,16 +144,7 @@
 	            	        "roleId": row.id
 	            	    },
 	            	    function(data) { 
-	            	        var listHtml = ''; 
-	            	        $.each(data,function(index) {    
-	            	            var permission = data[index];
-	            	            var checkStr = '';
-	            	            if (permission.checked) {
-	            	                checkStr = 'checked="checked"';
-	            	            }
-	            	            listHtml +=  '<input type="checkbox" name="permissionId" ' + checkStr + ' value="' + permission.permissionId + '">' + permission.permissionName;
-	            	        });      
-	            	        $("#permissionCheckBoxDiv").html(listHtml); 
+	            	    	createPermissionCheckBoxDiv(data);
 	            	        var checkboxList = document.getElementsByName("permissionId");
 	    	                
 	    	                $.each(checkboxList,function(index,item){
@@ -166,6 +157,7 @@
 	            	}
 	            }
 	        });
+	        
 	        $('#allSelect').checkbox({
 	            onChange: function(checked) {
 	                var checkboxList = document.getElementsByName("permissionId");
@@ -193,19 +185,37 @@
 	        "roleId": roleId
 	    },
 	    function(data) { 
-	        var listHtml = ''; 
-	        $.each(data,function(index) {    
-	            var permission = data[index];
-	            var checkStr = '';
-	            if (permission.checked) {
-	                checkStr = 'checked="checked"';
-	            }
-	            listHtml +=  '<input type="checkbox" name="permissionId" ' + checkStr + ' value="' + permission.permissionId + '">' + permission.permissionName;
-	        });      
-	        $("#permissionCheckBoxDiv").html(listHtml); 
+	    	createPermissionCheckBoxDiv(data);
+	        
+	        var checkboxList = document.getElementsByName("permissionId");
+	        var checkCount = 0;
+            $.each(checkboxList,function(index,item){
+            	if(item.checked){
+            		checkCount ++;
+            	}
+        	});
+            
+            if(checkCount == checkboxList.length){
+            	$('#allSelect').checkbox('check');
+            }else {
+            	$('#allSelect').checkbox('uncheck');
+            }
 	    },
 	    'json');     
 	
+	}
+	
+	function createPermissionCheckBoxDiv(data){
+		var listHtml = ''; 
+        $.each(data,function(index) {    
+            var permission = data[index];
+            var checkStr = '';
+            if (permission.checked) {
+                checkStr = 'checked="checked"';
+            }
+            listHtml +=  '<input type="checkbox" name="permissionId" ' + checkStr + ' value="' + permission.permissionId + '">' + permission.permissionName;
+        });      
+        $("#permissionCheckBoxDiv").html(listHtml); 
 	}
 	
 	function allot() {
@@ -213,24 +223,21 @@
 	    var row = $('#role-dg').datagrid('getSelected');
 	    var node = $('#menuTree').tree('getSelected');
 	    if (!node) {
-	    	node = $('#menuTree').tree('getChecked');
-	    	if(!node){
-		        $.messager.alert('提示', '请选择一行', 'info');
-		        return;
-	    	}
+	        $.messager.alert('提示', '请选择一行', 'info');
+	        return;
 	    }
 	    $('#permissionIdForm').form('submit', {
 	        url: "/role/allotPermission?_csrf=" + token,
 	        onSubmit: function(param) {
 	            var checkboxList = document.getElementsByName("permissionId");
 	            var permissionIdList = '';
-	            for (var i = 0; i < checkboxList.length; i++) {
-	                var permissionCheckbox = checkboxList[i];
-	                if (permissionCheckbox.checked) {
-	                    permissionIdList += permissionCheckbox.value;
+	            
+	            $.each(checkboxList,function(index,item){
+	            	 if (item.checked) {
+	                    permissionIdList += item.value;
 	                    permissionIdList += ',';
-	                }
-	            }
+		             }
+	            });
 	            if (permissionIdList != '') {
 	                permissionIdList = permissionIdList.substring(0, permissionIdList.length - 1);
 	            }
@@ -244,7 +251,8 @@
 	                $.messager.alert('提示', data.msg, 'info',
 	                function() {
 	                    $('#menuTree').tree('reload');
-	                    $("#permissionCheckBoxDiv").html(''); $('#allSelect').checkbox('uncheck');
+	                    $("#permissionCheckBoxDiv").html('');
+	                    $('#allSelect').checkbox('uncheck');
 	                });
 	            } else {
 	                $.messager.alert('提示', data.msg, 'error');
