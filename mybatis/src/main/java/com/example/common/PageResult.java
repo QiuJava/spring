@@ -3,7 +3,6 @@ package com.example.common;
 import java.util.List;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -16,7 +15,6 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@NoArgsConstructor
 public class PageResult<T> {
 	private Long total;
 	private List<T> rows;

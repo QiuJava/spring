@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +36,21 @@ public class MenuController {
 		return "menu_list";
 	}
 
-	@GetMapping("/menu/list")
+	@GetMapping("/menu/listByQo")
 	@ResponseBody
-	public List<Menu> menuList(MenuQo qo) {
-		return menuService.listByQo(qo);
+	public List<Menu> listByQo(MenuQo qo) {
+		try {
+			List<Menu> listByQo = menuService.listByQo(qo);
+			return listByQo;
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new ArrayList<>();
+		}
 	}
 
 	@PostMapping("/menu/add")
 	@ResponseBody
 	public Result addMenu(Menu menu) {
-		Long parentId = menu.getParentId();
-		if (parentId != null && parentId.toString().length() > 20) {
-			return new Result(false, "上级ID过长");
-		}
-
 		Result verifyMenuName = this.verifyMenuName(menu.getMenuName());
 		if (verifyMenuName != null) {
 			return verifyMenuName;
@@ -61,9 +63,8 @@ public class MenuController {
 
 		String intro = menu.getIntro();
 		if (StrUtil.hasText(intro)) {
-			Result verifyIntro = this.verifyIntro(menu.getIntro());
-			if (verifyIntro != null) {
-				return verifyIntro;
+			if (intro.length() > 255) {
+				return new Result(false, "菜单描述过长");
 			}
 		}
 		try {
@@ -79,12 +80,7 @@ public class MenuController {
 
 	@PostMapping("/menu/update")
 	@ResponseBody
-	public Result updateMenu(Menu menu) {
-		Long id = menu.getId();
-		Result verifyId = this.verifyId(id);
-		if (verifyId != null) {
-			return verifyId;
-		}
+	public Result<?> updateMenu(Menu menu) {
 
 		Result verifyMenuName = this.verifyMenuName(menu.getMenuName());
 		if (verifyMenuName != null) {
@@ -98,39 +94,34 @@ public class MenuController {
 
 		String intro = menu.getIntro();
 		if (StrUtil.hasText(intro)) {
-			Result verifyIntro = this.verifyIntro(intro);
-			if (verifyIntro != null) {
-				return verifyIntro;
+			if (intro.length() > 255) {
+				return new Result<>(false, "菜单描述过长");
 			}
 		}
 
 		try {
 			int update = menuService.update(menu);
 			if (update != 1) {
-				return new Result(false, "更新失败");
+				return new Result<>(false, "更新失败");
 			}
-			return new Result(true, "更新成功");
+			return new Result<>(true, "更新成功");
 		} catch (LogicException e) {
-			return new Result(false, e.getMessage());
+			return new Result<>(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "更新失败");
+			return new Result<>(false, "更新失败");
 		}
 	}
 
 	@PostMapping("/menu/remove")
 	@ResponseBody
-	public Result removeMenu(Long id) {
-		Result verifyId = this.verifyId(id);
-		if (verifyId != null) {
-			return verifyId;
-		}
+	public Result<?> removeMenu(Long id) {
 		try {
 			menuService.deleteById(id);
-			return new Result(true, "删除成功");
+			return new Result<>(true, "删除成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "删除失败");
+			return new Result<>(false, "删除失败");
 		}
 	}
 
@@ -141,25 +132,6 @@ public class MenuController {
 			return new Result(false, "菜单名称过长");
 		} else if (StrUtil.isContainSpecialChar(menuName)) {
 			return new Result(false, "菜单名称不能包含特殊字符");
-		}
-		return null;
-	}
-
-	private Result verifyIntro(String intro) {
-		if (intro.length() > 255) {
-			return new Result(false, "菜单描述过长");
-		}
-		if (StrUtil.isContainSpecialChar(intro)) {
-			return new Result(false, "菜单描述不能包含特殊字符");
-		}
-		return null;
-	}
-
-	private Result verifyId(Long id) {
-		if (id == null) {
-			return new Result(false, "菜单ID不能为空");
-		} else if (id.toString().length() > 20) {
-			return new Result(false, "菜单ID过长");
 		}
 		return null;
 	}

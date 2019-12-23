@@ -319,7 +319,7 @@
 	                    $('#permission-datagrid').datagrid('beginEdit', permissionIndex);
 	                }
 	            },
-	            'json');
+	            'json');                                                                                                                                       
 	        }
 	
 	    }
@@ -423,7 +423,7 @@
 				rownumbers: true,
 				animate: true,
 				fitColumns: true,
-				url:  '/menu/list',
+				url:  '/menu/listByQo',
 				method: 'get',
 				idField: 'id',
 				treeField: 'menuName',
@@ -431,8 +431,14 @@
 			"> 
    <thead> 
     <tr> 
-     <th data-options="field:'menuName',width:180,editor:'text'">菜单名称</th> 
-     <th data-options="field:'url',width:150,editor:'text'">菜单链接</th> 
+     <th data-options="field:'menuName',width:180,editor:{type:'validatebox',options:{required:true,validType:'length[2,20]'}}">菜单名称</th> 
+     <th data-options="field:'url',width:150,editor:{
+     	type:'validatebox',
+     	options:{
+     		required:true,
+     		validType:['length[0,100]']
+     	}
+     }">菜单链接</th> 
      <th data-options="field:'intro',width:150,editor:'text'">描述</th> 
      <th data-options="field:'createTime',width:150">创建时间</th> 
      <th data-options="field:'updateTime',width:150">更新时间</th> 

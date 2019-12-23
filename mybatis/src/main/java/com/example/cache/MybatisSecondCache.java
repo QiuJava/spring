@@ -11,7 +11,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import com.example.config.context.SpringContextHelper;
 
 /**
- * Mybatis二级缓存 注意:1.放session中的数据不适合用二级缓存
+ * Mybatis二级缓存 
+ * <p> 
+ * 放session中的数据不适合用二级缓存
  *
  * @author Qiu Jian
  *
@@ -76,9 +78,10 @@ public class MybatisSecondCache implements Cache {
 		return this.readWriteLock;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void setRedisTemplate() {
 		if (redisTemplate == null) {
-			redisTemplate = SpringContextHelper.getBean("redisTemplate");
+			redisTemplate = (RedisTemplate<String, Object>)SpringContextHelper.getBean("redisTemplate");
 		}
 	}
 }

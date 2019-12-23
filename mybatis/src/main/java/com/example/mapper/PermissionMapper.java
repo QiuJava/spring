@@ -135,10 +135,10 @@ public interface PermissionMapper {
 	List<Permission> selectByEmployeeId(Long employeeId);
 
 	@Select({ "SELECT ", //
-		"	authority  ", //
-		"FROM ", //
-		"	permission  ", //
-		"WHERE ", //
-		"	url = #{url,jdbcType=VARCHAR}" })
+			"	authority  ", //
+			"FROM ", //
+			"	permission  ", //
+			"WHERE ", //
+			"	url = #{url,jdbcType=VARCHAR}" })
 	String selectAuthorityByUrl(String url);
 }
