@@ -50,13 +50,13 @@ public class MenuController {
 
 	@PostMapping("/menu/add")
 	@ResponseBody
-	public Result addMenu(Menu menu) {
-		Result verifyMenuName = this.verifyMenuName(menu.getMenuName());
+	public Result<?> addMenu(Menu menu) {
+		Result<?> verifyMenuName = this.verifyMenuName(menu.getMenuName());
 		if (verifyMenuName != null) {
 			return verifyMenuName;
 		}
 
-		Result verifyUrl = this.verifyUrl(menu.getUrl());
+		Result<?> verifyUrl = this.verifyUrl(menu.getUrl());
 		if (verifyUrl != null) {
 			return verifyUrl;
 		}
@@ -64,17 +64,17 @@ public class MenuController {
 		String intro = menu.getIntro();
 		if (StrUtil.hasText(intro)) {
 			if (intro.length() > 255) {
-				return new Result(false, "菜单描述过长");
+				return new Result<>(false, "菜单描述过长");
 			}
 		}
 		try {
 			menuService.save(menu);
-			return new Result(true, "添加成功");
+			return new Result<>(true, "添加成功");
 		} catch (LogicException e) {
-			return new Result(false, e.getMessage());
+			return new Result<>(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "添加失败");
+			return new Result<>(false, "添加失败");
 		}
 	}
 
@@ -82,12 +82,12 @@ public class MenuController {
 	@ResponseBody
 	public Result<?> updateMenu(Menu menu) {
 
-		Result verifyMenuName = this.verifyMenuName(menu.getMenuName());
+		Result<?> verifyMenuName = this.verifyMenuName(menu.getMenuName());
 		if (verifyMenuName != null) {
 			return verifyMenuName;
 		}
 
-		Result verifyUrl = this.verifyUrl(menu.getUrl());
+		Result<?> verifyUrl = this.verifyUrl(menu.getUrl());
 		if (verifyUrl != null) {
 			return verifyUrl;
 		}
@@ -125,22 +125,22 @@ public class MenuController {
 		}
 	}
 
-	private Result verifyMenuName(String menuName) {
+	private Result<?> verifyMenuName(String menuName) {
 		if (StrUtil.noText(menuName)) {
-			return new Result(false, "菜单名称不能为空");
+			return new Result<>(false, "菜单名称不能为空");
 		} else if (menuName.length() > 20) {
-			return new Result(false, "菜单名称过长");
+			return new Result<>(false, "菜单名称过长");
 		} else if (StrUtil.isContainSpecialChar(menuName)) {
-			return new Result(false, "菜单名称不能包含特殊字符");
+			return new Result<>(false, "菜单名称不能包含特殊字符");
 		}
 		return null;
 	}
 
-	private Result verifyUrl(String url) {
+	private Result<?> verifyUrl(String url) {
 		if (StrUtil.noText(url)) {
-			return new Result(false, "菜单链接不能为空");
+			return new Result<>(false, "菜单链接不能为空");
 		} else if (url.length() > 100) {
-			return new Result(false, "菜单链接过长");
+			return new Result<>(false, "菜单链接过长");
 		}
 		return null;
 	}

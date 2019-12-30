@@ -33,154 +33,154 @@ public class JobController {
 	private JobManageServiceImpl jobManageService;
 
 	@GetMapping("/addJob")
-	public Result addJob(JobDetails jobDetails) {
+	public Result<?> addJob(JobDetails jobDetails) {
 		String jobClass = jobDetails.getJobClass();
 		if (StrUtil.noText(jobClass)) {
-			return new Result(false, "任务类名不能为空");
+			return new Result<>(false, "任务类名不能为空");
 		} else if (jobClass.length() > 250) {
-			return new Result(false, "任务类名过长");
+			return new Result<>(false, "任务类名过长");
 		}
 
 		Integer triggerType = jobDetails.getTriggerType();
 		if (triggerType == null) {
-			return new Result(false, "触发器类型不能为空");
+			return new Result<>(false, "触发器类型不能为空");
 		} else if (triggerType != JobDetails.JOB_TYPE_CRON && triggerType != JobDetails.JOB_TYPE_SIMPLE) {
-			return new Result(false, "触发器类型不正确");
+			return new Result<>(false, "触发器类型不正确");
 		}
 
 		String jobName = jobDetails.getJobName();
-		Result verifyJobName = this.verifyJobName(jobName);
+		Result<?> verifyJobName = this.verifyJobName(jobName);
 		if (verifyJobName != null) {
 			return verifyJobName;
 		}
 
 		String jobGroupName = jobDetails.getJobGroupName();
-		Result verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
+		Result<?> verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
 		if (verifyJobGroupName != null) {
 			return verifyJobGroupName;
 		}
 
 		String jobDescription = jobDetails.getJobDescription();
 		if (StrUtil.hasText(jobDescription) && jobDescription.length() > 250) {
-			return new Result(false, "任务描述过长");
+			return new Result<>(false, "任务描述过长");
 		}
 
 		try {
 			jobManageService.addJob(jobDetails);
-			return new Result(true, "添加成功");
+			return new Result<>(true, "添加成功");
 		} catch (LogicException e) {
-			return new Result(false, e.getMessage());
+			return new Result<>(false, e.getMessage());
 		} catch (ClassNotFoundException e) {
-			return new Result(false, "任务类名错误");
+			return new Result<>(false, "任务类名错误");
 		} catch (Exception e) {
-			return new Result(false, "添加失败");
+			return new Result<>(false, "添加失败");
 		}
 	}
 
 	@GetMapping("/listByQo")
-	public Result listByQo(JobDetailsQo qo) {
+	public Result<?> listByQo(JobDetailsQo qo) {
 
 		String jobGroupName = qo.getJobGroupName();
 		if (StrUtil.hasText(jobGroupName) && jobGroupName.length() > 190) {
-			return new Result(false, "任务组名称过长");
+			return new Result<>(false, "任务组名称过长");
 		}
 		if (StrUtil.hasText(jobGroupName) && StrUtil.isContainSpecialChar(jobGroupName)) {
-			return new Result(false, "任务组名称不能含有特殊字符");
+			return new Result<>(false, "任务组名称不能含有特殊字符");
 		}
 		try {
 			List<JobDetails> list = jobManageService.listByQo(qo);
-			return new Result(true, "查询成功", list);
+			return new Result<>(true, "查询成功", list);
 		} catch (LogicException e) {
-			return new Result(false, e.getMessage());
+			return new Result<>(false, e.getMessage());
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "查询失败");
+			return new Result<>(false, "查询失败");
 		}
 	}
 
 	@GetMapping("/deleteJob")
-	public Result deleteJob(JobDetails jobDetails) {
+	public Result<?> deleteJob(JobDetails jobDetails) {
 		String jobName = jobDetails.getJobName();
-		Result verifyJobName = this.verifyJobName(jobName);
+		Result<?> verifyJobName = this.verifyJobName(jobName);
 		if (verifyJobName != null) {
 			return verifyJobName;
 		}
 
 		String jobGroupName = jobDetails.getJobGroupName();
-		Result verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
+		Result<?> verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
 		if (verifyJobGroupName != null) {
 			return verifyJobGroupName;
 		}
 		try {
 			jobManageService.deleteJob(jobDetails);
-			return new Result(true, "删除任务成功");
+			return new Result<>(true, "删除任务成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "删除任务失败");
+			return new Result<>(false, "删除任务失败");
 		}
 	}
 
 	@GetMapping("/pauseJob")
-	public Result pauseJob(JobDetails jobDetails) {
+	public Result<?> pauseJob(JobDetails jobDetails) {
 		String jobName = jobDetails.getJobName();
-		Result verifyJobName = this.verifyJobName(jobName);
+		Result<?> verifyJobName = this.verifyJobName(jobName);
 		if (verifyJobName != null) {
 			return verifyJobName;
 		}
 
 		String jobGroupName = jobDetails.getJobGroupName();
-		Result verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
+		Result<?> verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
 		if (verifyJobGroupName != null) {
 			return verifyJobGroupName;
 		}
 		try {
 			jobManageService.pauseJob(jobDetails);
-			return new Result(true, "暂停任务成功");
+			return new Result<>(true, "暂停任务成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(true, "暂停任务失败");
+			return new Result<>(true, "暂停任务失败");
 		}
 	}
 
 	@GetMapping("/resumeJob")
-	public Result resumeJob(JobDetails jobDetails) {
+	public Result<?> resumeJob(JobDetails jobDetails) {
 		String jobName = jobDetails.getJobName();
-		Result verifyJobName = this.verifyJobName(jobName);
+		Result<?> verifyJobName = this.verifyJobName(jobName);
 		if (verifyJobName != null) {
 			return verifyJobName;
 		}
 		String jobGroupName = jobDetails.getJobGroupName();
-		Result verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
+		Result<?> verifyJobGroupName = this.verifyJobGroupName(jobGroupName);
 		if (verifyJobGroupName != null) {
 			return verifyJobGroupName;
 		}
 		try {
 			jobManageService.resumeJob(jobDetails);
-			return new Result(true, "重启任务成功");
+			return new Result<>(true, "重启任务成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
-			return new Result(false, "重启任务失败");
+			return new Result<>(false, "重启任务失败");
 		}
 	}
 
-	private Result verifyJobGroupName(String jobGroupName) {
+	private Result<?> verifyJobGroupName(String jobGroupName) {
 		if (StrUtil.noText(jobGroupName)) {
-			return new Result(false, "任务组名称不能为空");
+			return new Result<>(false, "任务组名称不能为空");
 		} else if (jobGroupName.length() > 190) {
-			return new Result(false, "任务组名称过长");
+			return new Result<>(false, "任务组名称过长");
 		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
-			return new Result(false, "任务组名称不能含有特殊字符");
+			return new Result<>(false, "任务组名称不能含有特殊字符");
 		}
 		return null;
 	}
 
-	private Result verifyJobName(String jobName) {
+	private Result<?> verifyJobName(String jobName) {
 		if (StrUtil.noText(jobName)) {
-			return new Result(false, "任务名称不能为空");
+			return new Result<>(false, "任务名称不能为空");
 		} else if (jobName.length() > 190) {
-			return new Result(false, "任务名称过长");
+			return new Result<>(false, "任务名称过长");
 		} else if (StrUtil.isContainSpecialChar(jobName)) {
-			return new Result(false, "任务名称不能含有特殊字符");
+			return new Result<>(false, "任务名称不能含有特殊字符");
 		}
 		return null;
 	}
