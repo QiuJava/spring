@@ -16,6 +16,10 @@ datasource:
 logging:
   level:
     com.example.mapper: debug #mybatis sql执行日志
+  file: 
+    max-history: 180
+    max-size: 100GB 
+  path: E:/var/log
 
 spring:
   redis:
