@@ -40,7 +40,4 @@ spring:
     password: fpnqgibsoohybdgh
   thymeleaf:
     cache: false
-          
-mybatis:
-  configuration:
-    cache-enabled: true #开启二级缓存
+    

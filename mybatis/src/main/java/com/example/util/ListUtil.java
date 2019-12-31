@@ -1,6 +1,5 @@
 package com.example.util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,15 +24,11 @@ public class ListUtil {
 	public static <T> List<T> page(List<T> list, int pageNum, int pageSize) {
 		// 为null 处理
 		if (list == null) {
-			return new ArrayList<T>();
+			return null;
 		}
 
 		// 空元素集合处理
 		int size = list.size();
-		if (size < 1) {
-			return list;
-		}
-
 		// 错误页码和页数据数处理
 		if (pageNum < 1 || pageSize < 0) {
 			return list.subList(0, 0);

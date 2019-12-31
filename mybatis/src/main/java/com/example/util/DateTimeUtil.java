@@ -5,11 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 日期时间工具
  * 
  * @author Qiu Jian
  */
+@Slf4j
 public class DateTimeUtil {
 	private DateTimeUtil() {
 	}
@@ -60,9 +63,14 @@ public class DateTimeUtil {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Date toDateByPattern(String dateStr, String pattern) throws ParseException {
+	public static Date toDateByPattern(String dateStr, String pattern) {
 		SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.CHINA);
-		return format.parse(dateStr);
+		try {
+			return format.parse(dateStr);
+		} catch (ParseException e) {
+			log.error("解析异常", e);
+			return null;
+		}
 	}
 
 }
