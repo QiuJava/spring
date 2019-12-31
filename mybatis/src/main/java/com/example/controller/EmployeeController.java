@@ -83,6 +83,18 @@ public class EmployeeController {
 			return new Result<>(false, "重置失败");
 		}
 	}
+	
+	@PostMapping("/employee/delete")
+	@ResponseBody
+	public Result<?> deleteEmployee(Long id){
+		try {
+			employeeService.delete(id);
+			return new Result<>(true, "删除成功");
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result<>(false, "删除失败");
+		}
+	}
 
 	@PostMapping("/employee/changePassword")
 	@ResponseBody

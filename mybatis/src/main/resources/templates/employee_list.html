@@ -14,68 +14,100 @@
 	}
 	var token = [[${_csrf.token}]];
 	
-	var statusObj = {0:"正常",1:"锁定",2:"失效"};
-	var employeeObj = {0:"管理"};
+	var statusObj = {
+	    0 : "正常",
+	    1 : "锁定",
+	    2 : "失效"
+	};
+	var employeeObj = {
+	    0 : "管理"
+	};
 
-	function employeeSearch(){
-		$("#employee-dg").datagrid("load",{
-			"username":$("#username").val(),
-			"employeeNumber":$("#employeeNumber").val(),
-			"employeeType":$("#employeeType").val()
-		});
+	function employeeSearch() {
+	    $("#employee-dg").datagrid("load", {
+	        "username": $("#username").val(),
+	        "employeeNumber": $("#employeeNumber").val(),
+	        "employeeType": $("#employeeType").val()
+	    });
+	}
+
+	function clearEmployeeCondition() {
+	    $('#username').textbox('clear');
+	    $('#employeeNumber').textbox('clear');
+	    $('#employeeType').combobox('setValue', '');
 	}
 	
-	function clearEmployeeCondition(){
-		$('#username').textbox('clear');
-		$('#employeeNumber').textbox('clear');
-		$('#employeeType').combobox('setValue','');
+	function add() {
+	    $('#employee-dialog').dialog('open');
 	}
 	
-	function add(){
-		$('#employee-dialog').dialog('open');
+	function save() {
+	    $("#add-form").form('submit', {
+	        url: "/employee/add?_csrf=" + token,
+	        onSubmit: function() {
+	            return $(this).form('validate');
+	        },
+	        success: function(data) {
+	            var data = eval('(' + data + ')');
+	            if (data.succeed) {
+	                $.messager.alert('提示', data.msg, 'info',
+	                function() {
+	                    $("#add-form").form("clear");
+	                });
+	            } else {
+	                $.messager.alert('提示', data.msg, 'error');
+	            }
+	        }
+	    });
 	}
 	
-	function save(){
-		$("#add-form").form('submit', {
-			url: "/employee/add?_csrf="+token,
-			onSubmit: function(){
-				return $(this).form('validate');	
-			},
-		 	success: function(data){
-				var data = eval('(' + data + ')'); 
-				if (data.succeed){
-					$.messager.alert('提示', data.msg, 'info',function(){
-						$("#add-form").form("clear");
-					});
-				}else {
-					$.messager.alert('提示', data.msg, 'error');
-				}
-		    }
-		});
+	function clearForm() {
+	    $("#add-form").form("clear");
 	}
 	
-	function clearForm(){
-		$("#add-form").form("clear");
+	function remove() {
+	    var row = $("#employee-dg").datagrid('getSelected');
+	    if (row) {
+	        $.messager.confirm('确认', '确认删除这个员工吗?',
+	        function(r) {
+	            if (r) {
+	                var index = $("#employee-dg").datagrid('getRowIndex', row);
+	                $.post('/employee/delete?_csrf=' + token, {
+	                    id: row.id
+	                },
+	                function(data) {
+	                    if (data.succeed) {
+	                        // 重新读取一次
+	                        employeeSearch();
+	                    } else {
+	                        $.messager.alert('提示', data.msg, 'error');
+	                    }
+	                });
+	            }
+	        });
+	    } else {
+	        $.messager.alert('提示', '请选择一条数据', 'info');
+	    }
 	}
 	
-	$(function(){
-		$("#email").textbox({
-			required:true,
-			validType:['email','length[0,50]','remote["/employee/verifyEmail?_csrf='+token+'","email"]']
-		});
-		$("#usernameInput").textbox({
-			required:true,
-			validType:['length[2,20]','remote["/employee/verifyUsername?_csrf='+token+'","username"]']
-		});
-		$("#nickname").textbox({
-			required:true,
-			validType:['length[2,20]','remote["/employee/verifyNickname?_csrf='+token+'","nickname"]']
-		});
-		$("#employeeNumberInput").numberbox({
-			required:true,
-			validType:['length[3,6]','remote["/employee/verifyEmployeeNumber?_csrf='+token+'","employeeNumber"]'],
-			min:0
-		});
+	$(function() {
+	    $("#email").textbox({
+	        required: true,
+	        validType: ['email', 'length[0,50]', 'remote["/employee/verifyEmail?_csrf=' + token + '","email"]']
+	    });
+	    $("#usernameInput").textbox({
+	        required: true,
+	        validType: ['length[2,20]', 'remote["/employee/verifyUsername?_csrf=' + token + '","username"]']
+	    });
+	    $("#nickname").textbox({
+	        required: true,
+	        validType: ['length[2,20]', 'remote["/employee/verifyNickname?_csrf=' + token + '","nickname"]']
+	    });
+	    $("#employeeNumberInput").numberbox({
+	        required: true,
+	        validType: ['length[3,6]', 'remote["/employee/verifyEmployeeNumber?_csrf=' + token + '","employeeNumber"]'],
+	        min: 0
+	    });
 	});
 	
   </script> 

@@ -121,5 +121,10 @@ public class EmployeeServiceImpl {
 	public boolean hasByNickname(String nickname) {
 		return employeeMapper.countByNickname(nickname) == 1;
 	}
+	
+	@Transactional(rollbackFor = RuntimeException.class)
+	public void delete(Long id) {
+		employeeMapper.deleteById(id);
+	}
 
 }

@@ -36,7 +36,7 @@ public interface EmployeeMapper {
 			"	employee  ", //
 			"WHERE ", //
 			"	id = #{id,jdbcType=BIGINT}" })
-	int deleteByPrimaryKey(Long id);
+	int deleteById(Long id);
 
 	@InsertProvider(type = EmployeeSqlProvider.class, method = "insertSelective")
 	int insertSelective(Employee record);
