@@ -68,11 +68,23 @@ public class EmployeeServiceImpl {
 		return employeeMapper.selectPasswordErrorsAndIdAndStatusByUsername(username);
 	}
 
-	public boolean hasByUsername(String username) {
+	public boolean hasByUsernameAndId(Long id, String username) {
+		if (id != null) {
+			String oldUsername = employeeMapper.selectUsernameById(id);
+			if (oldUsername.equals(username)) {
+				return false;
+			}
+		}
 		return employeeMapper.countByUsername(username) == 1;
 	}
 
-	public boolean hasByEmployeeNumber(String employeeNumber) {
+	public boolean hasByEmployeeNumberAndId(Long id, String employeeNumber) {
+		if (id != null) {
+			String oldEmployeeNumber = employeeMapper.selectEmployeeNumberById(id);
+			if (oldEmployeeNumber.equals(employeeNumber)) {
+				return false;
+			}
+		}
 		return employeeMapper.countByEmployeeNumber(employeeNumber) == 1;
 	}
 
@@ -114,14 +126,26 @@ public class EmployeeServiceImpl {
 		return page;
 	}
 
-	public boolean hasByEmail(String email) {
+	public boolean hasByEmailAndId(Long id, String email) {
+		if (id != null) {
+			String oldEmail = employeeMapper.selectEmailById(id);
+			if (oldEmail.equals(email)) {
+				return false;
+			}
+		}
 		return employeeMapper.countByEmail(email) == 1;
 	}
 
-	public boolean hasByNickname(String nickname) {
+	public boolean hasByNicknameAndId(Long id, String nickname) {
+		if (id != null) {
+			String oldNickname = employeeMapper.selectNicknameById(id);
+			if (oldNickname.equals(nickname)) {
+				return false;
+			}
+		}
 		return employeeMapper.countByNickname(nickname) == 1;
 	}
-	
+
 	@Transactional(rollbackFor = RuntimeException.class)
 	public void delete(Long id) {
 		employeeMapper.deleteById(id);

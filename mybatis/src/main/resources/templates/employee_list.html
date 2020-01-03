@@ -90,26 +90,93 @@
 	    }
 	}
 	
-	$(function() {
-	    $("#email").textbox({
-	        required: true,
-	        validType: ['email', 'length[0,50]', 'remote["/employee/verifyEmail?_csrf=' + token + '","email"]']
-	    });
-	    $("#usernameInput").textbox({
-	        required: true,
-	        validType: ['length[2,20]', 'remote["/employee/verifyUsername?_csrf=' + token + '","username"]']
-	    });
-	    $("#nickname").textbox({
-	        required: true,
-	        validType: ['length[2,20]', 'remote["/employee/verifyNickname?_csrf=' + token + '","nickname"]']
-	    });
-	    $("#employeeNumberInput").numberbox({
-	        required: true,
-	        validType: ['length[3,6]', 'remote["/employee/verifyEmployeeNumber?_csrf=' + token + '","employeeNumber"]'],
-	        min: 0
-	    });
-	});
+	function edit() {
+		var row = $("#employee-dg").datagrid('getSelected');
+		if(row) {
+			$("#add-form").form('load',row);
+			// 打开弹框
+			$('#employee-dialog').dialog('open');
+		}else {
+			 $.messager.alert('提示', '请选择一条数据', 'info');
+		}
+	}
 	
+	// 自定义校验
+	$.extend($.fn.validatebox.defaults.rules, {
+	    employeeVerifyEmail: {
+	        validator: function(value) {
+	            var employeeId = $("#employeeId").val();
+	            var verify = false;
+	            $.ajax({
+	                type: "get",
+	                url: "/employee/verifyEmail",
+	                data: "id=" + employeeId + "&email=" + value,
+	                dataType: "json",
+	                async: false,
+	                success: function(data) {
+	                    verify = data;
+	                }
+	            });
+	            return verify;
+	        },
+	        message: '邮箱已存在'
+	    },
+	    employeeVerifyNickname: {
+	        validator: function(value) {
+	            var employeeId = $("#employeeId").val();
+	            var verify = false;
+	            $.ajax({
+	                type: "get",
+	                url: "/employee/verifyNickname",
+	                data: "id=" + employeeId + "&nickname=" + value,
+	                dataType: "json",
+	                async: false,
+	                success: function(data) {
+	                    verify = data;
+	                }
+	            });
+	            return verify;
+	        },
+	        message: '昵称已存在'
+	    },
+	    employeeVerifyUsername: {
+	        validator: function(value) {
+	            var employeeId = $("#employeeId").val();
+	            var verify = false;
+	            $.ajax({
+	                type: "get",
+	                url: "/employee/verifyUsername",
+	                data: "id=" + employeeId + "&username=" + value,
+	                dataType: "json",
+	                async: false,
+	                success: function(data) {
+	                    verify = data;
+	                }
+	            });
+	            return verify;
+	        },
+	        message: '用户名已存在'
+	    },
+	    employeeVerifyEmployeeNumber: {
+	        validator: function(value) {
+	            var employeeId = $("#employeeId").val();
+	            var verify = false;
+	            $.ajax({
+	                type: "get",
+	                url: "/employee/verifyEmployeeNumber",
+	                data: "id=" + employeeId + "&employeeNumber=" + value,
+	                dataType: "json",
+	                async: false,
+	                success: function(data) {
+	                    verify = data;
+	                }
+	            });
+	            return verify;
+	        },
+	        message: '工号已存在'
+	    }
+	});
+
   </script> 
  </head> 
  <body> 
@@ -167,24 +234,25 @@
   </div> 
   <div id="employee-dialog" class="easyui-dialog" title="新增员工" style="width: 500px; height: 500px;" data-options="iconCls:'icon-add',resizable:true,modal:true,closed:true,
 				onClose:function(){
-					$('#add-form').form('clear');&nbsp;
+					$('#add-form').form('clear');
 					employeeSearch();
 				}
 		"> 
    <form id="add-form" method="post"> 
-    <table cellpadding="2"> 
+   	<input id="employeeId" name="id" type="hidden"/>
+    <table> 
      <tbody>
       <tr> 
        <td>登录名:</td> 
-       <td><input id="usernameInput" name="username" /></td> 
+       <td><input id="usernameInput" name="username" class="easyui-textbox" data-options="required: true,validType: ['employeeVerifyUsername', 'length[2,20]']"  /></td> 
       </tr> 
       <tr> 
        <td>邮箱:</td> 
-       <td><input id="email" name="email" /></td> 
+       <td><input id="email" name="email" class="easyui-textbox" data-options="required: true,validType: ['email', 'length[0,50]', 'employeeVerifyEmail']"  /></td> 
       </tr> 
       <tr> 
        <td>昵称:</td> 
-       <td><input id="nickname" name="nickname" /></td> 
+       <td><input id="nickname" name="nickname" class="easyui-textbox" data-options="required: true,validType: ['employeeVerifyNickname', 'length[2,20]']"  /></td> 
       </tr> 
       <tr> 
        <td>员工类型:</td> 
@@ -192,7 +260,7 @@
       </tr> 
       <tr> 
        <td>工号:</td> 
-       <td><input id="employeeNumberInput" name="employeeNumber" /></td> 
+       <td><input id="employeeNumberInput" name="employeeNumber" class="easyui-numberbox" data-options="required: true,validType:['length[3,6]','employeeVerifyEmployeeNumber'],min: 0 " /></td> 
       </tr> 
       <tr> 
        <td>描述:</td> 

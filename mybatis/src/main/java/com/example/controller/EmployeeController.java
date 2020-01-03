@@ -83,10 +83,10 @@ public class EmployeeController {
 			return new Result<>(false, "重置失败");
 		}
 	}
-	
+
 	@PostMapping("/employee/delete")
 	@ResponseBody
-	public Result<?> deleteEmployee(Long id){
+	public Result<?> deleteEmployee(Long id) {
 		try {
 			employeeService.delete(id);
 			return new Result<>(true, "删除成功");
@@ -115,48 +115,48 @@ public class EmployeeController {
 		}
 	}
 
-	@PostMapping("/employee/verifyUsername")
+	@GetMapping("/employee/verifyUsername")
 	@ResponseBody
-	public boolean verifyUsername(String username) {
+	public boolean verifyUsername(Long id, String username) {
 		try {
-			boolean hasByUsername = employeeService.hasByUsername(username);
-			return !hasByUsername;
+			boolean hasByUsernameAndId = employeeService.hasByUsernameAndId(id, username);
+			return !hasByUsernameAndId;
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return false;
 		}
 	}
 
-	@PostMapping("/employee/verifyEmail")
+	@GetMapping("/employee/verifyEmail")
 	@ResponseBody
-	public boolean verifyEmail(String email) {
+	public boolean verifyEmail(Long id, String email) {
 		try {
-			boolean hasByEmail = employeeService.hasByEmail(email);
-			return !hasByEmail;
+			boolean hasByEmailAndId = employeeService.hasByEmailAndId(id, email);
+			return !hasByEmailAndId;
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return false;
 		}
 	}
 
-	@PostMapping("/employee/verifyNickname")
+	@GetMapping("/employee/verifyNickname")
 	@ResponseBody
-	public boolean verifyNickname(String nickname) {
+	public boolean verifyNickname(Long id, String nickname) {
 		try {
-			boolean hasByNickname = employeeService.hasByNickname(nickname);
-			return !hasByNickname;
+			boolean hasByNicknameAndId = employeeService.hasByNicknameAndId(id, nickname);
+			return !hasByNicknameAndId;
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return false;
 		}
 	}
 
-	@PostMapping("/employee/verifyEmployeeNumber")
+	@GetMapping("/employee/verifyEmployeeNumber")
 	@ResponseBody
-	public boolean verifyEmployeeNumber(String employeeNumber) {
+	public boolean verifyEmployeeNumber(Long id, String employeeNumber) {
 		try {
-			boolean hasByEmployeeNumber = employeeService.hasByEmployeeNumber(employeeNumber);
-			return !hasByEmployeeNumber;
+			boolean hasByEmployeeNumberAndId = employeeService.hasByEmployeeNumberAndId(id,employeeNumber);
+			return !hasByEmployeeNumberAndId;
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return false;

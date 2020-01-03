@@ -192,4 +192,36 @@ public interface EmployeeMapper {
 		"	nickname = #{nickname,jdbcType=VARCHAR}" })
 	int countByNickname(String nickname);
 
+	@Select({ "SELECT ", //
+		"	email  ", //
+		"FROM ", //
+		"	`employee`  ", //
+		"WHERE ", //
+		"	id = #{id,jdbcType=BIGINT}" })
+	String selectEmailById(Long id);
+
+	@Select({ "SELECT ", //
+		"	nickname  ", //
+		"FROM ", //
+		"	`employee`  ", //
+		"WHERE ", //
+		"	id = #{id,jdbcType=BIGINT}" })
+	String selectNicknameById(Long id);
+
+	@Select({ "SELECT ", //
+		"	username  ", //
+		"FROM ", //
+		"	`employee`  ", //
+		"WHERE ", //
+		"	id = #{id,jdbcType=BIGINT}" })
+	String selectUsernameById(Long id);
+
+	@Select({ "SELECT ", //
+		"	employee_number  ", //
+		"FROM ", //
+		"	`employee`  ", //
+		"WHERE ", //
+		"	id = #{id,jdbcType=BIGINT}" })
+	String selectEmployeeNumberById(Long id);
+
 }
