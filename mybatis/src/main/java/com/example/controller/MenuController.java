@@ -61,12 +61,6 @@ public class MenuController {
 			return verifyUrl;
 		}
 
-		String intro = menu.getIntro();
-		if (StrUtil.hasText(intro)) {
-			if (intro.length() > 255) {
-				return new Result<>(false, "菜单描述过长");
-			}
-		}
 		try {
 			menuService.save(menu);
 			return new Result<>(true, "添加成功");
@@ -90,13 +84,6 @@ public class MenuController {
 		Result<?> verifyUrl = this.verifyUrl(menu.getUrl());
 		if (verifyUrl != null) {
 			return verifyUrl;
-		}
-
-		String intro = menu.getIntro();
-		if (StrUtil.hasText(intro)) {
-			if (intro.length() > 255) {
-				return new Result<>(false, "菜单描述过长");
-			}
 		}
 
 		try {

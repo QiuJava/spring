@@ -92,7 +92,6 @@
 	            // 发送post请求进行新增
 	            $.post("/menu/add?_csrf=" + token, {
 	                "menuName": row.menuName,
-	                "intro": row.intro,
 	                "url": row.url,
 	                "parentId": row._parentId
 	            },
@@ -112,7 +111,6 @@
 	            $.post("/menu/update?_csrf=" + token, {
 	                "id": row.id,
 	                "menuName": row.menuName,
-	                "intro": row.intro,
 	                "url": row.url
 	            },
 	            function(data) {
@@ -286,7 +284,6 @@
 	            // 发送post请求进行更新
 	            $.post("/permission/add?_csrf=" + token, {
 	                "permissionName": row.permissionName,
-	                "intro": row.intro,
 	                "url": row.url,
 	                "authority": row.authority,
 	                "menuId": menuRow.id
@@ -306,7 +303,6 @@
 	            $.post("/permission/update?_csrf=" + token, {
 	                "id": rowId,
 	                "permissionName": row.permissionName,
-	                "intro": row.intro,
 	                "url": row.url,
 	                "authority": row.authority
 	            },
@@ -391,7 +387,6 @@
       <th data-options="field:'permissionName',width:120,editor:'text'">权限名称</th> 
       <th data-options="field:'authority',width:150,editor:'text'">权限编码</th> 
       <th data-options="field:'url',width:150,editor:'text'">权限路径</th> 
-      <th data-options="field:'intro',width:150,editor:'text'">描述</th> 
      </tr> 
     </thead> 
    </table> 
@@ -439,7 +434,6 @@
      		validType:['length[0,100]']
      	}
      }">菜单链接</th> 
-     <th data-options="field:'intro',width:150,editor:'text'">描述</th> 
      <th data-options="field:'createTime',width:150">创建时间</th> 
      <th data-options="field:'updateTime',width:150">更新时间</th> 
     </tr> 

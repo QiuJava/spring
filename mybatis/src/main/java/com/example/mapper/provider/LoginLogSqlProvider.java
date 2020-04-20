@@ -16,7 +16,7 @@ public class LoginLogSqlProvider {
 		sql.INSERT_INTO("login_log");
 		sql.VALUES("remote_address", "#{remoteAddress,jdbcType=VARCHAR}");
 		sql.VALUES("username", "#{username,jdbcType=VARCHAR}");
-		sql.VALUES("login_type", "#{loginType,jdbcType=INTEGER}");
+		sql.VALUES("login_status", "#{loginStatus,jdbcType=VARCHAR}");
 		if (record.getRemark() != null) {
 			sql.VALUES("remark", "#{remark,jdbcType=VARCHAR}");
 		}

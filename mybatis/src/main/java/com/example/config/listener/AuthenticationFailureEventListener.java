@@ -58,7 +58,7 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 			}
 
 			LoginLog loginLog = new LoginLog();
-			loginLog.setLoginType(LoginLog.LOGIN_FAILURE_STATUS);
+			loginLog.setLoginStatus(LoginLog.LOGIN_FAILURE_STATUS);
 			loginLog.setRemoteAddress(details.getRemoteAddress());
 			loginLog.setCreateTime(date);
 			loginLog.setUpdateTime(date);

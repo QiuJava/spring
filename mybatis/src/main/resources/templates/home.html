@@ -88,8 +88,7 @@
     </div> 
     <div> 
      <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-man',plain:true"> </a> 
-     <span sec:authentication="name"> </span> ( 
-     <span sec:authentication="principal.nickname"> </span> ) 最近登录时间：[[${#dates.format(session.SPRING_SECURITY_CONTEXT.authentication.principal.newestLoginTime,'yyyy-MM-dd HH:mm:ss')}]] 
+     <span sec:authentication="name"> </span>  最近登录时间：[[${#dates.format(session.SPRING_SECURITY_CONTEXT.authentication.principal.newestLoginTime,'yyyy-MM-dd HH:mm:ss')}]] 
      <a href="/logout" class="easyui-linkbutton" data-options="iconCls:'icon-back',plain:true"> 注销 </a> 
      <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="changePassword()" sec:authorize="hasAuthority('CHANGE_PASSWORD')"> 修改密码 </a> 
     </div> 

@@ -25,7 +25,6 @@ public class Permission implements GrantedAuthority {
 	private String permissionName;
 	private String authority;
 	private String url;
-	private String intro;
 	private Date createTime;
 	private Date updateTime;
 	

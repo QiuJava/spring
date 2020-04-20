@@ -21,7 +21,6 @@ public class PermissionSqlProvider {
 				"permi_0.permission_name AS permission_name", //
 				"permi_0.authority AS authority", //
 				"permi_0.url AS url", //
-				"permi_0.intro AS intro", //
 				"menu_0.id AS menu_id" //
 		});
 		sql.FROM("permission permi_0");
@@ -49,9 +48,6 @@ public class PermissionSqlProvider {
 		if (StrUtil.hasText(permission.getUrl())) {
 			sql.VALUES("url", "#{url,jdbcType=VARCHAR}");
 		}
-		if (StrUtil.hasText(permission.getIntro())) {
-			sql.VALUES("intro", "#{intro,jdbcType=VARCHAR}");
-		}
 		return sql.toString();
 	}
 
@@ -65,7 +61,6 @@ public class PermissionSqlProvider {
 			sql.SET("authority=#{authority,jdbcType=VARCHAR}");
 		}
 		sql.SET("url=#{url,jdbcType=VARCHAR}");
-		sql.SET("intro=#{intro,jdbcType=VARCHAR}");
 		sql.SET("update_time=#{updateTime,jdbcType=TIMESTAMP}");
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
 		return sql.toString();

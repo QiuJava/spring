@@ -20,7 +20,6 @@ public class MenuListVo implements Serializable {
 	private static final long serialVersionUID = 8802358866790936967L;
 	private Long id;
 	private String menuName;
-	private String intro;
 	private Date createTime;
 	private Date updateTime;
 	private String parentMenuName;

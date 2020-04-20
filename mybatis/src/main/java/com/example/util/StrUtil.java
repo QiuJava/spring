@@ -46,16 +46,6 @@ public class StrUtil {
 	public static final String SPECIAL_CHAR_REGEX = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
 
 	/**
-	 * 判断不是工号
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public static boolean isNotEmployeeNumber(String str) {
-		return !str.matches(NUMBER_REGEX) || str.length() < 3 || str.length() > 6;
-	}
-
-	/**
 	 * 是否包含特殊字符
 	 * 
 	 * @param str

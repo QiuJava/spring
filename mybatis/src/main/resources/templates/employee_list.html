@@ -26,14 +26,12 @@
 	function employeeSearch() {
 	    $("#employee-dg").datagrid("load", {
 	        "username": $("#username").val(),
-	        "employeeNumber": $("#employeeNumber").val(),
 	        "employeeType": $("#employeeType").val()
 	    });
 	}
 
 	function clearEmployeeCondition() {
 	    $('#username').textbox('clear');
-	    $('#employeeNumber').textbox('clear');
 	    $('#employeeType').combobox('setValue', '');
 	}
 	
@@ -121,24 +119,6 @@
 	        },
 	        message: '邮箱已存在'
 	    },
-	    employeeVerifyNickname: {
-	        validator: function(value) {
-	            var employeeId = $("#employeeId").val();
-	            var verify = false;
-	            $.ajax({
-	                type: "get",
-	                url: "/employee/verifyNickname",
-	                data: "id=" + employeeId + "&nickname=" + value,
-	                dataType: "json",
-	                async: false,
-	                success: function(data) {
-	                    verify = data;
-	                }
-	            });
-	            return verify;
-	        },
-	        message: '昵称已存在'
-	    },
 	    employeeVerifyUsername: {
 	        validator: function(value) {
 	            var employeeId = $("#employeeId").val();
@@ -156,25 +136,8 @@
 	            return verify;
 	        },
 	        message: '用户名已存在'
-	    },
-	    employeeVerifyEmployeeNumber: {
-	        validator: function(value) {
-	            var employeeId = $("#employeeId").val();
-	            var verify = false;
-	            $.ajax({
-	                type: "get",
-	                url: "/employee/verifyEmployeeNumber",
-	                data: "id=" + employeeId + "&employeeNumber=" + value,
-	                dataType: "json",
-	                async: false,
-	                success: function(data) {
-	                    verify = data;
-	                }
-	            });
-	            return verify;
-	        },
-	        message: '工号已存在'
 	    }
+	    
 	});
 
   </script> 
@@ -193,7 +156,6 @@
     <tr> 
      <th data-options="field:'username'" width="80">登录名</th> 
      <th data-options="field:'email'" width="150">邮箱</th> 
-     <th data-options="field:'nickname'" width="80">昵称</th> 
      <th data-options="field:'status',
 				formatter: function(value,row,index){
 					return statusObj[value];
@@ -202,8 +164,6 @@
 				formatter: function(value,row,index){
 					return employeeObj[value];
 				}" width="50">员工类型</th> 
-     <th data-options="field:'employeeNumber'" width="50">工号</th> 
-     <th data-options="field:'intro'" width="150">简介</th> 
     </tr> 
    </thead> 
   </table> 
@@ -211,8 +171,6 @@
    <div id="employeeSearchInputs"> 
     <span>登录名称:</span> 
     <input class="easyui-textbox" id="username" name="username" /> 
-    <span>工号:</span> 
-    <input class="easyui-numberbox" id="employeeNumber" name="employeeNumber" /> 
     <span>员工类型:</span> 
     <input id="employeeType" class="easyui-combobox" name="employeeType" data-options="valueField:'value',textField:'name',data:
 					[{
@@ -251,20 +209,8 @@
        <td><input id="email" name="email" class="easyui-textbox" data-options="required: true,validType: ['email', 'length[0,50]', 'employeeVerifyEmail']"  /></td> 
       </tr> 
       <tr> 
-       <td>昵称:</td> 
-       <td><input id="nickname" name="nickname" class="easyui-textbox" data-options="required: true,validType: ['employeeVerifyNickname', 'length[2,20]']"  /></td> 
-      </tr> 
-      <tr> 
        <td>员工类型:</td> 
        <td><input class="easyui-combobox" name="employeeType" data-options="valueField:'value',textField:'name',required:true,url:'/dictEntry/employeeTypeList',method:'get'" /></td> 
-      </tr> 
-      <tr> 
-       <td>工号:</td> 
-       <td><input id="employeeNumberInput" name="employeeNumber" class="easyui-numberbox" data-options="required: true,validType:['length[3,6]','employeeVerifyEmployeeNumber'],min: 0 " /></td> 
-      </tr> 
-      <tr> 
-       <td>描述:</td> 
-       <td><textarea maxlength="255" form="add-form" rows="4" cols="25" name="intro" id="intro"></textarea></td> 
       </tr> 
      </tbody>
     </table> 

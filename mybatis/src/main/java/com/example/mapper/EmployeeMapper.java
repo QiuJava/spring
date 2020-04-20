@@ -45,25 +45,13 @@ public interface EmployeeMapper {
 	int updateByPrimaryKeySelective(Employee record);
 
 	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	`employee`  ", //
-			"WHERE ", //
-			"	super_admin = 1" })
-	int countBySuperAdmin();
-
-	@Select({ "SELECT ", //
 			"	id, ", //
 			"	username, ", //
 			"	`PASSWORD`, ", //
 			"	email, ", //
-			"	nickname, ", //
 			"	password_errors, ", //
 			"	`STATUS`, ", //
-			"	super_admin, ", //
 			"	employee_type, ", //
-			"	employee_number, ", //
-			"	intro, ", //
 			"	lock_time  ", //
 			"FROM ", //
 			"	employee  ", //
@@ -73,13 +61,9 @@ public interface EmployeeMapper {
 			@Result(column = "username", property = "username", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "password", property = "password", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "email", property = "email", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "nickname", property = "nickname", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "password_errors", property = "passwordErrors", jdbcType = JdbcType.INTEGER),
-			@Result(column = "status", property = "status", jdbcType = JdbcType.INTEGER),
-			@Result(column = "super_admin", property = "superAdmin", jdbcType = JdbcType.INTEGER),
-			@Result(column = "employee_type", property = "employeeType", jdbcType = JdbcType.INTEGER),
-			@Result(column = "employee_number", property = "employeeNumber", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "status", property = "status", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "employee_type", property = "employeeType", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "lock_time", property = "lockTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "id", property = "authorities", many = @Many(select = "com.example.mapper.PermissionMapper.selectByEmployeeId", fetchType = FetchType.LAZY)) })
 	Employee selectByUsername(String username);
@@ -93,7 +77,7 @@ public interface EmployeeMapper {
 
 	@Update({ "UPDATE employee  ", //
 			"SET password_errors = #{passwordErrors,jdbcType=INTEGER}, ", //
-			"`status` = #{status,jdbcType=INTEGER}, ", //
+			"`status` = #{status,jdbcType=VARCHAR}, ", //
 			"lock_time = #{lockTime,jdbcType=TIMESTAMP}, ", //
 			"update_time = #{updateTime,jdbcType=TIMESTAMP} ", //
 			"WHERE ", //
@@ -110,7 +94,7 @@ public interface EmployeeMapper {
 			"	username = #{username,jdbcType=VARCHAR}" })
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
 			@Result(column = "password_errors", property = "passwordErrors", jdbcType = JdbcType.INTEGER),
-			@Result(column = "status", property = "status", jdbcType = JdbcType.INTEGER) })
+			@Result(column = "status", property = "status", jdbcType = JdbcType.VARCHAR) })
 	Employee selectPasswordErrorsAndIdAndStatusByUsername(String username);
 
 	@Select({ "SELECT ", //
@@ -120,22 +104,6 @@ public interface EmployeeMapper {
 			"WHERE ", //
 			"	username = #{username,jdbcType=VARCHAR}" })
 	int countByUsername(String username);
-
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	`employee`  ", //
-			"WHERE ", //
-			"	employee_number = #{employeeNumber,jdbcType=VARCHAR}" })
-	int countByEmployeeNumber(String employeeNumber);
-
-	@Update({ "UPDATE `employee`  ", //
-			"SET `password` = #{password,jdbcType=VARCHAR}, ", //
-			"update_time = #{updateTime,jdbcType=TIMESTAMP} ", //
-			"WHERE ", //
-			"	username = #{username,jdbcType=VARCHAR} ", //
-			"	AND employee_number = #{employeeNumber,jdbcType=VARCHAR}" })
-	int updatePasswordAndUpdateTimeByUsernameEmployeeNumber(Employee employee);
 
 	@Update({ "UPDATE `employee`  ", //
 			"SET `password` = #{encodePassword,jdbcType=VARCHAR}, ", //
@@ -147,7 +115,7 @@ public interface EmployeeMapper {
 	@Update({ "UPDATE employee  ", //
 			"SET password_errors = 0 ", //
 			"WHERE ", //
-			"	`status` = 0 AND password_errors > 0 " })
+			"	`status` = 'NORMAL_STATUS' AND password_errors > 0 " })
 	int updateAllPasswordErrors();
 
 	@Select({ "SELECT ", //
@@ -169,11 +137,8 @@ public interface EmployeeMapper {
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
 			@Result(column = "username", property = "username", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "email", property = "email", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "nickname", property = "nickname", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "status", property = "status", jdbcType = JdbcType.INTEGER),
-			@Result(column = "employee_type", property = "employeeType", jdbcType = JdbcType.INTEGER),
-			@Result(column = "employee_number", property = "employeeNumber", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR) })
+			@Result(column = "status", property = "status", jdbcType = JdbcType.VARCHAR),
+			@Result(column = "employee_type", property = "employeeType", jdbcType = JdbcType.VARCHAR)})
 	List<Employee> selectByListByQo(EmployeeQo employeeQo);
 
 	@Select({ "SELECT ", //
@@ -185,28 +150,12 @@ public interface EmployeeMapper {
 	int countByEmail(String email);
 
 	@Select({ "SELECT ", //
-		"	count( * )  ", //
-		"FROM ", //
-		"	`employee`  ", //
-		"WHERE ", //
-		"	nickname = #{nickname,jdbcType=VARCHAR}" })
-	int countByNickname(String nickname);
-
-	@Select({ "SELECT ", //
 		"	email  ", //
 		"FROM ", //
 		"	`employee`  ", //
 		"WHERE ", //
 		"	id = #{id,jdbcType=BIGINT}" })
 	String selectEmailById(Long id);
-
-	@Select({ "SELECT ", //
-		"	nickname  ", //
-		"FROM ", //
-		"	`employee`  ", //
-		"WHERE ", //
-		"	id = #{id,jdbcType=BIGINT}" })
-	String selectNicknameById(Long id);
 
 	@Select({ "SELECT ", //
 		"	username  ", //
@@ -217,11 +166,11 @@ public interface EmployeeMapper {
 	String selectUsernameById(Long id);
 
 	@Select({ "SELECT ", //
-		"	employee_number  ", //
+		"	count(*)  ", //
 		"FROM ", //
 		"	`employee`  ", //
 		"WHERE ", //
-		"	id = #{id,jdbcType=BIGINT}" })
-	String selectEmployeeNumberById(Long id);
+		"	employee_type = #{employeeType,jdbcType=VARCHAR}" })
+	long countByEmployeeType(String employeeType);
 
 }

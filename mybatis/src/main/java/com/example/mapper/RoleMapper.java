@@ -71,8 +71,7 @@ public interface RoleMapper {
 
 	@SelectProvider(type = RoleSqlProvider.class, method = "selectByQo")
 	@Results({ @Result(column = "id", jdbcType = JdbcType.BIGINT, property = "id", id = true),
-			@Result(column = "role_name", jdbcType = JdbcType.VARCHAR, property = "roleName"),
-			@Result(column = "intro", jdbcType = JdbcType.VARCHAR, property = "intro") })
+			@Result(column = "role_name", jdbcType = JdbcType.VARCHAR, property = "roleName") })
 	List<Role> selectByQo(RoleQo roleQo);
 
 	@Delete({ "DELETE  ", //

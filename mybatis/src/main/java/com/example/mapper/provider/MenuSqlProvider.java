@@ -18,7 +18,6 @@ public class MenuSqlProvider {
 		SQL sql = new SQL();
 		sql.SELECT(new String[] { "id", //
 				"menu_name", //
-				"intro", //
 				"create_time", //
 				"update_time", //
 				"parent_id", //
@@ -68,7 +67,6 @@ public class MenuSqlProvider {
 		SQL sql = new SQL();
 		sql.SELECT(new String[] { "id", //
 				"menu_name", //
-				"intro", //
 				"create_time", //
 				"update_time", //
 				"parent_id", //
@@ -87,9 +85,6 @@ public class MenuSqlProvider {
 		sql.INSERT_INTO("menu");
 		sql.VALUES("menu_name", "#{menuName,jdbcType=VARCHAR}");
 		sql.VALUES("url", "#{url,jdbcType=VARCHAR}");
-		if (StrUtil.hasText(record.getIntro())) {
-			sql.VALUES("intro", "#{intro,jdbcType=VARCHAR}");
-		}
 		if (record.getParentId() != null) {
 			sql.VALUES("parent_id", "#{parentId,jdbcType=BIGINT}");
 		}
@@ -109,7 +104,6 @@ public class MenuSqlProvider {
 		if (StrUtil.hasText(record.getUrl())) {
 			sql.SET("url = #{url,jdbcType=VARCHAR}");
 		}
-		sql.SET("intro = #{intro,jdbcType=VARCHAR}");
 		sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
 		sql.WHERE("id = #{id,jdbcType=BIGINT}");
 		return sql.toString();

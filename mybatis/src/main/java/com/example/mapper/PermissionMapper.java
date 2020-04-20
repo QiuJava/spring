@@ -89,8 +89,7 @@ public interface PermissionMapper {
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
 			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR) })
+			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) })
 	List<Permission> selectByQo(PermissionQo qo);
 
 	@Delete({ "DELETE  ", //
@@ -119,7 +118,6 @@ public interface PermissionMapper {
 			"	permi_O.menu_id AS menu_id, ", //
 			"	permi_O.authority AS authority, ", //
 			"	permi_O.permission_name AS permission_name, ", //
-			"	permi_O.intro AS intro, ", //
 			"	permi_O.url AS url ", //
 			"FROM ", //
 			"	permission permi_O ", //
@@ -130,7 +128,6 @@ public interface PermissionMapper {
 			@Result(column = "menu_id", property = "menuId", jdbcType = JdbcType.BIGINT),
 			@Result(column = "authority", property = "authority", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "permission_name", property = "permissionName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "intro", property = "intro", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR) })
 	List<Permission> selectByEmployeeId(Long employeeId);
 

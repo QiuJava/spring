@@ -65,18 +65,16 @@ public class EmployeeController {
 
 	@GetMapping("/resetPassword")
 	public Result<?> resetPassword(Employee employee) {
-		String employeeNumber = employee.getEmployeeNumber();
-		String nickname = employee.getNickname();
 		// 校验邮箱
 		String email = employee.getEmail();
-
+		String username = employee.getUsername();
 		try {
-			int resetPassword = employeeService.resetPassword(employee);
-			if (resetPassword < 1) {
+			int resetPassword = employeeService.resetPassword(username);
+			if (resetPassword != 1) {
 				return new Result<>(false, "重置失败");
 			}
 			// 发送邮件
-			emailService.sendResetPasswordSuccessMail(employeeNumber, email, nickname);
+			emailService.sendResetPasswordSuccessMail(email, username);
 			return new Result<>(true, "重置成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
@@ -133,30 +131,6 @@ public class EmployeeController {
 		try {
 			boolean hasByEmailAndId = employeeService.hasByEmailAndId(id, email);
 			return !hasByEmailAndId;
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return false;
-		}
-	}
-
-	@GetMapping("/employee/verifyNickname")
-	@ResponseBody
-	public boolean verifyNickname(Long id, String nickname) {
-		try {
-			boolean hasByNicknameAndId = employeeService.hasByNicknameAndId(id, nickname);
-			return !hasByNicknameAndId;
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return false;
-		}
-	}
-
-	@GetMapping("/employee/verifyEmployeeNumber")
-	@ResponseBody
-	public boolean verifyEmployeeNumber(Long id, String employeeNumber) {
-		try {
-			boolean hasByEmployeeNumberAndId = employeeService.hasByEmployeeNumberAndId(id,employeeNumber);
-			return !hasByEmployeeNumberAndId;
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return false;

@@ -48,7 +48,7 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 		}
 
 		LoginLog loginLog = new LoginLog();
-		loginLog.setLoginType(LoginLog.LOGIN_SUCCESS_STATUS);
+		loginLog.setLoginStatus(LoginLog.LOGIN_SUCCESS_STATUS);
 		loginLog.setRemoteAddress(details.getRemoteAddress());
 		loginLog.setCreateTime(date);
 		loginLog.setUpdateTime(date);

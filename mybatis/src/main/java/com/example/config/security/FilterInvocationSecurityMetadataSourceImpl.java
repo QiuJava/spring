@@ -41,9 +41,10 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		Map<String, String> map = (Map<String, String>) valueOperations.get(ContextStartListener.PEMISSION_MAP);
-		Collection<String> values = map.values();
-		return SecurityConfig.createList(values.toArray(new String[values.size()]));
+		//Map<String, String> map = (Map<String, String>) valueOperations.get(ContextStartListener.PEMISSION_MAP);
+		//Collection<String> values = map.values();
+		//return SecurityConfig.createList(values.toArray(new String[values.size()]));
+		return null;
 	}
 
 	@Override

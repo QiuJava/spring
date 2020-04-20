@@ -24,38 +24,31 @@ public class Employee implements UserDetails {
 	private String username;
 	private String password;
 	private String email;
-	private String nickname;
 	private Integer passwordErrors;
-	private Integer status;
-	private Integer superAdmin;
-	private Integer employeeType;
-	private String employeeNumber;
-	private String intro;
+	private String status;
 	private Date lockTime;
 	private Date createTime;
 	private Date updateTime;
+	private String employeeType;
 
 	private List<Permission> authorities;
 
 	private List<MenuTree> menuTreeList;
-	
+
 	private Date newestLoginTime;
 
-	public static final int NORMAL_STATUS = 0;
-	public static final int LOCK_STATUS = 1;
-	public static final int INVALID_STATUS = 2;
+	public static final String NORMAL_STATUS = "NORMAL_STATUS";
+	public static final String LOCK_STATUS = "LOCK_STATUS";
+	public static final String INVALID_STATUS = "INVALID_STATUS";
+	
+	public static final String SUPER_ADMIN_TYPE = "SUPER_ADMIN_TYPE";
 
-	public static final int IS_ADMIN = 1;
-	public static final int IS_NOT_ADMIN = 0;
-
-	public static final int ADMIN_TYPE = 0;
-
+	public static final String ADMIN = "ADMIN";
+	
 	public static final int MAX_PASSWORD_ERRORS = 5;
-
 	public static final int PASSWORD_ERRORS_INIT = 0;
-
-	public static final String INIT_PASSWORD_SUFFIX = "000";
-	public static final String INIT_EMPLOYEE_NUMBER = "100";
+	
+	
 
 	@Override
 	public String getUsername() {
@@ -74,7 +67,7 @@ public class Employee implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return status != Employee.INVALID_STATUS;
+		return !Employee.INVALID_STATUS.equals(status);
 	}
 
 	@Override

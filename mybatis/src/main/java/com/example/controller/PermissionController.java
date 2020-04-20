@@ -61,14 +61,6 @@ public class PermissionController {
 			}
 		}
 
-		String intro = permission.getIntro();
-		if (StrUtil.hasText(intro)) {
-			Result<?> verifyIntro = this.verifyIntro(intro);
-			if (verifyIntro != null) {
-				return verifyIntro;
-			}
-		}
-
 		try {
 			permissionService.save(permission);
 			permissionService.settingPermissionMap();
@@ -104,14 +96,6 @@ public class PermissionController {
 			Result<?> verifyUrl = this.verifyUrl(url);
 			if (verifyUrl != null) {
 				return verifyUrl;
-			}
-		}
-
-		String intro = permission.getIntro();
-		if (StrUtil.hasText(intro)) {
-			Result<?> verifyIntro = this.verifyIntro(intro);
-			if (verifyIntro != null) {
-				return verifyIntro;
 			}
 		}
 
@@ -219,16 +203,6 @@ public class PermissionController {
 			return new Result<>(false, "权限ID不能为空");
 		} else if (id.toString().length() > 20) {
 			return new Result<>(false, "权限ID过长");
-		}
-		return null;
-	}
-
-	private Result<?> verifyIntro(String intro) {
-		if (intro.length() > 255) {
-			return new Result<>(false, "权限描述过长");
-		}
-		if (StrUtil.isContainSpecialChar(intro)) {
-			return new Result<>(false, "权限描述不能包含特殊字符");
 		}
 		return null;
 	}

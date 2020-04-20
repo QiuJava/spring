@@ -55,7 +55,7 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		String credentials = authentication.getCredentials().toString();
 		if (!passwordEncoder.matches(credentials, employee.getPassword())) {
 			if (employee.getPasswordErrors() + 1 >= Employee.MAX_PASSWORD_ERRORS
-					&& employee.getStatus() != Employee.LOCK_STATUS) {
+					&& !Employee.LOCK_STATUS.equals(employee.getStatus())) {
 				StringBuilder builder = new StringBuilder();
 				builder.append("账户已锁定，请").append(DateTimeUtil.LOCK_INTERVAL / 1000).append("秒后再试");
 				throw new LockedException(builder.toString());
@@ -64,7 +64,7 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		}
 
 		this.setMenuTreeAndPermission(employee);
-		
+
 		employee.setNewestLoginTime(loginLogService.getNewestLoginTimeByUsername(employee.getUsername()));
 
 		return new UsernamePasswordAuthenticationToken(employee, credentials, employee.getAuthorities());
@@ -85,7 +85,7 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 
 		// 登录用户的菜单
 		List<MenuTree> menuTreeList = menuService.listMenuTreeByAll();
-		if (employee.getSuperAdmin().equals(Employee.IS_NOT_ADMIN)) {
+		if (!Employee.SUPER_ADMIN_TYPE.equals(employee.getEmployeeType())) {
 			this.menuTreeMatches(menuTreeList, menuIdList);
 		} else {
 			// 超级管理员拥有全部权限

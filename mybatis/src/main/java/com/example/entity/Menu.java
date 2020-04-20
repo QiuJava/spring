@@ -20,7 +20,6 @@ public class Menu  {
 
 	private Long id;
 	private String menuName;
-	private String intro;
 	private String url;
 	private Date createTime;
 	private Date updateTime;

@@ -15,6 +15,7 @@ import com.example.qo.EmployeeQo;
 import com.example.util.SecurityContextUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.util.StringUtil;
 
 /**
  * 员工服务实现
@@ -32,22 +33,17 @@ public class EmployeeServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Employee employee) {
-		String employeeNumber = employee.getEmployeeNumber();
+
+		if (StringUtil.isEmpty(employee.getPassword())) {
+			employee.setPassword(passwordEncoder.encode(employee.getUsername()));
+		}
 		// 初始化
 		employee.setStatus(Employee.NORMAL_STATUS);
-		employee.setSuperAdmin(Employee.IS_NOT_ADMIN);
-
-		employee.setPassword(passwordEncoder
-				.encode(new StringBuilder(20).append(employeeNumber).append(Employee.INIT_PASSWORD_SUFFIX)));
 		employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
 		Date date = new Date();
 		employee.setCreateTime(date);
 		employee.setUpdateTime(date);
 		return employeeMapper.insertSelective(employee);
-	}
-
-	public boolean hasAdmin() {
-		return employeeMapper.countBySuperAdmin() > 0;
 	}
 
 	public Employee getByUsername(String username) {
@@ -78,22 +74,13 @@ public class EmployeeServiceImpl {
 		return employeeMapper.countByUsername(username) == 1;
 	}
 
-	public boolean hasByEmployeeNumberAndId(Long id, String employeeNumber) {
-		if (id != null) {
-			String oldEmployeeNumber = employeeMapper.selectEmployeeNumberById(id);
-			if (oldEmployeeNumber.equals(employeeNumber)) {
-				return false;
-			}
-		}
-		return employeeMapper.countByEmployeeNumber(employeeNumber) == 1;
-	}
-
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int resetPassword(Employee employee) {
-		employee.setPassword(passwordEncoder.encode(
-				new StringBuilder(20).append(employee.getEmployeeNumber()).append(Employee.INIT_PASSWORD_SUFFIX)));
-		employee.setUpdateTime(new Date());
-		return employeeMapper.updatePasswordAndUpdateTimeByUsernameEmployeeNumber(employee);
+	public int resetPassword(String username) {
+		ChangePasswordDto changePasswordDto = new ChangePasswordDto();
+		changePasswordDto.setUsername(username);
+		changePasswordDto.setEncodePassword(passwordEncoder.encode(username));
+		changePasswordDto.setUpdateTime(new Date());
+		return employeeMapper.updatePasswordAndUpdateTimeByUsername(changePasswordDto);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -136,19 +123,13 @@ public class EmployeeServiceImpl {
 		return employeeMapper.countByEmail(email) == 1;
 	}
 
-	public boolean hasByNicknameAndId(Long id, String nickname) {
-		if (id != null) {
-			String oldNickname = employeeMapper.selectNicknameById(id);
-			if (oldNickname.equals(nickname)) {
-				return false;
-			}
-		}
-		return employeeMapper.countByNickname(nickname) == 1;
-	}
-
 	@Transactional(rollbackFor = RuntimeException.class)
 	public void delete(Long id) {
 		employeeMapper.deleteById(id);
+	}
+
+	public boolean hasByEmployeeType(String superAdminType) {
+		return employeeMapper.countByEmployeeType(superAdminType) == 1;
 	}
 
 }

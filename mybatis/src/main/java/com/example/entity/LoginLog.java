@@ -17,13 +17,14 @@ import lombok.ToString;
 @ToString
 public class LoginLog {
 
-	public static final int LOGIN_SUCCESS_STATUS = 1;
-	public static final int LOGIN_FAILURE_STATUS = 0;
+	public static final String LOGIN_SUCCESS_STATUS = "LOGIN_SUCCESS_STATUS";
+	public static final String LOGIN_FAILURE_STATUS = "LOGIN_FAILURE_STATUS";
 
 	private Long id;
 	private String remoteAddress;
 	private String username;
-	private Integer loginType;
+	private String loginStatus;
+	
 	private String remark;
 	private Date createTime;
 	private Date updateTime;
