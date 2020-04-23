@@ -32,7 +32,7 @@ public class EmailService {
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
 		try {
-			mimeMessageHelper.setFrom(email, username);
+			mimeMessageHelper.setFrom(this.username, username);
 			mimeMessageHelper.setTo(email);
 			mimeMessageHelper.setSubject("密码重置成功");
 			mimeMessageHelper.setText("密码重置成功");

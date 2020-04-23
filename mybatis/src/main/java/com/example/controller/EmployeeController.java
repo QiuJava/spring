@@ -53,7 +53,7 @@ public class EmployeeController {
 
 	@PostMapping("/employee/add")
 	@ResponseBody
-	public Result<?> addEmployee(Employee employee) {
+	public Result<?> add(Employee employee) {
 		try {
 			employeeService.save(employee);
 			return new Result<>(true, "添加成功");
@@ -63,7 +63,8 @@ public class EmployeeController {
 		}
 	}
 
-	@GetMapping("/resetPassword")
+	@PostMapping("/employee/resetPassword")
+	@ResponseBody
 	public Result<?> resetPassword(Employee employee) {
 		// 校验邮箱
 		String email = employee.getEmailAddress();
@@ -84,7 +85,7 @@ public class EmployeeController {
 
 	@PostMapping("/employee/deleteById")
 	@ResponseBody
-	public Result<?> deleteEmployee(Integer id) {
+	public Result<?> deleteById(Integer id) {
 		try {
 			employeeService.deleteById(id);
 			return new Result<>(true, "删除成功");

@@ -16,6 +16,6 @@ import lombok.ToString;
 public class EmployeeQo extends PageQo {
 
 	private String employeeName;
-	private Integer employeeType;
+	private String employeeType;
 	
 }

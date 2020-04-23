@@ -13,17 +13,6 @@
 	    console.info(obj);
 	}
 	var token = [[${_csrf.token}]];
-	/*
-	var employeeStatusList = [];
-     $.get('/dataDictionary/listByDataKey', {
-	  dataKey: "EMPLOYEE_STATUS"
-     },
-     function(data) {
-         if(data){
-        	 employeeStatusList = data;
-         }
-     });
-	*/
      
 	function employeeSearch() {
 	    $("#employee-dg").datagrid("load", {
@@ -101,11 +90,36 @@
 		}
 	}
 	
+	function resetPassword() {
+	    var row = $("#employee-dg").datagrid('getSelected');
+	    if (row) {
+	        $.messager.confirm('确认', '确认重置这个员工的密码吗?',
+	        function(r) {
+	            if (r) {
+	                var index = $("#employee-dg").datagrid('getRowIndex', row);
+	                $.post('/employee/resetPassword?_csrf=' + token, {
+	                    id: row.id,
+	                    employeeName:row.username,
+	                    emailAddress:row.emailAddress
+	                },
+	                function(data) {
+	                    if (data.succeed) {
+	                    	$.messager.alert('提示', data.msg, 'info');
+	                    } else {
+	                        $.messager.alert('提示', data.msg, 'error');
+	                    }
+	                });
+	            }
+	        });
+	    } else {
+	        $.messager.alert('提示', '请选择一条数据', 'info');
+	    }
+	}
 
   </script> 
  </head> 
  <body> 
-  <table id="employee-dg" class="easyui-datagrid" title="员工列表" style="width: 800px; height: 600px" data-options="
+  <table id="employee-dg" class="easyui-datagrid" title="员工列表" style="width: 1800px; height: 600px" data-options="
 				iconCls: 'icon-ok',
 				fitColumns: true,
 				url:  '/employee/listByQo',
@@ -116,20 +130,32 @@
 			"> 
    <thead> 
     <tr> 
-     <th data-options="field:'username'" width="80">登录名</th> 
-     <th data-options="field:'email'" width="150">邮箱</th> 
+     <th data-options="field:'username'" >登录名</th> 
+     <th data-options="field:'emailAddress'" >邮箱</th> 
+	 <th data-options="field:'age'" >年龄</th>
+	 <th data-options="field:'genderName'" >性别</th>
+	 <th data-options="field:'phoneNumber'">手机号码</th>
+	 <th data-options="field:'idCardNo'" >身份证号码</th>
+	 <th data-options="field:'bankCard'" >银行卡号</th>
+	 <th data-options="field:'entryTime'" >入职时间</th>
+	 <th data-options="field:'departmentName'" >所属部门</th>
+	 <th data-options="field:'positionId'" >职位</th>
      <th data-options="field:'employeeStatus',
 				formatter: function(value,row,index){
 						return row.employeeStatusName;
-				}" width="50">员工状态</th> 
+				}" >员工状态</th> 
      <th data-options="field:'employeeType',
 				formatter: function(value,row,index){
 					return row.employeeTypeName;
-				}" width="50">员工类型</th> 
+				}" >员工类型</th> 
 	 <th data-options="field:'employeeDynamic',
 				formatter: function(value,row,index){
 					return row.employeeDynamicName;
-				}" width="50">员工动态</th> 
+				}" >员工动态</th>
+	 <th data-options="field:'resignationTime'" >离职时间</th>
+	 <th data-options="field:'remainingAnnualLeaveDay'" >剩余年假天数</th>
+	 <th data-options="field:'remainingLieuLeaveDay'" >剩余补休天数</th>
+	 <th data-options="field:'socialSecurityFundRatio'" >社保公积金比例</th>
     </tr> 
    </thead> 
   </table> 
@@ -148,6 +174,7 @@
    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="edit()">编辑</a> 
    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="remove()">删除</a> 
    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="allotRole()">分配角色</a> 
+   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="resetPassword()">重置密码</a> 
   </div> 
   <div id="employee-dialog" class="easyui-dialog" title="新增员工" style="width: 500px; height: 500px;" data-options="iconCls:'icon-add',resizable:true,modal:true,closed:true,
 				onClose:function(){

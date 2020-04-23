@@ -3,7 +3,6 @@ package com.example.config.listener;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -36,9 +35,6 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Autowired
 	private DataDictionaryServiceImpl dataDictionaryService;
 	
-	@Value("${spring.mail.username}")
-	private String username;
-
 	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -52,7 +48,7 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 		}
 		Employee employee = new Employee();
 		employee.setEmployeeName(Employee.INIT);
-		employee.setEmailAddress(username);
+		employee.setEmailAddress("1186335831@qq.com");
 		employee.setEmployeeType(Employee.SUPER_ADMIN_TYPE);
 		employee.setPhoneNumber(StrUtil.EMPTY_TEXT);
 		employee.setAge(0);
@@ -60,7 +56,6 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 		employee.setPositionId(0);
 		employee.setIdCardNo(StrUtil.EMPTY_TEXT);
 		employee.setBankCard(StrUtil.EMPTY_TEXT);
-		employee.setDepartmentId(0);
 		employee.setEmployeeDynamic(Employee.ON_DUTY_DYNAMIC);
 		employee.setGender(Employee.MAN);
 		employeeService.save(employee);

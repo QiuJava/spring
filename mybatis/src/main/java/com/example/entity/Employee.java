@@ -36,7 +36,6 @@ public class Employee implements UserDetails {
 	private Date updateTime;
 	private String idCardNo;
 	private String bankCard;
-	private Integer departmentId;
 	private Float remainingAnnualLeaveDay;
 	private Float remainingLieuLeaveDay;
 	private String password;
@@ -54,6 +53,8 @@ public class Employee implements UserDetails {
 	private String employeeTypeName;
 	private String employeeDynamicName;
 	private String genderName;
+	private String departmentName;
+	private String positionName;
 
 	public static final String NORMAL_STATUS = "NORMAL_STATUS";
 	public static final String LOCK_STATUS = "LOCK_STATUS";

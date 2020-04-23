@@ -101,6 +101,7 @@ public class EmployeeServiceImpl {
 	public Page<Employee> listByQo(EmployeeQo employeeQo) {
 		Page<Employee> page = PageHelper.startPage(employeeQo.getPage(), employeeQo.getRows(), employeeQo.getCount());
 		employeeMapper.listByQo(employeeQo);
+		
 		page.getResult().forEach(employee -> {
 			DataDictionary employeeDynamicDataDictionary = (DataDictionary) hashOperation.get(
 					ContextStartListener.DATA_DICTIONARY_LIST,

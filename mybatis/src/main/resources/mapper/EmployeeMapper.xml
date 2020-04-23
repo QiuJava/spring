@@ -17,7 +17,6 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
     <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
-    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
     <result column="remaining_annual_leave_day" jdbcType="REAL" property="remainingAnnualLeaveDay" />
     <result column="remaining_lieu_leave_day" jdbcType="REAL" property="remainingLieuLeaveDay" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -30,7 +29,7 @@
   <sql id="Base_Column_List">
     id, employee_name, phone_number, age, entry_time, resignation_time, gender, email_address, 
     position_id, employee_status, profile_photo_link_address, create_time, update_time, 
-    id_card_no, bank_card, department_id, remaining_annual_leave_day, remaining_lieu_leave_day, 
+    id_card_no, bank_card, remaining_annual_leave_day, remaining_lieu_leave_day, 
     password, password_errors, employee_type, social_security_fund_ratio, employee_dynamic, 
     locking_time
   </sql>
@@ -50,7 +49,7 @@
       gender, email_address, position_id, 
       employee_status, profile_photo_link_address, 
       create_time, update_time, id_card_no, 
-      bank_card, department_id, remaining_annual_leave_day, 
+      bank_card, remaining_annual_leave_day, 
       remaining_lieu_leave_day, password, password_errors, 
       employee_type, social_security_fund_ratio, 
       employee_dynamic, locking_time)
@@ -59,7 +58,7 @@
       #{gender,jdbcType=VARCHAR}, #{emailAddress,jdbcType=VARCHAR}, #{positionId,jdbcType=INTEGER}, 
       #{employeeStatus,jdbcType=VARCHAR}, #{profilePhotoLinkAddress,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{idCardNo,jdbcType=VARCHAR}, 
-      #{bankCard,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{remainingAnnualLeaveDay,jdbcType=REAL}, 
+      #{bankCard,jdbcType=VARCHAR},  #{remainingAnnualLeaveDay,jdbcType=REAL}, 
       #{remainingLieuLeaveDay,jdbcType=REAL}, #{password,jdbcType=VARCHAR}, #{passwordErrors,jdbcType=INTEGER}, 
       #{employeeType,jdbcType=VARCHAR}, #{socialSecurityFundRatio,jdbcType=DECIMAL}, 
       #{employeeDynamic,jdbcType=VARCHAR}, #{lockingTime,jdbcType=TIMESTAMP})
@@ -111,9 +110,6 @@
       </if>
       <if test="bankCard != null">
         bank_card,
-      </if>
-      <if test="departmentId != null">
-        department_id,
       </if>
       <if test="remainingAnnualLeaveDay != null">
         remaining_annual_leave_day,
@@ -186,9 +182,6 @@
       <if test="bankCard != null">
         #{bankCard,jdbcType=VARCHAR},
       </if>
-      <if test="departmentId != null">
-        #{departmentId,jdbcType=INTEGER},
-      </if>
       <if test="remainingAnnualLeaveDay != null">
         #{remainingAnnualLeaveDay,jdbcType=REAL},
       </if>
@@ -260,9 +253,6 @@
       <if test="bankCard != null">
         bank_card = #{bankCard,jdbcType=VARCHAR},
       </if>
-      <if test="departmentId != null">
-        department_id = #{departmentId,jdbcType=INTEGER},
-      </if>
       <if test="remainingAnnualLeaveDay != null">
         remaining_annual_leave_day = #{remainingAnnualLeaveDay,jdbcType=REAL},
       </if>
@@ -306,7 +296,6 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       id_card_no = #{idCardNo,jdbcType=VARCHAR},
       bank_card = #{bankCard,jdbcType=VARCHAR},
-      department_id = #{departmentId,jdbcType=INTEGER},
       remaining_annual_leave_day = #{remainingAnnualLeaveDay,jdbcType=REAL},
       remaining_lieu_leave_day = #{remainingLieuLeaveDay,jdbcType=REAL},
       password = #{password,jdbcType=VARCHAR},
@@ -343,7 +332,6 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
     <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
-    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
     <result column="remaining_annual_leave_day" jdbcType="REAL" property="remainingAnnualLeaveDay" />
     <result column="remaining_lieu_leave_day" jdbcType="REAL" property="remainingLieuLeaveDay" />
     <result column="password" jdbcType="VARCHAR" property="password" />
