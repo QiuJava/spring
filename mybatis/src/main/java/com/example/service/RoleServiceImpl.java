@@ -57,7 +57,7 @@ public class RoleServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int updateById(Role role) {
 		role.setUpdateTime(new Date());
-		return roleMapper.updateById(role);
+		return roleMapper.updateByPrimaryKeySelective(role);
 	}
 
 	public boolean hasByRoleName(String roleName) {

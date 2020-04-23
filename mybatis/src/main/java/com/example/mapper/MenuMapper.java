@@ -3,13 +3,11 @@ package com.example.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.mapping.FetchType;
 import org.apache.ibatis.type.JdbcType;
 
@@ -26,6 +24,19 @@ import com.example.vo.MenuTreeVo;
  *
  */
 public interface MenuMapper {
+
+	int deleteByPrimaryKey(Integer id);
+
+	int insert(Menu record);
+
+	int insertSelective(Menu record);
+
+	Menu selectByPrimaryKey(Integer id);
+
+	int updateByPrimaryKeySelective(Menu record);
+
+	int updateByPrimaryKey(Menu record);
+
 	@Delete({ "DELETE  ", //
 			"FROM ", //
 			"	menu  ", //
@@ -33,18 +44,7 @@ public interface MenuMapper {
 			"	id = #{id,jdbcType=BIGINT}" })
 	int deleteById(Long id);
 
-	@InsertProvider(type = MenuSqlProvider.class, method = "insert")
-	int insert(Menu record);
-
-	@UpdateProvider(type = MenuSqlProvider.class, method = "updateById")
-	int updateById(Menu record);
-
-	@SelectProvider(type = MenuSqlProvider.class, method = "selectMenuTreeByParentId")
-	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
-			@Result(column = "menu_name", property = "text", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectMenuTreeByParentId", fetchType = FetchType.EAGER)) })
-	List<MenuTree> selectMenuTreeByParentId(Long parentId);
+	List<MenuTree> listMenuTreeByParentId(Long parentId);
 
 	@Select({ "SELECT ", //
 			"	count( * )  ", //
@@ -102,5 +102,7 @@ public interface MenuMapper {
 			"	JOIN permission permis_1 ON permis_1.id = role_permis_0.permission_id ", // 
 			"	AND role_permis_0.role_id = #{roleId,jdbcType=BIGINT}"})
 	List<Long> selectMenuTreeByRoleId(Long roleId);
+
+	String getMenuNameById(Integer id);
 
 }

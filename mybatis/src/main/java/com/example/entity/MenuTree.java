@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class MenuTree implements Serializable {
 	private static final long serialVersionUID = -5849453039222592646L;
-	private Long id;
+	private Integer id;
 	private String text;
 	private String url;
 

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import java.math.BigDecimal;
 
 /**
  * 员工
@@ -20,30 +21,56 @@ import lombok.ToString;
 @ToString
 public class Employee implements UserDetails {
 	private static final long serialVersionUID = -8429721708182193581L;
-	private Long id;
-	private String username;
-	private String password;
-	private String email;
-	private Integer passwordErrors;
-	private String status;
-	private Date lockTime;
+	private Integer id;
+	private String employeeName;
+	private String phoneNumber;
+	private Integer age;
+	private Date entryTime;
+	private Date resignationTime;
+	private String gender;
+	private String emailAddress;
+	private Integer positionId;
+	private String employeeStatus;
+	private String profilePhotoLinkAddress;
 	private Date createTime;
 	private Date updateTime;
+	private String idCardNo;
+	private String bankCard;
+	private Integer departmentId;
+	private Float remainingAnnualLeaveDay;
+	private Float remainingLieuLeaveDay;
+	private String password;
+	private Integer passwordErrors;
 	private String employeeType;
-
+	private BigDecimal socialSecurityFundRatio;
+	private String employeeDynamic;
+	private Date lockingTime;
+	
 	private List<Permission> authorities;
 
 	private List<MenuTree> menuTreeList;
-
-	private Date newestLoginTime;
+	
+	private String employeeStatusName;
+	private String employeeTypeName;
+	private String employeeDynamicName;
+	private String genderName;
 
 	public static final String NORMAL_STATUS = "NORMAL_STATUS";
 	public static final String LOCK_STATUS = "LOCK_STATUS";
 	public static final String INVALID_STATUS = "INVALID_STATUS";
 	
 	public static final String SUPER_ADMIN_TYPE = "SUPER_ADMIN_TYPE";
+	public static final String ADMIN_TYPE = "ADMIN_TYPE";
+	
+	public static final String ON_DUTY_DYNAMIC = "ON_DUTY_DYNAMIC";
+	public static final String EGRESS_DYNAMIC = "EGRESS_DYNAMIC";
+	public static final String MEETING_DYNAMIC = "MEETING_DYNAMIC";
+	public static final String VACATION_DYNAMIC = "VACATION_DYNAMIC";
 
-	public static final String ADMIN = "ADMIN";
+	public static final String MAN = "MAN";
+	public static final String WOMAN = "WOMAN";
+	
+	public static final String INIT = "INIT";
 	
 	public static final int MAX_PASSWORD_ERRORS = 5;
 	public static final int PASSWORD_ERRORS_INIT = 0;
@@ -52,7 +79,7 @@ public class Employee implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return username;
+		return employeeName;
 	}
 
 	@Override
@@ -67,7 +94,7 @@ public class Employee implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return !Employee.INVALID_STATUS.equals(status);
+		return !Employee.INVALID_STATUS.equals(employeeStatus);
 	}
 
 	@Override

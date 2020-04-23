@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.example.entity.Employee">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="entry_time" jdbcType="TIMESTAMP" property="entryTime" />
+    <result column="resignation_time" jdbcType="TIMESTAMP" property="resignationTime" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="email_address" jdbcType="VARCHAR" property="emailAddress" />
+    <result column="position_id" jdbcType="INTEGER" property="positionId" />
+    <result column="employee_status" jdbcType="VARCHAR" property="employeeStatus" />
+    <result column="profile_photo_link_address" jdbcType="VARCHAR" property="profilePhotoLinkAddress" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="remaining_annual_leave_day" jdbcType="REAL" property="remainingAnnualLeaveDay" />
+    <result column="remaining_lieu_leave_day" jdbcType="REAL" property="remainingLieuLeaveDay" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="password_errors" jdbcType="INTEGER" property="passwordErrors" />
+    <result column="employee_type" jdbcType="VARCHAR" property="employeeType" />
+    <result column="social_security_fund_ratio" jdbcType="DECIMAL" property="socialSecurityFundRatio" />
+    <result column="employee_dynamic" jdbcType="VARCHAR" property="employeeDynamic" />
+    <result column="locking_time" jdbcType="TIMESTAMP" property="lockingTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, employee_name, phone_number, age, entry_time, resignation_time, gender, email_address, 
+    position_id, employee_status, profile_photo_link_address, create_time, update_time, 
+    id_card_no, bank_card, department_id, remaining_annual_leave_day, remaining_lieu_leave_day, 
+    password, password_errors, employee_type, social_security_fund_ratio, employee_dynamic, 
+    locking_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from employee
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.entity.Employee">
+    insert into employee (id, employee_name, phone_number, 
+      age, entry_time, resignation_time, 
+      gender, email_address, position_id, 
+      employee_status, profile_photo_link_address, 
+      create_time, update_time, id_card_no, 
+      bank_card, department_id, remaining_annual_leave_day, 
+      remaining_lieu_leave_day, password, password_errors, 
+      employee_type, social_security_fund_ratio, 
+      employee_dynamic, locking_time)
+    values (#{id,jdbcType=INTEGER}, #{employeeName,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{entryTime,jdbcType=TIMESTAMP}, #{resignationTime,jdbcType=TIMESTAMP}, 
+      #{gender,jdbcType=VARCHAR}, #{emailAddress,jdbcType=VARCHAR}, #{positionId,jdbcType=INTEGER}, 
+      #{employeeStatus,jdbcType=VARCHAR}, #{profilePhotoLinkAddress,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{idCardNo,jdbcType=VARCHAR}, 
+      #{bankCard,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{remainingAnnualLeaveDay,jdbcType=REAL}, 
+      #{remainingLieuLeaveDay,jdbcType=REAL}, #{password,jdbcType=VARCHAR}, #{passwordErrors,jdbcType=INTEGER}, 
+      #{employeeType,jdbcType=VARCHAR}, #{socialSecurityFundRatio,jdbcType=DECIMAL}, 
+      #{employeeDynamic,jdbcType=VARCHAR}, #{lockingTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.entity.Employee">
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="employeeName != null">
+        employee_name,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="entryTime != null">
+        entry_time,
+      </if>
+      <if test="resignationTime != null">
+        resignation_time,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="emailAddress != null">
+        email_address,
+      </if>
+      <if test="positionId != null">
+        position_id,
+      </if>
+      <if test="employeeStatus != null">
+        employee_status,
+      </if>
+      <if test="profilePhotoLinkAddress != null">
+        profile_photo_link_address,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="idCardNo != null">
+        id_card_no,
+      </if>
+      <if test="bankCard != null">
+        bank_card,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="remainingAnnualLeaveDay != null">
+        remaining_annual_leave_day,
+      </if>
+      <if test="remainingLieuLeaveDay != null">
+        remaining_lieu_leave_day,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="passwordErrors != null">
+        password_errors,
+      </if>
+      <if test="employeeType != null">
+        employee_type,
+      </if>
+      <if test="socialSecurityFundRatio != null">
+        social_security_fund_ratio,
+      </if>
+      <if test="employeeDynamic != null">
+        employee_dynamic,
+      </if>
+      <if test="lockingTime != null">
+        locking_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="entryTime != null">
+        #{entryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resignationTime != null">
+        #{resignationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null">
+        #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null">
+        #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeStatus != null">
+        #{employeeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="profilePhotoLinkAddress != null">
+        #{profilePhotoLinkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idCardNo != null">
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCard != null">
+        #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="remainingAnnualLeaveDay != null">
+        #{remainingAnnualLeaveDay,jdbcType=REAL},
+      </if>
+      <if test="remainingLieuLeaveDay != null">
+        #{remainingLieuLeaveDay,jdbcType=REAL},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordErrors != null">
+        #{passwordErrors,jdbcType=INTEGER},
+      </if>
+      <if test="employeeType != null">
+        #{employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="socialSecurityFundRatio != null">
+        #{socialSecurityFundRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeDynamic != null">
+        #{employeeDynamic,jdbcType=VARCHAR},
+      </if>
+      <if test="lockingTime != null">
+        #{lockingTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.entity.Employee">
+    update employee
+    <set>
+      <if test="employeeName != null">
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="entryTime != null">
+        entry_time = #{entryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resignationTime != null">
+        resignation_time = #{resignationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null">
+        email_address = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null">
+        position_id = #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeStatus != null">
+        employee_status = #{employeeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="profilePhotoLinkAddress != null">
+        profile_photo_link_address = #{profilePhotoLinkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idCardNo != null">
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCard != null">
+        bank_card = #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="remainingAnnualLeaveDay != null">
+        remaining_annual_leave_day = #{remainingAnnualLeaveDay,jdbcType=REAL},
+      </if>
+      <if test="remainingLieuLeaveDay != null">
+        remaining_lieu_leave_day = #{remainingLieuLeaveDay,jdbcType=REAL},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordErrors != null">
+        password_errors = #{passwordErrors,jdbcType=INTEGER},
+      </if>
+      <if test="employeeType != null">
+        employee_type = #{employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="socialSecurityFundRatio != null">
+        social_security_fund_ratio = #{socialSecurityFundRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeDynamic != null">
+        employee_dynamic = #{employeeDynamic,jdbcType=VARCHAR},
+      </if>
+      <if test="lockingTime != null">
+        locking_time = #{lockingTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.entity.Employee">
+    update employee
+    set employee_name = #{employeeName,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      entry_time = #{entryTime,jdbcType=TIMESTAMP},
+      resignation_time = #{resignationTime,jdbcType=TIMESTAMP},
+      gender = #{gender,jdbcType=VARCHAR},
+      email_address = #{emailAddress,jdbcType=VARCHAR},
+      position_id = #{positionId,jdbcType=INTEGER},
+      employee_status = #{employeeStatus,jdbcType=VARCHAR},
+      profile_photo_link_address = #{profilePhotoLinkAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      bank_card = #{bankCard,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      remaining_annual_leave_day = #{remainingAnnualLeaveDay,jdbcType=REAL},
+      remaining_lieu_leave_day = #{remainingLieuLeaveDay,jdbcType=REAL},
+      password = #{password,jdbcType=VARCHAR},
+      password_errors = #{passwordErrors,jdbcType=INTEGER},
+      employee_type = #{employeeType,jdbcType=VARCHAR},
+      social_security_fund_ratio = #{socialSecurityFundRatio,jdbcType=DECIMAL},
+      employee_dynamic = #{employeeDynamic,jdbcType=VARCHAR},
+      locking_time = #{lockingTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="countByEmployeeType" resultType="java.lang.Long">
+	SELECT
+		count( * ) 
+	FROM
+		employee 
+	WHERE
+		employee_type = #{employeeType,jdbcType=VARCHAR}  
+  </select>
+  
+  <resultMap id="getByEmployeeNameMap" type="com.example.entity.Employee">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="entry_time" jdbcType="TIMESTAMP" property="entryTime" />
+    <result column="resignation_time" jdbcType="TIMESTAMP" property="resignationTime" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="email_address" jdbcType="VARCHAR" property="emailAddress" />
+    <result column="position_id" jdbcType="INTEGER" property="positionId" />
+    <result column="employee_status" jdbcType="VARCHAR" property="employeeStatus" />
+    <result column="profile_photo_link_address" jdbcType="VARCHAR" property="profilePhotoLinkAddress" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="remaining_annual_leave_day" jdbcType="REAL" property="remainingAnnualLeaveDay" />
+    <result column="remaining_lieu_leave_day" jdbcType="REAL" property="remainingLieuLeaveDay" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="password_errors" jdbcType="INTEGER" property="passwordErrors" />
+    <result column="employee_type" jdbcType="VARCHAR" property="employeeType" />
+    <result column="social_security_fund_ratio" jdbcType="DECIMAL" property="socialSecurityFundRatio" />
+    <result column="employee_dynamic" jdbcType="VARCHAR" property="employeeDynamic" />
+    <result column="locking_time" jdbcType="TIMESTAMP" property="lockingTime" />
+    <collection property="authorities" column="id" fetchType="lazy" select="com.example.mapper.PermissionMapper.listByEmployeeId">
+    </collection>
+  </resultMap>
+  <select id="getByEmployeeName" resultMap="getByEmployeeNameMap">
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where employee_name = #{employeeName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="listByQo" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from employee
+    <where>
+    	<if test="employeeName != null and employeeName!=''">
+    		employee_name=#{employeeName,jdbcType=VARCHAR}
+    	</if>
+    	<if test="employeeType != null and employeeType!=''">
+    		employee_type=#{employeeType,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </select>
+</mapper>

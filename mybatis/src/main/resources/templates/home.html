@@ -44,7 +44,7 @@
 	});
 	
 	var token = [[${_csrf.token}]];
-	var usernameStr = [[${session.SPRING_SECURITY_CONTEXT.authentication.name}]];
+	var employeeId = [[${session.SPRING_SECURITY_CONTEXT.authentication.principal.id}]];
 	function changePassword() {
 	    $('#changePassword-dialog').dialog('setTitle', '修改密码');
 	    $('#changePassword-dialog').dialog('open');
@@ -54,7 +54,7 @@
 	    $('#changePassword-form').form('submit', {
 	        url: "/employee/changePassword?_csrf=" + token,
 	        onSubmit: function(param) {
-	            param.username = usernameStr;
+	            param.employeeId = employeeId;
 	            var isValid = $(this).form('validate');
 	            return isValid;
 	        },
@@ -88,7 +88,7 @@
     </div> 
     <div> 
      <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-man',plain:true"> </a> 
-     <span sec:authentication="name"> </span>  最近登录时间：[[${#dates.format(session.SPRING_SECURITY_CONTEXT.authentication.principal.newestLoginTime,'yyyy-MM-dd HH:mm:ss')}]] 
+     <span sec:authentication="name"> </span>  最近登录时间：[[${#dates.format(newestLoginTime,'yyyy-MM-dd HH:mm:ss')}]] 
      <a href="/logout" class="easyui-linkbutton" data-options="iconCls:'icon-back',plain:true"> 注销 </a> 
      <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="changePassword()" sec:authorize="hasAuthority('CHANGE_PASSWORD')"> 修改密码 </a> 
     </div> 
@@ -106,7 +106,7 @@
        <tbody> 
         <tr> 
          <td> 原密码: </td> 
-         <td> <input class="easyui-passwordbox" id="password" name="password" data-options="required:true,validType:'length[6,16]'" /> </td> 
+         <td> <input class="easyui-passwordbox" id="password" name="password" data-options="required:true,validType:'length[1,16]'" /> </td> 
         </tr> 
         <tr> 
          <td> 新密码: </td> 

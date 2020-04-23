@@ -16,7 +16,6 @@ datasource:
 logging:
   file: 
     max-history: 180
-    max-size: 100GB 
   path: E:/var/log
 
 spring:

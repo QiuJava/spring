@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.example.entity.Permission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="authority" jdbcType="VARCHAR" property="authority" />
+    <result column="mapping_address" jdbcType="VARCHAR" property="mappingAddress" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, permission_name, authority, mapping_address, menu_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.entity.Permission">
+    insert into permission (id, permission_name, authority, 
+      mapping_address, menu_id, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{permissionName,jdbcType=VARCHAR}, #{authority,jdbcType=VARCHAR}, 
+      #{mappingAddress,jdbcType=VARCHAR}, #{menuId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.entity.Permission">
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="authority != null">
+        authority,
+      </if>
+      <if test="mappingAddress != null">
+        mapping_address,
+      </if>
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="authority != null">
+        #{authority,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingAddress != null">
+        #{mappingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.entity.Permission">
+    update permission
+    <set>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="authority != null">
+        authority = #{authority,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingAddress != null">
+        mapping_address = #{mappingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.entity.Permission">
+    update permission
+    set permission_name = #{permissionName,jdbcType=VARCHAR},
+      authority = #{authority,jdbcType=VARCHAR},
+      mapping_address = #{mappingAddress,jdbcType=VARCHAR},
+      menu_id = #{menuId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <resultMap id="listByQoMap" type="com.example.entity.Permission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="authority" jdbcType="VARCHAR" property="authority" />
+    <result column="mapping_address" jdbcType="VARCHAR" property="mappingAddress" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+  </resultMap>
+  <select id="listByQo" resultMap="listByQoMap">
+	SELECT
+		permi_0.id AS id,
+		permi_0.permission_name AS permission_name,
+		permi_0.authority AS authority,
+		permi_0.mapping_address AS mapping_address,
+		menu_0.id AS menu_id 
+	FROM
+		permission permi_0
+		JOIN menu menu_0 ON menu_0.id = permi_0.menu_id 
+	<where>
+		<if test="permissionName!=null and permissionName!='' ">
+			permi_0.permission_name=#{permissionName,jdbcType=VARCHAR}
+		</if>
+		<if test="authority!=null and authority!='' ">
+			permi_0.authority=#{authority,jdbcType=VARCHAR}
+		</if>
+		<if test="menuId!=null ">
+			menu_0.id=#{menuId,jdbcType=VARCHAR}
+		</if>
+	</where> 	
+  </select>
+</mapper>

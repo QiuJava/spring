@@ -19,15 +19,16 @@ import lombok.ToString;
 @ToString
 public class Permission implements GrantedAuthority {
 
-	private static final long serialVersionUID = -8093648188829987622L;
-	private Long id;
-	private Long menuId;
+	private Integer id;
 	private String permissionName;
 	private String authority;
-	private String url;
+	private String mappingAddress;
+	private Integer menuId;
 	private Date createTime;
 	private Date updateTime;
-	
+
+	private static final long serialVersionUID = -8093648188829987622L;
+
 	@Override
 	public String getAuthority() {
 		return authority;

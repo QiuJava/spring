@@ -34,16 +34,24 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("用户名或密码错误");
 		}
 
-		if (Employee.LOCK_STATUS == employee.getStatus()) {
-			Date lockTime = employee.getLockTime();
+		if (Employee.LOCK_STATUS.equals(employee.getEmployeeStatus())) {
+			Date lockTime = employee.getLockingTime();
 			// 过了锁定区间 进行解锁操作
 			Date date = new Date();
 			if (date.getTime() > lockTime.getTime() + DateTimeUtil.LOCK_INTERVAL) {
-				employee.setLockTime(null);
+				employee.setLockingTime(null);
 				employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
-				employee.setStatus(Employee.NORMAL_STATUS);
+				employee.setEmployeeStatus(Employee.NORMAL_STATUS);
 				employee.setUpdateTime(date);
-				employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
+				
+				
+				Employee newEmployee = new Employee();
+				newEmployee.setId(employee.getId());
+				newEmployee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
+				newEmployee.setUpdateTime(date);
+				newEmployee.setLockingTime(null);
+				newEmployee.setEmployeeStatus(Employee.NORMAL_STATUS);
+				employeeService.updatePasswordErrorsAndEmployeeStatusAndLockingTimeById(newEmployee);
 			} else {
 				long differ = date.getTime() - lockTime.getTime();
 				StringBuilder builder = new StringBuilder();

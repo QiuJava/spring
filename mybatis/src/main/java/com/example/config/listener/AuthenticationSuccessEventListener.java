@@ -41,18 +41,25 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 		// 清空失败次数
 		if (passwordErrors > 0) {
 			employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
-			employee.setLockTime(null);
-			employee.setStatus(Employee.NORMAL_STATUS);
+			employee.setLockingTime(null);
+			employee.setEmployeeStatus(Employee.NORMAL_STATUS);
 			employee.setUpdateTime(date);
-			employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
+			
+			
+			Employee newEmployee = new Employee();
+			newEmployee.setId(employee.getId());
+			newEmployee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
+			newEmployee.setUpdateTime(date);
+			newEmployee.setLockingTime(null);
+			newEmployee.setEmployeeStatus(Employee.NORMAL_STATUS);
+			employeeService.updatePasswordErrorsAndEmployeeStatusAndLockingTimeById(newEmployee);
 		}
 
 		LoginLog loginLog = new LoginLog();
 		loginLog.setLoginStatus(LoginLog.LOGIN_SUCCESS_STATUS);
 		loginLog.setRemoteAddress(details.getRemoteAddress());
 		loginLog.setCreateTime(date);
-		loginLog.setUpdateTime(date);
-		loginLog.setUsername(employee.getUsername());
+		loginLog.setEmployeeId(employee.getId());
 		loginLogService.save(loginLog);
 	}
 

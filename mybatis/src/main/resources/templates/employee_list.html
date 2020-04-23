@@ -13,16 +13,18 @@
 	    console.info(obj);
 	}
 	var token = [[${_csrf.token}]];
-	
-	var statusObj = {
-	    0 : "正常",
-	    1 : "锁定",
-	    2 : "失效"
-	};
-	var employeeObj = {
-	    0 : "管理"
-	};
-
+	/*
+	var employeeStatusList = [];
+     $.get('/dataDictionary/listByDataKey', {
+	  dataKey: "EMPLOYEE_STATUS"
+     },
+     function(data) {
+         if(data){
+        	 employeeStatusList = data;
+         }
+     });
+	*/
+     
 	function employeeSearch() {
 	    $("#employee-dg").datagrid("load", {
 	        "username": $("#username").val(),
@@ -99,46 +101,6 @@
 		}
 	}
 	
-	// 自定义校验
-	$.extend($.fn.validatebox.defaults.rules, {
-	    employeeVerifyEmail: {
-	        validator: function(value) {
-	            var employeeId = $("#employeeId").val();
-	            var verify = false;
-	            $.ajax({
-	                type: "get",
-	                url: "/employee/verifyEmail",
-	                data: "id=" + employeeId + "&email=" + value,
-	                dataType: "json",
-	                async: false,
-	                success: function(data) {
-	                    verify = data;
-	                }
-	            });
-	            return verify;
-	        },
-	        message: '邮箱已存在'
-	    },
-	    employeeVerifyUsername: {
-	        validator: function(value) {
-	            var employeeId = $("#employeeId").val();
-	            var verify = false;
-	            $.ajax({
-	                type: "get",
-	                url: "/employee/verifyUsername",
-	                data: "id=" + employeeId + "&username=" + value,
-	                dataType: "json",
-	                async: false,
-	                success: function(data) {
-	                    verify = data;
-	                }
-	            });
-	            return verify;
-	        },
-	        message: '用户名已存在'
-	    }
-	    
-	});
 
   </script> 
  </head> 
@@ -156,14 +118,18 @@
     <tr> 
      <th data-options="field:'username'" width="80">登录名</th> 
      <th data-options="field:'email'" width="150">邮箱</th> 
-     <th data-options="field:'status',
+     <th data-options="field:'employeeStatus',
 				formatter: function(value,row,index){
-					return statusObj[value];
-				}" width="50">状态</th> 
+						return row.employeeStatusName;
+				}" width="50">员工状态</th> 
      <th data-options="field:'employeeType',
 				formatter: function(value,row,index){
-					return employeeObj[value];
+					return row.employeeTypeName;
 				}" width="50">员工类型</th> 
+	 <th data-options="field:'employeeDynamic',
+				formatter: function(value,row,index){
+					return row.employeeDynamicName;
+				}" width="50">员工动态</th> 
     </tr> 
    </thead> 
   </table> 
@@ -172,14 +138,7 @@
     <span>登录名称:</span> 
     <input class="easyui-textbox" id="username" name="username" /> 
     <span>员工类型:</span> 
-    <input id="employeeType" class="easyui-combobox" name="employeeType" data-options="valueField:'value',textField:'name',data:
-					[{
-						name: '全部',
-						value: ''
-					},{
-						name: '管理',
-						value: '0'
-					}]" /> 
+    <input id="employeeType" class="easyui-combobox" name="employeeType" data-options="valueField:'dataValue',textField:'dataName',url:'/dataDictionary/listByDataKey?dataKey=EMPLOYEE_TYPE',method:'get'"  /> 
    </div> 
    <div id="employeeSearchButton"> 
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="employeeSearch()">查询</a> 
@@ -201,16 +160,16 @@
     <table> 
      <tbody>
       <tr> 
-       <td>登录名:</td> 
-       <td><input id="usernameInput" name="username" class="easyui-textbox" data-options="required: true,validType: ['employeeVerifyUsername', 'length[2,20]']"  /></td> 
+       <td>员工名称:</td> 
+       <td><input id="usernameInput" name="employeeName" class="easyui-textbox" data-options="required: true,validType: ['length[1,4]']"  /></td> 
       </tr> 
       <tr> 
        <td>邮箱:</td> 
-       <td><input id="email" name="email" class="easyui-textbox" data-options="required: true,validType: ['email', 'length[0,50]', 'employeeVerifyEmail']"  /></td> 
+       <td><input id="email" name="email" class="easyui-textbox" data-options="required: true,validType: ['email', 'length[0,50]']"  /></td> 
       </tr> 
       <tr> 
        <td>员工类型:</td> 
-       <td><input class="easyui-combobox" name="employeeType" data-options="valueField:'value',textField:'name',required:true,url:'/dictEntry/employeeTypeList',method:'get'" /></td> 
+       <td><input id="addEmployeeType" class="easyui-combobox" name="employeeType" data-options="required: true,valueField:'dataValue',textField:'dataName',url:'/dataDictionary/listByDataKey?dataKey=EMPLOYEE_TYPE',method:'get'"/></td> 
       </tr> 
      </tbody>
     </table> 

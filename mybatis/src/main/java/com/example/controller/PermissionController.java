@@ -13,7 +13,6 @@ import com.example.common.Result;
 import com.example.entity.Permission;
 import com.example.qo.PermissionQo;
 import com.example.service.PermissionServiceImpl;
-import com.example.util.StrUtil;
 import com.example.vo.PermissionCheckboxVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,32 +33,6 @@ public class PermissionController {
 	@PostMapping("/permission/add")
 	@ResponseBody
 	public Result<?> addPermission(Permission permission) {
-		Long menuId = permission.getMenuId();
-		if (menuId == null) {
-			return new Result<>(false, "菜单ID不能为空");
-		} else if (menuId.toString().length() > 20) {
-			return new Result<>(false, "菜单ID过长");
-		}
-
-		String permissionName = permission.getPermissionName();
-		Result<?> verifyPermissionName = this.verifyPermissionName(permissionName);
-		if (verifyPermissionName != null) {
-			return verifyPermissionName;
-		}
-
-		String authority = permission.getAuthority();
-		Result<?> verifyAuthority = this.verifyAuthority(authority);
-		if (verifyAuthority != null) {
-			return verifyAuthority;
-		}
-
-		String url = permission.getUrl();
-		if (StrUtil.hasText(url)) {
-			Result<?> verifyUrl = this.verifyUrl(url);
-			if (verifyUrl != null) {
-				return verifyUrl;
-			}
-		}
 
 		try {
 			permissionService.save(permission);
@@ -76,31 +49,7 @@ public class PermissionController {
 	@PostMapping("/permission/update")
 	@ResponseBody
 	public Result<?> updatePermission(Permission permission) {
-		Result<?> verifyId = this.verifyId(permission.getId());
-		if (verifyId != null) {
-			return verifyId;
-		}
-
-		Result<?> verifyPermissionName = this.verifyPermissionName(permission.getPermissionName());
-		if (verifyPermissionName != null) {
-			return verifyPermissionName;
-		}
-
-		Result<?> verifyAuthority = this.verifyAuthority(permission.getAuthority());
-		if (verifyAuthority != null) {
-			return verifyAuthority;
-		}
-
-		String url = permission.getUrl();
-		if (StrUtil.hasText(url)) {
-			Result<?> verifyUrl = this.verifyUrl(url);
-			if (verifyUrl != null) {
-				return verifyUrl;
-			}
-		}
-
 		try {
-
 			int update = permissionService.update(permission);
 			if (update != 1) {
 				return new Result<>(false, "更新失败");
@@ -118,10 +67,6 @@ public class PermissionController {
 	@PostMapping("/permission/remove")
 	@ResponseBody
 	public Result<?> removePermission(Long id) {
-		Result<?> verifyId = this.verifyId(id);
-		if (verifyId != null) {
-			return verifyId;
-		}
 		try {
 			permissionService.deleteById(id);
 			permissionService.settingPermissionMap();
@@ -144,22 +89,6 @@ public class PermissionController {
 	@ResponseBody
 	public Result<?> listByQo(PermissionQo qo) {
 
-		String permissionName = qo.getPermissionName();
-		if (StrUtil.hasText(permissionName)) {
-			Result<?> verifyPermissionName = this.verifyPermissionName(permissionName);
-			if (verifyPermissionName != null) {
-				return verifyPermissionName;
-			}
-		}
-
-		String authority = qo.getAuthority();
-		if (StrUtil.hasText(authority)) {
-			Result<?> verifyAuthority = this.verifyAuthority(authority);
-			if (verifyAuthority != null) {
-				return verifyAuthority;
-			}
-		}
-
 		try {
 			List<Permission> listByQo = permissionService.listByQo(qo);
 			return new Result<>(true, "查询成功", listByQo);
@@ -167,44 +96,6 @@ public class PermissionController {
 			log.error("系统异常", e);
 			return new Result<>(false, "查询失败");
 		}
-	}
-
-	private Result<?> verifyPermissionName(String permissionName) {
-		if (StrUtil.noText(permissionName)) {
-			return new Result<>(false, "权限名称不能为空");
-		} else if (permissionName.length() > 20) {
-			return new Result<>(false, "权限名称过长");
-		} else if (StrUtil.isContainSpecialChar(permissionName)) {
-			return new Result<>(false, "权限名称不能包含特殊字符");
-		}
-		return null;
-	}
-
-	private Result<?> verifyAuthority(String authority) {
-		if (StrUtil.noText(authority)) {
-			return new Result<>(false, "权限编码不能为空");
-		} else if (authority.length() > 100) {
-			return new Result<>(false, "权限编码过长");
-		} else if (StrUtil.isContainSpecialChar(authority)) {
-			return new Result<>(false, "权限编码不能包含特殊字符");
-		}
-		return null;
-	}
-
-	private Result<?> verifyUrl(String url) {
-		if (url.length() > 100) {
-			return new Result<>(false, "权限路径编码过长");
-		}
-		return null;
-	}
-
-	private Result<?> verifyId(Long id) {
-		if (id == null) {
-			return new Result<>(false, "权限ID不能为空");
-		} else if (id.toString().length() > 20) {
-			return new Result<>(false, "权限ID过长");
-		}
-		return null;
 	}
 
 }

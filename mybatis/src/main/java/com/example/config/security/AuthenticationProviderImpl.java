@@ -19,7 +19,6 @@ import com.example.entity.Employee;
 import com.example.entity.MenuTree;
 import com.example.entity.Permission;
 import com.example.qo.PermissionQo;
-import com.example.service.LoginLogServiceImpl;
 import com.example.service.MenuServiceImpl;
 import com.example.service.PermissionServiceImpl;
 import com.example.util.DateTimeUtil;
@@ -41,8 +40,6 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 	private MenuServiceImpl menuService;
 	@Autowired
 	private PermissionServiceImpl permissionService;
-	@Autowired
-	private LoginLogServiceImpl loginLogService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -55,7 +52,7 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		String credentials = authentication.getCredentials().toString();
 		if (!passwordEncoder.matches(credentials, employee.getPassword())) {
 			if (employee.getPasswordErrors() + 1 >= Employee.MAX_PASSWORD_ERRORS
-					&& !Employee.LOCK_STATUS.equals(employee.getStatus())) {
+					&& !Employee.LOCK_STATUS.equals(employee.getEmployeeStatus())) {
 				StringBuilder builder = new StringBuilder();
 				builder.append("账户已锁定，请").append(DateTimeUtil.LOCK_INTERVAL / 1000).append("秒后再试");
 				throw new LockedException(builder.toString());
@@ -64,8 +61,6 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		}
 
 		this.setMenuTreeAndPermission(employee);
-
-		employee.setNewestLoginTime(loginLogService.getNewestLoginTimeByUsername(employee.getUsername()));
 
 		return new UsernamePasswordAuthenticationToken(employee, credentials, employee.getAuthorities());
 	}
@@ -78,13 +73,13 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 	private void setMenuTreeAndPermission(Employee employee) {
 
 		List<Permission> authorities = employee.getAuthorities();
-		List<Long> menuIdList = new ArrayList<>();
+		List<Integer> menuIdList = new ArrayList<>();
 		for (Permission permission : authorities) {
 			menuIdList.add(permission.getMenuId());
 		}
 
 		// 登录用户的菜单
-		List<MenuTree> menuTreeList = menuService.listMenuTreeByAll();
+		List<MenuTree> menuTreeList = menuService.listAllMenuTree();
 		if (!Employee.SUPER_ADMIN_TYPE.equals(employee.getEmployeeType())) {
 			this.menuTreeMatches(menuTreeList, menuIdList);
 		} else {
@@ -95,10 +90,10 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		employee.setMenuTreeList(menuTreeList);
 	}
 
-	private void menuTreeMatches(List<MenuTree> menuTreeList, List<Long> menuIdList) {
+	private void menuTreeMatches(List<MenuTree> menuTreeList, List<Integer> menuIdList) {
 		for (Iterator<MenuTree> iterator = menuTreeList.iterator(); iterator.hasNext();) {
 			MenuTree menuTree = iterator.next();
-			Long menuId = menuTree.getId();
+			Integer menuId = menuTree.getId();
 
 			boolean contain = false;
 			if (menuIdList.contains(menuId)) {
@@ -122,9 +117,9 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		}
 	}
 
-	private boolean hasMenuPermission(List<MenuTree> children, List<Long> menuIdList) {
+	private boolean hasMenuPermission(List<MenuTree> children, List<Integer> menuIdList) {
 		for (MenuTree menuTree : children) {
-			Long id = menuTree.getId();
+			Integer id = menuTree.getId();
 			if (menuIdList.contains(id)) {
 				return true;
 			} else {

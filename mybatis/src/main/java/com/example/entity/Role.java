@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 public class Role {
 
-	private Long id;
+	private Integer id;
 	private String roleName;
 	private Date createTime;
 	private Date updateTime;

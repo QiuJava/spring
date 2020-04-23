@@ -11,3 +11,5 @@ spring:
     active:
     - dev
     
+mybatis:  mapper-locations:  - classpath:mapper/*Mapper.xml
+    

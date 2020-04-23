@@ -14,7 +14,6 @@ import com.example.common.Result;
 import com.example.entity.Menu;
 import com.example.qo.MenuQo;
 import com.example.service.MenuServiceImpl;
-import com.example.util.StrUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,15 +50,6 @@ public class MenuController {
 	@PostMapping("/menu/add")
 	@ResponseBody
 	public Result<?> addMenu(Menu menu) {
-		Result<?> verifyMenuName = this.verifyMenuName(menu.getMenuName());
-		if (verifyMenuName != null) {
-			return verifyMenuName;
-		}
-
-		Result<?> verifyUrl = this.verifyUrl(menu.getUrl());
-		if (verifyUrl != null) {
-			return verifyUrl;
-		}
 
 		try {
 			menuService.save(menu);
@@ -75,16 +65,6 @@ public class MenuController {
 	@PostMapping("/menu/update")
 	@ResponseBody
 	public Result<?> updateMenu(Menu menu) {
-
-		Result<?> verifyMenuName = this.verifyMenuName(menu.getMenuName());
-		if (verifyMenuName != null) {
-			return verifyMenuName;
-		}
-
-		Result<?> verifyUrl = this.verifyUrl(menu.getUrl());
-		if (verifyUrl != null) {
-			return verifyUrl;
-		}
 
 		try {
 			int update = menuService.update(menu);
@@ -112,23 +92,4 @@ public class MenuController {
 		}
 	}
 
-	private Result<?> verifyMenuName(String menuName) {
-		if (StrUtil.noText(menuName)) {
-			return new Result<>(false, "菜单名称不能为空");
-		} else if (menuName.length() > 20) {
-			return new Result<>(false, "菜单名称过长");
-		} else if (StrUtil.isContainSpecialChar(menuName)) {
-			return new Result<>(false, "菜单名称不能包含特殊字符");
-		}
-		return null;
-	}
-
-	private Result<?> verifyUrl(String url) {
-		if (StrUtil.noText(url)) {
-			return new Result<>(false, "菜单链接不能为空");
-		} else if (url.length() > 100) {
-			return new Result<>(false, "菜单链接过长");
-		}
-		return null;
-	}
 }

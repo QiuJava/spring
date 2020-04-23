@@ -28,8 +28,8 @@ public class MenuServiceImpl {
 	@Autowired
 	private PermissionServiceImpl permissionService;
 
-	public List<MenuTree> listMenuTreeByAll() {
-		return menuMapper.selectMenuTreeByParentId(null);
+	public List<MenuTree> listAllMenuTree() {
+		return menuMapper.listMenuTreeByParentId(null);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -56,7 +56,7 @@ public class MenuServiceImpl {
 	public int update(Menu menu) {
 		Date date = new Date();
 		menu.setUpdateTime(date);
-		String oldMenuName = menuMapper.selectMenuNameById(menu.getId());
+		String oldMenuName = menuMapper.getMenuNameById(menu.getId());
 		String menuName = menu.getMenuName();
 		if (!menuName.equals(oldMenuName)) {
 			// 菜单名称不能重复
@@ -68,7 +68,7 @@ public class MenuServiceImpl {
 			menu.setMenuName(null);
 		}
 
-		return menuMapper.updateById(menu);
+		return menuMapper.updateByPrimaryKeySelective(menu);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)

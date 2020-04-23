@@ -36,20 +36,6 @@ public class MenuSqlProvider {
 		return sql.toString();
 	}
 
-	public String selectMenuTreeByParentId(Long parentId) {
-		SQL sql = new SQL();
-		sql.SELECT(new String[] { "id", //
-				"menu_name", //
-				"url" });
-		sql.FROM("menu");
-		if (parentId == null) {
-			sql.WHERE("parent_id is null");
-		} else {
-			sql.WHERE("parent_id = #{parentId,jdbcType=BIGINT}");
-		}
-		return sql.toString();
-	}
-
 	public String selectMenuTreeVoByParentId(Long parentId) {
 		SQL sql = new SQL();
 		sql.SELECT(new String[] { "id", //
@@ -94,18 +80,4 @@ public class MenuSqlProvider {
 		return sql.toString();
 	}
 
-	public String updateById(Menu record) {
-		SQL sql = new SQL();
-		sql.UPDATE("menu");
-
-		if (StrUtil.hasText(record.getMenuName())) {
-			sql.SET("menu_name = #{menuName,jdbcType=VARCHAR}");
-		}
-		if (StrUtil.hasText(record.getUrl())) {
-			sql.SET("url = #{url,jdbcType=VARCHAR}");
-		}
-		sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
-		sql.WHERE("id = #{id,jdbcType=BIGINT}");
-		return sql.toString();
-	}
 }

@@ -1,14 +1,13 @@
 package com.example.mapper.provider;
 
-import com.example.entity.Role;
-import com.example.qo.RoleQo;
-import com.example.util.SqlUtil;
-import com.example.util.StrUtil;
-
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
+
+import com.example.qo.RoleQo;
+import com.example.util.SqlUtil;
+import com.example.util.StrUtil;
 
 /**
  * 角色sql供应
@@ -17,25 +16,6 @@ import org.apache.ibatis.jdbc.SQL;
  *
  */
 public class RoleSqlProvider {
-
-	public String insert(Role record) {
-		SQL sql = new SQL();
-		sql.INSERT_INTO("role");
-		sql.VALUES("role_name", "#{roleName,jdbcType=VARCHAR}");
-		sql.VALUES("create_time", "#{createTime,jdbcType=TIMESTAMP}");
-		sql.VALUES("update_time", "#{updateTime,jdbcType=TIMESTAMP}");
-		return sql.toString();
-	}
-
-	public String updateById(Role record) {
-		SQL sql = new SQL();
-		sql.UPDATE("role");
-		sql.SET("role_name = #{roleName,jdbcType=VARCHAR}");
-		sql.SET("update_time = #{updateTime,jdbcType=TIMESTAMP}");
-		sql.WHERE("id = #{id,jdbcType=BIGINT}");
-
-		return sql.toString();
-	}
 
 	public String deleteRolePermissionByPermissionIdList(Map<String, List<Long>> params) {
 		SQL sql = new SQL();

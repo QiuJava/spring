@@ -37,12 +37,12 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 		String username = authentication.getPrincipal().toString();
 
 		// 如果登录名不是系统中的用户名则跳过
-		Employee employee = employeeService.getPasswordErrorsAndIdAndStatusByUsername(username);
+		Employee employee = employeeService.getByUsername(username);
 		if (employee == null) {
 			return;
 		}
 
-		if (employee.getStatus() != Employee.LOCK_STATUS) {
+		if (!Employee.LOCK_STATUS.equals(employee.getEmployeeStatus())) {
 			Date date = new Date();
 			int passwordErrors = employee.getPasswordErrors() + 1;
 
@@ -50,19 +50,30 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
 			employee.setUpdateTime(date);
 			if (passwordErrors >= Employee.MAX_PASSWORD_ERRORS) {
 				// 进入锁定状态 设置锁定时间
-				employee.setStatus(Employee.LOCK_STATUS);
-				employee.setLockTime(date);
-				employeeService.updatePasswordErrorsAndStatusAndLockTimeAndUpdateTimeById(employee);
+				employee.setEmployeeStatus(Employee.LOCK_STATUS);
+				employee.setLockingTime(date);
+				
+				
+				Employee newEmployee = new Employee();
+				newEmployee.setId(employee.getId());
+				newEmployee.setPasswordErrors(passwordErrors);
+				newEmployee.setUpdateTime(date);
+				newEmployee.setLockingTime(date);
+				newEmployee.setEmployeeStatus(Employee.LOCK_STATUS);
+				employeeService.updatePasswordErrorsAndEmployeeStatusAndLockingTimeById(newEmployee);
 			} else {
-				employeeService.updatePasswordErrorsAndUpdateTimeById(employee);
+				Employee newEmployee = new Employee();
+				newEmployee.setId(employee.getId());
+				newEmployee.setPasswordErrors(passwordErrors);
+				newEmployee.setUpdateTime(date);
+				employeeService.updatePasswordErrorsById(newEmployee);
 			}
 
 			LoginLog loginLog = new LoginLog();
 			loginLog.setLoginStatus(LoginLog.LOGIN_FAILURE_STATUS);
 			loginLog.setRemoteAddress(details.getRemoteAddress());
 			loginLog.setCreateTime(date);
-			loginLog.setUpdateTime(date);
-			loginLog.setUsername(username);
+			loginLog.setEmployeeId(employee.getId());
 			loginLog.setRemark(event.getException().getMessage());
 			loginLogService.save(loginLog);
 		}

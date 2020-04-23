@@ -15,7 +15,6 @@ import com.example.config.listener.ContextStartListener;
 import com.example.entity.Permission;
 import com.example.mapper.PermissionMapper;
 import com.example.qo.PermissionQo;
-import com.example.util.StrUtil;
 import com.example.vo.PermissionCheckboxVo;
 
 /**
@@ -39,24 +38,7 @@ public class PermissionServiceImpl {
 		permission.setCreateTime(date);
 		permission.setUpdateTime(date);
 
-		boolean hasByPermissionName = this.hasByPermissionName(permission.getPermissionName());
-		if (hasByPermissionName) {
-			throw new LogicException("权限名称已存在");
-		}
-
-		boolean hasByAuthority = this.hasByAuthority(permission.getAuthority());
-		if (hasByAuthority) {
-			throw new LogicException("权限编码已存在");
-		}
-
-		String url = permission.getUrl();
-		if (StrUtil.hasText(url)) {
-			boolean hasByUrl = this.hasByUrl(url);
-			if (hasByUrl) {
-				throw new LogicException("权限路径已存在");
-			}
-		}
-		return permissionMapper.insert(permission);
+		return permissionMapper.insertSelective(permission);
 	}
 
 	public boolean hasByPermissionName(String permissionName) {
@@ -74,43 +56,7 @@ public class PermissionServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int update(Permission permission) throws LogicException {
 		permission.setUpdateTime(new Date());
-
-		Permission oldPermission = permissionMapper.selectById(permission.getId());
-
-		String permissionName = permission.getPermissionName();
-		if (!permissionName.equals(oldPermission.getPermissionName())) {
-			boolean hasByPermissionName = this.hasByPermissionName(permissionName);
-			if (hasByPermissionName) {
-				throw new LogicException("权限名称已存在");
-			}
-		} else {
-			// 不更新权限名称
-			permission.setPermissionName(null);
-		}
-
-		String authority = permission.getAuthority();
-		if (!authority.equals(oldPermission.getAuthority())) {
-			boolean hasByAuthority = this.hasByAuthority(authority);
-			if (hasByAuthority) {
-				throw new LogicException("权限编码已存在");
-			}
-		} else {
-			// 不更新权限编码
-			permission.setAuthority(null);
-		}
-
-		String url = permission.getUrl();
-
-		if (StrUtil.hasText(url)) {
-			if (!url.equals(oldPermission.getUrl())) {
-				boolean hasByUrl = this.hasByUrl(url);
-				if (hasByUrl) {
-					throw new LogicException("权限路径已存在");
-				}
-			}
-		}
-
-		return permissionMapper.updateById(permission);
+		return permissionMapper.updateByPrimaryKeySelective(permission);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -120,7 +66,7 @@ public class PermissionServiceImpl {
 	}
 
 	public List<Permission> listByQo(PermissionQo qo) {
-		return permissionMapper.selectByQo(qo);
+		return permissionMapper.listByQo(qo);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
@@ -151,7 +97,7 @@ public class PermissionServiceImpl {
 		List<Permission> listByQo = this.listByQo(new PermissionQo());
 		Map<String, String> map = new HashMap<>(listByQo.size());
 		listByQo.forEach(permission -> {
-			map.put(permission.getUrl(), permission.getAuthority());
+			map.put(permission.getMappingAddress(), permission.getAuthority());
 		});
 		valueOperations.set(ContextStartListener.PEMISSION_MAP, map);
 	}

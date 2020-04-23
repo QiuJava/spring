@@ -18,9 +18,9 @@ import lombok.ToString;
 @ToString
 public class Menu  {
 
-	private Long id;
+	private Integer id;
 	private String menuName;
-	private String url;
+	private String mappingAddress;
 	private Date createTime;
 	private Date updateTime;
 	private Long parentId;

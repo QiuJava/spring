@@ -66,10 +66,10 @@ public class EmployeeController {
 	@GetMapping("/resetPassword")
 	public Result<?> resetPassword(Employee employee) {
 		// 校验邮箱
-		String email = employee.getEmail();
+		String email = employee.getEmailAddress();
 		String username = employee.getUsername();
 		try {
-			int resetPassword = employeeService.resetPassword(username);
+			int resetPassword = employeeService.resetPassword(employee.getId(),employee.getUsername());
 			if (resetPassword != 1) {
 				return new Result<>(false, "重置失败");
 			}
@@ -82,11 +82,11 @@ public class EmployeeController {
 		}
 	}
 
-	@PostMapping("/employee/delete")
+	@PostMapping("/employee/deleteById")
 	@ResponseBody
-	public Result<?> deleteEmployee(Long id) {
+	public Result<?> deleteEmployee(Integer id) {
 		try {
-			employeeService.delete(id);
+			employeeService.deleteById(id);
 			return new Result<>(true, "删除成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);
@@ -96,9 +96,9 @@ public class EmployeeController {
 
 	@PostMapping("/employee/changePassword")
 	@ResponseBody
-	public Result<?> changePassword(String username, String password, String newPassword) {
+	public Result<?> changePassword(Integer employeeId, String password, String newPassword) {
 		try {
-			int changePassword = employeeService.changePassword(username, password, newPassword);
+			int changePassword = employeeService.changePassword(employeeId, password, newPassword);
 			if (changePassword != 1) {
 				return new Result<>(false, "修改失败");
 			}
@@ -110,30 +110,6 @@ public class EmployeeController {
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result<>(false, "修改失败");
-		}
-	}
-
-	@GetMapping("/employee/verifyUsername")
-	@ResponseBody
-	public boolean verifyUsername(Long id, String username) {
-		try {
-			boolean hasByUsernameAndId = employeeService.hasByUsernameAndId(id, username);
-			return !hasByUsernameAndId;
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return false;
-		}
-	}
-
-	@GetMapping("/employee/verifyEmail")
-	@ResponseBody
-	public boolean verifyEmail(Long id, String email) {
-		try {
-			boolean hasByEmailAndId = employeeService.hasByEmailAndId(id, email);
-			return !hasByEmailAndId;
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return false;
 		}
 	}
 

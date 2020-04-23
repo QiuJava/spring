@@ -26,8 +26,8 @@ public class LoginLogServiceImpl {
 		return loginLogMapper.insert(loginLog);
 	}
 
-	public Date getNewestLoginTimeByUsername(String username) {
-		return loginLogMapper.selectNewestLoginTimeByUsername(username);
+	public Date getNewestLoginTimeByEmployeeId(Integer employeeId) {
+		return loginLogMapper.getNewestCreateTimeByEmployeeId(employeeId);
 	}
 
 }

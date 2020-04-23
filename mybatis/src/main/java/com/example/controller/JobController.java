@@ -84,9 +84,6 @@ public class JobController {
 		if (StrUtil.hasText(jobGroupName) && jobGroupName.length() > 190) {
 			return new Result<>(false, "任务组名称过长");
 		}
-		if (StrUtil.hasText(jobGroupName) && StrUtil.isContainSpecialChar(jobGroupName)) {
-			return new Result<>(false, "任务组名称不能含有特殊字符");
-		}
 		try {
 			List<JobDetails> list = jobManageService.listByQo(qo);
 			return new Result<>(true, "查询成功", list);
@@ -168,8 +165,6 @@ public class JobController {
 			return new Result<>(false, "任务组名称不能为空");
 		} else if (jobGroupName.length() > 190) {
 			return new Result<>(false, "任务组名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobGroupName)) {
-			return new Result<>(false, "任务组名称不能含有特殊字符");
 		}
 		return null;
 	}
@@ -179,8 +174,6 @@ public class JobController {
 			return new Result<>(false, "任务名称不能为空");
 		} else if (jobName.length() > 190) {
 			return new Result<>(false, "任务名称过长");
-		} else if (StrUtil.isContainSpecialChar(jobName)) {
-			return new Result<>(false, "任务名称不能含有特殊字符");
 		}
 		return null;
 	}

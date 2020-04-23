@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.entity.DictEntry;
-import com.example.service.DictEntryServiceImpl;
+import com.example.entity.DataDictionary;
+import com.example.service.DataDictionaryServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,16 +21,16 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Controller
 @Slf4j
-public class DictEntryController {
+public class DataDictionaryController {
 
 	@Autowired
-	private DictEntryServiceImpl dictEntryService;
+	private DataDictionaryServiceImpl dataDictionaryService;
 
-	@GetMapping("/dictEntry/employeeTypeList")
+	@GetMapping("/dataDictionary/listByDataKey")
 	@ResponseBody
-	public List<DictEntry> getEmployeeTypeList() {
+	public List<DataDictionary> listByDataKey(String dataKey) {
 		try {
-			List<DictEntry> list = dictEntryService.listByDictKey(DictEntry.EMPLOYEE_TYPE);
+			List<DataDictionary> list = dataDictionaryService.listByDataKey(dataKey);
 			return list;
 		} catch (Exception e) {
 			log.error("系统异常", e);

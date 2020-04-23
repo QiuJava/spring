@@ -4,13 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
 import com.example.dto.AllotPermissionDto;
@@ -27,19 +24,24 @@ import com.example.qo.RoleQo;
  */
 public interface RoleMapper {
 
+	int deleteByPrimaryKey(Integer id);
+
+	int insert(Role record);
+
+	int insertSelective(Role record);
+
+	Role selectByPrimaryKey(Integer id);
+
+	int updateByPrimaryKeySelective(Role record);
+
+	int updateByPrimaryKey(Role record);
+
 	@Delete({ "DELETE  ", //
 			"FROM ", //
 			"	role  ", //
 			"WHERE ", //
 			"	id = #{id,jdbcType=BIGINT}" })
 	int deleteById(Long id);
-
-	@InsertProvider(type = RoleSqlProvider.class, method = "insert")
-	@Options(useGeneratedKeys = true, keyProperty = "id")
-	int insert(Role record);
-
-	@UpdateProvider(type = RoleSqlProvider.class, method = "updateById")
-	int updateById(Role record);
 
 	@Insert({ "INSERT role_permission ( role_id, permission_id ) ", //
 			"VALUES ", //
