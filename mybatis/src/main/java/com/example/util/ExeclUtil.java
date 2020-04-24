@@ -1,7 +1,6 @@
 package com.example.util;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +23,12 @@ public class ExeclUtil {
 	private ExeclUtil() {
 	}
 
-	@SuppressWarnings("resource")
-	public static void exportExecl(HttpServletResponse response, String sheetName, List<Map<String, Object>> dataList,
+	public static void exportExecl(HttpServletResponse response, List<Map<String, Object>> dataList,
 			String[] headerColumnNameArray, String[] columnPropertyNameArray, String fileName) throws IOException {
 
+		@SuppressWarnings("resource")
 		HSSFWorkbook workBook = new HSSFWorkbook();
-		HSSFSheet newSheet = workBook.createSheet(sheetName);
+		HSSFSheet newSheet = workBook.createSheet("sheet");
 
 		HSSFRow topRow = newSheet.createRow(0);
 		for (int i = 0; i < headerColumnNameArray.length; i++) {
@@ -48,7 +47,7 @@ public class ExeclUtil {
 			}
 		}
 
-		response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 		ServletOutputStream outputStream = response.getOutputStream();
 		workBook.write(outputStream);
 		outputStream.flush();
@@ -56,13 +55,7 @@ public class ExeclUtil {
 	}
 
 	private static void setCellValue(HSSFCell newCell, Object obj) {
-		if (obj instanceof Boolean) {
-			newCell.setCellValue((Boolean) obj);
-		} else if (obj instanceof Date) {
-			newCell.setCellValue((Date) obj);
-		} else {
-			newCell.setCellValue(new HSSFRichTextString(obj.toString()));
-		}
+		newCell.setCellValue(new HSSFRichTextString(obj == null ? "" : obj.toString()));
 	}
 
 }

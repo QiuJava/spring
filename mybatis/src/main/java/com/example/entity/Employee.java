@@ -3,11 +3,15 @@ package com.example.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.example.util.DateTimeUtil;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 import java.math.BigDecimal;
 
 /**
@@ -25,6 +29,7 @@ public class Employee implements UserDetails {
 	private String employeeName;
 	private String phoneNumber;
 	private Integer age;
+	@DateTimeFormat(pattern = DateTimeUtil.DATATIME_PATTERN)
 	private Date entryTime;
 	private Date resignationTime;
 	private String gender;
@@ -72,10 +77,9 @@ public class Employee implements UserDetails {
 	public static final String MAN = "MAN";
 	public static final String WOMAN = "WOMAN";
 	
-	public static final String INIT = "INIT";
-	
 	public static final int MAX_PASSWORD_ERRORS = 5;
 	public static final int PASSWORD_ERRORS_INIT = 0;
+	public static final float ZERO_DAY_FLOAT = 0.0F;
 	
 	
 

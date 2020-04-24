@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.entity.Employee;
@@ -35,6 +36,12 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 	@Autowired
 	private DataDictionaryServiceImpl dataDictionaryService;
 	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	private String password = "123456";
+	private String username = "qiu";
+	
 	@Transactional(rollbackFor = RuntimeException.class)
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -47,8 +54,9 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 			return;
 		}
 		Employee employee = new Employee();
-		employee.setEmployeeName(Employee.INIT);
-		employee.setEmailAddress("1186335831@qq.com");
+		employee.setEmployeeName(username);
+		employee.setEmailAddress(StrUtil.EMPTY_TEXT);
+		employee.setPassword(passwordEncoder.encode(password));
 		employee.setEmployeeType(Employee.SUPER_ADMIN_TYPE);
 		employee.setPhoneNumber(StrUtil.EMPTY_TEXT);
 		employee.setAge(0);
@@ -56,7 +64,6 @@ public class ContextStartListener implements ApplicationListener<ContextRefreshe
 		employee.setPositionId(0);
 		employee.setIdCardNo(StrUtil.EMPTY_TEXT);
 		employee.setBankCard(StrUtil.EMPTY_TEXT);
-		employee.setEmployeeDynamic(Employee.ON_DUTY_DYNAMIC);
 		employee.setGender(Employee.MAN);
 		employeeService.save(employee);
 	}

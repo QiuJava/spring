@@ -43,7 +43,7 @@
 		</javaClientGenerator>
 		
 		<!--生成对应表及类名 -->
-		<table tableName="role" domainObjectName="Role"
+		<table tableName="position" domainObjectName="Position"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

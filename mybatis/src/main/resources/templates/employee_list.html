@@ -16,7 +16,7 @@
      
 	function employeeSearch() {
 	    $("#employee-dg").datagrid("load", {
-	        "username": $("#username").val(),
+	        "employeeName": $("#employeeName").val(),
 	        "employeeType": $("#employeeType").val()
 	    });
 	}
@@ -61,7 +61,7 @@
 	        function(r) {
 	            if (r) {
 	                var index = $("#employee-dg").datagrid('getRowIndex', row);
-	                $.post('/employee/delete?_csrf=' + token, {
+	                $.post('/employee/deleteById?_csrf=' + token, {
 	                    id: row.id
 	                },
 	                function(data) {
@@ -162,9 +162,9 @@
   <div id="employee-toolbar"> 
    <div id="employeeSearchInputs"> 
     <span>登录名称:</span> 
-    <input class="easyui-textbox" id="username" name="username" /> 
+    <input class="easyui-textbox" id="employeeName" name="employeeName" /> 
     <span>员工类型:</span> 
-    <input id="employeeType" class="easyui-combobox" name="employeeType" data-options="valueField:'dataValue',textField:'dataName',url:'/dataDictionary/listByDataKey?dataKey=EMPLOYEE_TYPE',method:'get'"  /> 
+    <input id="employeeType"  name="employeeType" class="easyui-combobox" data-options="valueField:'dataValue',textField:'dataName',url:'/dataDictionary/listByDataKey?dataKey=EMPLOYEE_TYPE',method:'get'"  /> 
    </div> 
    <div id="employeeSearchButton"> 
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="employeeSearch()">查询</a> 
@@ -184,21 +184,60 @@
 				}
 		"> 
    <form id="add-form" method="post"> 
-   	<input id="employeeId" name="id" type="hidden"/>
+   	<input name="id" type="hidden"/>
     <table> 
      <tbody>
       <tr> 
        <td>员工名称:</td> 
-       <td><input id="usernameInput" name="employeeName" class="easyui-textbox" data-options="required: true,validType: ['length[1,4]']"  /></td> 
+       <td><input  name="employeeName" class="easyui-textbox" data-options="required: true,validType: ['length[1,4]']"  /></td> 
       </tr> 
       <tr> 
        <td>邮箱:</td> 
-       <td><input id="email" name="email" class="easyui-textbox" data-options="required: true,validType: ['email', 'length[0,50]']"  /></td> 
+       <td><input  name="emailAddress" class="easyui-textbox" data-options="required: true,validType: ['email', 'length[0,50]']"  /></td> 
       </tr> 
       <tr> 
        <td>员工类型:</td> 
-       <td><input id="addEmployeeType" class="easyui-combobox" name="employeeType" data-options="required: true,valueField:'dataValue',textField:'dataName',url:'/dataDictionary/listByDataKey?dataKey=EMPLOYEE_TYPE',method:'get'"/></td> 
+       <td><input  name="employeeType"  class="easyui-combobox"  data-options="required: true,valueField:'dataValue',textField:'dataName',url:'/dataDictionary/listByDataKey?dataKey=EMPLOYEE_TYPE',method:'get'"/></td> 
       </tr> 
+      <tr> 
+       <td>手机号码:</td> 
+       <td><input  name="phoneNumber"  class="easyui-textbox"  data-options="required: true,validType: ['length[11,11]']"/></td> 
+      </tr>
+      <tr> 
+       <td>年龄:</td> 
+       <td><input  name="age"  class="easyui-numberbox"  data-options="required: true,validType: ['length[2,2]'],min:18,max:99"/></td> 
+      </tr>
+      <tr> 
+       <td>性别:</td> 
+       <td><input  name="gender"  class="easyui-combobox"  data-options="required: true,valueField:'dataValue',textField:'dataName',url:'/dataDictionary/listByDataKey?dataKey=GENDER',method:'get'"/></td> 
+      </tr> 
+      <tr> 
+       <td>身份证号码:</td> 
+       <td><input  name="idCardNo"  class="easyui-textbox"  data-options="required: true,validType: ['length[1,20]']"/></td> 
+      </tr>
+      <tr> 
+       <td>银行卡号:</td> 
+       <td><input  name="bankCard"  class="easyui-textbox"  data-options="required: true,validType: ['length[1,20]']"/></td> 
+      </tr> 
+      <tr> 
+       <td>社保公积金比例:</td> 
+       <td><input  name="socialSecurityFundRatio"  class="easyui-numberbox"  data-options="min:0.05,max:0.15,precision:2"/></td> 
+      </tr> 
+      <tr> 
+       <td>所属部门:</td> 
+       <td><input  name="departmentId"  class="easyui-combobox"  data-options="required: true,valueField:'id',textField:'departmentName',url:'/department/listAll',method:'get', onSelect: function(department){
+	    var url = '/position/listByDepartmentId?departmentId='+department.id+'&_csrf=' + token;
+	    $('#positionId').combobox('reload', url);
+	    }"/></td> 
+      </tr>
+      <tr> 
+       <td>职位:</td> 
+       <td><input id="positionId"  name="positionId"  class="easyui-combobox"  data-options="required: true,valueField:'id',textField:'positionName'"/></td> 
+      </tr>
+      <tr> 
+       <td>入职时间:</td> 
+       <td><input  name="entryTime"  class="easyui-datetimebox"  data-options="required: true"/></td> 
+      </tr>
      </tbody>
     </table> 
    </form> 

@@ -39,12 +39,19 @@ public class EmployeeServiceImpl {
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Employee employee) {
 
+		if (employee.getId() != null) {
+			return employeeMapper.updateByPrimaryKeySelective(employee);
+		}
+
 		if (StringUtil.isEmpty(employee.getPassword())) {
 			employee.setPassword(passwordEncoder.encode(employee.getUsername()));
 		}
 		// 初始化
 		employee.setEmployeeStatus(Employee.NORMAL_STATUS);
+		employee.setEmployeeDynamic(Employee.ON_DUTY_DYNAMIC);
 		employee.setPasswordErrors(Employee.PASSWORD_ERRORS_INIT);
+		employee.setRemainingAnnualLeaveDay(Employee.ZERO_DAY_FLOAT);
+		employee.setRemainingLieuLeaveDay(Employee.ZERO_DAY_FLOAT);
 		Date date = new Date();
 		employee.setCreateTime(date);
 		employee.setUpdateTime(date);
@@ -101,7 +108,7 @@ public class EmployeeServiceImpl {
 	public Page<Employee> listByQo(EmployeeQo employeeQo) {
 		Page<Employee> page = PageHelper.startPage(employeeQo.getPage(), employeeQo.getRows(), employeeQo.getCount());
 		employeeMapper.listByQo(employeeQo);
-		
+
 		page.getResult().forEach(employee -> {
 			DataDictionary employeeDynamicDataDictionary = (DataDictionary) hashOperation.get(
 					ContextStartListener.DATA_DICTIONARY_LIST,

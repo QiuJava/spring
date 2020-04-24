@@ -21,4 +21,10 @@ public class PageQo {
 	public Boolean getCount() {
 		return count == null ? true : count;
 	}
+	
+	public void exportInit() {
+		this.count = false;
+		this.page = 1;
+		this.rows = 0;
+	}
 }
