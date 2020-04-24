@@ -350,17 +350,63 @@
     where employee_name = #{employeeName,jdbcType=VARCHAR}
   </select>
   
-  <select id="listByQo" resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from employee
+  <resultMap id="listByQoMap" type="com.example.entity.Employee">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="entry_time" jdbcType="TIMESTAMP" property="entryTime" />
+    <result column="resignation_time" jdbcType="TIMESTAMP" property="resignationTime" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="email_address" jdbcType="VARCHAR" property="emailAddress" />
+    <result column="position_id" jdbcType="INTEGER" property="positionId" />
+    <result column="employee_status" jdbcType="VARCHAR" property="employeeStatus" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+    <result column="remaining_annual_leave_day" jdbcType="REAL" property="remainingAnnualLeaveDay" />
+    <result column="remaining_lieu_leave_day" jdbcType="REAL" property="remainingLieuLeaveDay" />
+    <result column="employee_type" jdbcType="VARCHAR" property="employeeType" />
+    <result column="social_security_fund_ratio" jdbcType="DECIMAL" property="socialSecurityFundRatio" />
+    <result column="employee_dynamic" jdbcType="VARCHAR" property="employeeDynamic" />
+    <result column="position_name" jdbcType="VARCHAR" property="positionName" />
+    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+  </resultMap>
+  <select id="listByQo" resultMap="listByQoMap">
+	SELECT
+		employee0_.employee_name AS employee_name,
+		employee0_.email_address AS email_address,
+		employee0_.age AS age,
+		employee0_.gender AS gender,
+		employee0_.phone_number AS phone_number,
+		employee0_.id_card_no AS id_card_no,
+		employee0_.bank_card AS bank_card,
+		employee0_.entry_time AS entry_time,
+		employee0_.position_id AS position_id,
+		employee0_.employee_status AS employee_status,
+		employee0_.employee_type AS employee_type,
+		employee0_.employee_dynamic AS employee_dynamic,
+		employee0_.id AS id,
+		employee0_.resignation_time AS resignation_time,
+		employee0_.remaining_annual_leave_day AS remaining_annual_leave_day,
+		employee0_.remaining_lieu_leave_day AS remaining_lieu_leave_day,
+		employee0_.social_security_fund_ratio AS social_security_fund_ratio,
+		position0_.position_name AS position_name,
+		department0_.id AS department_id,
+		department0_.department_name AS department_name 
+	FROM
+		employee employee0_
+		JOIN position position0_ ON employee0_.position_id = position0_.id
+		JOIN department department0_ ON position0_.department_id = department0_.id
+		AND employee0_.employee_status != 'INVALID_STATUS'
     <where>
     	<if test="employeeName != null and employeeName!=''">
-    		employee_name=#{employeeName,jdbcType=VARCHAR}
+    		employee0_.employee_name=#{employeeName,jdbcType=VARCHAR}
     	</if>
     	<if test="employeeType != null and employeeType!=''">
-    		employee_type=#{employeeType,jdbcType=VARCHAR}
+    		employee0_.employee_type=#{employeeType,jdbcType=VARCHAR}
     	</if>
+    	
     </where>
   </select>
 </mapper>

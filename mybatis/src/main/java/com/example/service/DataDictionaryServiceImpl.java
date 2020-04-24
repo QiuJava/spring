@@ -34,9 +34,9 @@ public class DataDictionaryServiceImpl {
 		List<DataDictionary> list = new ArrayList<>();
 		keySet.forEach(key -> {
 			if (key.contains(employeeType)) {
-				list.add((DataDictionary)entries.get(key));
+				list.add((DataDictionary) entries.get(key));
 			}
-			
+
 		});
 		return list;
 	}
@@ -48,11 +48,8 @@ public class DataDictionaryServiceImpl {
 	public void settingDataDictionaryList() {
 		hashOperation.getOperations().delete(ContextStartListener.DATA_DICTIONARY_LIST);
 		List<DataDictionary> list = this.listAll();
-		list.forEach(dataDictionary -> {
-			hashOperation.put(ContextStartListener.DATA_DICTIONARY_LIST,
-					dataDictionary.getDataKey().concat(dataDictionary.getDataValue()), dataDictionary);
-		});
-		
+		list.forEach(dataDictionary -> hashOperation.put(ContextStartListener.DATA_DICTIONARY_LIST,
+				dataDictionary.getDataKey().concat(dataDictionary.getDataValue()), dataDictionary));
 
 	}
 

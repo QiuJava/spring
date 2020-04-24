@@ -55,6 +55,7 @@ public class Employee implements UserDetails {
 	private String genderName;
 	private String departmentName;
 	private String positionName;
+	private String departmentId; 
 
 	public static final String NORMAL_STATUS = "NORMAL_STATUS";
 	public static final String LOCK_STATUS = "LOCK_STATUS";

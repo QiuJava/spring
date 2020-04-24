@@ -96,9 +96,7 @@ public class PermissionServiceImpl {
 	public void settingPermissionMap() {
 		List<Permission> listByQo = this.listByQo(new PermissionQo());
 		Map<String, String> map = new HashMap<>(listByQo.size());
-		listByQo.forEach(permission -> {
-			map.put(permission.getMappingAddress(), permission.getAuthority());
-		});
+		listByQo.forEach(permission -> map.put(permission.getMappingAddress(), permission.getAuthority()));
 		valueOperations.set(ContextStartListener.PEMISSION_MAP, map);
 	}
 

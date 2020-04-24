@@ -1,6 +1,11 @@
 package com.example.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +20,7 @@ import com.example.entity.Employee;
 import com.example.qo.EmployeeQo;
 import com.example.service.EmployeeServiceImpl;
 import com.example.service.email.EmailService;
+import com.example.util.ExeclUtil;
 import com.example.util.SecurityContextUtil;
 import com.github.pagehelper.Page;
 
@@ -70,7 +76,7 @@ public class EmployeeController {
 		String email = employee.getEmailAddress();
 		String username = employee.getUsername();
 		try {
-			int resetPassword = employeeService.resetPassword(employee.getId(),employee.getUsername());
+			int resetPassword = employeeService.resetPassword(employee.getId(), employee.getUsername());
 			if (resetPassword != 1) {
 				return new Result<>(false, "重置失败");
 			}
@@ -111,6 +117,34 @@ public class EmployeeController {
 		} catch (Exception e) {
 			log.error("系统异常", e);
 			return new Result<>(false, "修改失败");
+		}
+	}
+
+	@GetMapping("/employee/export")
+	@ResponseBody
+	public void export(EmployeeQo qo, HttpServletResponse response) {
+		qo.setCount(false);
+		qo.setPage(1);
+		qo.setRows(0);
+
+		Page<Employee> listByQo = employeeService.listByQo(qo);
+		List<Employee> result = listByQo.getResult();
+
+		List<Map<String, Object>> dataList = new ArrayList<>(result.size());
+
+		for (Employee employee : result) {
+			Map<String, Object> data = new HashMap<>();
+			data.put("employeeName", employee.getEmployeeName());
+			dataList.add(data);
+		}
+
+		try {
+			String fileName = "员工信息表";
+			
+			ExeclUtil.exportExecl(response, "员工信息", dataList, new String[] { "员工姓名" }, new String[] { "employeeName" },
+					new String(fileName.getBytes("UTF-8"),"ISO-8859-1" ) + ".xlsx");
+		} catch (Exception e) {
+			log.error("系统异常", e);
 		}
 	}
 
