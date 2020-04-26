@@ -44,7 +44,7 @@ public class EmployeeServiceImpl {
 		}
 
 		if (StringUtil.isEmpty(employee.getPassword())) {
-			employee.setPassword(passwordEncoder.encode(employee.getUsername()));
+			employee.setPassword(passwordEncoder.encode(Employee.INIT_PASSWORD));
 		}
 		// 初始化
 		employee.setEmployeeStatus(Employee.NORMAL_STATUS);
@@ -73,10 +73,10 @@ public class EmployeeServiceImpl {
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int resetPassword(Integer employeeId, String employeeName) {
+	public int resetPassword(Integer employeeId) {
 		Employee employee = new Employee();
 		employee.setId(employeeId);
-		employee.setPassword(passwordEncoder.encode(employeeName));
+		employee.setPassword(passwordEncoder.encode(Employee.INIT_PASSWORD));
 		employee.setUpdateTime(new Date());
 		return employeeMapper.updateByPrimaryKeySelective(employee);
 	}
@@ -101,7 +101,7 @@ public class EmployeeServiceImpl {
 		return employeeMapper.updateAllPasswordErrors();
 	}
 
-	public int deleteEmployeeRoleByRoleId(Long id) {
+	public int deleteEmployeeRoleByRoleId(Integer id) {
 		return employeeMapper.deleteEmployeeRoleByRoleId(id);
 	}
 
@@ -150,7 +150,7 @@ public class EmployeeServiceImpl {
 	}
 
 	public boolean hasByEmployeeType(String superAdminType) {
-		return employeeMapper.countByEmployeeType(superAdminType) == 1;
+		return employeeMapper.countByEmployeeType(superAdminType) > 0;
 	}
 
 }

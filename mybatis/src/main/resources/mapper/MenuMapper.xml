@@ -127,4 +127,38 @@
 		</if>
 	</where>
   </select>
+  
+  <resultMap id="listByQoMap" type="com.example.entity.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="mapping_address" jdbcType="VARCHAR" property="mappingAddress" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	<collection property="children" column="id" select="com.example.mapper.MenuMapper.listByParentId"></collection>
+  </resultMap>
+  <select id="listByQo" resultMap="listByQoMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from menu
+  	<where>
+  		<choose>
+  			<when test="menuName != null and menuName !=''">
+  				menu_name = #{menuName,jdbcType=VARCHAR}
+  			</when>
+  			<otherwise>
+  				<choose>
+  					<when test="parentId == null">
+  						parent_id is null
+  					</when>
+  					<otherwise>
+  						parent_id = #{parentId,jdbcType=INTEGER}
+  					</otherwise>
+  				</choose>
+  			</otherwise>
+  		</choose>
+  	</where>
+  </select>
+  
+  <select id=""></select>
 </mapper>

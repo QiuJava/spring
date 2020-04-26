@@ -75,7 +75,7 @@ public class RoleController {
 
 	@PostMapping("/role/add")
 	@ResponseBody
-	public Result<Role> addRole(Role role) {
+	public Result<Role> add(Role role) {
 		try {
 			roleService.save(role);
 			return new Result<>(true, "添加成功", role);
@@ -88,7 +88,7 @@ public class RoleController {
 
 	@PostMapping("/role/allotPermission")
 	@ResponseBody
-	public Result<?> allotPermission(Long roleId, Long[] permissionIdList, Long menuId) {
+	public Result<?> allotPermission(Integer roleId, Integer[] permissionIdList, Integer menuId) {
 		try {
 			roleService.allotPermission(roleId, permissionIdList, menuId);
 			return new Result<>(true, "分配成功");
@@ -99,9 +99,9 @@ public class RoleController {
 
 	}
 
-	@PostMapping("/role/update")
+	@PostMapping("/role/updateById")
 	@ResponseBody
-	public Result<?> updateRole(Role role) {
+	public Result<?> updateById(Role role) {
 		try {
 			int updateById = roleService.updateById(role);
 			if (updateById != 1) {
@@ -115,27 +115,9 @@ public class RoleController {
 
 	}
 
-	@PostMapping("/role/verifyRoleName")
+	@PostMapping("/role/deleteById")
 	@ResponseBody
-	public boolean verifyRoleName(String roleName, Long id) {
-		try {
-			if (id != 0) {
-				String oldRoleName = roleService.getRoleNameById(id);
-				if (oldRoleName.equals(roleName)) {
-					return true;
-				}
-			}
-			boolean hasByRoleName = roleService.hasByRoleName(roleName);
-			return !hasByRoleName;
-		} catch (Exception e) {
-			log.error("系统异常", e);
-			return false;
-		}
-	}
-
-	@PostMapping("/role/delete")
-	@ResponseBody
-	public Result<?> deleteRole(Long id) {
+	public Result<?> deleteById(Integer id) {
 		try {
 			roleService.deleteById(id);
 			return new Result<>(true, "删除成功");

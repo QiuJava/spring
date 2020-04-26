@@ -34,11 +34,11 @@ public class RoleServiceImpl {
 		Date date = new Date();
 		role.setCreateTime(date);
 		role.setUpdateTime(date);
-		return roleMapper.insert(role);
+		return roleMapper.insertSelective(role);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
-	public void allotPermission(Long roleId, Long[] permissionIdList, Long menuId) throws LogicException {
+	public void allotPermission(Integer roleId, Integer[] permissionIdList, Integer menuId) throws LogicException {
 		InitPermissionDto initPermissionDto = new InitPermissionDto();
 		initPermissionDto.setRoleId(roleId);
 		initPermissionDto.setMenuId(menuId);
@@ -47,7 +47,7 @@ public class RoleServiceImpl {
 
 		AllotPermissionDto allotPermissionDto = new AllotPermissionDto();
 		allotPermissionDto.setRoleId(roleId);
-		for (Long permissionId : permissionIdList) {
+		for (Integer permissionId : permissionIdList) {
 			allotPermissionDto.setPermissionId(permissionId);
 			roleMapper.insertRolePermission(allotPermissionDto);
 		}
@@ -60,26 +60,18 @@ public class RoleServiceImpl {
 		return roleMapper.updateByPrimaryKeySelective(role);
 	}
 
-	public boolean hasByRoleName(String roleName) {
-		return roleMapper.countByRoleName(roleName) == 1;
-	}
-
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int deleteById(Long id) throws LogicException {
+	public int deleteById(Integer id) throws LogicException {
 		// 删除角色对应的权限关系和员工关系
 		roleMapper.deleteRolePermissionByRoleId(id);
 		employeeService.deleteEmployeeRoleByRoleId(id);
-		return roleMapper.deleteById(id);
+		return roleMapper.deleteByPrimaryKey(id);
 	}
 
 	public Page<Role> listByQo(RoleQo roleQo) {
 		Page<Role> page = PageHelper.startPage(roleQo.getPage(), roleQo.getRows(), roleQo.getCount());
-		roleMapper.selectByQo(roleQo);
+		roleMapper.listByQo(roleQo);
 		return page;
-	}
-
-	public String getRoleNameById(Long id) {
-		return roleMapper.selectRoleNameById(id);
 	}
 
 }

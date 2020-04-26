@@ -14,6 +14,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class InitPermissionDto {
-	private Long roleId;
-	private Long menuId;
+	private Integer roleId;
+	private Integer menuId;
 }

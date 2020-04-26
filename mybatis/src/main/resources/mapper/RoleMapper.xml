@@ -79,4 +79,38 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="listByQo" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from role
+    <where>
+    	<if test="roleName != null and roleName != '' ">
+    		role_name=#{roleName,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </select>
+  
+  <delete id="deleteRolePermissionByRoleIdAndMenuId">
+	DELETE 
+	FROM
+		role_permission 
+	WHERE
+		role_id = #{roleId,jdbcType=INTEGER}
+		AND permission_id IN ( SELECT id FROM permission WHERE menu_id = #{permissionId,jdbcType=INTEGER} )
+  </delete>
+  
+  <delete id="deleteRolePermissionByRoleId">
+	DELETE 
+	FROM
+		role_permission 
+	WHERE
+		role_id = #{roleId,jdbcType=INTEGER}  	
+  </delete>
+  
+  <insert id="insertRolePermission">
+	INSERT role_permission ( role_id, permission_id )
+	VALUES
+		(#{roleId,jdbcType=INTEGER}, #{permissionId,jdbcType=INTEGER} )	  
+  </insert>
 </mapper>

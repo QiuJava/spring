@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class AllotPermissionDto {
-	private Long roleId;
-	private Long permissionId;
+	private Integer roleId;
+	private Integer permissionId;
 
 }

@@ -77,6 +77,8 @@ public class Employee implements UserDetails {
 	public static final String MAN = "MAN";
 	public static final String WOMAN = "WOMAN";
 	
+	public static final String INIT_PASSWORD = "123456";
+	
 	public static final int MAX_PASSWORD_ERRORS = 5;
 	public static final int PASSWORD_ERRORS_INIT = 0;
 	public static final float ZERO_DAY_FLOAT = 0.0F;

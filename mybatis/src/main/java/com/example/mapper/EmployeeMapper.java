@@ -108,8 +108,8 @@ public interface EmployeeMapper {
 			"FROM ", //
 			"	`employee_role`  ", //
 			"WHERE ", //
-			"	role_id = #{roleId,jdbcType=BIGINT}" })
-	int deleteEmployeeRoleByRoleId(Long roleId);
+			"	role_id = #{roleId,jdbcType=INTEGER}" })
+	int deleteEmployeeRoleByRoleId(Integer roleId);
 
 	@SelectProvider(type = EmployeeSqlProvider.class, method = "selectByListByQo")
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),

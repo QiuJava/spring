@@ -81,8 +81,8 @@ public class MenuServiceImpl {
 		return menuMapper.deleteById(id);
 	}
 
-	public List<Menu> listByAll() {
-		return menuMapper.selectByParentId(null);
+	public List<Menu> listAll() {
+		return menuMapper.listByParentId(null);
 	}
 
 	public List<Menu> listByQo(MenuQo qo) {

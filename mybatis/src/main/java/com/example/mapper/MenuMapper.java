@@ -70,7 +70,7 @@ public interface MenuMapper {
 			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
-	List<Menu> selectByParentId(Long parentId);
+	List<Menu> listByParentId(Long parentId);
 
 	@Delete({ "DELETE  ", //
 			"FROM ", //
@@ -104,5 +104,7 @@ public interface MenuMapper {
 	List<Long> selectMenuTreeByRoleId(Long roleId);
 
 	String getMenuNameById(Integer id);
-
+	
+	
+	List<Menu> listByQo(MenuQo qo);
 }

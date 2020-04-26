@@ -14,8 +14,7 @@
 	var token = [[${_csrf.token}]];
 	$(function () {
 		$("#roleNameInput").textbox({
-			required:true,
-			validType:['length[2,20]','remote["/role/verifyRoleName?_csrf='+token+'&id='+[[${id}]]+'","roleName"]']
+			required:true
 		});
 	});
   </script> 

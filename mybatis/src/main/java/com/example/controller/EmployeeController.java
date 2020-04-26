@@ -78,12 +78,11 @@ public class EmployeeController {
 		String email = employee.getEmailAddress();
 		String username = employee.getUsername();
 		try {
-			int resetPassword = employeeService.resetPassword(employee.getId(), employee.getUsername());
+			emailService.sendResetPasswordSuccessMail(email, username);
+			int resetPassword = employeeService.resetPassword(employee.getId());
 			if (resetPassword != 1) {
 				return new Result<>(false, "重置失败");
 			}
-			// 发送邮件
-			emailService.sendResetPasswordSuccessMail(email, username);
 			return new Result<>(true, "重置成功");
 		} catch (Exception e) {
 			log.error("系统异常", e);

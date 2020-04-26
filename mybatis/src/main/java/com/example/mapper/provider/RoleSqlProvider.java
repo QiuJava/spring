@@ -5,9 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 
-import com.example.qo.RoleQo;
 import com.example.util.SqlUtil;
-import com.example.util.StrUtil;
 
 /**
  * 角色sql供应
@@ -24,13 +22,4 @@ public class RoleSqlProvider {
 		return sql.toString();
 	}
 
-	public String selectByQo(RoleQo roleQo) {
-		SQL sql = new SQL();
-		sql.SELECT("id", "role_name");
-		sql.FROM("role");
-		if (StrUtil.hasText(roleQo.getRoleName())) {
-			sql.WHERE("role_name=#{roleName,jdbcType=VARCHAR}");
-		}
-		return sql.toString();
-	}
 }
