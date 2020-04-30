@@ -31,6 +31,10 @@ public class RoleServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Role role) throws LogicException {
+		if (role.getId() != null) {
+			return roleMapper.updateByPrimaryKeySelective(role);
+		}
+		
 		Date date = new Date();
 		role.setCreateTime(date);
 		role.setUpdateTime(date);

@@ -85,6 +85,19 @@ public class RoleController {
 		}
 
 	}
+	
+	@PostMapping("/role/update")
+	@ResponseBody
+	public Result<Role> update(Role role) {
+		try {
+			roleService.save(role);
+			return new Result<>(true, "添加成功", role);
+		} catch (Exception e) {
+			log.error("系统异常", e);
+			return new Result<>(false, "添加失败");
+		}
+
+	}
 
 	@PostMapping("/role/allotPermission")
 	@ResponseBody

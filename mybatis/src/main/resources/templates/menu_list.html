@@ -92,7 +92,7 @@
 	            // 发送post请求进行新增
 	            $.post("/menu/add?_csrf=" + token, {
 	                "menuName": row.menuName,
-	                "url": row.url,
+	                "mappingAddress": row.mappingAddress,
 	                "parentId": row._parentId
 	            },
 	            function(data) {
@@ -111,7 +111,7 @@
 	            $.post("/menu/update?_csrf=" + token, {
 	                "id": row.id,
 	                "menuName": row.menuName,
-	                "url": row.url
+	                "mappingAddress": row.mappingAddress
 	            },
 	            function(data) {
 	                if (data.succeed) {
@@ -284,7 +284,7 @@
 	            // 发送post请求进行更新
 	            $.post("/permission/add?_csrf=" + token, {
 	                "permissionName": row.permissionName,
-	                "url": row.url,
+	                "mappingAddress": row.mappingAddress,
 	                "authority": row.authority,
 	                "menuId": menuRow.id
 	            },
@@ -303,7 +303,7 @@
 	            $.post("/permission/update?_csrf=" + token, {
 	                "id": rowId,
 	                "permissionName": row.permissionName,
-	                "url": row.url,
+	                "mappingAddress": row.mappingAddress,
 	                "authority": row.authority
 	            },
 	            function(data) {
@@ -386,7 +386,7 @@
      <tr> 
       <th data-options="field:'permissionName',width:120,editor:'text'">权限名称</th> 
       <th data-options="field:'authority',width:150,editor:'text'">权限编码</th> 
-      <th data-options="field:'url',width:150,editor:'text'">权限路径</th> 
+      <th data-options="field:'mappingAddress',width:150,editor:'text'">权限路径</th> 
      </tr> 
     </thead> 
    </table> 
@@ -427,15 +427,13 @@
    <thead> 
     <tr> 
      <th data-options="field:'menuName',width:180,editor:{type:'validatebox',options:{required:true,validType:'length[2,20]'}}">菜单名称</th> 
-     <th data-options="field:'url',width:150,editor:{
+     <th data-options="field:'mappingAddress',width:150,editor:{
      	type:'validatebox',
      	options:{
      		required:true,
      		validType:['length[0,100]']
      	}
      }">菜单链接</th> 
-     <th data-options="field:'createTime',width:150">创建时间</th> 
-     <th data-options="field:'updateTime',width:150">更新时间</th> 
     </tr> 
    </thead> 
   </table> 

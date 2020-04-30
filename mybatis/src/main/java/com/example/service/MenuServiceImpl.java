@@ -34,39 +34,18 @@ public class MenuServiceImpl {
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int save(Menu menu) {
-		String menuName = menu.getMenuName();
 
 		Date date = new Date();
 		menu.setCreateTime(date);
 		menu.setUpdateTime(date);
-		// 菜单名称不能重复
-		boolean hasByMenuName = this.hasByMenuName(menuName);
-		if (hasByMenuName) {
-			throw new LogicException("菜单名称已存在");
-		}
 
-		return menuMapper.insert(menu);
-	}
-
-	public boolean hasByMenuName(String menuName) {
-		return menuMapper.countByMenuName(menuName) == 1;
+		return menuMapper.insertSelective(menu);
 	}
 
 	@Transactional(rollbackFor = RuntimeException.class)
 	public int update(Menu menu) {
 		Date date = new Date();
 		menu.setUpdateTime(date);
-		String oldMenuName = menuMapper.getMenuNameById(menu.getId());
-		String menuName = menu.getMenuName();
-		if (!menuName.equals(oldMenuName)) {
-			// 菜单名称不能重复
-			boolean hasMenuName = this.hasByMenuName(menuName);
-			if (hasMenuName) {
-				throw new LogicException("菜单名称已存在");
-			}
-		} else {
-			menu.setMenuName(null);
-		}
 
 		return menuMapper.updateByPrimaryKeySelective(menu);
 	}
@@ -86,7 +65,7 @@ public class MenuServiceImpl {
 	}
 
 	public List<Menu> listByQo(MenuQo qo) {
-		return menuMapper.selectByQo(qo);
+		return menuMapper.listByQo(qo);
 	}
 
 	public List<MenuTreeVo> listMenuTreeVoByAll(Long roleId) {

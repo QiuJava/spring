@@ -160,5 +160,35 @@
   	</where>
   </select>
   
-  <select id=""></select>
+  <select id="listByParentId" resultMap="listByQoMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from menu
+    <where>
+    	<choose>
+			<when test="parentId == null">
+				parent_id is null
+			</when>
+			<otherwise>
+				parent_id = #{parentId,jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+    </where>
+  </select>
+  
+  <delete id="deleteById">
+	DELETE 
+	FROM
+		menu 
+	WHERE
+		id = #{id,jdbcType=INTEGER}  
+  </delete>
+  <delete id="deleteByParentId">
+	DELETE 
+	FROM
+		menu 
+	WHERE
+		parent_id = #{id,jdbcType=INTEGER}  
+  </delete>
+  
 </mapper>

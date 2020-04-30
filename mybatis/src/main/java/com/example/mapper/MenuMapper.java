@@ -2,7 +2,6 @@ package com.example.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -37,57 +36,13 @@ public interface MenuMapper {
 
 	int updateByPrimaryKey(Menu record);
 
-	@Delete({ "DELETE  ", //
-			"FROM ", //
-			"	menu  ", //
-			"WHERE ", //
-			"	id = #{id,jdbcType=BIGINT}" })
 	int deleteById(Long id);
 
 	List<MenuTree> listMenuTreeByParentId(Long parentId);
 
-	@Select({ "SELECT ", //
-			"	count( * )  ", //
-			"FROM ", //
-			"	menu  ", //
-			"WHERE ", //
-			"	menu_name = #{menuName,jdbcType=VARCHAR}" })
-	int countByMenuName(String menuName);
-
-	@Select({ "SELECT ", //
-			"	menu_name ", //
-			"FROM ", //
-			"	menu  ", //
-			"WHERE ", //
-			"	id = #{id,jdbcType=BIGINT}" })
-	String selectMenuNameById(Long id);
-
-	@SelectProvider(type = MenuSqlProvider.class, method = "selectByParentId")
-	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
-			@Result(column = "parent_id", property = "parentId", jdbcType = JdbcType.BIGINT),
-			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
 	List<Menu> listByParentId(Long parentId);
 
-	@Delete({ "DELETE  ", //
-			"FROM ", //
-			"	menu  ", //
-			"WHERE ", //
-			"	parent_id = #{parentId,jdbcType=BIGINT}" })
 	int deleteByParentId(Long parentId);
-
-	@SelectProvider(type = MenuSqlProvider.class, method = "selectByQo")
-	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
-			@Result(column = "parent_id", property = "parentId", jdbcType = JdbcType.BIGINT),
-			@Result(column = "menu_name", property = "menuName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
-			@Result(column = "id", property = "children", many = @Many(select = "com.example.mapper.MenuMapper.selectByParentId", fetchType = FetchType.EAGER)) })
-	List<Menu> selectByQo(MenuQo qo);
 
 	@SelectProvider(type = MenuSqlProvider.class, method = "selectMenuTreeVoByParentId")
 	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
@@ -104,7 +59,6 @@ public interface MenuMapper {
 	List<Long> selectMenuTreeByRoleId(Long roleId);
 
 	String getMenuNameById(Integer id);
-	
 	
 	List<Menu> listByQo(MenuQo qo);
 }
